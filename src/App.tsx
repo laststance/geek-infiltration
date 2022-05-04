@@ -1,24 +1,11 @@
-import axios from 'axios'
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import logo from './logo.svg'
 
 import './App.css'
 
-type DocsList = Array<{ name: string; url: string }>
-
 const App: React.FC = () => {
   const [count, setCount] = useState(0)
-  const [docsList, setDocsList] = useState<DocsList>([])
-
-  useEffect(() => {
-    axios
-      .get('./docs_list')
-      .then(({ data }) => {
-        setDocsList(data)
-      })
-      .catch()
-  }, [])
 
   return (
     <main className="App">
@@ -56,23 +43,6 @@ const App: React.FC = () => {
           >
             Vite Docs
           </a>
-          {docsList.length
-            ? docsList.map((v, i) => {
-                return (
-                  <span key={i}>
-                    {' | '}
-                    <a
-                      className="App-link"
-                      href={v.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {v.name}
-                    </a>
-                  </span>
-                )
-              })
-            : false}
         </p>
       </header>
     </main>
