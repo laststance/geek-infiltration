@@ -563,31 +563,10 @@
     estree-walker "^2.0.1"
     picomatch "^2.2.2"
 
-"@tailwindcss/aspect-ratio@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/aspect-ratio/-/aspect-ratio-0.4.0.tgz#c635dd7331cbcc1b111cebdc2647dd3493ebdd3e"
-  integrity sha512-WJu0I4PpqNPuutpaA9zDUq2JXR+lorZ7PbLcKNLmb6GL9/HLfC7w3CRsMhJF4BbYd/lkY6CfXOvkYpuGnZfkpQ==
-
-"@tailwindcss/forms@^0.5.0":
-  version "0.5.0"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/forms/-/forms-0.5.0.tgz#d4bea2560a10aac642573e72d3b4d62a88960449"
-  integrity sha512-KzWugryEBFkmoaYcBE18rs6gthWCFHHO7cAZm2/hv3hwD67AzwP7udSCa22E7R1+CEJL/FfhYsJWrc0b1aeSzw==
-  dependencies:
-    mini-svg-data-uri "^1.2.3"
-
 "@tailwindcss/line-clamp@^0.4.0":
   version "0.4.0"
   resolved "https://registry.yarnpkg.com/@tailwindcss/line-clamp/-/line-clamp-0.4.0.tgz#03353e31e77636b785f2336e8c978502cec1de81"
   integrity sha512-HQZo6gfx1D0+DU3nWlNLD5iA6Ef4JAXh0LeD8lOGrJwEDBwwJNKQza6WoXhhY1uQrxOuU8ROxV7CqiQV4CoiLw==
-
-"@tailwindcss/typography@^0.5.2":
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/@tailwindcss/typography/-/typography-0.5.2.tgz#24b069dab24d7a2467d01aca0dd432cb4b29f0ee"
-  integrity sha512-coq8DBABRPFcVhVIk6IbKyyHUt7YTEC/C992tatFB+yEx5WGBQrCgsSFjxHUr8AWXphWckadVJbominEduYBqw==
-  dependencies:
-    lodash.castarray "^4.4.0"
-    lodash.isplainobject "^4.0.6"
-    lodash.merge "^4.6.2"
 
 "@tauri-apps/api@^1.0.0-rc.4":
   version "1.0.0-rc.4"
@@ -2966,16 +2945,6 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash.castarray@^4.4.0:
-  version "4.4.0"
-  resolved "https://registry.yarnpkg.com/lodash.castarray/-/lodash.castarray-4.4.0.tgz#c02513515e309daddd4c24c60cfddcf5976d9115"
-  integrity sha1-wCUTUV4wna3dTCTGDP3c9ZdtkRU=
-
-lodash.isplainobject@^4.0.6:
-  version "4.0.6"
-  resolved "https://registry.yarnpkg.com/lodash.isplainobject/-/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
-  integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
-
 lodash.merge@^4.6.2:
   version "4.6.2"
   resolved "https://registry.yarnpkg.com/lodash.merge/-/lodash.merge-4.6.2.tgz#558aa53b43b661e1925a0afdfa36a9a1085fe57a"
@@ -3084,11 +3053,6 @@ mimic-fn@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/mimic-fn/-/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
-
-mini-svg-data-uri@^1.2.3:
-  version "1.4.4"
-  resolved "https://registry.yarnpkg.com/mini-svg-data-uri/-/mini-svg-data-uri-1.4.4.tgz#8ab0aabcdf8c29ad5693ca595af19dd2ead09939"
-  integrity sha512-r9deDe9p5FJUPZAk3A59wGH7Ii9YrjjWw0jmw/liSbHl2CHiyXj6FcDXDu2K3TjVAXqiJdaw3xxwlZZr9E6nHg==
 
 minimatch@3.0.4:
   version "3.0.4"
@@ -3508,14 +3472,7 @@ prettier-linter-helpers@^1.0.0:
   dependencies:
     fast-diff "^1.1.2"
 
-prettier-plugin-tailwind-css@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/prettier-plugin-tailwind-css/-/prettier-plugin-tailwind-css-1.5.0.tgz#ec8faa7e671f92900a548c18b708838c445ace9c"
-  integrity sha512-LUbINk8O0l+r7iPO6fUOQtoZdF7lQ0SGZTrlAl6IjW8zc5URMGqdW2QVoIK2de2HQeKvb9X2xv8aUzf+v2UVYw==
-  dependencies:
-    prettier "^2.0.5"
-
-prettier@^2.0.5, prettier@^2.6.1:
+prettier@^2.6.1:
   version "2.6.2"
   resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.6.2.tgz#e26d71a18a74c3d0f0597f55f01fb6c06c206032"
   integrity sha512-PkUpF+qoXTqhOeWL9fu7As8LXsIUZ1WYaJiY/a7McAQzxjk82OF0tibkFXVCDImZtWxbvojFjerkiLb0/q8mew==
