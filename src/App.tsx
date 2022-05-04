@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Button } from '@nextui-org/react';
 
 import logo from './logo.svg'
 
@@ -11,7 +12,7 @@ const App: React.FC = () => {
     <main className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
+        <p>Hello Vite + React! </p><Button>click me</Button>
         <p>
           <button
             type="button"
