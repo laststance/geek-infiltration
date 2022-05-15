@@ -1,22 +1,16 @@
 import { request, gql } from 'graphql-request'
 import React from 'react'
-import {
-  useQuery,
-  useQueryClient,
-  QueryClient,
-  QueryClientProvider,
-} from 'react-query'
+import { useQuery } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 
-const queryClient = new QueryClient()
+import getIssueCommentByUsername from './gql/getIssueCommentByUsername'
 
-const endpoint = 'https://graphqlzero.almansi.me/api'
+const endpoint = 'https://api.github.com/graphql'
 
 function App() {
-  const [postId, setPostId] = React.useState(-1)
-
+  const { status, data, error, isFetching } = useIssue()
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <p>
         As you visit the posts below, you will notice them in a loading state
         the first time you load them. However, after you return to this list and
@@ -27,133 +21,20 @@ function App() {
           loading sequences)
         </strong>
       </p>
-      {postId > -1 ? (
-        <Post postId={postId} setPostId={setPostId} />
-      ) : (
-        <Posts setPostId={setPostId} />
-      )}
       <ReactQueryDevtools initialIsOpen />
-    </QueryClientProvider>
+    </>
   )
 }
 
-function usePosts() {
-  return useQuery('posts', async () => {
+function useIssue() {
+  return useQuery('issues', async () => {
     const {
-      posts: { data },
-    } = await request(
-      endpoint,
-      gql`
-        query {
-          posts {
-            data {
-              id
-              title
-            }
-          }
-        }
-      `
-    )
+      issues: { data },
+    } = await request(endpoint, getIssueCommentByUsername, null, {
+      authorization: 'Bearer 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',
+    })
     return data
   })
-}
-
-function Posts({ setPostId }) {
-  const queryClient = useQueryClient()
-  const { status, data, error, isFetching } = usePosts()
-
-  return (
-    <div>
-      <h1>Posts</h1>
-      <div>
-        {status === 'loading' ? (
-          'Loading...'
-        ) : status === 'error' ? (
-          <span>Error: {error.message}</span>
-        ) : (
-          <>
-            <div>
-              {data.map((post) => (
-                <p key={post.id}>
-                  {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-                  <a
-                    onClick={() => setPostId(post.id)}
-                    href="#"
-                    style={
-                      // We can find the existing query data here to show bold links for
-                      // ones that are cached
-                      queryClient.getQueryData(['post', post.id])
-                        ? {
-                            color: 'green',
-                            fontWeight: 'bold',
-                          }
-                        : {}
-                    }
-                  >
-                    {post.title}
-                  </a>
-                </p>
-              ))}
-            </div>
-            <div>{isFetching ? 'Background Updating...' : ' '}</div>
-          </>
-        )}
-      </div>
-    </div>
-  )
-}
-
-function usePost(postId) {
-  return useQuery(
-    ['post', postId],
-    async () => {
-      const { post } = await request(
-        endpoint,
-        gql`
-          query {
-            post(id: ${postId}) {
-              id
-              title
-              body
-            }
-          }
-        `
-      )
-
-      return post
-    },
-    {
-      enabled: !!postId,
-    }
-  )
-}
-
-function Post({ postId, setPostId }) {
-  const { status, data, error, isFetching } = usePost(postId)
-
-  return (
-    <div>
-      <div>
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a onClick={() => setPostId(-1)} href="#">
-          Back
-        </a>
-      </div>
-      {!postId || status === 'loading' ? (
-        'Loading...'
-      ) : status === 'error' ? (
-        <span>Error: {error.message}</span>
-      ) : (
-        <>
-          <h1>{data.title}</h1>
-          <div>
-            <p>{data.body}</p>
-          </div>
-          <div>{isFetching ? 'Background Updating...' : ' '}</div>
-        </>
-      )}
-    </div>
-  )
 }
 
 export default App
