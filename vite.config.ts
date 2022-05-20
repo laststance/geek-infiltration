@@ -10,5 +10,11 @@ export default defineConfig({
   server: {
     host: true,
     open: true,
+    proxy: {
+      '/login/oauth/access_token': {
+        changeOrigin: true,
+        target: 'https://github.com',
+      },
+    },
   },
 })
