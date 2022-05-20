@@ -1,14 +1,18 @@
 import { request, gql } from 'graphql-request'
+import { useAtomValue } from 'jotai'
 import React from 'react'
 import { useQuery } from 'react-query'
 import { ReactQueryDevtools } from 'react-query/devtools'
 
+import { accessTokenAtom } from './atom'
 import getIssueCommentByUsername from './gql/getIssueCommentByUsername'
 
 const endpoint = 'https://api.github.com/graphql'
 
 function App() {
-  const { status, data, error, isFetching } = useIssue()
+  const accessToken = useAtomValue(accessTokenAtom)
+  const { status, data, error, isFetching } = useIssue(accessToken)
+  console.log(status, data, error, isFetching)
   return (
     <>
       <p>
@@ -26,14 +30,17 @@ function App() {
   )
 }
 
-function useIssue() {
+function useIssue(accessToken) {
   return useQuery(['issues'], async () => {
-    const {
-      issues: { data },
-    } = await request(endpoint, getIssueCommentByUsername, null, {
-      authorization: 'Bearer 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',
-    })
-    return data
+    const { search } = await request(
+      endpoint,
+      getIssueCommentByUsername,
+      null,
+      {
+        authorization: `Bearer ${accessToken}`,
+      }
+    )
+    return search
   })
 }
 

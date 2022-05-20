@@ -23,7 +23,8 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-query": "4.0.0-beta.12"
+    "react-query": "4.0.0-beta.12",
+    "react-spinners": "^0.12.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^1.0.0-rc.9",

@@ -1,14 +1,19 @@
 import axios from 'axios'
-import { useSetAtom } from 'jotai'
-import { memo, useLayoutEffect } from 'react'
+import { useAtom } from 'jotai'
+import { useState, memo, useLayoutEffect } from 'react'
 
 import App from './App'
+import { accessTokenAtom } from './atom'
+import Loading from './Loading'
 import SignIn from './SignIn'
 
 const Controller = () => {
+  const [loading, setLoading] = useState(false)
+  const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
   useLayoutEffect(() => {
     if (window.location.href.includes('?code=')) {
       const [url, code] = window.location.href.split('?code=')
+      setLoading(() => true)
       axios
         .post(
           '/login/oauth/access_token',
@@ -23,11 +28,15 @@ const Controller = () => {
             },
           }
         )
-        .then((res) => console.log(res))
+        .then(({ data }) => {
+          setAccessToken(data['access_token'])
+          setLoading(false)
+        })
       window.history.pushState({}, null, url.split('login')[0])
     }
   }, [window.location.href.includes('?code=')])
-  return window.location.href.includes('?code=') ? <App /> : <SignIn />
+  if (loading) <Loading />
+  return accessToken ? <App /> : <SignIn />
 }
 
 export default memo(Controller)
