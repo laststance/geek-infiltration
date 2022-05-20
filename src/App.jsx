@@ -27,7 +27,7 @@ function App() {
 }
 
 function useIssue() {
-  return useQuery('issues', async () => {
+  return useQuery(['issues'], async () => {
     const {
       issues: { data },
     } = await request(endpoint, getIssueCommentByUsername, null, {

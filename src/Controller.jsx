@@ -1,13 +1,20 @@
-import { useAtomValue } from 'jotai'
-import { memo } from 'react'
+import { useSetAtom } from 'jotai'
+import { memo, useLayoutEffect } from 'react'
 
 import App from './App'
-import { userAtom } from './atom'
+import { codeAtom } from './atom'
 import SignIn from './SignIn'
 
 const Controller = () => {
-  const user = useAtomValue(userAtom)
-  return user ? <App /> : <SignIn />
+  const setAtom = useSetAtom(codeAtom)
+  useLayoutEffect(() => {
+    if (window.location.href.includes('?code=')) {
+      const [url, code] = window.location.href.split('?code=')
+      setAtom(code)
+      window.history.pushState({}, null, url.split('login')[0])
+    }
+  }, [window.location.href.includes('?code=')])
+  return window.location.href.includes('?code=') ? <App /> : <SignIn />
 }
 
 export default memo(Controller)
