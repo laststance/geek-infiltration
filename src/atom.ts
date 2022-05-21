@@ -1,3 +1,3 @@
-import { atom } from 'jotai'
+import { atomWithStorage } from 'jotai/utils'
 
-export const accessTokenAtom = atom(null)
+export const accessTokenAtom = atomWithStorage('accessToken', null)
