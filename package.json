@@ -11,7 +11,8 @@
     "clean": "rimraf node_modules yarn.lock dist",
     "typecheck": "tsc --noEmit",
     "tauri": "tauri",
-    "validate": "./scripts/validate"
+    "validate": "./scripts/validate",
+    "codegen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.6",
@@ -23,10 +24,16 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-query": "4.0.0-beta.12",
+    "react-query": "4.0.0-beta.13",
     "react-spinners": "^0.12.0"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "2.6.2",
+    "@graphql-codegen/typescript": "2.4.11",
+    "@graphql-codegen/typescript-document-nodes": "2.2.11",
+    "@graphql-codegen/typescript-graphql-files-modules": "2.1.1",
+    "@graphql-codegen/typescript-operations": "2.4.0",
+    "@graphql-codegen/typescript-react-query": "^3.5.12",
     "@tauri-apps/cli": "^1.0.0-rc.9",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.3",

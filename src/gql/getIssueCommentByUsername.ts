@@ -1,8 +1,8 @@
 import { gql } from 'graphql-request'
 
 export default gql`
-  {
-    search(query: "markerikson", type: ISSUE, first: 30) {
+  query getIssueComments($user: String!) {
+    search(query: user, type: ISSUE, first: 30) {
       issueCount
       edges {
         node {
