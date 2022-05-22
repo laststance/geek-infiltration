@@ -4,9 +4,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
-const queryClient = new QueryClient()
 import './index.css'
 import Controller from './Controller'
+
+const queryClient = new QueryClient()
 
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 
