@@ -1,4 +1,4 @@
-import { gql } from 'graphql-request'
+import { gql } from 'graphql-tag'
 import type { UseQueryOptions } from 'react-query'
 import { useQuery } from 'react-query'
 export type Maybe<T> = T | null
@@ -23742,7 +23742,7 @@ export type GetIssueCommentsQuery = {
   }
 }
 
-export const GetIssueCommentsDocument = gql`
+export const GetIssueComments = gql`
   query getIssueComments($query: String!) {
     search(query: $query, type: USER, first: 1) {
       edges {
@@ -23778,6 +23778,41 @@ export const GetIssueCommentsDocument = gql`
   }
 `
 
+export const GetIssueCommentsDocument = `
+    query getIssueComments($query: String!) {
+  search(query: $query, type: USER, first: 1) {
+    edges {
+      node {
+        ... on User {
+          issueComments(last: 30) {
+            edges {
+              node {
+                repository {
+                  nameWithOwner
+                }
+                url
+                issue {
+                  title
+                  author {
+                    login
+                  }
+                  url
+                }
+                bodyHTML
+                publishedAt
+                createdAt
+                reactions {
+                  totalCount
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `
 export const useGetIssueCommentsQuery = <
   TData = GetIssueCommentsQuery,
   TError = unknown
