@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag'
+import { gql } from 'graphql-request'
 import type { UseQueryOptions } from 'react-query'
 import { useQuery } from 'react-query'
 export type Maybe<T> = T | null
@@ -23691,70 +23691,84 @@ export type GetIssueCommentsQuery = {
   __typename?: 'Query'
   search: {
     __typename?: 'SearchResultItemConnection'
-    issueCount: number
     edges?: Array<{
       __typename?: 'SearchResultItemEdge'
       node?:
         | { __typename?: 'App' }
         | { __typename?: 'Discussion' }
-        | {
-            __typename?: 'Issue'
-            isReadByViewer?: boolean | null
-            number: number
-            title: string
-            url: any
-            body: string
-            repository: {
-              __typename?: 'Repository'
-              description?: string | null
-              name: string
-              owner:
-                | { __typename?: 'Organization'; name?: string | null }
-                | { __typename?: 'User'; name?: string | null }
-            }
-            reactions: { __typename?: 'ReactionConnection'; totalCount: number }
-          }
+        | { __typename?: 'Issue' }
         | { __typename?: 'MarketplaceListing' }
         | { __typename?: 'Organization' }
         | { __typename?: 'PullRequest' }
         | { __typename?: 'Repository' }
-        | { __typename?: 'User' }
+        | {
+            __typename?: 'User'
+            issueComments: {
+              __typename?: 'IssueCommentConnection'
+              edges?: Array<{
+                __typename?: 'IssueCommentEdge'
+                node?: {
+                  __typename?: 'IssueComment'
+                  url: any
+                  bodyHTML: any
+                  publishedAt?: any | null
+                  createdAt: any
+                  repository: {
+                    __typename?: 'Repository'
+                    nameWithOwner: string
+                  }
+                  issue: {
+                    __typename?: 'Issue'
+                    title: string
+                    url: any
+                    author?:
+                      | { __typename?: 'Bot'; login: string }
+                      | { __typename?: 'EnterpriseUserAccount'; login: string }
+                      | { __typename?: 'Mannequin'; login: string }
+                      | { __typename?: 'Organization'; login: string }
+                      | { __typename?: 'User'; login: string }
+                      | null
+                  }
+                  reactions: {
+                    __typename?: 'ReactionConnection'
+                    totalCount: number
+                  }
+                } | null
+              } | null> | null
+            }
+          }
         | null
     } | null> | null
   }
 }
 
-export const GetIssueComments = gql`
+export const GetIssueCommentsDocument = gql`
   query getIssueComments($query: String!) {
-    search(query: $query, type: ISSUE, first: 30) {
-      issueCount
+    search(query: $query, type: USER, first: 1) {
       edges {
         node {
-          ... on Issue {
-            isReadByViewer
-            number
-            title
-            url
-            repository {
-              description
-              name
-              owner {
-                ... on Organization {
-                  name
+          ... on User {
+            issueComments(last: 30) {
+              edges {
+                node {
+                  repository {
+                    nameWithOwner
+                  }
+                  url
+                  issue {
+                    title
+                    author {
+                      login
+                    }
+                    url
+                  }
+                  bodyHTML
+                  publishedAt
+                  createdAt
+                  reactions {
+                    totalCount
+                  }
                 }
-                ... on User {
-                  name
-                }
-              }
-            }
-            reactions {
-              totalCount
-            }
-            ... on Comment {
-              body
-              ... on IssueComment {
-                url
-                updatedAt
               }
             }
           }
@@ -23762,46 +23776,6 @@ export const GetIssueComments = gql`
       }
     }
   }
-`
-
-export const GetIssueCommentsDocument = `
-    query getIssueComments($query: String!) {
-  search(query: $query, type: ISSUE, first: 30) {
-    issueCount
-    edges {
-      node {
-        ... on Issue {
-          isReadByViewer
-          number
-          title
-          url
-          repository {
-            description
-            name
-            owner {
-              ... on Organization {
-                name
-              }
-              ... on User {
-                name
-              }
-            }
-          }
-          reactions {
-            totalCount
-          }
-          ... on Comment {
-            body
-            ... on IssueComment {
-              url
-              updatedAt
-            }
-          }
-        }
-      }
-    }
-  }
-}
 `
 
 export const useGetIssueCommentsQuery = <
