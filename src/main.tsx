@@ -7,7 +7,16 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 import './index.css'
 import Controller from './Controller'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnMount: false,
+      refetchOnReconnect: false,
+      refetchOnWindowFocus: false,
+      retryOnMount: false,
+    },
+  },
+})
 
 const darkTheme = createTheme({
   type: 'dark',

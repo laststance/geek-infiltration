@@ -1,7 +1,6 @@
 import {
   Card,
   Container,
-  Row,
   Col,
   Text,
   Link,
@@ -43,7 +42,7 @@ function App() {
   return (
     status === 'success' && (
       <Container css={{ padding: '40px' }}>
-        {data.reverse().map(({ node }, i) => (
+        {data.reverse().map(({ node }, i: number) => (
           <Col
             key={i}
             css={{ display: 'flex', justifyContent: 'center', mb: '2px' }}
