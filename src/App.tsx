@@ -42,32 +42,28 @@ function App() {
 
   return (
     status === 'success' && (
-      <Container>
-        <Col offset={1}>
-          {data.reverse().map(({ node }, i) => (
-            <Row key={i} gap={0.5}>
-              <Card bordered shadow={false} css={{ mw: '400px' }}>
-                <Text color="primary">{node.repository.nameWithOwner}</Text>
-                <Link underline href={node.issue.url} target="_blank">
-                  {node.issue.title}{' '}
-                  <Text small>{node.issue.author.login}</Text>
-                  <Text small>{new Date(node.createdAt).toLocaleString()}</Text>
-                  <Spacer />
-                </Link>
-                <Card>
-                  <Text
-                    size={15}
-                    dangerouslySetInnerHTML={{ __html: node.bodyHTML }}
-                  />
-                </Card>
+      <Container css={{ padding: '40px' }}>
+        {data.reverse().map(({ node }, i) => (
+          <Col
+            key={i}
+            css={{ display: 'flex', justifyContent: 'center', mb: '2px' }}
+          >
+            <Card bordered shadow={false} css={{ mw: '400px' }}>
+              <Text color="primary">{node.repository.nameWithOwner}</Text>
+              <Link underline href={node.issue.url} target="_blank">
+                {node.issue.title} <Text small>{node.issue.author.login}</Text>
+                <Text small>{new Date(node.createdAt).toLocaleString()}</Text>
+                <Spacer />
+              </Link>
+              <Card>
+                <Text
+                  size={16}
+                  dangerouslySetInnerHTML={{ __html: node.bodyHTML }}
+                />
               </Card>
-            </Row>
-          ))}
-        </Col>
-        <Col offset={1}>
-          <Card>fwiejfeawiofjewoi</Card>
-          <Card>jfoiwejfiowefjweoi</Card>
-        </Col>
+            </Card>
+          </Col>
+        ))}
       </Container>
     )
   )
