@@ -5,9 +5,7 @@ generates:
   src/generated/graphql.ts:
     plugins:
       - "typescript"
-      - "typescript-operations"
-      - "typescript-graphql-files-modules"
-      - "typescript-document-nodes"
+      - "typescript-operation"
       - "typescript-react-query"
     config:
       fetcher: fetch
