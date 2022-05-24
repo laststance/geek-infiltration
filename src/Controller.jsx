@@ -4,7 +4,7 @@ import { useState, memo, useLayoutEffect } from 'react'
 
 import App from './App'
 import { accessTokenAtom } from './atom'
-import Loading from './Loading'
+import Loading from './components/Loading'
 import SignIn from './SignIn'
 
 const Controller = () => {
