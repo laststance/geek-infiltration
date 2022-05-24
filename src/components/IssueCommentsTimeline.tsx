@@ -2,12 +2,12 @@ import { Card, Container, Col, Text, Link, Spacer } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React from 'react'
 
+import { endpoint } from '../const'
+
 import { accessTokenAtom } from './../atom'
 import { useGetIssueCommentsQuery } from './../generated/graphql'
 import type { IssueComment } from './../generated/graphql'
 import Loading from './Loading'
-
-const endpoint = 'https://api.github.com/graphql'
 
 function IssueCommentsTimeline() {
   const accessToken = useAtomValue(accessTokenAtom)
