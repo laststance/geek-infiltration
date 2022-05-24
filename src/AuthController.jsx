@@ -7,7 +7,7 @@ import { accessTokenAtom } from './atom'
 import Loading from './components/Loading'
 import SignIn from './SignIn'
 
-const Controller = () => {
+const AuthController = () => {
   const [loading, setLoading] = useState(false)
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
   useLayoutEffect(() => {
@@ -39,4 +39,4 @@ const Controller = () => {
   return accessToken ? <App /> : <SignIn />
 }
 
-export default memo(Controller)
+export default memo(AuthController)

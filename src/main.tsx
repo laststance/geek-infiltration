@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
 import './index.css'
-import Controller from './Controller'
+import AuthController from './AuthController'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,7 +28,7 @@ root.render(
   <JotaiProvider>
     <QueryClientProvider client={queryClient}>
       <NextUIProvider theme={darkTheme}>
-        <Controller />
+        <AuthController />
       </NextUIProvider>
     </QueryClientProvider>
   </JotaiProvider>
