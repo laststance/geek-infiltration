@@ -1,3 +1,13 @@
 import { atomWithStorage } from 'jotai/utils'
 
-export const accessTokenAtom = atomWithStorage('accessToken', null)
+type AccessToken = string
+type AddedUserName = string[]
+
+export const accessTokenAtom = atomWithStorage<AccessToken | null>(
+  'accessToken',
+  null
+)
+export const addedUserAtom = atomWithStorage<AddedUserName | []>(
+  'addedUserName',
+  []
+)
