@@ -48,7 +48,7 @@ function IssueCommentsTimeline() {
 
   return (
     status === 'success' && (
-      <Container css={{ padding: '40px' }}>
+      <Container>
         {data.reverse().map(({ node }, i: number) => (
           <Col
             key={i}

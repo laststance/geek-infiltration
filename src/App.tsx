@@ -3,7 +3,7 @@ import React from 'react'
 
 function App() {
   return (
-    <Container>
+    <Container css={{ padding: '40px' }}>
       <h1>App</h1>
     </Container>
   )
