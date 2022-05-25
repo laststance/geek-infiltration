@@ -65,15 +65,19 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
           css={{ display: 'flex', justifyContent: 'center', mb: '2px' }}
         >
           <Card bordered shadow={false} css={{ mw: '400px' }}>
-            <Text color="primary">{node.repository.nameWithOwner}</Text>
-            <Link underline href={node.issue.url} target="_blank">
-              {node.issue.title} <Text small>{node.issue.author!.login}</Text>
-              <Text small>{new Date(node.createdAt).toLocaleString()}</Text>
-              <Spacer />
+            <Text color="primary" h5>
+              {node.repository.nameWithOwner}
+            </Text>
+            <Link underline href={node.url} target="_blank">
+              <Text h4>{node.issue.title}</Text>
             </Link>
+            {'  '}
+            <Text small>{node.issue.author!.login}</Text>
+            <Text small>{new Date(node.createdAt).toLocaleString()}</Text>
+            <Spacer />
             <Card>
               <Text
-                size={16}
+                size={26}
                 dangerouslySetInnerHTML={{ __html: node.bodyHTML }}
               />
             </Card>
