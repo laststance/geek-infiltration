@@ -1,19 +1,4 @@
 {
-  "name": "vite-react-ts-extended",
-  "version": "2.0.0",
-  "license": "MIT",
-  "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "serve": "serve dist",
-    "lint": "eslint . --ext .ts,.tsx,.js,jsx",
-    "lint:fix": "eslint . --ext .ts,.tsx,.js,jsx --fix",
-    "clean": "rimraf node_modules yarn.lock dist",
-    "typecheck": "tsc --noEmit",
-    "tauri": "tauri",
-    "validate": "./scripts/validate",
-    "codegen": "graphql-codegen --config codegen.yml"
-  },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.6",
     "@tauri-apps/api": "^1.0.0-rc.4",
@@ -24,8 +9,7 @@
     "prop-types": "^15.8.1",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-query": "4.0.0-beta.13",
-    "react-spinners": "^0.12.0"
+    "react-query": "4.0.0-beta.13"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "2.6.2",
@@ -55,5 +39,19 @@
     "serve": "^13.0.2",
     "typescript": "^4.6.4",
     "vite": "^2.9.7"
+  },
+  "license": "MIT",
+  "name": "vite-react-ts-extended",
+  "scripts": {
+    "build": "tsc && vite build",
+    "clean": "rimraf node_modules yarn.lock dist",
+    "codegen": "graphql-codegen --config codegen.yml",
+    "dev": "vite",
+    "lint": "eslint . --ext .ts,.tsx,.js,jsx",
+    "lint:fix": "eslint . --ext .ts,.tsx,.js,jsx --fix",
+    "serve": "serve dist",
+    "tauri": "tauri",
+    "typecheck": "tsc --noEmit",
+    "validate": "./scripts/validate"
   }
 }
