@@ -1,4 +1,4 @@
-import { Card, Avatar, Divider, Row } from '@nextui-org/react'
+import { Card, Avatar, Divider } from '@nextui-org/react'
 import React, { memo } from 'react'
 
 import PlusButton from './PlusButton'
