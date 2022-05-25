@@ -10,6 +10,7 @@ import SignIn from './SignIn'
 const AuthController = () => {
   const [loading, setLoading] = useState(false)
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
+
   useLayoutEffect(() => {
     if (window.location.href.includes('?code=')) {
       const [url, code] = window.location.href.split('?code=')
@@ -32,9 +33,10 @@ const AuthController = () => {
           setAccessToken(data['access_token'])
           setLoading(false)
         })
-      window.history.pushState({}, null, url.split('login')[0])
+      window.history.pushState({}, '', url.split('login')[0])
     }
   }, [window.location.href.includes('?code=')])
+
   if (loading) <Loading />
   return accessToken ? <App /> : <SignIn />
 }
