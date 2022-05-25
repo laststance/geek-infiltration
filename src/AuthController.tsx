@@ -1,10 +1,10 @@
+import { Loading } from '@nextui-org/react'
 import axios from 'axios'
 import { useAtom } from 'jotai'
 import { useState, memo, useLayoutEffect } from 'react'
 
 import App from './App'
 import { accessTokenAtom } from './atom'
-import Loading from './components/Loading'
 import SignIn from './SignIn'
 
 const AuthController = () => {
@@ -37,7 +37,7 @@ const AuthController = () => {
     }
   }, [window.location.href.includes('?code=')])
 
-  if (loading) <Loading />
+  if (loading) <Loading size="md" />
   return accessToken ? <App /> : <SignIn />
 }
 
