@@ -16,7 +16,11 @@ import { accessTokenAtom } from './../atom'
 import { useGetIssueCommentsQuery } from './../generated/graphql'
 import type { IssueComment } from './../generated/graphql'
 
-function IssueCommentsTimeline() {
+interface Props {
+  user: string
+}
+
+const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
   const accessToken = useAtomValue(accessTokenAtom)
 
   const { status, data, error, isFetching } = useGetIssueCommentsQuery(
@@ -24,7 +28,7 @@ function IssueCommentsTimeline() {
       endpoint: endpoint,
       fetchParams: { headers: { authorization: `Bearer ${accessToken}` } },
     },
-    { query: 'markerikson' },
+    { query: user },
 
     {
       select: (data): { node: IssueComment }[] => {
@@ -53,32 +57,32 @@ function IssueCommentsTimeline() {
       </Container>
     )
 
-  return (
-    status === 'success' && (
-      <Container>
-        {data.reverse().map(({ node }, i: number) => (
-          <Col
-            key={i}
-            css={{ display: 'flex', justifyContent: 'center', mb: '2px' }}
-          >
-            <Card bordered shadow={false} css={{ mw: '400px' }}>
-              <Text color="primary">{node.repository.nameWithOwner}</Text>
-              <Link underline href={node.issue.url} target="_blank">
-                {node.issue.title} <Text small>{node.issue.author!.login}</Text>
-                <Text small>{new Date(node.createdAt).toLocaleString()}</Text>
-                <Spacer />
-              </Link>
-              <Card>
-                <Text
-                  size={16}
-                  dangerouslySetInnerHTML={{ __html: node.bodyHTML }}
-                />
-              </Card>
+  return status === 'success' ? (
+    <Container>
+      {data.reverse().map(({ node }, i: number) => (
+        <Col
+          key={i}
+          css={{ display: 'flex', justifyContent: 'center', mb: '2px' }}
+        >
+          <Card bordered shadow={false} css={{ mw: '400px' }}>
+            <Text color="primary">{node.repository.nameWithOwner}</Text>
+            <Link underline href={node.issue.url} target="_blank">
+              {node.issue.title} <Text small>{node.issue.author!.login}</Text>
+              <Text small>{new Date(node.createdAt).toLocaleString()}</Text>
+              <Spacer />
+            </Link>
+            <Card>
+              <Text
+                size={16}
+                dangerouslySetInnerHTML={{ __html: node.bodyHTML }}
+              />
             </Card>
-          </Col>
-        ))}
-      </Container>
-    )
+          </Card>
+        </Col>
+      ))}
+    </Container>
+  ) : (
+    <></>
   )
 }
 

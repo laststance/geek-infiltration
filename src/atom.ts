@@ -2,7 +2,7 @@ import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 
 type AccessToken = string
-type AddedUserName = string[]
+type SubscribedUser = string[]
 type SearchQuery = string
 
 export const accessTokenAtom = atomWithStorage<AccessToken | null>(
@@ -12,7 +12,7 @@ export const accessTokenAtom = atomWithStorage<AccessToken | null>(
 
 export const searchQueryAtom = atom<SearchQuery>('')
 
-export const addedUserAtom = atomWithStorage<AddedUserName | []>(
-  'addedUserName',
+export const subscribedUserAtom = atomWithStorage<SubscribedUser | []>(
+  'subscribedUser',
   []
 )

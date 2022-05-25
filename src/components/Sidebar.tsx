@@ -10,10 +10,10 @@ import {
   Row,
   Checkbox,
 } from '@nextui-org/react'
-import { useSetAtom } from 'jotai'
+import { useAtom } from 'jotai'
 import React, { memo, useState, useCallback, useRef } from 'react'
 
-import { searchQueryAtom } from '../atom'
+import { subscribedUserAtom } from '../atom'
 
 const Sidebar = () => {
   const input = useRef() as React.RefObject<FormElement>
@@ -22,8 +22,11 @@ const Sidebar = () => {
   const onClose = useCallback(() => {
     setVisible(false)
   }, [])
-  const setSearchQuery = useSetAtom(searchQueryAtom)
-  const onSubmit = useCallback(() => setSearchQuery(input.current!.value), [])
+  const [subscribedUser, setSubscribedUser] = useAtom(subscribedUserAtom)
+  const onSubmit = useCallback(() => {
+    setSubscribedUser([...subscribedUser, input.current!.value])
+    setVisible(false)
+  }, [subscribedUser])
 
   return (
     <Card as="section" css={{ borderRadius: 0, h: '100%' }}>
