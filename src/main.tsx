@@ -5,7 +5,7 @@ import ReactDOM from 'react-dom/client'
 import { QueryClientProvider, QueryClient } from 'react-query'
 
 import './index.css'
-import AuthController from './AuthController'
+import AuthController from './components/AuthController'
 
 const queryClient = new QueryClient({
   defaultOptions: {
