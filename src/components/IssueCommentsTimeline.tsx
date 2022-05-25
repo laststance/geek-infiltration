@@ -1,4 +1,12 @@
-import { Card, Container, Col, Text, Link, Spacer } from '@nextui-org/react'
+import {
+  Card,
+  Container,
+  Col,
+  Text,
+  Link,
+  Spacer,
+  Loading,
+} from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React from 'react'
 
@@ -7,7 +15,6 @@ import { endpoint } from '../const'
 import { accessTokenAtom } from './../atom'
 import { useGetIssueCommentsQuery } from './../generated/graphql'
 import type { IssueComment } from './../generated/graphql'
-import Loading from './Loading'
 
 function IssueCommentsTimeline() {
   const accessToken = useAtomValue(accessTokenAtom)
@@ -31,7 +38,7 @@ function IssueCommentsTimeline() {
     }
   )
 
-  if (status === 'loading' || isFetching) return <Loading />
+  if (status === 'loading' || isFetching) return <Loading size="md" />
 
   if (error)
     return (
