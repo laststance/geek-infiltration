@@ -1,3 +1,4 @@
+import type { FormElement } from '@nextui-org/react'
 import {
   Card,
   Avatar,
@@ -9,15 +10,20 @@ import {
   Row,
   Checkbox,
 } from '@nextui-org/react'
-import React, { memo, useState, useCallback } from 'react'
+import { useSetAtom } from 'jotai'
+import React, { memo, useState, useCallback, useRef } from 'react'
+
+import { searchQueryAtom } from '../atom'
 
 const Sidebar = () => {
+  const input = useRef() as React.RefObject<FormElement>
   const [visible, setVisible] = useState(false)
-  const handler = useCallback(() => setVisible(true), [])
-
-  const closeHandler = useCallback(() => {
+  const onOpen = useCallback(() => setVisible(true), [])
+  const onClose = useCallback(() => {
     setVisible(false)
   }, [])
+  const setSearchQuery = useSetAtom(searchQueryAtom)
+  const onSubmit = useCallback(() => setSearchQuery(input.current!.value), [])
 
   return (
     <Card as="section" css={{ borderRadius: 0, h: '100%' }}>
@@ -37,7 +43,7 @@ const Sidebar = () => {
           color="gradient"
           shadow
           css={{ border: 0, fontSize: '30px', padding: '0 15px' }}
-          onClick={handler}
+          onClick={onOpen}
         >
           +
         </Button>
@@ -45,7 +51,7 @@ const Sidebar = () => {
           closeButton
           aria-labelledby="modal-title"
           open={visible}
-          onClose={closeHandler}
+          onClose={onClose}
         >
           <Modal.Header>
             <Text id="modal-title" size={18}>
@@ -57,6 +63,7 @@ const Sidebar = () => {
           </Modal.Header>
           <Modal.Body>
             <Input
+              ref={input}
               clearable
               bordered
               fullWidth
@@ -74,10 +81,10 @@ const Sidebar = () => {
             </Row>
           </Modal.Body>
           <Modal.Footer>
-            <Button auto onClick={closeHandler}>
+            <Button type="submit" auto onClick={onSubmit}>
               Search
             </Button>
-            <Button auto flat color="error" onClick={closeHandler}>
+            <Button auto flat color="error" onClick={onClose}>
               Close
             </Button>
           </Modal.Footer>
