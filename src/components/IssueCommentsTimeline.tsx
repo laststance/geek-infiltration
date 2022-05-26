@@ -1,4 +1,4 @@
-import { Card, Col, Text, Link, Spacer, Loading } from '@nextui-org/react'
+import { Col, Loading } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React from 'react'
 
@@ -7,6 +7,7 @@ import { endpoint } from '../const'
 import { accessTokenAtom } from './../atom'
 import { useGetIssueCommentsQuery } from './../generated/graphql'
 import type { IssueComment } from './../generated/graphql'
+import CommentCard from './CommentCard'
 
 interface Props {
   user: string
@@ -42,38 +43,25 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
   if (status === 'success' && data.length > 0)
     return (
       <Col as="article">
-        {data.reverse().map(({ node }, i: number) => (
-          <Card
-            as="section"
-            bordered
-            key={i}
-            shadow
-            css={{
-              borderBottomColor: 'rgba(77, 77, 77, 0.7)',
-              borderBottomWidth: '1px',
-              borderTopColor:
-                i === 1 ? 'rgb(77, 77, 77)' : 'rgba(77, 77, 77, 0.7)',
-              borderTopWidth: '1px',
-            }}
-          >
-            <Text color="primary" h5>
-              {node.repository.nameWithOwner}
-            </Text>
-            <Link underline href={node.url} target="_blank">
-              <Text h4>{node.issue.title}</Text>
-            </Link>
-            {'  '}
-            <Text small>{node.issue.author!.login}</Text>
-            <Text small>{new Date(node.createdAt).toLocaleString()}</Text>
-            <Spacer />
-            <Card>
-              <Text
-                size={20}
-                dangerouslySetInnerHTML={{ __html: node.bodyHTML }}
+        {data
+          .reverse()
+          .map(
+            (
+              { node: { bodyHTML, publishedAt, url, repository, issue } },
+              i: number
+            ) => (
+              <CommentCard
+                key={i}
+                repositoryName={repository.nameWithOwner}
+                bodyHTML={bodyHTML}
+                commentLink={url}
+                publishedAt={publishedAt}
+                ticketAuthorName={issue.author!.login}
+                ticketLink={issue.url}
+                ticketTitle={issue.title}
               />
-            </Card>
-          </Card>
-        ))}
+            )
+          )}
       </Col>
     )
 
