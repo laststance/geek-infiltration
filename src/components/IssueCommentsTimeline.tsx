@@ -27,7 +27,7 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
         if (data.search.edges!.length === 0) return []
         // @ts-ignore error TS2339: Property 'issueComments' does not exist on type '{ __typename?: "App" | undefined; } | { __typename?: "Discussion" | undefined; } | { __typename?: "Issue" | undefined; } | { __typename?: "MarketplaceListing" | undefined; } | { __typename?: "Organization" | undefined; } | { ...; } | { ...; } | { ...; }'.
         //   Property 'issueComments' does not exist on type '{ __typename?: "App" | undefined; }'.
-        return data.search.edges[0].node.issueCooments.edges as Array<{
+        return data.search.edges[0].node.issueComments.edges as Array<{
           node: IssueComment
         }>
       },
