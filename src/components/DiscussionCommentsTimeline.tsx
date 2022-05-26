@@ -46,7 +46,17 @@ const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
       <Col as="article">
         {data.map(
           (
-            { node: { author, bodyHTML, publishedAt, url, discussion } },
+            {
+              node: {
+                author,
+                body,
+                bodyHTML,
+                bodyText,
+                publishedAt,
+                url,
+                discussion,
+              },
+            },
             i: number
           ) => (
             <CommentCard
@@ -54,6 +64,8 @@ const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
               author={author as Actor}
               repositoryName={discussion!.repository.nameWithOwner}
               bodyHTML={bodyHTML}
+              bodyL={body}
+              bodyText={bodyText}
               commentLink={url}
               publishedAt={publishedAt}
               ticketAuthorName={discussion!.author!.login}

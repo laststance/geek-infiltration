@@ -59,8 +59,14 @@ const CommentCard: React.FC<Props> = ({
           </User.Link>
         </User>
       </Row>
-      <Row>
-        <Text size={20} dangerouslySetInnerHTML={{ __html: bodyHTML }} />
+      <Row as="section">
+        <div
+          dangerouslySetInnerHTML={{ __html: bodyHTML }}
+          style={{
+            maxWidth: '100%',
+            overflowWrap: 'break-word',
+          }}
+        />
       </Row>
     </Card>
   )
