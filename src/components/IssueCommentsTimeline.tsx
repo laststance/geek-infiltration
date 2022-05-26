@@ -6,7 +6,7 @@ import { endpoint } from '../const'
 
 import { accessTokenAtom } from './../atom'
 import { useGetIssueCommentsQuery } from './../generated/graphql'
-import type { IssueComment } from './../generated/graphql'
+import type { IssueComment, Actor } from './../generated/graphql'
 import CommentCard from './CommentCard'
 
 interface Props {
@@ -46,11 +46,14 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
           .reverse()
           .map(
             (
-              { node: { bodyHTML, publishedAt, url, repository, issue } },
+              {
+                node: { author, bodyHTML, publishedAt, url, repository, issue },
+              },
               i: number
             ) => (
               <CommentCard
                 key={i}
+                author={author as Actor}
                 repositoryName={repository.nameWithOwner}
                 bodyHTML={bodyHTML}
                 commentLink={url}

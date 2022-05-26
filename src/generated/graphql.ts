@@ -1,4 +1,4 @@
-import { gql } from 'graphql-tag'
+import gql from 'graphql-tag'
 import type { UseQueryOptions } from 'react-query'
 import { useQuery } from 'react-query'
 export type Maybe<T> = T | null
@@ -23719,30 +23719,35 @@ export type GetDiscussionCommentsQuery = {
                         avatarUrl: any
                         login: string
                         url: any
+                        resourcePath: any
                       }
                     | {
                         __typename?: 'EnterpriseUserAccount'
                         avatarUrl: any
                         login: string
                         url: any
+                        resourcePath: any
                       }
                     | {
                         __typename?: 'Mannequin'
                         avatarUrl: any
                         login: string
                         url: any
+                        resourcePath: any
                       }
                     | {
                         __typename?: 'Organization'
                         avatarUrl: any
                         login: string
                         url: any
+                        resourcePath: any
                       }
                     | {
                         __typename?: 'User'
                         avatarUrl: any
                         login: string
                         url: any
+                        resourcePath: any
                       }
                     | null
                   reactions: {
@@ -23752,6 +23757,7 @@ export type GetDiscussionCommentsQuery = {
                   discussion?: {
                     __typename?: 'Discussion'
                     title: string
+                    url: any
                     author?:
                       | {
                           __typename?: 'Bot'
@@ -23828,6 +23834,43 @@ export type GetIssueCommentsQuery = {
                   bodyHTML: any
                   publishedAt?: any | null
                   createdAt: any
+                  author?:
+                    | {
+                        __typename?: 'Bot'
+                        url: any
+                        avatarUrl: any
+                        login: string
+                        resourcePath: any
+                      }
+                    | {
+                        __typename?: 'EnterpriseUserAccount'
+                        url: any
+                        avatarUrl: any
+                        login: string
+                        resourcePath: any
+                      }
+                    | {
+                        __typename?: 'Mannequin'
+                        url: any
+                        avatarUrl: any
+                        login: string
+                        resourcePath: any
+                      }
+                    | {
+                        __typename?: 'Organization'
+                        url: any
+                        avatarUrl: any
+                        login: string
+                        resourcePath: any
+                      }
+                    | {
+                        __typename?: 'User'
+                        url: any
+                        avatarUrl: any
+                        login: string
+                        resourcePath: any
+                      }
+                    | null
                   repository: {
                     __typename?: 'Repository'
                     nameWithOwner: string
@@ -23870,6 +23913,7 @@ export const GetDiscussionComments = gql`
                     avatarUrl
                     login
                     url
+                    resourcePath
                   }
                   url
                   bodyHTML
@@ -23880,6 +23924,7 @@ export const GetDiscussionComments = gql`
                   }
                   discussion {
                     title
+                    url
                     author {
                       avatarUrl
                       login
@@ -23907,6 +23952,12 @@ export const GetIssueComments = gql`
             issueComments(last: 30) {
               edges {
                 node {
+                  author {
+                    url
+                    avatarUrl
+                    login
+                    resourcePath
+                  }
                   repository {
                     nameWithOwner
                   }
@@ -23947,6 +23998,7 @@ export const GetDiscussionCommentsDocument = `
                   avatarUrl
                   login
                   url
+                  resourcePath
                 }
                 url
                 bodyHTML
@@ -23957,6 +24009,7 @@ export const GetDiscussionCommentsDocument = `
                 }
                 discussion {
                   title
+                  url
                   author {
                     avatarUrl
                     login
@@ -24002,6 +24055,12 @@ export const GetIssueCommentsDocument = `
           issueComments(last: 30) {
             edges {
               node {
+                author {
+                  url
+                  avatarUrl
+                  login
+                  resourcePath
+                }
                 repository {
                   nameWithOwner
                 }

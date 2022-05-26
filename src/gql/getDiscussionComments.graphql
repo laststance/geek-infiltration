@@ -10,6 +10,7 @@ query getDiscussionComments($query: String!) {
                   avatarUrl
                   login
                   url
+                  resourcePath
                 }
                 url
                 bodyHTML
@@ -20,6 +21,7 @@ query getDiscussionComments($query: String!) {
                 }
                 discussion {
                   title
+                  url
                   author {
                     avatarUrl
                     login

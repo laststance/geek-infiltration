@@ -1,7 +1,10 @@
-import { Card, Text, Link, Spacer } from '@nextui-org/react'
+import { Card, Text, Link, Spacer, User } from '@nextui-org/react'
 import React, { memo } from 'react'
 
+import type { Actor } from '../generated/graphql'
+
 interface Props {
+  author: Actor
   repositoryName: string
   ticketLink: URL['href']
   ticketTitle: string
@@ -12,6 +15,7 @@ interface Props {
 }
 
 const CommentCard: React.FC<Props> = ({
+  author,
   repositoryName,
   ticketLink,
   ticketTitle,
@@ -43,6 +47,11 @@ const CommentCard: React.FC<Props> = ({
       {'  '}
       <Text small>{ticketAuthorName}</Text>
       <Text small>{new Date(publishedAt).toLocaleString()}</Text>
+      <User src={author.avatarUrl} name={author.login}>
+        <User.Link href={author.url} target="_blank">
+          @{author.login}
+        </User.Link>
+      </User>
       <Spacer />
       <Card>
         <Text size={20} dangerouslySetInnerHTML={{ __html: bodyHTML }} />
@@ -51,4 +60,4 @@ const CommentCard: React.FC<Props> = ({
   )
 }
 
-export default memo(CommentCard, () => true)
+export default memo(CommentCard)

@@ -6,7 +6,7 @@ import { endpoint } from '../const'
 
 import { accessTokenAtom } from './../atom'
 import { useGetDiscussionCommentsQuery } from './../generated/graphql'
-import type { DiscussionComment } from './../generated/graphql'
+import type { DiscussionComment, Actor } from './../generated/graphql'
 import CommentCard from './CommentCard'
 
 interface Props {
@@ -45,9 +45,13 @@ const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
     return (
       <Col as="article">
         {data.map(
-          ({ node: { bodyHTML, publishedAt, url, discussion } }, i: number) => (
+          (
+            { node: { author, bodyHTML, publishedAt, url, discussion } },
+            i: number
+          ) => (
             <CommentCard
               key={i}
+              author={author as Actor}
               repositoryName={discussion!.repository.nameWithOwner}
               bodyHTML={bodyHTML}
               commentLink={url}

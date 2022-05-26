@@ -6,6 +6,12 @@ query getIssueComments($query: String!) {
           issueComments(last: 30) {
             edges {
               node {
+                author {
+                  url
+                  avatarUrl
+                  login
+                  resourcePath
+                }
                 repository {
                   nameWithOwner
                 }
