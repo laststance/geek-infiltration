@@ -4,6 +4,7 @@ import React, { memo } from 'react'
 
 import type { ValidSerchQuery } from './atom'
 import { subscribedAtom } from './atom'
+import DiscussionCommentsTimeline from './components/DiscussionCommentsTimeline'
 import IssueCommentsTimeline from './components/IssueCommentsTimeline'
 import Sidebar from './components/Sidebar'
 
@@ -17,13 +18,23 @@ function App() {
       </section>
       <Grid.Container gap={1} as="main" wrap="nowrap" css={{ h: '100%' }}>
         {subscribed.length ? (
-          subscribed.map((query: ValidSerchQuery, i) => {
-            return (
-              <Grid xs={2.5} key={i}>
-                <IssueCommentsTimeline user={query.username} />
-              </Grid>
-            )
-          })
+          subscribed.map(
+            (
+              { username, issueComments, discussionComments }: ValidSerchQuery,
+              i
+            ) => {
+              return (
+                <Grid xs={2.5} key={i}>
+                  {issueComments && !discussionComments && (
+                    <IssueCommentsTimeline user={username} />
+                  )}
+                  {!issueComments && discussionComments && (
+                    <DiscussionCommentsTimeline user={username} />
+                  )}
+                </Grid>
+              )
+            }
+          )
         ) : (
           <></>
         )}

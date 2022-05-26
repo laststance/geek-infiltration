@@ -5,17 +5,18 @@ import React from 'react'
 import { endpoint } from '../const'
 
 import { accessTokenAtom } from './../atom'
-import { useGetIssueCommentsQuery } from './../generated/graphql'
-import type { IssueComment } from './../generated/graphql'
+import { useGetDiscussionCommentsQuery } from './../generated/graphql'
+import type { DiscussionComment } from './../generated/graphql'
 import CommentCard from './CommentCard'
 
 interface Props {
   user: string
 }
 
-const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
+const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
   const accessToken = useAtomValue(accessTokenAtom)
-  const { status, data, error, isFetching } = useGetIssueCommentsQuery(
+
+  const { status, data, error, isFetching } = useGetDiscussionCommentsQuery(
     {
       endpoint: endpoint,
       fetchParams: { headers: { authorization: `Bearer ${accessToken}` } },
@@ -23,12 +24,13 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
     { query: user },
 
     {
-      select: (data): { node: IssueComment }[] => {
+      select: (data): { node: DiscussionComment }[] => {
         if (data.search.edges!.length === 0) return []
         // @ts-ignore error TS2339: Property 'issueComments' does not exist on type '{ __typename?: "App" | undefined; } | { __typename?: "Discussion" | undefined; } | { __typename?: "Issue" | undefined; } | { __typename?: "MarketplaceListing" | undefined; } | { __typename?: "Organization" | undefined; } | { ...; } | { ...; } | { ...; }'.
         //   Property 'issueComments' does not exist on type '{ __typename?: "App" | undefined; }'.
-        return data.search.edges[0].node.issueCooments.edges as Array<{
-          node: IssueComment
+        return data.search.edges[0].node.repositoryDiscussionComments
+          .edges as Array<{
+          node: DiscussionComment
         }>
       },
     }
@@ -42,29 +44,24 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
   if (status === 'success' && data.length > 0)
     return (
       <Col as="article">
-        {data
-          .reverse()
-          .map(
-            (
-              { node: { bodyHTML, publishedAt, url, repository, issue } },
-              i: number
-            ) => (
-              <CommentCard
-                key={i}
-                repositoryName={repository.nameWithOwner}
-                bodyHTML={bodyHTML}
-                commentLink={url}
-                publishedAt={publishedAt}
-                ticketAuthorName={issue.author!.login}
-                ticketLink={issue.url}
-                ticketTitle={issue.title}
-              />
-            )
-          )}
+        {data.map(
+          ({ node: { bodyHTML, publishedAt, url, discussion } }, i: number) => (
+            <CommentCard
+              key={i}
+              repositoryName={discussion!.repository.nameWithOwner}
+              bodyHTML={bodyHTML}
+              commentLink={url}
+              publishedAt={publishedAt}
+              ticketAuthorName={discussion!.author!.login}
+              ticketLink={discussion!.url}
+              ticketTitle={discussion!.title}
+            />
+          )
+        )}
       </Col>
     )
 
   return <></>
 }
 
-export default IssueCommentsTimeline
+export default DiscussionCommentsTimeline

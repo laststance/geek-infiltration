@@ -23863,7 +23863,7 @@ export const GetDiscussionComments = gql`
       edges {
         node {
           ... on User {
-            repositoryDiscussionComments(last: 30) {
+            repositoryDiscussionComments(first: 30) {
               edges {
                 node {
                   author {
@@ -23940,7 +23940,7 @@ export const GetDiscussionCommentsDocument = `
     edges {
       node {
         ... on User {
-          repositoryDiscussionComments(last: 30) {
+          repositoryDiscussionComments(first: 30) {
             edges {
               node {
                 author {

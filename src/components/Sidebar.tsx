@@ -36,7 +36,7 @@ const Sidebar = () => {
       },
     ])
     setVisible(false)
-  }, [issueCommentCheck, discussionCommentCheck])
+  }, [issueCommentCheck, discussionCommentCheck, subscribed])
 
   return (
     <Card as="section" css={{ borderRadius: 0, h: '100%' }}>
