@@ -13,7 +13,7 @@ import {
 import { useAtom } from 'jotai'
 import React, { memo, useState, useCallback, useRef } from 'react'
 
-import { subscribedUserAtom } from '../atom'
+import { subscribedUsersAtom } from '../atom'
 
 const Sidebar = () => {
   const input = useRef() as React.RefObject<FormElement>
@@ -22,7 +22,7 @@ const Sidebar = () => {
   const onClose = useCallback(() => {
     setVisible(false)
   }, [])
-  const [subscribedUser, setSubscribedUser] = useAtom(subscribedUserAtom)
+  const [subscribedUser, setSubscribedUser] = useAtom(subscribedUsersAtom)
   const onSubmit = useCallback(() => {
     setSubscribedUser([...subscribedUser, input.current!.value])
     setVisible(false)

@@ -12,7 +12,7 @@ export const accessTokenAtom = atomWithStorage<AccessToken | null>(
 
 export const searchQueryAtom = atom<SearchQuery>('')
 
-export const subscribedUserAtom = atomWithStorage<SubscribedUser | []>(
-  'subscribedUser',
+export const subscribedUsersAtom = atomWithStorage<SubscribedUser | []>(
+  'subscribedUsers',
   []
 )
