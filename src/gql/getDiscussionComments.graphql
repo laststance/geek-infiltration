@@ -1,0 +1,39 @@
+query getDiscussionComments($query: String!) {
+  search(query: $query, type: USER, first: 1) {
+    edges {
+      node {
+        ... on User {
+          repositoryDiscussionComments(last: 30) {
+            edges {
+              node {
+                author {
+                  avatarUrl
+                  login
+                  url
+                }
+                url
+                bodyHTML
+                publishedAt
+                createdAt
+                reactions {
+                  totalCount
+                }
+                discussion {
+                  title
+                  author {
+                    avatarUrl
+                    login
+                    url
+                  }
+                  repository {
+                    nameWithOwner
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

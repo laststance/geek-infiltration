@@ -23683,6 +23683,121 @@ export type WorkflowRunPendingDeploymentRequestsArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
+export type GetDiscussionCommentsQueryVariables = Exact<{
+  query: Scalars['String']
+}>
+
+export type GetDiscussionCommentsQuery = {
+  __typename?: 'Query'
+  search: {
+    __typename?: 'SearchResultItemConnection'
+    edges?: Array<{
+      __typename?: 'SearchResultItemEdge'
+      node?:
+        | { __typename?: 'App' }
+        | { __typename?: 'Discussion' }
+        | { __typename?: 'Issue' }
+        | { __typename?: 'MarketplaceListing' }
+        | { __typename?: 'Organization' }
+        | { __typename?: 'PullRequest' }
+        | { __typename?: 'Repository' }
+        | {
+            __typename?: 'User'
+            repositoryDiscussionComments: {
+              __typename?: 'DiscussionCommentConnection'
+              edges?: Array<{
+                __typename?: 'DiscussionCommentEdge'
+                node?: {
+                  __typename?: 'DiscussionComment'
+                  url: any
+                  bodyHTML: any
+                  publishedAt?: any | null
+                  createdAt: any
+                  author?:
+                    | {
+                        __typename?: 'Bot'
+                        avatarUrl: any
+                        login: string
+                        url: any
+                      }
+                    | {
+                        __typename?: 'EnterpriseUserAccount'
+                        avatarUrl: any
+                        login: string
+                        url: any
+                      }
+                    | {
+                        __typename?: 'Mannequin'
+                        avatarUrl: any
+                        login: string
+                        url: any
+                      }
+                    | {
+                        __typename?: 'Organization'
+                        avatarUrl: any
+                        login: string
+                        url: any
+                      }
+                    | {
+                        __typename?: 'User'
+                        avatarUrl: any
+                        login: string
+                        url: any
+                      }
+                    | null
+                  reactions: {
+                    __typename?: 'ReactionConnection'
+                    totalCount: number
+                  }
+                  discussion?: {
+                    __typename?: 'Discussion'
+                    title: string
+                    author?:
+                      | {
+                          __typename?: 'Bot'
+                          avatarUrl: any
+                          login: string
+                          url: any
+                        }
+                      | {
+                          __typename?: 'EnterpriseUserAccount'
+                          avatarUrl: any
+                          login: string
+                          url: any
+                        }
+                      | {
+                          __typename?: 'Mannequin'
+                          avatarUrl: any
+                          login: string
+                          url: any
+                        }
+                      | {
+                          __typename?: 'Organization'
+                          avatarUrl: any
+                          login: string
+                          url: any
+                        }
+                      | {
+                          __typename?: 'User'
+                          avatarUrl: any
+                          login: string
+                          url: any
+                        }
+                      | null
+                    repository: {
+                      __typename?: 'Repository'
+                      nameWithOwner: string
+                    }
+                  } | null
+                } | null
+              } | null> | null
+            }
+          }
+        | null
+    } | null> | null
+  }
+}
+
 export type GetIssueCommentsQueryVariables = Exact<{
   query: Scalars['String']
 }>
@@ -23742,6 +23857,47 @@ export type GetIssueCommentsQuery = {
   }
 }
 
+export const GetDiscussionComments = gql`
+  query getDiscussionComments($query: String!) {
+    search(query: $query, type: USER, first: 1) {
+      edges {
+        node {
+          ... on User {
+            repositoryDiscussionComments(last: 30) {
+              edges {
+                node {
+                  author {
+                    avatarUrl
+                    login
+                    url
+                  }
+                  url
+                  bodyHTML
+                  publishedAt
+                  createdAt
+                  reactions {
+                    totalCount
+                  }
+                  discussion {
+                    title
+                    author {
+                      avatarUrl
+                      login
+                      url
+                    }
+                    repository {
+                      nameWithOwner
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`
 export const GetIssueComments = gql`
   query getIssueComments($query: String!) {
     search(query: $query, type: USER, first: 1) {
@@ -23778,6 +23934,65 @@ export const GetIssueComments = gql`
   }
 `
 
+export const GetDiscussionCommentsDocument = `
+    query getDiscussionComments($query: String!) {
+  search(query: $query, type: USER, first: 1) {
+    edges {
+      node {
+        ... on User {
+          repositoryDiscussionComments(last: 30) {
+            edges {
+              node {
+                author {
+                  avatarUrl
+                  login
+                  url
+                }
+                url
+                bodyHTML
+                publishedAt
+                createdAt
+                reactions {
+                  totalCount
+                }
+                discussion {
+                  title
+                  author {
+                    avatarUrl
+                    login
+                    url
+                  }
+                  repository {
+                    nameWithOwner
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+    `
+export const useGetDiscussionCommentsQuery = <
+  TData = GetDiscussionCommentsQuery,
+  TError = unknown
+>(
+  dataSource: { endpoint: string; fetchParams?: RequestInit },
+  variables: GetDiscussionCommentsQueryVariables,
+  options?: UseQueryOptions<GetDiscussionCommentsQuery, TError, TData>
+) =>
+  useQuery<GetDiscussionCommentsQuery, TError, TData>(
+    ['getDiscussionComments', variables],
+    fetcher<GetDiscussionCommentsQuery, GetDiscussionCommentsQueryVariables>(
+      dataSource.endpoint,
+      dataSource.fetchParams || {},
+      GetDiscussionCommentsDocument,
+      variables
+    ),
+    options
+  )
 export const GetIssueCommentsDocument = `
     query getIssueComments($query: String!) {
   search(query: $query, type: USER, first: 1) {
