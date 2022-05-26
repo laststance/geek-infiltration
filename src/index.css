@@ -6,7 +6,8 @@ body {
   padding: 0;
 }
 
-#root, [data-overlay-container] {
+#root,
+[data-overlay-container] {
   height: 100%;
   width: 100%;
 }

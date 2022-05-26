@@ -50,6 +50,7 @@
     "dev": "vite",
     "lint": "eslint . --ext .ts,.tsx,.js,jsx",
     "lint:fix": "eslint . --ext .ts,.tsx,.js,jsx --fix",
+    "prettier": "prettier --write \"**/*.+(json|yml|css|md|mdx|graphql)\"",
     "serve": "serve dist",
     "tauri": "tauri",
     "typecheck": "tsc --noEmit",

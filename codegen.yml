@@ -1,12 +1,12 @@
 overwrite: true
-schema: "schema.docs.graphql"
-documents: "src/**/*.graphql"
+schema: 'schema.docs.graphql'
+documents: 'src/**/*.graphql'
 generates:
   src/generated/graphql.ts:
     plugins:
-      - "typescript"
-      - "typescript-operations"
-      - "typescript-document-nodes"
-      -  "typescript-react-query"
+      - 'typescript'
+      - 'typescript-operations'
+      - 'typescript-document-nodes'
+      - 'typescript-react-query'
     config:
       fetcher: fetch
