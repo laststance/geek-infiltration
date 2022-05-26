@@ -13,7 +13,9 @@ query getDiscussionComments($query: String!) {
                   resourcePath
                 }
                 url
+                body
                 bodyHTML
+                bodyText
                 publishedAt
                 createdAt
                 reactions {

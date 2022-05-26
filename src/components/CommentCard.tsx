@@ -1,4 +1,4 @@
-import { Card, Text, Link, Spacer, User } from '@nextui-org/react'
+import { Card, Text, Row, Link, Spacer, User } from '@nextui-org/react'
 import React, { memo } from 'react'
 
 import type { Actor } from '../generated/graphql'
@@ -41,21 +41,27 @@ const CommentCard: React.FC<Props> = ({
           {repositoryName}
         </Link>
       </Text>
-      <Link underline href={commentLink} target="_blank">
-        <Text h4>{ticketTitle}</Text>
-      </Link>
-      {'  '}
-      <Text small>{ticketAuthorName}</Text>
-      <Text small>{new Date(publishedAt).toLocaleString()}</Text>
-      <User src={author.avatarUrl} name={author.login}>
-        <User.Link href={author.url} target="_blank">
-          @{author.login}
-        </User.Link>
-      </User>
+      <Row as="section">
+        <Link underline href={commentLink} target="_blank">
+          <Text h4>{ticketTitle}</Text>
+        </Link>
+      </Row>
+      <Row>
+        <Text small>{ticketAuthorName}</Text>
+        <Spacer x={0.4} />
+        <Text small>{new Date(publishedAt).toLocaleString()}</Text>
+      </Row>
       <Spacer />
-      <Card>
+      <Row>
+        <User src={author.avatarUrl} name={author.login} css={{ p: 0 }}>
+          <User.Link href={author.url} target="_blank">
+            @{author.login}
+          </User.Link>
+        </User>
+      </Row>
+      <Row>
         <Text size={20} dangerouslySetInnerHTML={{ __html: bodyHTML }} />
-      </Card>
+      </Row>
     </Card>
   )
 }

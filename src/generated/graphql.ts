@@ -1,4 +1,4 @@
-import gql from 'graphql-tag'
+import { gql } from 'graphql-tag'
 import type { UseQueryOptions } from 'react-query'
 import { useQuery } from 'react-query'
 export type Maybe<T> = T | null
@@ -23710,7 +23710,9 @@ export type GetDiscussionCommentsQuery = {
                 node?: {
                   __typename?: 'DiscussionComment'
                   url: any
+                  body: string
                   bodyHTML: any
+                  bodyText: string
                   publishedAt?: any | null
                   createdAt: any
                   author?:
@@ -23831,7 +23833,9 @@ export type GetIssueCommentsQuery = {
                 node?: {
                   __typename?: 'IssueComment'
                   url: any
+                  body: string
                   bodyHTML: any
+                  bodyText: string
                   publishedAt?: any | null
                   createdAt: any
                   author?:
@@ -23916,7 +23920,9 @@ export const GetDiscussionComments = gql`
                     resourcePath
                   }
                   url
+                  body
                   bodyHTML
+                  bodyText
                   publishedAt
                   createdAt
                   reactions {
@@ -23969,7 +23975,9 @@ export const GetIssueComments = gql`
                     }
                     url
                   }
+                  body
                   bodyHTML
+                  bodyText
                   publishedAt
                   createdAt
                   reactions {
@@ -24001,7 +24009,9 @@ export const GetDiscussionCommentsDocument = `
                   resourcePath
                 }
                 url
+                body
                 bodyHTML
+                bodyText
                 publishedAt
                 createdAt
                 reactions {
@@ -24072,7 +24082,9 @@ export const GetIssueCommentsDocument = `
                   }
                   url
                 }
+                body
                 bodyHTML
+                bodyText
                 publishedAt
                 createdAt
                 reactions {

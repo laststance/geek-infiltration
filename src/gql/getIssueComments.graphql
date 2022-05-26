@@ -23,7 +23,9 @@ query getIssueComments($query: String!) {
                   }
                   url
                 }
+                body
                 bodyHTML
+                bodyText
                 publishedAt
                 createdAt
                 reactions {
