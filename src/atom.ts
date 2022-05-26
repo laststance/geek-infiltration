@@ -1,18 +1,19 @@
 import { atom } from 'jotai'
 import { atomWithStorage } from 'jotai/utils'
 
-type AccessToken = string
-type SubscribedUser = string[]
-type SearchQuery = string
+export type AccessToken = string
+export type ValidSerchQuery = {
+  username: string
+  issueComments: boolean
+  discussionComments: boolean
+}
+export type Subscribed = ValidSerchQuery[]
 
 export const accessTokenAtom = atomWithStorage<AccessToken | null>(
   'accessToken',
   null
 )
 
-export const searchQueryAtom = atom<SearchQuery>('')
+export const validSearchQueryAtom = atom<ValidSerchQuery | null>(null)
 
-export const subscribedUsersAtom = atomWithStorage<SubscribedUser | []>(
-  'subscribedUsers',
-  []
-)
+export const subscribedAtom = atomWithStorage<Subscribed | []>('subscribed', [])

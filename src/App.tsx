@@ -2,12 +2,13 @@ import { Grid } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
-import { subscribedUsersAtom } from './atom'
+import type { ValidSerchQuery } from './atom'
+import { subscribedAtom } from './atom'
 import IssueCommentsTimeline from './components/IssueCommentsTimeline'
 import Sidebar from './components/Sidebar'
 
 function App() {
-  const subscribedUsers = useAtomValue(subscribedUsersAtom)
+  const subscribed = useAtomValue(subscribedAtom)
 
   return (
     <div style={{ display: 'flex', height: '100%', width: '100%' }}>
@@ -15,11 +16,11 @@ function App() {
         <Sidebar />
       </section>
       <Grid.Container gap={1} as="main" wrap="nowrap" css={{ h: '100%' }}>
-        {subscribedUsers.length ? (
-          subscribedUsers.map((user, i) => {
+        {subscribed.length ? (
+          subscribed.map((query: ValidSerchQuery, i) => {
             return (
               <Grid xs={2.5} key={i}>
-                <IssueCommentsTimeline user={user} />
+                <IssueCommentsTimeline user={query.username} />
               </Grid>
             )
           })

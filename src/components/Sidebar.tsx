@@ -13,20 +13,30 @@ import {
 import { useAtom } from 'jotai'
 import React, { memo, useState, useCallback, useRef } from 'react'
 
-import { subscribedUsersAtom } from '../atom'
+import { subscribedAtom } from '../atom'
 
 const Sidebar = () => {
-  const input = useRef() as React.RefObject<FormElement>
+  const userNameInput = useRef() as React.RefObject<FormElement>
+  const [issueCommentCheck, setIssueCommentCheck] = useState(false)
+  const [discussionCommentCheck, setDiscussionCommentCheck] = useState(false)
   const [visible, setVisible] = useState(false)
   const onOpen = useCallback(() => setVisible(true), [])
   const onClose = useCallback(() => {
     setVisible(false)
   }, [])
-  const [subscribedUser, setSubscribedUser] = useAtom(subscribedUsersAtom)
+  const [subscribed, setSubscribed] = useAtom(subscribedAtom)
+  //  @TODO const setValidSearchQueryAtom = useSetAtom(validSearchQueryAtom)
   const onSubmit = useCallback(() => {
-    setSubscribedUser([...subscribedUser, input.current!.value])
+    setSubscribed([
+      ...subscribed,
+      {
+        discussionComments: discussionCommentCheck,
+        issueComments: issueCommentCheck,
+        username: userNameInput.current!.value,
+      },
+    ])
     setVisible(false)
-  }, [subscribedUser])
+  }, [issueCommentCheck, discussionCommentCheck])
 
   return (
     <Card as="section" css={{ borderRadius: 0, h: '100%' }}>
@@ -66,7 +76,8 @@ const Sidebar = () => {
           </Modal.Header>
           <Modal.Body>
             <Input
-              ref={input}
+              aria-label="userNameInput"
+              ref={userNameInput}
               clearable
               bordered
               fullWidth
@@ -75,19 +86,22 @@ const Sidebar = () => {
               placeholder="ryota-murakami"
             />
             <Row justify="space-between">
-              <Checkbox>
-                <Text size={14}>Issue/PR/Discussion Comments</Text>
+              <Checkbox onChange={setIssueCommentCheck} label="Issue Comments">
+                <Text size={14}>Issue Comments</Text>
               </Checkbox>
-              <Checkbox>
-                <Text size={14}>Opened Issue/PR/Discussion</Text>
+              <Checkbox
+                onChange={setDiscussionCommentCheck}
+                label="Disscussion Comments"
+              >
+                <Text size={14}>Disscussion Comments</Text>
               </Checkbox>
             </Row>
           </Modal.Body>
           <Modal.Footer>
-            <Button type="submit" auto onClick={onSubmit}>
+            <Button type="submit" auto onPress={onSubmit}>
               Search
             </Button>
-            <Button auto flat color="error" onClick={onClose}>
+            <Button auto flat color="error" onPress={onClose}>
               Close
             </Button>
           </Modal.Footer>
