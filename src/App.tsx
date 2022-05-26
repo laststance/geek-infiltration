@@ -16,7 +16,7 @@ function App() {
       <section style={{ height: '100%', width: '60px' }}>
         <Sidebar />
       </section>
-      <Grid.Container gap={1} as="main" wrap="nowrap" css={{ h: '100%' }}>
+      <Grid.Container gap={0.6} as="main" wrap="nowrap" css={{ h: '100%' }}>
         {subscribed.length ? (
           subscribed.map(
             (
