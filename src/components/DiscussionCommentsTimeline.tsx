@@ -1,4 +1,4 @@
-import { Col, Loading } from '@nextui-org/react'
+import { Col, Loading, Container } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React from 'react'
 
@@ -16,7 +16,7 @@ interface Props {
 const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
   const accessToken = useAtomValue(accessTokenAtom)
 
-  const { status, data, error, isFetching } = useGetDiscussionCommentsQuery(
+  const { status, data, isFetching } = useGetDiscussionCommentsQuery(
     {
       endpoint: endpoint,
       fetchParams: { headers: { authorization: `Bearer ${accessToken}` } },
@@ -36,27 +36,19 @@ const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
     }
   )
 
-  if (status === 'loading' || isFetching) return <Loading size="md" />
-
-  if (error) return <h1>Error</h1>
-  if (data === []) return <h1>User Doesn't Exist</h1>
+  if (status === 'loading' || isFetching)
+    return (
+      <Container display="flex" justify="center" css={{ paddingTop: '20px' }}>
+        <Loading size="md" />
+      </Container>
+    )
 
   if (status === 'success' && data.length > 0)
     return (
       <Col as="article">
         {data.map(
           (
-            {
-              node: {
-                author,
-                body,
-                bodyHTML,
-                bodyText,
-                publishedAt,
-                url,
-                discussion,
-              },
-            },
+            { node: { author, bodyHTML, publishedAt, url, discussion } },
             i: number
           ) => (
             <CommentCard
