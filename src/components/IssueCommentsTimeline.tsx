@@ -1,12 +1,4 @@
-import {
-  Card,
-  Container,
-  Col,
-  Text,
-  Link,
-  Spacer,
-  Loading,
-} from '@nextui-org/react'
+import { Card, Col, Text, Link, Spacer, Loading } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React from 'react'
 
@@ -44,27 +36,26 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
 
   if (status === 'loading' || isFetching) return <Loading size="md" />
 
-  if (error)
-    return (
-      <Container>
-        <h1>Error</h1>
-      </Container>
-    )
-  if (data === [])
-    return (
-      <Container>
-        <h1>User Doesn't Exist</h1>
-      </Container>
-    )
+  if (error) return <h1>Error</h1>
+  if (data === []) return <h1>User Doesn't Exist</h1>
 
-  return status === 'success' ? (
-    <Container>
-      {data.reverse().map(({ node }, i: number) => (
-        <Col
-          key={i}
-          css={{ display: 'flex', justifyContent: 'center', mb: '2px' }}
-        >
-          <Card bordered shadow={false} css={{ mw: '400px' }}>
+  if (status === 'success' && data.length > 0)
+    return (
+      <Col as="article">
+        {data.reverse().map(({ node }, i: number) => (
+          <Card
+            as="section"
+            bordered
+            key={i}
+            shadow
+            css={{
+              borderBottomColor: 'rgba(77, 77, 77, 0.7)',
+              borderBottomWidth: '1px',
+              borderTopColor:
+                i === 1 ? 'rgb(77, 77, 77)' : 'rgba(77, 77, 77, 0.7)',
+              borderTopWidth: '1px',
+            }}
+          >
             <Text color="primary" h5>
               {node.repository.nameWithOwner}
             </Text>
@@ -77,17 +68,16 @@ const IssueCommentsTimeline: React.FC<Props> = ({ user }) => {
             <Spacer />
             <Card>
               <Text
-                size={26}
+                size={20}
                 dangerouslySetInnerHTML={{ __html: node.bodyHTML }}
               />
             </Card>
           </Card>
-        </Col>
-      ))}
-    </Container>
-  ) : (
-    <></>
-  )
+        ))}
+      </Col>
+    )
+
+  return <></>
 }
 
 export default IssueCommentsTimeline
