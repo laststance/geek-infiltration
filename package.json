@@ -42,7 +42,7 @@
     "vite": "^2.9.7"
   },
   "license": "MIT",
-  "name": "vite-react-ts-extended",
+  "name": "geek-may-cry",
   "scripts": {
     "build": "tsc && vite build",
     "clean": "rimraf node_modules yarn.lock dist",
