@@ -1,4 +1,6 @@
 {
+  "name": "geek-infiltration",
+  "license": "MIT",
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.6",
     "@tauri-apps/api": "^1.0.0-rc.4",
@@ -41,8 +43,6 @@
     "typescript": "^4.6.4",
     "vite": "^2.9.7"
   },
-  "license": "MIT",
-  "name": "geek-may-cry",
   "scripts": {
     "build": "tsc && vite build",
     "clean": "rimraf node_modules yarn.lock dist",

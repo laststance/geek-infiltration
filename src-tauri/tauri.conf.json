@@ -1,6 +1,6 @@
 {
   "package": {
-    "productName": "GeekRide",
+    "productName": "Geek Infiltration",
     "version": "0.1.0"
   },
   "build": {
@@ -51,7 +51,7 @@
     },
     "windows": [
       {
-        "title": "Geek May Cry",
+        "title": "Geek Infiltration",
         "width": 800,
         "height": 600,
         "resizable": true,
