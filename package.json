@@ -20,7 +20,7 @@
     "@graphql-codegen/typescript-operations": "2.4.0",
     "@graphql-codegen/typescript-react-query": "^3.5.12",
     "@tauri-apps/cli": "^1.0.0-rc.9",
-    "@types/react": "^18.0.11",
+    "@types/react": "^18.0.12",
     "@types/react-dom": "^18.0.3",
     "@typescript-eslint/eslint-plugin": "^5.27.0",
     "@typescript-eslint/parser": "^5.27.0",
