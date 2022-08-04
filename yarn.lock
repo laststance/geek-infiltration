@@ -4007,10 +4007,10 @@ isomorphic-ws@^4.0.1:
   resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
   integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
 
-jotai@^1.7.5:
-  version "1.7.5"
-  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.7.5.tgz#82a001b41fc8638f711d31cbf38fd29873cba8b7"
-  integrity sha512-EpawdHUOQmiKDoKRaFkO0L7R7YAFYBylK6M9IivMUPUpiHnXnt5e80AlqHvMUwg4p8BcQewh2JLWGQqFhtjpEA==
+jotai@^1.7.7:
+  version "1.7.7"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.7.7.tgz#c1f4bcb2fb02375c3042bd7ae460c645f3196704"
+  integrity sha512-UK1fzkR2vq62rUL7iHlMkjkKj49AEU9iOm2xwfgPAeMJ8GIzKrEiKQC81w+O4dlNCjmCIi9UVkV75dADqccVCw==
 
 js-sha3@0.8.0:
   version "0.8.0"
