@@ -17,14 +17,18 @@ import { subscribedAtom } from '../atom'
 
 const Sidebar = () => {
   const userNameInput = useRef() as React.RefObject<FormElement>
+
   const [issueCommentCheck, setIssueCommentCheck] = useState(false)
   const [discussionCommentCheck, setDiscussionCommentCheck] = useState(false)
   const [visible, setVisible] = useState(false)
+
   const onOpen = useCallback(() => setVisible(true), [])
   const onClose = useCallback(() => {
     setVisible(false)
   }, [])
+
   const [subscribed, setSubscribed] = useAtom(subscribedAtom)
+
   //  @TODO const setValidSearchQueryAtom = useSetAtom(validSearchQueryAtom)
   const onSubmit = useCallback(() => {
     setSubscribed([
