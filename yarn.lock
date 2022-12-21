@@ -4044,10 +4044,10 @@ isomorphic-ws@^4.0.1:
   resolved "https://registry.yarnpkg.com/isomorphic-ws/-/isomorphic-ws-4.0.1.tgz#55fd4cd6c5e6491e76dc125938dd863f5cd4f2dc"
   integrity sha512-BhBvN2MBpWTaSHdWRb/bwdZJ1WaehQ2L1KngkCkfLUGF0mAWAT1sQUQacEmQ0jXkFw/czDXPNQSL5u2/Krsz1w==
 
-jotai@^1.11.2:
-  version "1.11.2"
-  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.11.2.tgz#274a8eeb3e213f59d2b1e34d1e6583ac65d41dd5"
-  integrity sha512-hVLn1aS1QprDy+NrvyWIOcaA/LEG5AY0Z7kWtx26EJ8eH8DY8pW1wUM0PrlqQzthqd6HdEVtXLY1rB//0n8LvA==
+jotai@^1.12.0:
+  version "1.12.0"
+  resolved "https://registry.yarnpkg.com/jotai/-/jotai-1.12.0.tgz#2e22760289458f636f689ae0aa71cc4a089aa312"
+  integrity sha512-IhyBmjxU1sE2Ni/MUK7gQAb8QvCM6yd1/K5jtQzgQBmmjCjgfXZkkk1rYlQAIRp2KoQk0Y+yzhm1f5cZ7kegnw==
 
 js-sdsl@^4.1.4:
   version "4.1.5"
