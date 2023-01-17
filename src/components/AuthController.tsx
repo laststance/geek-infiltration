@@ -8,7 +8,7 @@ import { accessTokenAtom } from '../atom'
 
 import SignIn from './SignIn'
 
-const AuthController = () => {
+const AuthController = memo(() => {
   const [loading, setLoading] = useState(false)
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
 
@@ -40,6 +40,6 @@ const AuthController = () => {
 
   if (loading) <Loading size="md" />
   return accessToken ? <App /> : <SignIn />
-}
-
-export default memo(AuthController)
+})
+AuthController.displayName = ''
+export default AuthController
