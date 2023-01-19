@@ -15,7 +15,7 @@ import React, { memo, useState, useCallback, useRef } from 'react'
 
 import { subscribedAtom } from '../atom'
 
-const Sidebar = () => {
+const Sidebar = memo(() => {
   const userNameInput = useRef() as React.RefObject<FormElement>
 
   const [issueCommentCheck, setIssueCommentCheck] = useState(false)
@@ -117,6 +117,6 @@ const Sidebar = () => {
       </Card.Footer>
     </Card>
   )
-}
-
-export default memo(Sidebar)
+})
+Sidebar.displayName = 'Sidebar'
+export default Sidebar
