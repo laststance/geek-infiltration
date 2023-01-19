@@ -1,6 +1,6 @@
 import { Col, Loading, Container } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
-import React from 'react'
+import React, { memo } from 'react'
 
 import { endpoint } from '../const'
 
@@ -13,7 +13,7 @@ interface Props {
   user: string
 }
 
-const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
+const DiscussionCommentsTimeline: React.FC<Props> = memo(({ user }) => {
   const accessToken = useAtomValue(accessTokenAtom)
 
   const { status, data, isFetching } = useGetDiscussionCommentsQuery(
@@ -68,6 +68,7 @@ const DiscussionCommentsTimeline: React.FC<Props> = ({ user }) => {
     )
 
   return <></>
-}
+})
+DiscussionCommentsTimeline.displayName = 'DiscussionCommentsTimeline'
 
 export default DiscussionCommentsTimeline
