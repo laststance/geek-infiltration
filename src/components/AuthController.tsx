@@ -41,5 +41,5 @@ const AuthController = memo(() => {
   if (loading) <Loading size="md" />
   return accessToken ? <App /> : <SignIn />
 })
-AuthController.displayName = ''
+AuthController.displayName = 'AuthController'
 export default AuthController

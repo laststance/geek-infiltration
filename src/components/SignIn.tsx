@@ -1,6 +1,6 @@
 import { memo } from 'react'
 
-const SignIn = () => {
+const SignIn: React.FC = memo(() => {
   return (
     <div>
       <h1>SignIn</h1>
@@ -13,6 +13,6 @@ const SignIn = () => {
       </a>
     </div>
   )
-}
-
-export default memo(SignIn)
+})
+SignIn.displayName = 'SignIn'
+export default SignIn

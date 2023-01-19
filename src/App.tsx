@@ -8,7 +8,7 @@ import DiscussionCommentsTimeline from './components/DiscussionCommentsTimeline'
 import IssueCommentsTimeline from './components/IssueCommentsTimeline'
 import Sidebar from './components/Sidebar'
 
-function App() {
+const App: React.FC = memo(() => {
   const subscribed = useAtomValue(subscribedAtom)
 
   return (
@@ -41,6 +41,7 @@ function App() {
       </Grid.Container>
     </div>
   )
-}
+})
+App.displayName = 'App'
 
-export default memo(App)
+export default App
