@@ -113,10 +113,19 @@ const Sidebar = memo(() => {
       </Card.Body>
       <Divider />
       <Card.Footer blur as="footer" css={{ p: '20px 10px' }}>
-        <Avatar src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4" />
+        <Avatar
+          // TODO logout funciton
+          onClick={() => logout()}
+          src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4"
+        />
       </Card.Footer>
     </Card>
   )
 })
 Sidebar.displayName = 'Sidebar'
 export default Sidebar
+
+// TODO logout funciton
+function logout() {
+  return false
+}
