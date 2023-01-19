@@ -10,7 +10,7 @@ export type ValidSerchQuery = {
 export type Subscribed = ValidSerchQuery[]
 
 export const accessTokenAtom = atomWithStorage<AccessToken | null>(
-  'accessToken',
+  'GI_accessToken',
   null
 )
 
