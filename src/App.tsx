@@ -8,15 +8,16 @@ import DiscussionCommentsTimeline from './components/DiscussionCommentsTimeline'
 import IssueCommentsTimeline from './components/IssueCommentsTimeline'
 import RootContainer from './components/RootContainer'
 import Sidebar from './components/Sidebar'
+import SidebarSection from './components/SidebarSection'
 
 const App: React.FC = memo(() => {
   const subscribed = useAtomValue(subscribedAtom)
 
   return (
     <RootContainer>
-      <section style={{ height: '100%', width: '60px' }}>
+      <SidebarSection>
         <Sidebar />
-      </section>
+      </SidebarSection>
       <Grid.Container gap={0.6} as="main" wrap="nowrap" css={{ h: '100%' }}>
         {subscribed.length ? (
           subscribed.map(
