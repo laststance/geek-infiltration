@@ -6,13 +6,14 @@ import type { ValidSerchQuery } from './atom'
 import { subscribedAtom } from './atom'
 import DiscussionCommentsTimeline from './components/DiscussionCommentsTimeline'
 import IssueCommentsTimeline from './components/IssueCommentsTimeline'
+import RootContainer from './components/RootContainer'
 import Sidebar from './components/Sidebar'
 
 const App: React.FC = memo(() => {
   const subscribed = useAtomValue(subscribedAtom)
 
   return (
-    <div style={{ display: 'flex', height: '100%', width: '100%' }}>
+    <RootContainer>
       <section style={{ height: '100%', width: '60px' }}>
         <Sidebar />
       </section>
@@ -39,7 +40,7 @@ const App: React.FC = memo(() => {
           <></>
         )}
       </Grid.Container>
-    </div>
+    </RootContainer>
   )
 })
 App.displayName = 'App'
