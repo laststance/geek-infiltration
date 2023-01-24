@@ -1,7 +1,6 @@
 import type { FormElement } from '@nextui-org/react'
 import {
   Card,
-  Avatar,
   Divider,
   Button,
   Modal,
@@ -13,7 +12,9 @@ import {
 import { useAtom } from 'jotai'
 import React, { memo, useState, useCallback, useRef } from 'react'
 
-import { subscribedAtom } from '../atom'
+import { subscribedAtom } from '../../atom'
+
+import AccountMenu from './AccountMenu'
 
 const Sidebar = memo(() => {
   const userNameInput = useRef() as React.RefObject<FormElement>
@@ -112,20 +113,9 @@ const Sidebar = memo(() => {
         </Modal>
       </Card.Body>
       <Divider />
-      <Card.Footer blur as="footer" css={{ p: '20px 10px' }}>
-        <Avatar
-          // TODO logout funciton
-          onClick={() => logout()}
-          src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4"
-        />
-      </Card.Footer>
+      <AccountMenu />
     </Card>
   )
 })
 Sidebar.displayName = 'Sidebar'
 export default Sidebar
-
-// TODO logout funciton
-function logout() {
-  return false
-}
