@@ -2,13 +2,13 @@ import { Grid } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
-import type { ValidSerchQuery } from './atom'
-import { subscribedAtom } from './atom'
-import DiscussionCommentsTimeline from './components/DiscussionCommentsTimeline'
-import IssueCommentsTimeline from './components/IssueCommentsTimeline'
-import RootContainer from './components/RootContainer'
-import Sidebar from './components/Sidebar'
-import SidebarSection from './components/SidebarSection'
+import type { ValidSerchQuery } from '../atom'
+import { subscribedAtom } from '../atom'
+import DiscussionCommentsTimeline from '../components/DiscussionCommentsTimeline'
+import IssueCommentsTimeline from '../components/IssueCommentsTimeline'
+import RootContainer from '../components/layouts/RootContainer'
+import SidebarSection from '../components/layouts/SidebarSection'
+import Sidebar from '../components/Sidebar'
 
 const App: React.FC = memo(() => {
   const subscribed = useAtomValue(subscribedAtom)

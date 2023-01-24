@@ -1,9 +1,9 @@
 import { memo } from 'react'
 
-const SignIn: React.FC = memo(() => {
+const Login: React.FC = memo(() => {
   return (
     <div>
-      <h1>SignIn</h1>
+      <h1>Login</h1>
       <a
         href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
           import.meta.env.VITE_CLIENT_ID
@@ -14,5 +14,5 @@ const SignIn: React.FC = memo(() => {
     </div>
   )
 })
-SignIn.displayName = 'SignIn'
-export default SignIn
+Login.displayName = 'Login'
+export default Login

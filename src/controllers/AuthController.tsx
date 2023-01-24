@@ -3,10 +3,9 @@ import axios from 'axios'
 import { useAtom } from 'jotai'
 import { useState, memo, useLayoutEffect } from 'react'
 
-import App from '../App'
 import { accessTokenAtom } from '../atom'
-
-import SignIn from './SignIn'
+import App from '../pages/App'
+import Login from '../pages/Login'
 
 const AuthController = memo(() => {
   const [loading, setLoading] = useState(false)
@@ -39,7 +38,7 @@ const AuthController = memo(() => {
   }, [window.location.href.includes('?code=')])
 
   if (loading) <Loading size="md" />
-  return accessToken ? <App /> : <SignIn />
+  return accessToken ? <App /> : <Login />
 })
 AuthController.displayName = 'AuthController'
 export default AuthController
