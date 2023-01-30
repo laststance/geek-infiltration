@@ -16,4 +16,7 @@ export const accessTokenAtom = atomWithStorage<AccessToken | null>(
 
 export const validSearchQueryAtom = atom<ValidSerchQuery | null>(null)
 
-export const subscribedAtom = atomWithStorage<Subscribed | []>('subscribed', [])
+export const subscribedAtom = atomWithStorage<Subscribed | []>(
+  'GI_subscribed',
+  []
+)

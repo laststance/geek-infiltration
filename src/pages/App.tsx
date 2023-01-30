@@ -1,5 +1,6 @@
 import { Grid } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
+import { useAtomDevtools } from 'jotai/devtools'
 import React, { memo } from 'react'
 
 import type { ValidSerchQuery } from '../atom'
@@ -12,7 +13,7 @@ import Sidebar from '../components/Sidebar'
 
 const App: React.FC = memo(() => {
   const subscribed = useAtomValue(subscribedAtom)
-
+  useAtomDevtools(subscribedAtom)
   return (
     <RootContainer>
       <SidebarSection>
