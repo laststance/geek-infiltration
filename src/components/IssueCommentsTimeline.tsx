@@ -69,7 +69,7 @@ const IssueCommentsTimeline: React.FC<Props> = memo(({ user }) => {
       </Col>
     )
 
-  return <></>
+  return <div>Faild data loding.</div>
 })
 IssueCommentsTimeline.displayName = 'IssueCommentsTimeline'
 

@@ -67,7 +67,7 @@ const DiscussionCommentsTimeline: React.FC<Props> = memo(({ user }) => {
       </Col>
     )
 
-  return <></>
+  return <div>Faild data loading.</div>
 })
 DiscussionCommentsTimeline.displayName = 'DiscussionCommentsTimeline'
 
