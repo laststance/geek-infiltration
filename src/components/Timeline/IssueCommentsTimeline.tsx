@@ -2,11 +2,11 @@ import { Col, Loading, Container } from '@nextui-org/react'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
-import { endpoint } from '../const'
+import { accessTokenAtom } from '../../atom'
+import { endpoint } from '../../const'
+import { useGetIssueCommentsQuery } from '../../generated/graphql'
+import type { IssueComment, Actor } from '../../generated/graphql'
 
-import { accessTokenAtom } from './../atom'
-import { useGetIssueCommentsQuery } from './../generated/graphql'
-import type { IssueComment, Actor } from './../generated/graphql'
 import CommentCard from './CommentCard'
 
 interface Props {

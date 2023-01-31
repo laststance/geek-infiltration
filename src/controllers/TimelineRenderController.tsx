@@ -2,8 +2,8 @@ import { Grid } from '@nextui-org/react'
 import React, { memo } from 'react'
 
 import type { ValidSerchQuery, Subscribed } from '../atom'
-import DiscussionCommentsTimeline from '../components/DiscussionCommentsTimeline'
-import IssueCommentsTimeline from '../components/IssueCommentsTimeline'
+import DiscussionCommentsTimeline from '../components/Timeline/DiscussionCommentsTimeline'
+import IssueCommentsTimeline from '../components/Timeline/IssueCommentsTimeline'
 
 interface Props {
   subscribed: [] | Subscribed

@@ -1,7 +1,7 @@
 import { Card, Text, Row, Link, Spacer, User } from '@nextui-org/react'
 import React, { memo } from 'react'
 
-import type { Actor } from '../generated/graphql'
+import type { Actor } from '../../generated/graphql'
 
 interface Props {
   author: Actor

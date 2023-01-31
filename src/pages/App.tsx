@@ -1,5 +1,5 @@
 import { useAtomValue } from 'jotai'
-import { useAtomDevtools } from 'jotai/devtools'
+import { useAtomDevtools } from 'jotai-devtools'
 import React, { memo } from 'react'
 
 import { subscribedAtom } from '../atom'
