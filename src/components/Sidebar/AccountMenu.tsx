@@ -13,7 +13,7 @@ const AccountMenu: React.FC = memo(() => {
   }, [setAccessTokenAtom])
 
   return (
-    <Card.Footer blur as="footer" css={{ p: '20px 10px' }}>
+    <Card.Footer isBlurred={true} as="footer" css={{ p: '20px 10px' }}>
       <Avatar
         onClick={logout}
         src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4"
