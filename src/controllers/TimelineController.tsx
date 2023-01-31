@@ -9,7 +9,7 @@ interface Props {
   subscribed: [] | Subscribed
 }
 
-const TimelineRenderController: React.FC<Props> = memo(({ subscribed }) => {
+const TimelineController: React.FC<Props> = memo(({ subscribed }) => {
   return (
     <Grid.Container gap={0.6} as="main" wrap="nowrap" css={{ h: '100%' }}>
       {subscribed.length ? (
@@ -31,6 +31,6 @@ const TimelineRenderController: React.FC<Props> = memo(({ subscribed }) => {
     </Grid.Container>
   )
 })
-TimelineRenderController.displayName = 'TimelineRenderController'
+TimelineController.displayName = 'TimelineRenderController'
 
-export default TimelineRenderController
+export default TimelineController
