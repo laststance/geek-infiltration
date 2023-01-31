@@ -36,7 +36,7 @@ const SubscribeModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
             placeholder="ryota-murakami"
           />
 
-          <Radio.Group>
+          <Radio.Group label="Timeline" defaultValue="issueComments">
             <Radio value="issueComments">Issue Comments</Radio>
             <Radio value="PRComments">PR Comments</Radio>
             <Radio value="discussionComments">Disscussion Comments</Radio>
