@@ -28,8 +28,7 @@ const CommentCard: React.FC<Props> = memo(
     return (
       <Card
         as="section"
-        bordered
-        shadow
+        variant="bordered"
         css={{
           borderBottomColor: 'rgba(77, 77, 77, 0.7)',
           borderBottomWidth: '1px',
