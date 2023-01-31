@@ -1,47 +1,13 @@
-import type { FormElement } from '@nextui-org/react'
-import {
-  Card,
-  Divider,
-  Button,
-  Modal,
-  Text,
-  Input,
-  Row,
-  Checkbox,
-} from '@nextui-org/react'
-import { useAtom } from 'jotai'
-import React, { memo, useState, useCallback, useRef } from 'react'
+import { Card, Divider, Button } from '@nextui-org/react'
+import React, { memo } from 'react'
 
-import { subscribedAtom } from '../../atom'
+import useModalHandlers from '../../hooks/useModalHandlers'
 
 import AccountMenu from './AccountMenu'
+import SubscribeModal from './SubscribeModal'
 
 const Sidebar = memo(() => {
-  const userNameInput = useRef() as React.RefObject<FormElement>
-
-  const [issueCommentCheck, setIssueCommentCheck] = useState(false)
-  const [discussionCommentCheck, setDiscussionCommentCheck] = useState(false)
-  const [visible, setVisible] = useState(false)
-
-  const onOpen = useCallback(() => setVisible(true), [])
-  const onClose = useCallback(() => {
-    setVisible(false)
-  }, [])
-
-  const [subscribed, setSubscribed] = useAtom(subscribedAtom)
-
-  //  @TODO const setValidSearchQueryAtom = useSetAtom(validSearchQueryAtom)
-  const onSubmit = useCallback(() => {
-    setSubscribed([
-      ...subscribed,
-      {
-        discussionComments: discussionCommentCheck,
-        issueComments: issueCommentCheck,
-        username: userNameInput.current!.value,
-      },
-    ])
-    setVisible(false)
-  }, [issueCommentCheck, discussionCommentCheck, subscribed])
+  const { isVisible, onOpen, onClose } = useModalHandlers()
 
   return (
     <Card as="section" css={{ borderRadius: 0, h: '100%' }}>
@@ -65,52 +31,7 @@ const Sidebar = memo(() => {
         >
           +
         </Button>
-        <Modal
-          closeButton
-          aria-labelledby="modal-title"
-          open={visible}
-          onClose={onClose}
-        >
-          <Modal.Header>
-            <Text id="modal-title" size={18}>
-              Search{' '}
-              <Text b size={18}>
-                GitHub Username
-              </Text>
-            </Text>
-          </Modal.Header>
-          <Modal.Body>
-            <Input
-              aria-label="userNameInput"
-              ref={userNameInput}
-              clearable
-              bordered
-              fullWidth
-              color="primary"
-              size="lg"
-              placeholder="ryota-murakami"
-            />
-            <Row justify="space-between">
-              <Checkbox onChange={setIssueCommentCheck} label="Issue Comments">
-                <Text size={14}>Issue Comments</Text>
-              </Checkbox>
-              <Checkbox
-                onChange={setDiscussionCommentCheck}
-                label="Disscussion Comments"
-              >
-                <Text size={14}>Disscussion Comments</Text>
-              </Checkbox>
-            </Row>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type="submit" auto onPress={onSubmit}>
-              Search
-            </Button>
-            <Button auto flat color="error" onPress={onClose}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </Modal>
+        <SubscribeModal isVisible={isVisible} onClose={onClose} />
       </Card.Body>
       <Divider />
       <AccountMenu />

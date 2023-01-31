@@ -13,23 +13,18 @@ const TimelineRenderController: React.FC<Props> = memo(({ subscribed }) => {
   return (
     <Grid.Container gap={0.6} as="main" wrap="nowrap" css={{ h: '100%' }}>
       {subscribed.length ? (
-        subscribed.map(
-          (
-            { username, issueComments, discussionComments }: ValidSerchQuery,
-            i
-          ) => {
-            return (
-              <Grid xs={2.5} key={i}>
-                {issueComments && !discussionComments && (
-                  <IssueCommentsTimeline user={username} />
-                )}
-                {!issueComments && discussionComments && (
-                  <DiscussionCommentsTimeline user={username} />
-                )}
-              </Grid>
-            )
-          }
-        )
+        subscribed.map(({ username, selectedTimeline }: ValidSerchQuery, i) => {
+          return (
+            <Grid xs={2.5} key={i}>
+              {selectedTimeline === 'issueComments' && (
+                <IssueCommentsTimeline user={username} />
+              )}
+              {selectedTimeline === 'discussionComments' && (
+                <DiscussionCommentsTimeline user={username} />
+              )}
+            </Grid>
+          )
+        })
       ) : (
         <></>
       )}
