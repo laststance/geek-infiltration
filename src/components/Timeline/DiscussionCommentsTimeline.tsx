@@ -3,7 +3,7 @@ import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
 import { accessTokenAtom } from '../../atom'
-import { endpoint } from '../../const'
+import { endpoint } from '../../constants'
 import { useGetDiscussionCommentsQuery } from '../../generated/graphql'
 import type { DiscussionComment, Actor } from '../../generated/graphql'
 

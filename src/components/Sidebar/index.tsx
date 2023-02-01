@@ -1,9 +1,10 @@
-import { Card, Divider, Button } from '@nextui-org/react'
+import { Card, Divider } from '@nextui-org/react'
 import React, { memo } from 'react'
 
 import useModalHandlers from '../../hooks/useModalHandlers'
 
 import AccountMenu from './AccountMenu'
+import AddButton from './AddButtton'
 import SubscribeModal from './SubscribeModal'
 
 const Sidebar = memo(() => {
@@ -21,16 +22,7 @@ const Sidebar = memo(() => {
           p: '20px 10px',
         }}
       >
-        <Button
-          auto
-          size="md"
-          color="gradient"
-          shadow
-          css={{ border: 0, fontSize: '30px', padding: '0 15px' }}
-          onClick={onOpen}
-        >
-          +
-        </Button>
+        <AddButton onOpen={onOpen} />
         <SubscribeModal isVisible={isVisible} onClose={onClose} />
       </Card.Body>
       <Divider />
