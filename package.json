@@ -1,6 +1,10 @@
 {
   "name": "geek-infiltration",
   "license": "MIT",
+  "volta": {
+    "node": "18.13.0",
+    "yarn": "1.22.19"
+  },
   "dependencies": {
     "@nextui-org/react": "^1.0.0-beta.12",
     "@tauri-apps/api": "^1.0.0-rc.4",
