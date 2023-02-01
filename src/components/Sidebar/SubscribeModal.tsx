@@ -11,7 +11,11 @@ interface Props {
 }
 
 const SubscribeModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
-  const { control, handleSubmit } = useForm<{
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<{
     username: ValidSerchQuery['username']
     selectedTimeline: ValidSerchQuery['selectedTimeline']
   }>({
@@ -43,33 +47,42 @@ const SubscribeModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
         <Modal.Body>
           <Controller
             name="username"
+            rules={{ required: true }}
             control={control}
             render={({ field }) => (
-              <Input
-                {...field}
-                aria-label="username"
-                clearable
-                bordered
-                fullWidth
-                color="primary"
-                size="lg"
-                placeholder="ryota-murakami"
-              />
+              <>
+                <Input
+                  {...field}
+                  aria-label="username"
+                  clearable
+                  bordered
+                  fullWidth
+                  color="primary"
+                  size="lg"
+                  placeholder="ryota-murakami"
+                />
+                {errors.username && <Text color="error">required</Text>}
+              </>
             )}
           />
           <Controller
             name="selectedTimeline"
+            rules={{ required: true }}
             control={control}
             render={({ field }) => (
-              <Radio.Group
-                {...field}
-                label="Timeline"
-                defaultValue="issueComments"
-              >
-                <Radio value="issueComments">Issue Comments</Radio>
-                <Radio value="PRComments">PR Comments</Radio>
-                <Radio value="discussionComments">Disscussion Comments</Radio>
-              </Radio.Group>
+              <>
+                <Radio.Group
+                  {...field}
+                  label="Timeline"
+                  defaultValue="issueComments"
+                >
+                  <Radio value="issueComments">Issue Comments</Radio>
+                  <Radio value="PRComments">PR Comments</Radio>
+                  <Radio value="discussionComments">Disscussion Comments</Radio>
+                </Radio.Group>
+
+                {errors.selectedTimeline && <Text color="error">required</Text>}
+              </>
             )}
           />
         </Modal.Body>
