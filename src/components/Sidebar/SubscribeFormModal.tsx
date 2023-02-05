@@ -4,7 +4,7 @@ import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
 import { subscribedAtom } from '../../atom'
-import type { ValidSerchQuery } from '../../atom'
+import type { SerchQuery } from '../../atom'
 import type { UseModalHandlersReturnValues } from '../../hooks/useModalHandlers'
 
 interface Props {
@@ -13,8 +13,8 @@ interface Props {
 }
 
 interface FormData {
-  username: ValidSerchQuery['username']
-  selectedTimeline: ValidSerchQuery['selectedTimeline']
+  username: SerchQuery['username']
+  selectedTimeline: SerchQuery['selectedTimeline']
 }
 
 const SubscribeFormModal: React.FC<Props> = memo(({ isVisible, onClose }) => {

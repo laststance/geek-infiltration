@@ -1,7 +1,7 @@
 import { Grid } from '@nextui-org/react'
 import React, { memo } from 'react'
 
-import type { ValidSerchQuery, Subscribed } from '../atom'
+import type { SerchQuery, Subscribed } from '../atom'
 import DiscussionCommentsTimeline from '../components/Timeline/DiscussionCommentsTimeline'
 import IssueCommentsTimeline from '../components/Timeline/IssueCommentsTimeline'
 
@@ -13,7 +13,7 @@ const TimelineController: React.FC<Props> = memo(({ subscribed }) => {
   return (
     <Grid.Container gap={0.6} as="main" wrap="nowrap" css={{ h: '100%' }}>
       {subscribed.length ? (
-        subscribed.map(({ username, selectedTimeline }: ValidSerchQuery, i) => {
+        subscribed.map(({ username, selectedTimeline }: SerchQuery, i) => {
           return (
             <Grid xs={2.5} key={i}>
               {selectedTimeline === 'issueComments' && (
