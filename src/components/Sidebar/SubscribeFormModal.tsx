@@ -1,7 +1,9 @@
 import { Modal, Text, Input, Radio, Button } from '@nextui-org/react'
+import { useAtom } from 'jotai'
 import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
+import { subscribedAtom } from '../../atom'
 import type { ValidSerchQuery } from '../../atom'
 import type { UseModalHandlersReturnValues } from '../../hooks/useModalHandlers'
 
@@ -10,23 +12,30 @@ interface Props {
   onClose: UseModalHandlersReturnValues['onClose']
 }
 
+interface FormData {
+  username: ValidSerchQuery['username']
+  selectedTimeline: ValidSerchQuery['selectedTimeline']
+}
+
 const SubscribeFormModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<{
-    username: ValidSerchQuery['username']
-    selectedTimeline: ValidSerchQuery['selectedTimeline']
-  }>({
+  } = useForm<FormData>({
     defaultValues: {
       selectedTimeline: 'issueComments',
       username: '',
     },
   })
 
-  // eslint-disable-next-line no-console
-  const onSubmit = (data: any) => console.log(data)
+  const [subscribed, setSubscribed] = useAtom(subscribedAtom)
+  const onSubmit = (data: FormData) => {
+    setSubscribed([
+      ...subscribed,
+      { selectedTimeline: data.selectedTimeline, username: data.username },
+    ])
+  }
 
   return (
     <Modal
