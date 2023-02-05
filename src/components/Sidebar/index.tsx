@@ -7,7 +7,7 @@ import AccountMenu from './AccountMenu'
 import AddButton from './AddButtton'
 import CardBody from './CardBody'
 import CardContainer from './CardContainer'
-import SubscribeModal from './SubscribeModal'
+import SubscribeFormModal from './SubscribeFormModal'
 
 const Sidebar = memo(() => {
   const { isVisible, onOpen, onClose } = useModalHandlers()
@@ -16,7 +16,7 @@ const Sidebar = memo(() => {
     <CardContainer>
       <CardBody>
         <AddButton onOpen={onOpen} />
-        <SubscribeModal isVisible={isVisible} onClose={onClose} />
+        <SubscribeFormModal isVisible={isVisible} onClose={onClose} />
       </CardBody>
       <Divider />
       <AccountMenu />

@@ -10,7 +10,7 @@ interface Props {
   onClose: UseModalHandlersReturnValues['onClose']
 }
 
-const SubscribeModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
+const SubscribeFormModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
   const {
     control,
     handleSubmit,
@@ -99,6 +99,6 @@ const SubscribeModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
   )
 })
 
-SubscribeModal.displayName = 'SubscribeModal'
+SubscribeFormModal.displayName = 'SubscribeModal'
 
-export default SubscribeModal
+export default SubscribeFormModal
