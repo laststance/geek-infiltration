@@ -7,6 +7,8 @@ import { QueryClientProvider, QueryClient } from 'react-query'
 import './index.css'
 import AuthController from './controllers/AuthController'
 
+export const endpoint = 'https://api.github.com/graphql'
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
