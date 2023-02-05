@@ -3,7 +3,7 @@ import React, { memo } from 'react'
 
 import type { SerchQuery, Subscribed } from '../atom'
 import DiscussionCommentsTimeline from '../components/Timeline/DiscussionCommentsTimeline'
-import IssueCommentsTimeline from '../components/Timeline/IssueCommentsTimeline'
+import PullRequestAndIssueCommentsTimeline from '../components/Timeline/PullRequestAndIssueCommentsTimeline'
 
 interface Props {
   subscribed: [] | Subscribed
@@ -12,22 +12,20 @@ interface Props {
 const TimelineController: React.FC<Props> = memo(({ subscribed }) => {
   return (
     <Grid.Container gap={0.6} as="main" wrap="nowrap" css={{ h: '100%' }}>
-      {subscribed.length ? (
-        subscribed.map(({ username, selectedTimeline }: SerchQuery, i) => {
-          return (
-            <Grid xs={2.5} key={i}>
-              {selectedTimeline === 'issueComments' && (
-                <IssueCommentsTimeline user={username} />
-              )}
-              {selectedTimeline === 'discussionComments' && (
-                <DiscussionCommentsTimeline user={username} />
-              )}
-            </Grid>
-          )
-        })
-      ) : (
-        <></>
-      )}
+      {subscribed.length
+        ? subscribed.map(({ username, selectedTimeline }: SerchQuery, i) => {
+            return (
+              <Grid xs={2.5} key={i}>
+                {selectedTimeline === 'PullRequestAndIssueComments' && (
+                  <PullRequestAndIssueCommentsTimeline user={username} />
+                )}
+                {selectedTimeline === 'discussionComments' && (
+                  <DiscussionCommentsTimeline user={username} />
+                )}
+              </Grid>
+            )
+          })
+        : null}
     </Grid.Container>
   )
 })

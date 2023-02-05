@@ -4,7 +4,7 @@ import { atomWithStorage } from 'jotai/utils'
 export type AccessToken = string
 export type SerchQuery = {
   username: string
-  selectedTimeline: 'issueComments' | 'PRComments' | 'discussionComments'
+  selectedTimeline: 'PullRequestAndIssueComments' | 'discussionComments'
 }
 export type Subscribed = SerchQuery[]
 

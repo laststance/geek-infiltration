@@ -24,7 +24,7 @@ const SubscribeFormModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
     formState: { errors },
   } = useForm<FormData>({
     defaultValues: {
-      selectedTimeline: 'issueComments',
+      selectedTimeline: 'PullRequestAndIssueComments',
       username: '',
     },
   })
@@ -85,8 +85,9 @@ const SubscribeFormModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
                   label="Timeline"
                   defaultValue="issueComments"
                 >
-                  <Radio value="issueComments">Issue Comments</Radio>
-                  <Radio value="PRComments">PR Comments</Radio>
+                  <Radio value="PullRequestAndIssueComments">
+                    PullRequest & Issue Comments
+                  </Radio>
                   <Radio value="discussionComments">Disscussion Comments</Radio>
                 </Radio.Group>
 
