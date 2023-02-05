@@ -29,6 +29,6 @@ const TimelineController: React.FC<Props> = memo(({ subscribed }) => {
     </Grid.Container>
   )
 })
-TimelineController.displayName = 'TimelineRenderController'
+TimelineController.displayName = 'TimelineController'
 
 export default TimelineController
