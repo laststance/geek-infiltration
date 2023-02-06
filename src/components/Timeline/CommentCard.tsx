@@ -36,38 +36,40 @@ const CommentCard: React.FC<Props> = memo(
           borderTopWidth: '1px',
         }}
       >
-        <Text color="primary" h5>
-          <Link target="_blank" href={ticketLink}>
-            {repositoryName}
-          </Link>
-        </Text>
-        <Row as="section">
-          <Link underline href={commentLink} target="_blank">
-            <Text h4>{ticketTitle}</Text>
-          </Link>
-        </Row>
-        <Row>
-          <Text small>{ticketAuthorName}</Text>
-          <Spacer x={0.4} />
-          <Text small>{new Date(publishedAt).toLocaleString()}</Text>
-        </Row>
-        <Spacer />
-        <Row>
-          <User src={author.avatarUrl} name={author.login} css={{ p: 0 }}>
-            <User.Link href={author.url} target="_blank">
-              @{author.login}
-            </User.Link>
-          </User>
-        </Row>
-        <Row as="section">
-          <div
-            dangerouslySetInnerHTML={{ __html: bodyHTML }}
-            style={{
-              maxWidth: '100%',
-              overflowWrap: 'break-word',
-            }}
-          />
-        </Row>
+        <Card.Body>
+          <Text color="primary" h5>
+            <Link target="_blank" href={ticketLink}>
+              {repositoryName}
+            </Link>
+          </Text>
+          <Row as="section">
+            <Link underline href={commentLink} target="_blank">
+              <Text h4>{ticketTitle}</Text>
+            </Link>
+          </Row>
+          <Row>
+            <Text small>{ticketAuthorName}</Text>
+            <Spacer x={0.4} />
+            <Text small>{new Date(publishedAt).toLocaleString()}</Text>
+          </Row>
+          <Spacer />
+          <Row>
+            <User src={author.avatarUrl} name={author.login} css={{ p: 0 }}>
+              <User.Link href={author.url} target="_blank">
+                @{author.login}
+              </User.Link>
+            </User>
+          </Row>
+          <Row as="section">
+            <div
+              dangerouslySetInnerHTML={{ __html: bodyHTML }}
+              style={{
+                maxWidth: '100%',
+                overflowWrap: 'break-word',
+              }}
+            />
+          </Row>
+        </Card.Body>
       </Card>
     )
   }
