@@ -45,11 +45,8 @@ const SubscribeFormModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
       onClose={onClose}
     >
       <Modal.Header>
-        <Text id="modal-title" size={18}>
-          Input{' '}
-          <Text b size={18}>
-            GitHub Username
-          </Text>
+        <Text id="modal-title" b size={18}>
+          Enter GitHub Username
         </Text>
       </Modal.Header>
       <form onSubmit={handleSubmit(onSubmit)}>
