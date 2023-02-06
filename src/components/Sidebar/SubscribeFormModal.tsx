@@ -8,7 +8,7 @@ import type { SerchQuery } from '../../atom'
 import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
 
 interface Props {
-  isVisible: UseModalHandlersReturnValues['isVisible']
+  isModalVisible: UseModalHandlersReturnValues['isModalVisible']
   closeModal: UseModalHandlersReturnValues['closeModal']
 }
 
@@ -18,7 +18,7 @@ interface FormData {
 }
 
 const SubscribeFormModal: React.FC<Props> = memo(
-  ({ isVisible, closeModal }) => {
+  ({ isModalVisible, closeModal }) => {
     const {
       control,
       handleSubmit,
@@ -43,7 +43,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
       <Modal
         closeButton
         aria-labelledby="modal-title"
-        open={isVisible}
+        open={isModalVisible}
         onClose={closeModal}
       >
         <Modal.Header>

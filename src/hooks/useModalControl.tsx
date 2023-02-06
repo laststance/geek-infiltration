@@ -1,18 +1,18 @@
 import { useState, useCallback } from 'react'
 export interface UseModalHandlersReturnValues {
-  isVisible: boolean
+  isModalVisible: boolean
   openModal: () => void
   closeModal: () => void
 }
 
 const useModalControl = (): UseModalHandlersReturnValues => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
 
-  const openModal = useCallback(() => setIsVisible(true), [])
+  const openModal = useCallback(() => setIsModalVisible(true), [])
   const closeModal = useCallback(() => {
-    setIsVisible(false)
+    setIsModalVisible(false)
   }, [])
-  return { closeModal, isVisible, openModal }
+  return { closeModal, isModalVisible, openModal }
 }
 
 export default useModalControl

@@ -10,13 +10,16 @@ import OpenSubscribeFormModalButton from './OpenSubscribeFormModalButton'
 import SubscribeFormModal from './SubscribeFormModal'
 
 const Sidebar = memo(() => {
-  const { isVisible, openModal, closeModal } = useModalControl()
+  const { isModalVisible, openModal, closeModal } = useModalControl()
 
   return (
     <CardContainer>
       <CardBody>
         <OpenSubscribeFormModalButton openModal={openModal} />
-        <SubscribeFormModal isVisible={isVisible} closeModal={closeModal} />
+        <SubscribeFormModal
+          isModalVisible={isModalVisible}
+          closeModal={closeModal}
+        />
       </CardBody>
       <Divider />
       <AccountMenu />
