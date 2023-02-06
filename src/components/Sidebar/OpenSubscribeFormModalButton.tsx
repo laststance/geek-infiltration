@@ -1,12 +1,12 @@
 import { Button } from '@nextui-org/react'
 import React, { memo } from 'react'
 
-import type { UseModalHandlersReturnValues } from '../../hooks/useModalHandlers'
+import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
 
 interface Props {
-  onOpen: UseModalHandlersReturnValues['onOpen']
+  openModal: UseModalHandlersReturnValues['openModal']
 }
-const OpenSubscribeFormModalButton: React.FC<Props> = memo(({ onOpen }) => {
+const OpenSubscribeFormModalButton: React.FC<Props> = memo(({ openModal }) => {
   return (
     <Button
       auto
@@ -14,7 +14,7 @@ const OpenSubscribeFormModalButton: React.FC<Props> = memo(({ onOpen }) => {
       color="gradient"
       shadow
       css={{ border: 0, fontSize: '30px', padding: '0 15px' }}
-      onClick={onOpen}
+      onPress={openModal}
     >
       +
     </Button>

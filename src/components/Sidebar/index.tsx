@@ -1,7 +1,7 @@
 import { Divider } from '@nextui-org/react'
 import React, { memo } from 'react'
 
-import useModalHandlers from '../../hooks/useModalHandlers'
+import useModalControl from '../../hooks/useModalControl'
 import CardBody from '../layouts/CardBody'
 import CardContainer from '../layouts/CardContainer'
 
@@ -10,13 +10,13 @@ import OpenSubscribeFormModalButton from './OpenSubscribeFormModalButton'
 import SubscribeFormModal from './SubscribeFormModal'
 
 const Sidebar = memo(() => {
-  const { isVisible, onOpen, onClose } = useModalHandlers()
+  const { isVisible, openModal, closeModal } = useModalControl()
 
   return (
     <CardContainer>
       <CardBody>
-        <OpenSubscribeFormModalButton onOpen={onOpen} />
-        <SubscribeFormModal isVisible={isVisible} onClose={onClose} />
+        <OpenSubscribeFormModalButton openModal={openModal} />
+        <SubscribeFormModal isVisible={isVisible} closeModal={closeModal} />
       </CardBody>
       <Divider />
       <AccountMenu />
