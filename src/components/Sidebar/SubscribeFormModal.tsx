@@ -98,7 +98,7 @@ const SubscribeFormModal: React.FC<Props> = memo(({ isVisible, onClose }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button type="submit" auto>
-            Search
+            Add
           </Button>
           <Button auto flat color="error" onPress={onClose}>
             Close
