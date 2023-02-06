@@ -6,7 +6,7 @@ import type { UseModalHandlersReturnValues } from '../../hooks/useModalHandlers'
 interface Props {
   onOpen: UseModalHandlersReturnValues['onOpen']
 }
-const AddButton: React.FC<Props> = memo(({ onOpen }) => {
+const OpenSubscribeFormModalButton: React.FC<Props> = memo(({ onOpen }) => {
   return (
     <Button
       auto
@@ -20,6 +20,6 @@ const AddButton: React.FC<Props> = memo(({ onOpen }) => {
     </Button>
   )
 })
-AddButton.displayName = 'AddButton'
+OpenSubscribeFormModalButton.displayName = 'OpenSubscribeFormModalButton'
 
-export default AddButton
+export default OpenSubscribeFormModalButton
