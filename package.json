@@ -26,7 +26,7 @@
     "@graphql-codegen/typescript-document-nodes": "2.2.11",
     "@graphql-codegen/typescript-graphql-files-modules": "2.2.1",
     "@graphql-codegen/typescript-operations": "2.4.0",
-    "@graphql-codegen/typescript-react-query": "^3.6.2",
+    "@graphql-codegen/typescript-react-query": "^4.1.0",
     "@tauri-apps/cli": "^1.0.0-rc.9",
     "@types/react": "^18.0.27",
     "@types/react-dom": "^18.0.10",
