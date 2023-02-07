@@ -6,7 +6,7 @@
     "yarn": "1.22.19"
   },
   "dependencies": {
-    "@nextui-org/react": "^1.0.2-beta.4",
+    "@nextui-org/react": "v1.0.0-beta.12",
     "@tauri-apps/api": "^1.0.0-rc.4",
     "axios": "^0.27.2",
     "graphql": "^16.6.0",
