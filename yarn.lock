@@ -4848,10 +4848,10 @@ jiti@^1.17.1:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.17.2.tgz#9e193d171c76b1c518a46c243c410c0462fe22d1"
   integrity sha512-Xf0nU8+8wuiQpLcqdb2HRyHqYwGk2Pd+F7kstyp20ZuqTyCmB9dqpX2NxaxFc1kovraa2bG6c1RL3W7XfapiZg==
 
-jotai-devtools@^0.3.0:
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/jotai-devtools/-/jotai-devtools-0.3.0.tgz#d2a7715752a529df56b969e0c27f809b2262e866"
-  integrity sha512-6rhtcTALwNt0V2SqGhZyUd2L1V5cPm2bJoTaJPZizgluZmNQp07Hwm/zk0uujgIzvTi4W3PLiURgksuU6duLTg==
+jotai-devtools@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/jotai-devtools/-/jotai-devtools-0.3.1.tgz#310e5e17c10d34edb4d9586ffedc7dde548eb844"
+  integrity sha512-np1JEV9f01e0V9A8OzGurYShJFLhuBTOHRGl4F3F47nWIaQjpLScWAbl2C56dOWxsJxZ8J3WIJOIWQ5bF05x/Q==
   dependencies:
     "@emotion/react" "^11.10.5"
     "@mantine/core" "^5.10.3"
