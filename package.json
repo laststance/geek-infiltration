@@ -12,7 +12,7 @@
     "graphql": "^16.6.0",
     "graphql-request": "^5.2.0",
     "jotai": "^2.0.3",
-    "jotai-devtools": "^0.3.1",
+    "jotai-devtools": "^0.4.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
