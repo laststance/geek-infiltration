@@ -4964,10 +4964,10 @@ jiti@^1.17.1:
   resolved "https://registry.yarnpkg.com/jiti/-/jiti-1.17.2.tgz#9e193d171c76b1c518a46c243c410c0462fe22d1"
   integrity sha512-Xf0nU8+8wuiQpLcqdb2HRyHqYwGk2Pd+F7kstyp20ZuqTyCmB9dqpX2NxaxFc1kovraa2bG6c1RL3W7XfapiZg==
 
-jotai-devtools@^0.5.2:
-  version "0.5.2"
-  resolved "https://registry.yarnpkg.com/jotai-devtools/-/jotai-devtools-0.5.2.tgz#29b6828003c79503650d18b66b21dbe37b0c47f2"
-  integrity sha512-2juCqNYURUC26bjAA8huWI0x8h9NeqKDjdu3O1sqNvLbzChXmK/sh1AO6o5I+S8MRT05l7fu6BqKoGsMfqh95Q==
+jotai-devtools@^0.5.3:
+  version "0.5.3"
+  resolved "https://registry.yarnpkg.com/jotai-devtools/-/jotai-devtools-0.5.3.tgz#827e63cc881845e0ff468bc52bfaf14c2b2060ac"
+  integrity sha512-VWfRfTu3jEgR828boLfVtP5X8hC9X3LsjT+ER67HzcaL08HvEoNb1NaVu0spX1fC5xUIEKibCrMspnHHdsePyw==
   dependencies:
     "@mantine/core" "^6.0.9"
     "@mantine/hooks" "^6.0.9"
