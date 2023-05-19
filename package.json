@@ -47,7 +47,7 @@
     "rimraf": "^5.0.1",
     "serve": "^14.2.0",
     "typescript": "^5.0.4",
-    "vite": "^4.3.7"
+    "vite": "^4.3.8"
   },
   "scripts": {
     "build": "tsc && vite build",
