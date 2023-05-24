@@ -10,7 +10,7 @@
     "@tauri-apps/api": "^1.0.0-rc.4",
     "axios": "^1.4.0",
     "graphql": "^16.6.0",
-    "graphql-request": "^6.0.0",
+    "graphql-request": "^6.1.0",
     "jotai": "^2.1.0",
     "jotai-devtools": "^0.5.3",
     "prop-types": "^15.8.1",
