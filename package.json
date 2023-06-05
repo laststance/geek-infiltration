@@ -6,6 +6,10 @@
     "yarn": "1.22.19"
   },
   "dependencies": {
+    "@emotion/cache": "^11.11.0",
+    "@emotion/react": "^11.11.0",
+    "@emotion/serialize": "^1.1.2",
+    "@emotion/utils": "^1.2.1",
     "@nextui-org/react": "^1.0.0-beta.12",
     "@tauri-apps/api": "^1.0.0-rc.4",
     "axios": "^1.4.0",
