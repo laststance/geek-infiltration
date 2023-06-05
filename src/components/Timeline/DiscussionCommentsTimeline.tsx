@@ -3,9 +3,9 @@ import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
 import { accessTokenAtom } from '../../atom'
+import { endpoint } from '../../constant'
 import { useGetDiscussionCommentsQuery } from '../../generated/graphql'
 import type { DiscussionComment, Actor } from '../../generated/graphql'
-import { endpoint } from '../../main'
 
 import CommentCard from './CommentCard'
 
