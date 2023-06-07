@@ -1,8 +1,7 @@
-import { Divider } from '@nextui-org/react'
+import { Divider } from '@mui/material'
 import React, { memo } from 'react'
 
 import useModalControl from '../../hooks/useModalControl'
-import CardBody from '../layouts/CardBody'
 import CardContainer from '../layouts/CardContainer'
 
 import AccountMenu from './AccountMenu'
@@ -14,13 +13,11 @@ const Sidebar = memo(() => {
 
   return (
     <CardContainer>
-      <CardBody>
         <OpenSubscribeFormModalButton openModal={openModal} />
         <SubscribeFormModal
           isModalVisible={isModalVisible}
           closeModal={closeModal}
         />
-      </CardBody>
       <Divider />
       <AccountMenu />
     </CardContainer>

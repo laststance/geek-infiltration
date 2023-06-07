@@ -1,4 +1,4 @@
-import { Avatar, Card } from '@nextui-org/react'
+import { Avatar, Card, CardMedia } from '@mui/material'
 import { useSetAtom } from 'jotai'
 import { RESET } from 'jotai/utils'
 import React, { memo, useCallback } from 'react'
@@ -13,13 +13,15 @@ const AccountMenu: React.FC = memo(() => {
   }, [setAccessTokenAtom])
 
   return (
-    <Card.Footer isBlurred={true} as="footer" css={{ p: '20px 10px' }}>
-      <Avatar
-        onClick={logout}
-        src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4"
-        css={{ cursor: 'pointer' }}
-      />
-    </Card.Footer>
+    <Card sx={{ p: '20px 10px' }}>
+      <CardMedia>
+        <Avatar
+          onClick={logout}
+          src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4"
+          sx={{ cursor: 'pointer' }}
+        />
+      </CardMedia>
+    </Card>
   )
 })
 AccountMenu.displayName = 'AccountMenu'

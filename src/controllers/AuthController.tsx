@@ -1,4 +1,4 @@
-import { Loading } from '@nextui-org/react'
+import { CircularProgress } from '@mui/material'
 import axios from 'axios'
 import { useAtom } from 'jotai'
 import { useState, memo, useLayoutEffect } from 'react'
@@ -37,7 +37,7 @@ const AuthController = memo(() => {
     }
   }, [window.location.href.includes('?code=')])
 
-  if (loading) <Loading size="md" />
+  if (loading) <CircularProgress />
   return accessToken ? <App /> : <Login />
 })
 AuthController.displayName = 'AuthController'

@@ -1,4 +1,12 @@
-import { Card, Text, Row, Link, Spacer, User } from '@nextui-org/react'
+import {
+  Card,
+  Typography as Text,
+  CardContent,
+  Link,
+  Box,
+  Divider,
+  Avatar,
+} from '@mui/material'
 import React, { memo } from 'react'
 
 import type { Actor } from '../../generated/graphql'
@@ -27,40 +35,38 @@ const CommentCard: React.FC<Props> = memo(
   }) => {
     return (
       <Card
-        as="section"
-        variant="bordered"
-        css={{
+        sx={{
           borderBottomColor: 'rgba(77, 77, 77, 0.7)',
           borderBottomWidth: '1px',
           borderTopColor: 'rgba(77, 77, 77, 0.7)',
           borderTopWidth: '1px',
         }}
       >
-        <Card.Body>
-          <Text color="primary" h5>
+        <CardContent>
+          <Text>
             <Link target="_blank" href={ticketLink}>
               {repositoryName}
             </Link>
           </Text>
-          <Row as="section">
-            <Link underline href={commentLink} target="_blank">
-              <Text h4>{ticketTitle}</Text>
+          <Box>
+            <Link href={commentLink} target="_blank">
+              <Text>{ticketTitle}</Text>
             </Link>
-          </Row>
-          <Row>
-            <Text small>{ticketAuthorName}</Text>
-            <Spacer x={0.4} />
-            <Text small>{new Date(publishedAt).toLocaleString()}</Text>
-          </Row>
-          <Spacer />
-          <Row>
-            <User src={author.avatarUrl} name={author.login} css={{ p: 0 }}>
-              <User.Link href={author.url} target="_blank">
+          </Box>
+          <Box>
+            <Text>{ticketAuthorName}</Text>
+            <Divider />
+            <Text>{new Date(publishedAt).toLocaleString()}</Text>
+          </Box>
+          <Divider />
+          <Box>
+            <Avatar src={author.avatarUrl} alt={author.login}>
+              <Link href={author.url} target="_blank">
                 @{author.login}
-              </User.Link>
-            </User>
-          </Row>
-          <Row as="section">
+              </Link>
+            </Avatar>
+          </Box>
+          <Box>
             <div
               dangerouslySetInnerHTML={{ __html: bodyHTML }}
               style={{
@@ -68,8 +74,8 @@ const CommentCard: React.FC<Props> = memo(
                 overflowWrap: 'break-word',
               }}
             />
-          </Row>
-        </Card.Body>
+          </Box>
+        </CardContent>
       </Card>
     )
   }

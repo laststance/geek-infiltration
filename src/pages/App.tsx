@@ -6,7 +6,7 @@ import { subscribedAtom } from '../atom'
 import RootContainer from '../components/layouts/RootContainer'
 import SidebarSection from '../components/layouts/SidebarSection'
 import Sidebar from '../components/Sidebar'
-import TimelineController from '../controllers/TimelineController'
+import TimelineContainer from '../controllers/TimelineContainer'
 
 const App: React.FC = memo(() => {
   const subscribed = useAtomValue(subscribedAtom)
@@ -16,7 +16,7 @@ const App: React.FC = memo(() => {
       <SidebarSection>
         <Sidebar />
       </SidebarSection>
-      <TimelineController subscribed={subscribed} />
+      <TimelineContainer subscribed={subscribed} />
     </RootContainer>
   )
 })

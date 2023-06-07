@@ -1,4 +1,15 @@
-import { Modal, Text, Input, Radio, Button } from '@nextui-org/react'
+import {
+  Modal,
+  Typography as Text,
+  Radio,
+  Button,
+  Box,
+  TextField,
+  FormControl,
+  RadioGroup,
+  FormControlLabel,
+  Stack,
+} from '@mui/material'
 import { useAtom } from 'jotai'
 import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
@@ -40,33 +51,22 @@ const SubscribeFormModal: React.FC<Props> = memo(
     }
 
     return (
-      <Modal
-        closeButton
-        aria-labelledby="modal-title"
-        open={isModalVisible}
-        onClose={closeModal}
-      >
-        <Modal.Header>
-          <Text id="modal-title" b size={18}>
-            Enter GitHub Username
-          </Text>
-        </Modal.Header>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Modal.Body>
+      <Modal open={isModalVisible} onClose={closeModal}>
+        <Stack>
+          <Text>Enter GitHub Username</Text>
+
+          <form onSubmit={handleSubmit(onSubmit)}>
             <Controller
               name="username"
               rules={{ required: true }}
               control={control}
               render={({ field }) => (
                 <>
-                  <Input
+                  <TextField
                     {...field}
                     aria-label="username"
-                    clearable
-                    bordered
                     fullWidth
                     color="primary"
-                    size="lg"
                     placeholder="ryota-murakami"
                   />
                   {errors.username && <Text color="error">required</Text>}
@@ -78,36 +78,35 @@ const SubscribeFormModal: React.FC<Props> = memo(
               rules={{ required: true }}
               control={control}
               render={({ field }) => (
-                <>
-                  <Radio.Group
-                    {...field}
-                    label="Timeline"
-                    defaultValue="issueComments"
+                <FormControl>
+                  <RadioGroup
+                    name="selectedTimeline"
+                    defaultValue="PullRequestAndIssueComments"
                   >
-                    <Radio value="PullRequestAndIssueComments">
-                      PullRequest & Issue Comments
-                    </Radio>
-                    <Radio value="discussionComments">
-                      Disscussion Comments
-                    </Radio>
-                  </Radio.Group>
-
-                  {errors.selectedTimeline && (
-                    <Text color="error">required</Text>
-                  )}
-                </>
+                    <FormControlLabel
+                      value="PullRequestAndIssueComments"
+                      control={<Radio {...field} />}
+                      label="PullRequest & Issue Comments"
+                    />
+                    <FormControlLabel
+                      value="discussionComments"
+                      control={<Radio {...field} />}
+                      label="Disscussion Comments"
+                    />
+                    {errors.selectedTimeline && (
+                      <Text color="error">required</Text>
+                    )}
+                  </RadioGroup>
+                </FormControl>
               )}
             />
-          </Modal.Body>
-          <Modal.Footer>
-            <Button type="submit" auto>
-              Add
-            </Button>
-            <Button auto flat color="error" onPress={closeModal}>
-              Close
-            </Button>
-          </Modal.Footer>
-        </form>
+
+            <Box>
+              <Button type="submit">Add</Button>
+              <Button onClick={closeModal}>Close</Button>
+            </Box>
+          </form>
+        </Stack>
       </Modal>
     )
   }

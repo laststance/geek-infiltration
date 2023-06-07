@@ -1,4 +1,4 @@
-import { Col, Loading, Container } from '@nextui-org/react'
+import { CircularProgress, Container, List } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
@@ -37,14 +37,16 @@ const PullRequestAndIssueCommentsTimeline: React.FC<Props> = memo(
 
     if (status === 'loading' || isFetching)
       return (
-        <Container display="flex" justify="center" css={{ paddingTop: '20px' }}>
-          <Loading size="md" />
+        <Container sx={{ padfding: '20px' }}>
+          <CircularProgress />
         </Container>
       )
 
     if (status === 'success' && data.length > 0)
       return (
-        <Col as="article">
+        <List
+          sx={{ bgcolor: 'background.paper', maxWidth: 360, width: '100%' }}
+        >
           {data
             .reverse()
             .map(
@@ -74,7 +76,7 @@ const PullRequestAndIssueCommentsTimeline: React.FC<Props> = memo(
                 />
               )
             )}
-        </Col>
+        </List>
       )
 
     return <div>Faild data loding.</div>

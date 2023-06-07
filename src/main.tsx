@@ -1,8 +1,14 @@
+import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import { Provider as JotaiProvider } from 'jotai'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClientProvider, QueryClient } from 'react-query'
+
+import '@fontsource/roboto/300.css'
+import '@fontsource/roboto/400.css'
+import '@fontsource/roboto/500.css'
+import '@fontsource/roboto/700.css'
 
 import './index.css'
 import AuthController from './controllers/AuthController'
@@ -28,6 +34,7 @@ const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
   <ThemeProvider theme={theme}>
+    <CssBaseline />
     <JotaiProvider>
       <QueryClientProvider client={queryClient}>
         <AuthController />

@@ -1,4 +1,4 @@
-import { Grid } from '@nextui-org/react'
+import { Grid } from '@mui/material'
 import React, { memo } from 'react'
 
 import type { SerchQuery, Subscribed } from '../atom'
@@ -9,9 +9,9 @@ interface Props {
   subscribed: [] | Subscribed
 }
 
-const TimelineController: React.FC<Props> = memo(({ subscribed }) => {
+const TimelineContainer: React.FC<Props> = memo(({ subscribed }) => {
   return (
-    <Grid.Container gap={0.6} as="main" wrap="nowrap" css={{ h: '100%' }}>
+    <Grid container spacing={2} gap={0.6}>
       {subscribed.length
         ? subscribed.map(({ username, selectedTimeline }: SerchQuery, i) => {
             return (
@@ -26,9 +26,9 @@ const TimelineController: React.FC<Props> = memo(({ subscribed }) => {
             )
           })
         : null}
-    </Grid.Container>
+    </Grid>
   )
 })
-TimelineController.displayName = 'TimelineController'
+TimelineContainer.displayName = 'TimelineContainer'
 
-export default TimelineController
+export default TimelineContainer
