@@ -3,9 +3,9 @@ import { useAtomDevtools } from 'jotai-devtools'
 import React, { memo } from 'react'
 
 import { subscribedAtom } from '../atom'
-import RootContainer from '../components/layouts/RootContainer'
-import SidebarSection from '../components/layouts/SidebarSection'
+import RootContainer from '../components/RootContainer'
 import Sidebar from '../components/Sidebar'
+import SidebarSection from '../components/SidebarSection'
 import TimelineContainer from '../controllers/TimelineContainer'
 
 const App: React.FC = memo(() => {
