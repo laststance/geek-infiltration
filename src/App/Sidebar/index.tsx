@@ -2,27 +2,26 @@ import { Divider, Stack } from '@mui/material'
 import type { PropsWithChildren } from 'react'
 import React, { memo } from 'react'
 
-import useModalControl from '../../../hooks/useModalControl'
+import useModalControl from '../../hooks/useModalControl'
 
-import AccountMenu from './AccountMenu'
+import UserMenuButton from './AccountMenu'
 import OpenSubscribeFormModalButton from './OpenSubscribeFormModalButton'
 import SubscribeFormModal from './SubscribeFormModal'
 
 const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
   <Stack
     sx={{
-      position: 'fixed',
-      top:0,
-      right: '70px',
       border: 0,
       borderRadius: 0,
       margin: 0,
-      minHeight: '100vh',
+      maxWidth: '70px',
+      minHeight: '100%',
       minWidth: '70px',
       padding: 0,
     }}
     direction="column-reverse"
     gap={0}
+    component="section"
   >
     {children}
   </Stack>
@@ -40,7 +39,7 @@ const Sidebar = memo(() => {
         closeModal={closeModal}
       />
       <Divider />
-      <AccountMenu />
+      <UserMenuButton />
     </SideBarContainer>
   )
 })

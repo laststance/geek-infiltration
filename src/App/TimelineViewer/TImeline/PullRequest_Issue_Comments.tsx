@@ -2,11 +2,11 @@ import { CircularProgress, Container, List } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
-import { accessTokenAtom } from '../../../../atom'
-import CommentCard from '../../../../components/CommentCard'
-import { useGetIssueCommentsQuery } from '../../../../generated/graphql'
-import type { IssueComment, Actor } from '../../../../generated/graphql'
-import { endpoint } from '../../../../variables/endpoint'
+import { accessTokenAtom } from '../../../atom'
+import CommentCard from '../../../components/CommentCard'
+import { useGetIssueCommentsQuery } from '../../../generated/graphql'
+import type { IssueComment, Actor } from '../../../generated/graphql'
+import { endpoint } from '../../../variables/endpoint'
 
 interface Props {
   user: string
