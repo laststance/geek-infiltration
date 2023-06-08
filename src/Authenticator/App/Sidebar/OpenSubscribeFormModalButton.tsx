@@ -1,7 +1,7 @@
 import { Button } from '@mui/material'
 import React, { memo } from 'react'
 
-import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
+import type { UseModalHandlersReturnValues } from '../../../hooks/useModalControl'
 
 interface Props {
   openModal: UseModalHandlersReturnValues['openModal']

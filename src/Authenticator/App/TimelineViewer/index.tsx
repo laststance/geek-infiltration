@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import React, { memo } from 'react'
 
-import type { SerchQuery, Subscribed } from '../../atom'
+import type { SerchQuery, Subscribed } from '../../../atom'
 
 import Timeline from './TImeline'
 

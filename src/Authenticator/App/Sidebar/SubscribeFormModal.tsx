@@ -14,9 +14,9 @@ import { useAtom } from 'jotai'
 import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
-import { subscribedAtom } from '../../atom'
-import type { SerchQuery } from '../../atom'
-import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
+import { subscribedAtom } from '../../../atom'
+import type { SerchQuery } from '../../../atom'
+import type { UseModalHandlersReturnValues } from '../../../hooks/useModalControl'
 
 interface Props {
   isModalVisible: UseModalHandlersReturnValues['isModalVisible']

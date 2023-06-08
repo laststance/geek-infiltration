@@ -2,7 +2,7 @@ import { Divider, Stack } from '@mui/material'
 import type { PropsWithChildren } from 'react'
 import React, { memo } from 'react'
 
-import useModalControl from '../../hooks/useModalControl'
+import useModalControl from '../../../hooks/useModalControl'
 
 import AccountMenu from './AccountMenu'
 import OpenSubscribeFormModalButton from './OpenSubscribeFormModalButton'

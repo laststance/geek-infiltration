@@ -3,7 +3,7 @@ import { useSetAtom } from 'jotai'
 import { RESET } from 'jotai/utils'
 import React, { memo, useCallback } from 'react'
 
-import { accessTokenAtom } from '../../atom'
+import { accessTokenAtom } from '../../../atom'
 
 const AccountMenu: React.FC = memo(() => {
   const setAccessTokenAtom = useSetAtom(accessTokenAtom)

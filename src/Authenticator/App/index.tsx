@@ -3,7 +3,7 @@ import { useAtomDevtools } from 'jotai-devtools'
 import type { PropsWithChildren } from 'react'
 import React, { memo } from 'react'
 
-import { subscribedAtom } from '../atom'
+import { subscribedAtom } from '../../atom'
 
 import Sidebar from './Sidebar'
 import TimelineContainer from './TimelineViewer'

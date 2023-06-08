@@ -3,9 +3,10 @@ import axios from 'axios'
 import { useAtom } from 'jotai'
 import { useState, memo, useLayoutEffect } from 'react'
 
-import App from '../App'
 import { accessTokenAtom } from '../atom'
-import LandingPage from '../LandingPage'
+
+import App from './App'
+import LandingPage from './LandingPage'
 
 const Authenticator = memo(() => {
   const [loading, setLoading] = useState(false)
