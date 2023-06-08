@@ -1343,7 +1343,7 @@ type AddedToProjectEvent implements Node {
   id: ID!
 }
 
-"A GitHub App."
+"A GitHub Index."
 type App implements Node {
   "Identifies the date and time when the object was created."
   createdAt: DateTime!
@@ -1615,7 +1615,7 @@ type Blob implements GitObject & Node {
 
 "A special type of user which takes actions on behalf of GitHub Apps."
 type Bot implements Actor & Node & UniformResourceLocatable {
-  "A URL pointing to the GitHub App's public avatar."
+  "A URL pointing to the GitHub Index's public avatar."
   avatarUrl("The size of the resulting square image." size: Int): URI!
   "Identifies the date and time when the object was created."
   createdAt: DateTime!
@@ -2110,7 +2110,7 @@ type CheckStepEdge {
 
 "A check suite."
 type CheckSuite implements Node {
-  "The GitHub App which created this check suite."
+  "The GitHub Index which created this check suite."
   app: App
   "The name of the branch for this check suite."
   branch: Ref
@@ -4887,7 +4887,7 @@ type EnterpriseOwnerInfo {
     "The setting value to find organizations for."
     value: Boolean!
   ): OrganizationConnection!
-  "The SAML Identity Provider for the enterprise. When used by a GitHub App, requires an installation token with read and write access to members."
+  "The SAML Identity Provider for the enterprise. When used by a GitHub Index, requires an installation token with read and write access to members."
   samlIdentityProvider: EnterpriseIdentityProvider
   "A list of enterprise organizations configured with the SAML single sign-on setting value."
   samlIdentityProviderSettingOrganizations(
@@ -6496,7 +6496,7 @@ type LockedEvent implements Node {
 
 "A placeholder user for attribution of imported data on GitHub."
 type Mannequin implements Actor & Node & UniformResourceLocatable {
-  "A URL pointing to the GitHub App's public avatar."
+  "A URL pointing to the GitHub Index's public avatar."
   avatarUrl("The size of the resulting square image." size: Int): URI!
   "The user that has claimed the data attributed to this mannequin."
   claimant: User
@@ -6579,7 +6579,7 @@ type MarketplaceCategory implements Node {
 
 "A listing in the GitHub integration marketplace."
 type MarketplaceListing implements Node {
-  "The GitHub App this listing represents."
+  "The GitHub Index this listing represents."
   app: App
   "URL to the listing owner's company site."
   companyUrl: URI
@@ -14109,7 +14109,7 @@ type Repository implements Node & PackageOwner & ProjectOwner & RepositoryInfo &
   viewerDefaultMergeMethod: PullRequestMergeMethod!
   "Returns a boolean indicating whether the viewing user has starred this starrable."
   viewerHasStarred: Boolean!
-  "The users permission level on the repository. Will return null if authenticated as an GitHub App."
+  "The users permission level on the repository. Will return null if authenticated as an GitHub Index."
   viewerPermission: RepositoryPermission
   "A list of emails this viewer can commit with."
   viewerPossibleCommitEmails: [String!]
@@ -14500,7 +14500,7 @@ type RequestReviewsPayload {
 
 "Represents a required status check for a protected branch, but not any specific run of that check."
 type RequiredStatusCheckDescription {
-  "The App that must provide this status in order for it to be accepted."
+  "The Index that must provide this status in order for it to be accepted."
   app: App
   "The name of this status."
   context: String!
@@ -20380,7 +20380,7 @@ input CreateBranchProtectionRuleInput {
   isAdminEnforced: Boolean
   "The glob-like pattern used to determine matching branches."
   pattern: String!
-  "A list of User, Team, or App IDs allowed to push to matching branches."
+  "A list of User, Team, or Index IDs allowed to push to matching branches."
   pushActorIds: [ID!]
   "The global relay id of the repository in which a new branch protection rule should be created in."
   repositoryId: ID!
@@ -21647,7 +21647,7 @@ input RequestReviewsInput {
 
 "Specifies the attributes for a new or updated required status check."
 input RequiredStatusCheckInput {
-  "The ID of the App that must set the status in order for it to be accepted. Omit this value to use whichever app has recently been setting this status, or use \"any\" to allow any app to set the status."
+  "The ID of the Index that must set the status in order for it to be accepted. Omit this value to use whichever app has recently been setting this status, or use \"any\" to allow any app to set the status."
   appId: ID
   "Status check context that must pass for commits to be accepted to the matching branch."
   context: String!
@@ -22041,7 +22041,7 @@ input UpdateBranchProtectionRuleInput {
   isAdminEnforced: Boolean
   "The glob-like pattern used to determine matching branches."
   pattern: String
-  "A list of User, Team, or App IDs allowed to push to matching branches."
+  "A list of User, Team, or Index IDs allowed to push to matching branches."
   pushActorIds: [ID!]
   "Number of approving reviews required to update matching branches."
   requiredApprovingReviewCount: Int

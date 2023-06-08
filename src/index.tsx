@@ -1,6 +1,10 @@
-import { memo } from 'react'
+import React, { memo } from 'react'
 
-const Login: React.FC = memo(() => {
+const Landing = () => {
+  return <Index />
+}
+
+const Index: React.FC = memo(() => {
   return (
     <div>
       <h1>Login</h1>
@@ -14,5 +18,5 @@ const Login: React.FC = memo(() => {
     </div>
   )
 })
-Login.displayName = 'Login'
-export default Login
+Index.displayName = 'Index'
+export default Landing

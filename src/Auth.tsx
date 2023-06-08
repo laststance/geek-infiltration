@@ -3,11 +3,12 @@ import axios from 'axios'
 import { useAtom } from 'jotai'
 import { useState, memo, useLayoutEffect } from 'react'
 
-import { accessTokenAtom } from '../atom'
-import App from '../pages/App'
-import Login from '../pages/Login'
+import Index from './App'
+import { accessTokenAtom } from './atom'
 
-const AuthController = memo(() => {
+import Landing from './index'
+
+const Auth = memo(() => {
   const [loading, setLoading] = useState(false)
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
 
@@ -38,7 +39,7 @@ const AuthController = memo(() => {
   }, [window.location.href.includes('?code=')])
 
   if (loading) <CircularProgress />
-  return accessToken ? <App /> : <Login />
+  return accessToken ? <Index /> : <Landing />
 })
-AuthController.displayName = 'AuthController'
-export default AuthController
+Auth.displayName = 'Auth'
+export default Auth

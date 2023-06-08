@@ -11,7 +11,7 @@ import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
 import './index.css'
-import AuthController from './controllers/AuthController'
+import Auth from './Auth'
 import { theme } from './theme'
 
 const queryClient = new QueryClient({
@@ -37,7 +37,7 @@ root.render(
     <CssBaseline />
     <JotaiProvider>
       <QueryClientProvider client={queryClient}>
-        <AuthController />
+        <Auth />
       </QueryClientProvider>
     </JotaiProvider>
   </ThemeProvider>
