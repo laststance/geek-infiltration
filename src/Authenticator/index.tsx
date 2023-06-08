@@ -11,9 +11,9 @@ import LandingPage from './LandingPage'
 const Authenticator = memo(() => {
   const [loading, setLoading] = useState(false)
   const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
-
+  const isAuthenticated = window.location.href.includes('?code=')
   useLayoutEffect(() => {
-    if (window.location.href.includes('?code=')) {
+    if (isAuthenticated) {
       const [url, code] = window.location.href.split('?code=')
       setLoading(() => true)
       axios
@@ -36,7 +36,7 @@ const Authenticator = memo(() => {
         })
       window.history.pushState({}, '', url.split('login')[0])
     }
-  }, [window.location.href.includes('?code=')])
+  }, [isAuthenticated])
 
   if (loading) <CircularProgress />
   return accessToken ? <App /> : <LandingPage />
