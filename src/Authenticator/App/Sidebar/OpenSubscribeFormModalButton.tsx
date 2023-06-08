@@ -8,10 +8,7 @@ interface Props {
 }
 const OpenSubscribeFormModalButton: React.FC<Props> = memo(({ openModal }) => {
   return (
-    <Button
-      sx={{ border: 0, fontSize: '30px', padding: '0 15px' }}
-      onClick={openModal}
-    >
+    <Button sx={{ border: 0, fontSize: '30px' }} onClick={openModal}>
       +
     </Button>
   )

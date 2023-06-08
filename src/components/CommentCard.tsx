@@ -78,7 +78,8 @@ const CommentCard: React.FC<Props> = memo(
         </CardContent>
       </Card>
     )
-  }
+  },
+  () => true
 )
 CommentCard.displayName = 'CommentCard'
 export default CommentCard

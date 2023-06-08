@@ -13,7 +13,7 @@ const AccountMenu: React.FC = memo(() => {
   }, [setAccessTokenAtom])
 
   return (
-    <Card sx={{ p: '20px 10px' }}>
+    <Card>
       <CardMedia>
         <Avatar
           onClick={logout}

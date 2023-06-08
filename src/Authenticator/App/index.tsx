@@ -1,3 +1,4 @@
+import { Container } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import { useAtomDevtools } from 'jotai-devtools'
 import type { PropsWithChildren } from 'react'
@@ -19,10 +20,10 @@ const App: React.FC = memo(() => {
   const subscribed = useAtomValue(subscribedAtom)
   useAtomDevtools(subscribedAtom)
   return (
-    <RootContainer>
+    <Container>
       <Sidebar />
       <TimelineContainer subscribed={subscribed} />
-    </RootContainer>
+    </Container>
   )
 })
 App.displayName = 'App'

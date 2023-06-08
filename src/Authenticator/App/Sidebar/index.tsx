@@ -10,8 +10,19 @@ import SubscribeFormModal from './SubscribeFormModal'
 
 const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
   <Stack
-    sx={{ border: 0, borderRadius: 0, h: '100vh', margin: 0, padding: 0 }}
-    direction="column"
+    sx={{
+      position: 'fixed',
+      top:0,
+      right: '70px',
+      border: 0,
+      borderRadius: 0,
+      margin: 0,
+      minHeight: '100vh',
+      minWidth: '70px',
+      padding: 0,
+    }}
+    direction="column-reverse"
+    gap={0}
   >
     {children}
   </Stack>
