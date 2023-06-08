@@ -9,9 +9,18 @@ interface Props {
   subscribed: [] | Subscribed
 }
 
-const TimelineContainer: React.FC<Props> = memo(({ subscribed }) => {
+const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
   return (
-    <Grid container spacing={2} gap={0.6}>
+    <Grid
+      container
+      sx={{
+        maxHeight: '100vh',
+        minHeight: '100vh',
+        minWidth: '100%',
+        overflow: 'scroll',
+      }}
+      component="section"
+    >
       {subscribed.length
         ? subscribed.map(({ username, selectedTimeline }: SerchQuery, i) => {
             return (
@@ -29,6 +38,6 @@ const TimelineContainer: React.FC<Props> = memo(({ subscribed }) => {
     </Grid>
   )
 })
-TimelineContainer.displayName = 'TimelineContainer'
+TimelineViewer.displayName = 'TimelineViewer'
 
-export default TimelineContainer
+export default TimelineViewer

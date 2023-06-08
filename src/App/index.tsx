@@ -6,7 +6,7 @@ import React, { memo } from 'react'
 import { subscribedAtom } from '../atom'
 
 import Sidebar from './Sidebar'
-import TimelineContainer from './TimelineViewer'
+import TimelineViewer from './TimelineViewer'
 
 const App: React.FC = memo(
   () => {
@@ -25,7 +25,7 @@ const App: React.FC = memo(
         }}
       >
         <Sidebar />
-        <TimelineContainer subscribed={subscribed} />
+        <TimelineViewer subscribed={subscribed} />
       </Container>
     )
   },
