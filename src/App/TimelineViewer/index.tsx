@@ -3,8 +3,7 @@ import React, { memo } from 'react'
 
 import type { SerchQuery, Subscribed } from '../../atom'
 
-import DiscussionComments from './TImeline/DiscussionComments'
-import PullRequest_Issue_Comments from './TImeline/PullRequest_Issue_Comments'
+import Timeline from './TImeline'
 
 interface Props {
   subscribed: [] | Subscribed
@@ -18,10 +17,10 @@ const TimelineContainer: React.FC<Props> = memo(({ subscribed }) => {
             return (
               <Grid xs={2.5} key={i}>
                 {selectedTimeline === 'PullRequestAndIssueComments' && (
-                  <PullRequest_Issue_Comments user={username} />
+                  <Timeline.PullRequest_Issue_Comments user={username} />
                 )}
                 {selectedTimeline === 'discussionComments' && (
-                  <DiscussionComments user={username} />
+                  <Timeline.DiscussionComments user={username} />
                 )}
               </Grid>
             )
