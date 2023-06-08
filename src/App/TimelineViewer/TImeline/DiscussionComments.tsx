@@ -2,17 +2,17 @@ import { CircularProgress, Container, List } from '@mui/material'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
-import { accessTokenAtom } from '../../atom'
-import CommentCard from '../../components/CommentCard'
-import { endpoint } from '../../constant'
-import { useGetDiscussionCommentsQuery } from '../../generated/graphql'
-import type { DiscussionComment, Actor } from '../../generated/graphql'
+import { accessTokenAtom } from '../../../atom'
+import CommentCard from '../../../components/CommentCard'
+import { endpoint } from '../../../constant'
+import { useGetDiscussionCommentsQuery } from '../../../generated/graphql'
+import type { DiscussionComment, Actor } from '../../../generated/graphql'
 
 interface Props {
   user: string
 }
 
-const DiscussionCommentsTimeline: React.FC<Props> = memo(({ user }) => {
+const DiscussionComments: React.FC<Props> = memo(({ user }) => {
   const accessToken = useAtomValue(accessTokenAtom)
 
   const { status, data, isFetching } = useGetDiscussionCommentsQuery(
@@ -68,6 +68,6 @@ const DiscussionCommentsTimeline: React.FC<Props> = memo(({ user }) => {
 
   return <div>Faild data loading.</div>
 })
-DiscussionCommentsTimeline.displayName = 'DiscussionCommentsTimeline'
+DiscussionComments.displayName = 'DiscussionCommentsTimeline'
 
-export default DiscussionCommentsTimeline
+export default DiscussionComments

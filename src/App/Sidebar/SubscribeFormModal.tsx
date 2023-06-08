@@ -81,10 +81,10 @@ const SubscribeFormModal: React.FC<Props> = memo(
                 <FormControl>
                   <RadioGroup
                     name="selectedTimeline"
-                    defaultValue="PullRequestAndIssueComments"
+                    defaultValue="PullRequest_Issue_Comments"
                   >
                     <FormControlLabel
-                      value="PullRequestAndIssueComments"
+                      value="PullRequest_Issue_Comments"
                       control={<Radio {...field} />}
                       label="PullRequest & Issue Comments"
                     />
