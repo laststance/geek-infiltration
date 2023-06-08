@@ -3,11 +3,10 @@ import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
 import { accessTokenAtom } from '../../atom'
+import CommentCard from '../../components/CommentCard'
 import { endpoint } from '../../constant'
 import { useGetIssueCommentsQuery } from '../../generated/graphql'
 import type { IssueComment, Actor } from '../../generated/graphql'
-
-import CommentCard from './CommentCard'
 
 interface Props {
   user: string

@@ -1,9 +1,10 @@
 import { Grid } from '@mui/material'
 import React, { memo } from 'react'
 
-import type { SerchQuery, Subscribed } from '../atom'
-import DiscussionCommentsTimeline from '../components/Timeline/DiscussionCommentsTimeline'
-import PullRequestAndIssueCommentsTimeline from '../components/Timeline/PullRequestAndIssueCommentsTimeline'
+import type { SerchQuery, Subscribed } from '../../atom'
+
+import DiscussionCommentsTimeline from './DiscussionCommentsTimeline'
+import PullRequestAndIssueCommentsTimeline from './PullRequestAndIssueCommentsTimeline'
 
 interface Props {
   subscribed: [] | Subscribed

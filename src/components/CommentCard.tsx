@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import React, { memo } from 'react'
 
-import type { Actor } from '../../generated/graphql'
+import type { Actor } from '../generated/graphql'
 
 interface Props {
   author: Actor

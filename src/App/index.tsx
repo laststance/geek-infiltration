@@ -6,7 +6,7 @@ import React, { memo } from 'react'
 import { subscribedAtom } from '../atom'
 
 import Sidebar from './Sidebar'
-import TimelineContainer from './TimelineContainer'
+import TimelineContainer from './TimelineViewer'
 
 const RootContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
   <div style={{ display: 'flex', height: '100vh', width: '100%' }}>
