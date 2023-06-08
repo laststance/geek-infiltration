@@ -4,9 +4,9 @@ import React, { memo } from 'react'
 
 import { accessTokenAtom } from '../../../atom'
 import CommentCard from '../../../components/CommentCard'
-import { endpoint } from '../../../constant'
 import { useGetDiscussionCommentsQuery } from '../../../generated/graphql'
 import type { DiscussionComment, Actor } from '../../../generated/graphql'
+import { endpoint } from '../../../variables/endpoint'
 
 interface Props {
   user: string

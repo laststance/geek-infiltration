@@ -11,9 +11,9 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
-import Auth from './Auth'
-import ErrorBoundary from './ErrorBoundary'
-import { theme } from './theme'
+import Authenticator from './Authenticator'
+import ErrorBoundary from './components/ErrorBoundary'
+import { theme } from './variables/theme'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,7 +64,7 @@ root.render(
       <CssBaseline />
       <JotaiProvider>
         <QueryClientProvider client={queryClient}>
-          <Auth />
+          <Authenticator />
         </QueryClientProvider>
       </JotaiProvider>
     </ThemeProvider>
