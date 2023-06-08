@@ -1,4 +1,4 @@
-import { Divider, Card } from '@mui/material'
+import { Divider, Stack } from '@mui/material'
 import type { PropsWithChildren } from 'react'
 import React, { memo } from 'react'
 
@@ -8,16 +8,21 @@ import AccountMenu from './AccountMenu'
 import OpenSubscribeFormModalButton from './OpenSubscribeFormModalButton'
 import SubscribeFormModal from './SubscribeFormModal'
 
-const CardContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
-  <Card sx={{ borderRadius: 0, h: '100%' }}>{children}</Card>
+const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
+  <Stack
+    sx={{ border: 0, borderRadius: 0, h: '100vh', margin: 0, padding: 0 }}
+    direction="column"
+  >
+    {children}
+  </Stack>
 ))
-CardContainer.displayName = 'Sidebar.CardContainer'
+SideBarContainer.displayName = 'Sidebar.Container'
 
 const Sidebar = memo(() => {
   const { isModalVisible, openModal, closeModal } = useModalControl()
 
   return (
-    <CardContainer>
+    <SideBarContainer>
       <OpenSubscribeFormModalButton openModal={openModal} />
       <SubscribeFormModal
         isModalVisible={isModalVisible}
@@ -25,7 +30,7 @@ const Sidebar = memo(() => {
       />
       <Divider />
       <AccountMenu />
-    </CardContainer>
+    </SideBarContainer>
   )
 })
 Sidebar.displayName = 'Sidebar'
