@@ -36,7 +36,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
       formState: { errors },
     } = useForm<FormData>({
       defaultValues: {
-        selectedTimeline: 'PullRequestAndIssueComments',
+        selectedTimeline: 'PullRequest_Issue_Comments',
         username: '',
       },
     })
@@ -51,7 +51,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
     }
 
     return (
-      <Modal open={isModalVisible} onClose={closeModal}>
+      <Modal open={isModalVisible} onClose={closeModal} component="section">
         <Stack>
           <Text>Enter GitHub Username</Text>
 
@@ -67,7 +67,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
                     aria-label="username"
                     fullWidth
                     color="primary"
-                    placeholder="ryota-murakami"
+                    placeholder="@username"
                   />
                   {errors.username && <Text color="error">required</Text>}
                 </>
@@ -80,17 +80,17 @@ const SubscribeFormModal: React.FC<Props> = memo(
               render={({ field }) => (
                 <FormControl>
                   <RadioGroup
-                    name="selectedTimeline"
                     defaultValue="PullRequest_Issue_Comments"
+                    {...field}
                   >
                     <FormControlLabel
                       value="PullRequest_Issue_Comments"
-                      control={<Radio {...field} />}
+                      control={<Radio />}
                       label="PullRequest & Issue Comments"
                     />
                     <FormControlLabel
                       value="discussionComments"
-                      control={<Radio {...field} />}
+                      control={<Radio />}
                       label="Disscussion Comments"
                     />
                     {errors.selectedTimeline && (

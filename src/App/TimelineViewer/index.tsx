@@ -25,7 +25,7 @@ const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
         ? subscribed.map(({ username, selectedTimeline }: SerchQuery, i) => {
             return (
               <Grid xs={2.5} key={i}>
-                {selectedTimeline === 'PullRequestAndIssueComments' && (
+                {selectedTimeline === 'PullRequest_Issue_Comments' && (
                   <Timeline.PullRequest_Issue_Comments user={username} />
                 )}
                 {selectedTimeline === 'discussionComments' && (

@@ -1,26 +1,26 @@
-import { Divider, Stack } from '@mui/material'
+import { Stack } from '@mui/material'
 import type { PropsWithChildren } from 'react'
 import React, { memo } from 'react'
 
 import useModalControl from '../../hooks/useModalControl'
 
 import UserMenuButton from './AccountMenu'
-import OpenSubscribeFormModalButton from './OpenSubscribeFormModalButton'
 import SubscribeFormModal from './SubscribeFormModal'
+import SubscribeFormModalButton from './SubscribeFormModalButton'
 
 const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
   <Stack
     sx={{
+      alignItems: 'center',
       border: 0,
-      borderRadius: 0,
       margin: 0,
       maxWidth: '70px',
       minHeight: '100%',
       minWidth: '70px',
-      padding: 0,
+      padding: '8px 0',
     }}
     direction="column-reverse"
-    gap={0}
+    gap={3}
     component="section"
   >
     {children}
@@ -32,15 +32,16 @@ const Sidebar = memo(() => {
   const { isModalVisible, openModal, closeModal } = useModalControl()
 
   return (
-    <SideBarContainer>
-      <OpenSubscribeFormModalButton openModal={openModal} />
+    <>
       <SubscribeFormModal
         isModalVisible={isModalVisible}
         closeModal={closeModal}
       />
-      <Divider />
-      <UserMenuButton />
-    </SideBarContainer>
+      <SideBarContainer>
+        <UserMenuButton />
+        <SubscribeFormModalButton openModal={openModal} />
+      </SideBarContainer>
+    </>
   )
 })
 Sidebar.displayName = 'Sidebar'
