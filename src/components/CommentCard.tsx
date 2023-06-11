@@ -4,7 +4,7 @@ import {
   CardContent,
   Link,
   Box,
-  Divider,
+  Grid,
   Avatar,
 } from '@mui/material'
 import React, { memo } from 'react'
@@ -43,28 +43,37 @@ const CommentCard: React.FC<Props> = memo(
         }}
       >
         <CardContent>
-          <Text>
-            <Link target="_blank" href={ticketLink}>
+          <Box>
+            <Link variant="subtitle2" target="_blank" href={ticketLink}>
               {repositoryName}
             </Link>
-          </Text>
+          </Box>
           <Box>
-            <Link href={commentLink} target="_blank">
-              <Text>{ticketTitle}</Text>
+            <Link
+              variant="h6"
+              href={commentLink}
+              target="_blank"
+              sx={{ color: 'text.primary' }}
+            >
+              {ticketTitle}
             </Link>
           </Box>
           <Box>
-            <Text>{ticketAuthorName}</Text>
-            <Divider />
-            <Text>{new Date(publishedAt).toLocaleString()}</Text>
+            <Text variant="caption">
+              {ticketAuthorName} {new Date(publishedAt).toLocaleString()}
+            </Text>
           </Box>
-          <Divider />
-          <Box>
-            <Avatar src={author.avatarUrl} alt={author.login}>
-              <Link href={author.url} target="_blank">
-                @{author.login}
-              </Link>
-            </Avatar>
+          <Box style={{ marginTop: '20px' }}>
+            <Grid container spacing={1}>
+              <Grid item>
+                <Avatar src={author.avatarUrl} alt={author.login} />
+              </Grid>
+              <Grid item>
+                <Link href={author.url} target="_blank">
+                  @{author.login}
+                </Link>
+              </Grid>
+            </Grid>
           </Box>
           <Box>
             <div
@@ -78,8 +87,7 @@ const CommentCard: React.FC<Props> = memo(
         </CardContent>
       </Card>
     )
-  },
-  () => true
+  }
 )
 CommentCard.displayName = 'CommentCard'
 export default CommentCard

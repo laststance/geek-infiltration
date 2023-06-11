@@ -1,4 +1,10 @@
-import { CircularProgress, Container, List } from '@mui/material'
+import {
+  CircularProgress,
+  Container,
+  List,
+  ListItem,
+  Typography as Text,
+} from '@mui/material'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
@@ -57,23 +63,24 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ user }) => {
               },
               i: number
             ) => (
-              <CommentCard
-                key={i}
-                author={author as Actor}
-                repositoryName={repository.nameWithOwner}
-                bodyHTML={bodyHTML}
-                commentLink={url}
-                publishedAt={publishedAt}
-                ticketAuthorName={issue.author!.login}
-                ticketLink={issue.url}
-                ticketTitle={issue.title}
-              />
+              <ListItem key={i}>
+                <CommentCard
+                  author={author as Actor}
+                  repositoryName={repository.nameWithOwner}
+                  bodyHTML={bodyHTML}
+                  commentLink={url}
+                  publishedAt={publishedAt}
+                  ticketAuthorName={issue.author!.login}
+                  ticketLink={issue.url}
+                  ticketTitle={issue.title}
+                />
+              </ListItem>
             )
           )}
       </List>
     )
 
-  return <div>Faild data loding.</div>
+  return <Text>Faild data loding.</Text>
 })
 PullRequest_Issue_Comments.displayName = 'RullRequest_Issue_Comments'
 

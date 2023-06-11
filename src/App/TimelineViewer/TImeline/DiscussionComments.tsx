@@ -1,4 +1,10 @@
-import { CircularProgress, Container, List } from '@mui/material'
+import {
+  CircularProgress,
+  Container,
+  List,
+  ListItem,
+  Typography as Text,
+} from '@mui/material'
 import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
@@ -50,23 +56,24 @@ const DiscussionComments: React.FC<Props> = memo(({ user }) => {
             { node: { author, bodyHTML, publishedAt, url, discussion } },
             i: number
           ) => (
-            <CommentCard
-              key={i}
-              author={author as Actor}
-              repositoryName={discussion!.repository.nameWithOwner}
-              bodyHTML={bodyHTML}
-              commentLink={url}
-              publishedAt={publishedAt}
-              ticketAuthorName={discussion!.author!.login}
-              ticketLink={discussion!.url}
-              ticketTitle={discussion!.title}
-            />
+            <ListItem key={i}>
+              <CommentCard
+                author={author as Actor}
+                repositoryName={discussion!.repository.nameWithOwner}
+                bodyHTML={bodyHTML}
+                commentLink={url}
+                publishedAt={publishedAt}
+                ticketAuthorName={discussion!.author!.login}
+                ticketLink={discussion!.url}
+                ticketTitle={discussion!.title}
+              />
+            </ListItem>
           )
         )}
       </List>
     )
 
-  return <div>Faild data loading.</div>
+  return <Text>Faild data loading.</Text>
 })
 DiscussionComments.displayName = 'DiscussionCommentsTimeline'
 
