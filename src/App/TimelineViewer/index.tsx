@@ -17,13 +17,14 @@ const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
         ? subscribed.map(({ username, selectedTimeline }: SearchQuery, i) => {
             return (
               <Grid
-                sx={{
+                style={{
                   maxHeight: '100vh',
+                  maxWidth: '344px',
                   minHeight: '100vh',
+                  minWidth: '344px',
                   overflow: 'scroll',
                 }}
                 item
-                xs={2.5}
                 key={i}
               >
                 {selectedTimeline === 'PullRequest_Issue_Comments' && (

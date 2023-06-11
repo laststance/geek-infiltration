@@ -43,20 +43,20 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
 
   if (status === 'loading' || isFetching)
     return (
-      <Box style={{ maxWidth: 360, textAlign: 'center', width: '100%' }}>
+      <Box style={{ textAlign: 'center', width: '100%' }}>
         <CircularProgress />
       </Box>
     )
 
   if (status === 'success' && data.length > 0)
     return (
-      <List sx={{ bgcolor: 'background.paper', maxWidth: 360, width: '100%' }}>
+      <List sx={{ bgcolor: 'background.paper', width: '100%' }}>
         {data.map(
           (
             { node: { author, bodyHTML, publishedAt, url, discussion } },
             i: number
           ) => (
-            <ListItem key={i}>
+            <ListItem disableGutters style={{ padding: '8px' }} key={i}>
               <CommentCard
                 author={author as Actor}
                 repositoryName={discussion!.repository.nameWithOwner}
