@@ -15,10 +15,10 @@ import type { DiscussionComment, Actor } from '../../../generated/graphql'
 import { endpoint } from '../../../variables/endpoint'
 
 interface Props {
-  user: string
+  username: string
 }
 
-const DiscussionComments: React.FC<Props> = memo(({ user }) => {
+const DiscussionComments: React.FC<Props> = memo(({ username }) => {
   const accessToken = useAtomValue(accessTokenAtom)
 
   const { status, data, isFetching } = useGetDiscussionCommentsQuery(
@@ -26,7 +26,7 @@ const DiscussionComments: React.FC<Props> = memo(({ user }) => {
       endpoint: endpoint,
       fetchParams: { headers: { authorization: `Bearer ${accessToken}` } },
     },
-    { query: user },
+    { query: username },
 
     {
       select: (data): { node: DiscussionComment }[] => {

@@ -3,7 +3,8 @@ import React, { memo } from 'react'
 
 import type { SearchQuery, Subscribed } from '../../atom'
 
-import Timeline from './TImeline'
+import DiscussionComments from './TImeline/DiscussionComments'
+import PullRequest_Issue_Comments from './TImeline/PullRequest_Issue_Comments'
 
 interface Props {
   subscribed: [] | Subscribed
@@ -11,25 +12,25 @@ interface Props {
 
 const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
   return (
-    <Grid
-      container
-      sx={{
-        maxHeight: '100vh',
-        minHeight: '100vh',
-        minWidth: '100%',
-        overflow: 'scroll',
-      }}
-      component="section"
-    >
+    <Grid container component="section">
       {subscribed.length
         ? subscribed.map(({ username, selectedTimeline }: SearchQuery, i) => {
             return (
-              <Grid item xs={2.5} key={i}>
+              <Grid
+                sx={{
+                  maxHeight: '100vh',
+                  minHeight: '100vh',
+                  overflow: 'scroll',
+                }}
+                item
+                xs={2.5}
+                key={i}
+              >
                 {selectedTimeline === 'PullRequest_Issue_Comments' && (
-                  <Timeline.PullRequest_Issue_Comments username={username} />
+                  <PullRequest_Issue_Comments username={username} />
                 )}
                 {selectedTimeline === 'discussionComments' && (
-                  <Timeline.DiscussionComments user={username} />
+                  <DiscussionComments username={username} />
                 )}
               </Grid>
             )
