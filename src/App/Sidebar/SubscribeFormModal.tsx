@@ -15,7 +15,7 @@ import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
 import { subscribedAtom } from '../../atom'
-import type { SerchQuery } from '../../atom'
+import type { SearchQuery } from '../../atom'
 import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
 
 interface Props {
@@ -24,8 +24,8 @@ interface Props {
 }
 
 interface FormData {
-  username: SerchQuery['username']
-  selectedTimeline: SerchQuery['selectedTimeline']
+  username: SearchQuery['username']
+  selectedTimeline: SearchQuery['selectedTimeline']
 }
 
 const SubscribeFormModal: React.FC<Props> = memo(

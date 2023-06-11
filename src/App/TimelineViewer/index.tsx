@@ -1,7 +1,7 @@
 import { Grid } from '@mui/material'
 import React, { memo } from 'react'
 
-import type { SerchQuery, Subscribed } from '../../atom'
+import type { SearchQuery, Subscribed } from '../../atom'
 
 import Timeline from './TImeline'
 
@@ -22,7 +22,7 @@ const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
       component="section"
     >
       {subscribed.length
-        ? subscribed.map(({ username, selectedTimeline }: SerchQuery, i) => {
+        ? subscribed.map(({ username, selectedTimeline }: SearchQuery, i) => {
             return (
               <Grid item xs={2.5} key={i}>
                 {selectedTimeline === 'PullRequest_Issue_Comments' && (
