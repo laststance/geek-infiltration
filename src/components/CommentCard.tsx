@@ -34,14 +34,7 @@ const CommentCard: React.FC<Props> = memo(
     bodyHTML,
   }) => {
     return (
-      <Card
-        sx={{
-          borderBottomColor: 'rgba(77, 77, 77, 0.7)',
-          borderBottomWidth: '1px',
-          borderTopColor: 'rgba(77, 77, 77, 0.7)',
-          borderTopWidth: '1px',
-        }}
-      >
+      <Card style={{ borderRadius: '20px' }}>
         <CardContent>
           <Box>
             <Link variant="subtitle2" target="_blank" href={ticketLink}>
