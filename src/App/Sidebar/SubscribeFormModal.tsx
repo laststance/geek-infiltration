@@ -1,9 +1,11 @@
 import {
-  Modal,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContent,
   Typography as Text,
   Radio,
   Button,
-  Box,
   TextField,
   FormControl,
   RadioGroup,
@@ -51,63 +53,64 @@ const SubscribeFormModal: React.FC<Props> = memo(
     }
 
     return (
-      <Modal open={isModalVisible} onClose={closeModal} component="section">
-        <Stack>
-          <Text>Enter GitHub Username</Text>
-
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Controller
-              name="username"
-              rules={{ required: true }}
-              control={control}
-              render={({ field }) => (
-                <>
-                  <TextField
-                    {...field}
-                    aria-label="username"
-                    fullWidth
-                    color="primary"
-                    placeholder="@username"
-                  />
-                  {errors.username && <Text color="error">required</Text>}
-                </>
-              )}
-            />
-            <Controller
-              name="selectedTimeline"
-              rules={{ required: true }}
-              control={control}
-              render={({ field }) => (
-                <FormControl>
-                  <RadioGroup
-                    defaultValue="PullRequest_Issue_Comments"
-                    {...field}
-                  >
-                    <FormControlLabel
-                      value="PullRequest_Issue_Comments"
-                      control={<Radio />}
-                      label="PullRequest & Issue Comments"
+      <Dialog open={isModalVisible} onClose={closeModal}>
+        <DialogTitle>Enter GitHub Username</DialogTitle>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <DialogContent>
+            <Stack spacing={1}>
+              <Controller
+                name="username"
+                rules={{ required: true }}
+                control={control}
+                render={({ field }) => (
+                  <>
+                    <TextField
+                      {...field}
+                      aria-label="username"
+                      fullWidth
+                      color="primary"
+                      placeholder="@username"
                     />
-                    <FormControlLabel
-                      value="discussionComments"
-                      control={<Radio />}
-                      label="Disscussion Comments"
-                    />
-                    {errors.selectedTimeline && (
-                      <Text color="error">required</Text>
-                    )}
-                  </RadioGroup>
-                </FormControl>
-              )}
-            />
+                    {errors.username && <Text color="error">required</Text>}
+                  </>
+                )}
+              />
 
-            <Box>
-              <Button type="submit">Add</Button>
-              <Button onClick={closeModal}>Close</Button>
-            </Box>
-          </form>
-        </Stack>
-      </Modal>
+              <Controller
+                name="selectedTimeline"
+                rules={{ required: true }}
+                control={control}
+                render={({ field }) => (
+                  <FormControl>
+                    <RadioGroup
+                      defaultValue="PullRequest_Issue_Comments"
+                      {...field}
+                    >
+                      <FormControlLabel
+                        value="PullRequest_Issue_Comments"
+                        control={<Radio />}
+                        label="PullRequest & Issue Comments"
+                      />
+                      <FormControlLabel
+                        value="discussionComments"
+                        control={<Radio />}
+                        label="Disscussion Comments"
+                      />
+                      {errors.selectedTimeline && (
+                        <Text color="error">required</Text>
+                      )}
+                    </RadioGroup>
+                  </FormControl>
+                )}
+              />
+            </Stack>
+          </DialogContent>
+          <DialogActions>
+            <Button type="submit">Add</Button>
+            <Button onClick={closeModal}>Close</Button>
+          </DialogActions>
+        </form>
+      </Dialog>
     )
   }
 )
