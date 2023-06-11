@@ -26,7 +26,7 @@ const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
             return (
               <Grid item xs={2.5} key={i}>
                 {selectedTimeline === 'PullRequest_Issue_Comments' && (
-                  <Timeline.PullRequest_Issue_Comments user={username} />
+                  <Timeline.PullRequest_Issue_Comments username={username} />
                 )}
                 {selectedTimeline === 'discussionComments' && (
                   <Timeline.DiscussionComments user={username} />

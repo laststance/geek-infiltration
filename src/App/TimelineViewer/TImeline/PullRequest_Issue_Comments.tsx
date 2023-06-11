@@ -15,7 +15,7 @@ import type { IssueComment, Actor } from '../../../generated/graphql'
 import { endpoint } from '../../../variables/endpoint'
 
 interface Props {
-  user: string
+  username: string
 }
 
 /**
@@ -23,14 +23,14 @@ interface Props {
  * But the Github API spec does not distinguish between them.
  * So currently I can only view them at the same time.
  */
-const PullRequest_Issue_Comments: React.FC<Props> = memo(({ user }) => {
+const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
   const accessToken = useAtomValue(accessTokenAtom)
   const { status, data, isFetching } = useGetIssueCommentsQuery(
     {
       endpoint: endpoint,
       fetchParams: { headers: { authorization: `Bearer ${accessToken}` } },
     },
-    { query: user },
+    { query: username },
 
     {
       select: (data): { node: IssueComment }[] => {

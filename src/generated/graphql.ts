@@ -157,7 +157,7 @@ export type ActorLocation = {
 export enum ActorType {
   /** Indicates a team actor. */
   Team = 'TEAM',
-  /** Indicates a user actor. */
+  /** Indicates a username actor. */
   User = 'USER',
 }
 
@@ -641,13 +641,13 @@ export type AssignedEvent = Node & {
   actor?: Maybe<Actor>
   /** Identifies the assignable associated with the event. */
   assignable: Assignable
-  /** Identifies the user or mannequin that was assigned. */
+  /** Identifies the username or mannequin that was assigned. */
   assignee?: Maybe<Assignee>
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
   id: Scalars['ID']
   /**
-   * Identifies the user who was assigned.
+   * Identifies the username who was assigned.
    * @deprecated Assignees can now be mannequins. Use the `assignee` field instead. Removal on 2020-01-01 UTC.
    */
   user?: Maybe<User>
@@ -660,13 +660,13 @@ export type Assignee = Bot | Mannequin | Organization | User
 export type AuditEntry = {
   /** The action name */
   action: Scalars['String']
-  /** The user who initiated the action */
+  /** The username who initiated the action */
   actor?: Maybe<AuditEntryActor>
   /** The IP address of the actor */
   actorIp?: Maybe<Scalars['String']>
   /** A readable representation of the actor's location */
   actorLocation?: Maybe<ActorLocation>
-  /** The username of the user who initiated the action */
+  /** The username of the username who initiated the action */
   actorLogin?: Maybe<Scalars['String']>
   /** The HTTP path for the actor. */
   actorResourcePath?: Maybe<Scalars['URI']>
@@ -676,13 +676,13 @@ export type AuditEntry = {
   createdAt: Scalars['PreciseDateTime']
   /** The corresponding operation type for the action */
   operationType?: Maybe<OperationType>
-  /** The user affected by the action */
+  /** The username affected by the action */
   user?: Maybe<User>
-  /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+  /** For actions involving two users, the actor is the initiator and the username is the affected username. */
   userLogin?: Maybe<Scalars['String']>
-  /** The HTTP path for the user. */
+  /** The HTTP path for the username. */
   userResourcePath?: Maybe<Scalars['URI']>
-  /** The HTTP URL for the user. */
+  /** The HTTP URL for the username. */
   userUrl?: Maybe<Scalars['URI']>
 }
 
@@ -710,7 +710,7 @@ export type AutoMergeDisabledEvent = Node & {
   actor?: Maybe<Actor>
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** The user who disabled auto-merge for this Pull Request */
+  /** The username who disabled auto-merge for this Pull Request */
   disabler?: Maybe<User>
   id: Scalars['ID']
   /** PullRequest referenced by event */
@@ -728,7 +728,7 @@ export type AutoMergeEnabledEvent = Node & {
   actor?: Maybe<Actor>
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** The user who enabled auto-merge for this Pull Request */
+  /** The username who enabled auto-merge for this Pull Request */
   enabler?: Maybe<User>
   id: Scalars['ID']
   /** PullRequest referenced by event. */
@@ -761,7 +761,7 @@ export type AutoRebaseEnabledEvent = Node & {
   actor?: Maybe<Actor>
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** The user who enabled auto-merge (rebase) for this Pull Request */
+  /** The username who enabled auto-merge (rebase) for this Pull Request */
   enabler?: Maybe<User>
   id: Scalars['ID']
   /** PullRequest referenced by event. */
@@ -775,7 +775,7 @@ export type AutoSquashEnabledEvent = Node & {
   actor?: Maybe<Actor>
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** The user who enabled auto-merge (squash) for this Pull Request */
+  /** The username who enabled auto-merge (squash) for this Pull Request */
   enabler?: Maybe<User>
   id: Scalars['ID']
   /** PullRequest referenced by event. */
@@ -909,7 +909,7 @@ export type Blob = GitObject &
     text?: Maybe<Scalars['String']>
   }
 
-/** A special type of user which takes actions on behalf of GitHub Apps. */
+/** A special type of username which takes actions on behalf of GitHub Apps. */
 export type Bot = Actor &
   Node &
   UniformResourceLocatable & {
@@ -931,7 +931,7 @@ export type Bot = Actor &
     url: Scalars['URI']
   }
 
-/** A special type of user which takes actions on behalf of GitHub Apps. */
+/** A special type of username which takes actions on behalf of GitHub Apps. */
 export type BotAvatarUrlArgs = {
   size?: InputMaybe<Scalars['Int']>
 }
@@ -1103,12 +1103,12 @@ export type BranchProtectionRuleEdge = {
   node?: Maybe<BranchProtectionRule>
 }
 
-/** A team or user who has the ability to bypass a force push requirement on a protected branch. */
+/** A team or username who has the ability to bypass a force push requirement on a protected branch. */
 export type BypassForcePushAllowance = Node & {
   __typename?: 'BypassForcePushAllowance'
   /** The actor that can dismiss. */
   actor?: Maybe<BranchActorAllowanceActor>
-  /** Identifies the branch protection rule associated with the allowed user or team. */
+  /** Identifies the branch protection rule associated with the allowed username or team. */
   branchProtectionRule?: Maybe<BranchProtectionRule>
   id: Scalars['ID']
 }
@@ -1135,12 +1135,12 @@ export type BypassForcePushAllowanceEdge = {
   node?: Maybe<BypassForcePushAllowance>
 }
 
-/** A team or user who has the ability to bypass a pull request requirement on a protected branch. */
+/** A team or username who has the ability to bypass a pull request requirement on a protected branch. */
 export type BypassPullRequestAllowance = Node & {
   __typename?: 'BypassPullRequestAllowance'
   /** The actor that can dismiss. */
   actor?: Maybe<BranchActorAllowanceActor>
-  /** Identifies the branch protection rule associated with the allowed user or team. */
+  /** Identifies the branch protection rule associated with the allowed username or team. */
   branchProtectionRule?: Maybe<BranchProtectionRule>
   id: Scalars['ID']
 }
@@ -1233,13 +1233,13 @@ export type CancelEnterpriseAdminInvitationPayload = {
 export type CancelSponsorshipInput = {
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']>
-  /** The ID of the user or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorLogin is not given. */
+  /** The ID of the username or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorLogin is not given. */
   sponsorId?: InputMaybe<Scalars['ID']>
-  /** The username of the user or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorId is not given. */
+  /** The username of the username or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorId is not given. */
   sponsorLogin?: InputMaybe<Scalars['String']>
-  /** The ID of the user or organization who is receiving the sponsorship. Required if sponsorableLogin is not given. */
+  /** The ID of the username or organization who is receiving the sponsorship. Required if sponsorableLogin is not given. */
   sponsorableId?: InputMaybe<Scalars['ID']>
-  /** The username of the user or organization who is receiving the sponsorship. Required if sponsorableId is not given. */
+  /** The username of the username or organization who is receiving the sponsorship. Required if sponsorableId is not given. */
   sponsorableLogin?: InputMaybe<Scalars['String']>
 }
 
@@ -1258,7 +1258,7 @@ export type ChangeUserStatusInput = {
   clientMutationId?: InputMaybe<Scalars['String']>
   /** The emoji to represent your status. Can either be a native Unicode emoji or an emoji name with colons, e.g., :grinning:. */
   emoji?: InputMaybe<Scalars['String']>
-  /** If set, the user status will not be shown after this date. */
+  /** If set, the username status will not be shown after this date. */
   expiresAt?: InputMaybe<Scalars['DateTime']>
   /** Whether this status should indicate you are not fully available on GitHub, e.g., you are away. */
   limitedAvailability?: InputMaybe<Scalars['Boolean']>
@@ -1621,7 +1621,7 @@ export type CheckSuite = Node & {
   conclusion?: Maybe<CheckConclusionState>
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** The user who triggered the check suite. */
+  /** The username who triggered the check suite. */
   creator?: Maybe<User>
   /** Identifies the primary key from the database. */
   databaseId?: Maybe<Scalars['Int']>
@@ -1859,7 +1859,7 @@ export type CodeOfConduct = Node & {
 
 /** Collaborators affiliation level with a subject. */
 export enum CollaboratorAffiliation {
-  /** All collaborators the authenticated user can see. */
+  /** All collaborators the authenticated username can see. */
   All = 'ALL',
   /** All collaborators with permissions to an organization-owned subject, regardless of organization membership status. */
   Direct = 'DIRECT',
@@ -1918,7 +1918,7 @@ export enum CommentAuthorAssociation {
   FirstTimer = 'FIRST_TIMER',
   /** Author has not previously committed to the repository. */
   FirstTimeContributor = 'FIRST_TIME_CONTRIBUTOR',
-  /** Author is a placeholder for an unclaimed user. */
+  /** Author is a placeholder for an unclaimed username. */
   Mannequin = 'MANNEQUIN',
   /** Author is a member of the organization that owns the repository. */
   Member = 'MEMBER',
@@ -1928,7 +1928,7 @@ export enum CommentAuthorAssociation {
   Owner = 'OWNER',
 }
 
-/** The possible errors that will prevent a user from updating a comment. */
+/** The possible errors that will prevent a username from updating a comment. */
 export enum CommentCannotUpdateReason {
   /** Unable to create comment because repository is archived. */
   Archived = 'ARCHIVED',
@@ -1955,7 +1955,7 @@ export type CommentDeletedEvent = Node & {
   createdAt: Scalars['DateTime']
   /** Identifies the primary key from the database. */
   databaseId?: Maybe<Scalars['Int']>
-  /** The user who authored the deleted comment. */
+  /** The username who authored the deleted comment. */
   deletedCommentAuthor?: Maybe<Actor>
   id: Scalars['ID']
 }
@@ -2150,7 +2150,7 @@ export type CommitSubmodulesArgs = {
 export type CommitAuthor = {
   /** Email addresses to filter by. Commits authored by any of the specified email addresses will be returned. */
   emails?: InputMaybe<Array<Scalars['String']>>
-  /** ID of a User to filter by. If non-null, only commits authored by this user will be returned. This field takes precedence over emails. */
+  /** ID of a User to filter by. If non-null, only commits authored by this username will be returned. This field takes precedence over emails. */
   id?: InputMaybe<Scalars['ID']>
 }
 
@@ -2217,7 +2217,7 @@ export type CommitComment = Comment &
     viewerCanDelete: Scalars['Boolean']
     /** Check if the current viewer can minimize this object. */
     viewerCanMinimize: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the current viewer can update this object. */
     viewerCanUpdate: Scalars['Boolean']
@@ -2321,20 +2321,20 @@ export enum CommitContributionOrderField {
   OccurredAt = 'OCCURRED_AT',
 }
 
-/** This aggregates commits made by a user within one repository. */
+/** This aggregates commits made by a username within one repository. */
 export type CommitContributionsByRepository = {
   __typename?: 'CommitContributionsByRepository'
   /** The commit contributions, each representing a day. */
   contributions: CreatedCommitContributionConnection
   /** The repository in which the commits were made. */
   repository: Repository
-  /** The HTTP path for the user's commits to the repository in this time range. */
+  /** The HTTP path for the username's commits to the repository in this time range. */
   resourcePath: Scalars['URI']
-  /** The HTTP URL for the user's commits to the repository in this time range. */
+  /** The HTTP URL for the username's commits to the repository in this time range. */
   url: Scalars['URI']
 }
 
-/** This aggregates commits made by a user within one repository. */
+/** This aggregates commits made by a username within one repository. */
 export type CommitContributionsByRepositoryContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -2421,7 +2421,7 @@ export type ConnectedEvent = Node & {
   subject: ReferencedSubject
 }
 
-/** Represents a contribution a user made on GitHub, such as opening an issue. */
+/** Represents a contribution a username made on GitHub, such as opening an issue. */
 export type Contribution = {
   /**
    * Whether this contribution is associated with a record you do not have access to. For
@@ -2435,11 +2435,11 @@ export type Contribution = {
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
-/** A calendar of contributions made on GitHub by a user. */
+/** A calendar of contributions made on GitHub by a username. */
 export type ContributionCalendar = {
   __typename?: 'ContributionCalendar'
   /** A list of hex color codes used in this calendar. The darker the color, the more contributions it represents. */
@@ -2454,12 +2454,12 @@ export type ContributionCalendar = {
   weeks: Array<ContributionCalendarWeek>
 }
 
-/** Represents a single day of contributions on GitHub by a user. */
+/** Represents a single day of contributions on GitHub by a username. */
 export type ContributionCalendarDay = {
   __typename?: 'ContributionCalendarDay'
   /** The hex color code that represents how many contributions were made on this day compared to others in the calendar. */
   color: Scalars['String']
-  /** How many contributions were made by the user on this day. */
+  /** How many contributions were made by the username on this day. */
   contributionCount: Scalars['Int']
   /** Indication of contributions, relative to other days. Can be used to indicate which color to represent this day on a calendar. */
   contributionLevel: ContributionLevel
@@ -2469,7 +2469,7 @@ export type ContributionCalendarDay = {
   weekday: Scalars['Int']
 }
 
-/** A month of contributions in a user's contribution graph. */
+/** A month of contributions in a username's contribution graph. */
 export type ContributionCalendarMonth = {
   __typename?: 'ContributionCalendarMonth'
   /** The date of the first day of this month. */
@@ -2482,7 +2482,7 @@ export type ContributionCalendarMonth = {
   year: Scalars['Int']
 }
 
-/** A week of contributions in a user's contribution graph. */
+/** A week of contributions in a username's contribution graph. */
 export type ContributionCalendarWeek = {
   __typename?: 'ContributionCalendarWeek'
   /** The days of contributions in this week. */
@@ -2511,45 +2511,45 @@ export type ContributionOrder = {
   direction: OrderDirection
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollection = {
   __typename?: 'ContributionsCollection'
-  /** Commit contributions made by the user, grouped by repository. */
+  /** Commit contributions made by the username, grouped by repository. */
   commitContributionsByRepository: Array<CommitContributionsByRepository>
-  /** A calendar of this user's contributions on GitHub. */
+  /** A calendar of this username's contributions on GitHub. */
   contributionCalendar: ContributionCalendar
-  /** The years the user has been making contributions with the most recent year first. */
+  /** The years the username has been making contributions with the most recent year first. */
   contributionYears: Array<Scalars['Int']>
   /** Determine if this collection's time span ends in the current month. */
   doesEndInCurrentMonth: Scalars['Boolean']
-  /** The date of the first restricted contribution the user made in this time period. Can only be non-null when the user has enabled private contribution counts. */
+  /** The date of the first restricted contribution the username made in this time period. Can only be non-null when the username has enabled private contribution counts. */
   earliestRestrictedContributionDate?: Maybe<Scalars['Date']>
   /** The ending date and time of this collection. */
   endedAt: Scalars['DateTime']
-  /** The first issue the user opened on GitHub. This will be null if that issue was opened outside the collection's time range and ignoreTimeRange is false. If the issue is not visible but the user has opted to show private contributions, a RestrictedContribution will be returned. */
+  /** The first issue the username opened on GitHub. This will be null if that issue was opened outside the collection's time range and ignoreTimeRange is false. If the issue is not visible but the username has opted to show private contributions, a RestrictedContribution will be returned. */
   firstIssueContribution?: Maybe<CreatedIssueOrRestrictedContribution>
-  /** The first pull request the user opened on GitHub. This will be null if that pull request was opened outside the collection's time range and ignoreTimeRange is not true. If the pull request is not visible but the user has opted to show private contributions, a RestrictedContribution will be returned. */
+  /** The first pull request the username opened on GitHub. This will be null if that pull request was opened outside the collection's time range and ignoreTimeRange is not true. If the pull request is not visible but the username has opted to show private contributions, a RestrictedContribution will be returned. */
   firstPullRequestContribution?: Maybe<CreatedPullRequestOrRestrictedContribution>
-  /** The first repository the user created on GitHub. This will be null if that first repository was created outside the collection's time range and ignoreTimeRange is false. If the repository is not visible, then a RestrictedContribution is returned. */
+  /** The first repository the username created on GitHub. This will be null if that first repository was created outside the collection's time range and ignoreTimeRange is false. If the repository is not visible, then a RestrictedContribution is returned. */
   firstRepositoryContribution?: Maybe<CreatedRepositoryOrRestrictedContribution>
-  /** Does the user have any more activity in the timeline that occurred prior to the collection's time range? */
+  /** Does the username have any more activity in the timeline that occurred prior to the collection's time range? */
   hasActivityInThePast: Scalars['Boolean']
   /** Determine if there are any contributions in this collection. */
   hasAnyContributions: Scalars['Boolean']
-  /** Determine if the user made any contributions in this time frame whose details are not visible because they were made in a private repository. Can only be true if the user enabled private contribution counts. */
+  /** Determine if the username made any contributions in this time frame whose details are not visible because they were made in a private repository. Can only be true if the username enabled private contribution counts. */
   hasAnyRestrictedContributions: Scalars['Boolean']
   /** Whether or not the collector's time span is all within the same day. */
   isSingleDay: Scalars['Boolean']
-  /** A list of issues the user opened. */
+  /** A list of issues the username opened. */
   issueContributions: CreatedIssueContributionConnection
-  /** Issue contributions made by the user, grouped by repository. */
+  /** Issue contributions made by the username, grouped by repository. */
   issueContributionsByRepository: Array<IssueContributionsByRepository>
-  /** When the user signed up for GitHub. This will be null if that sign up date falls outside the collection's time range and ignoreTimeRange is false. */
+  /** When the username signed up for GitHub. This will be null if that sign up date falls outside the collection's time range and ignoreTimeRange is false. */
   joinedGitHubContribution?: Maybe<JoinedGitHubContribution>
-  /** The date of the most recent restricted contribution the user made in this time period. Can only be non-null when the user has enabled private contribution counts. */
+  /** The date of the most recent restricted contribution the username made in this time period. Can only be non-null when the username has enabled private contribution counts. */
   latestRestrictedContributionDate?: Maybe<Scalars['Date']>
   /**
-   * When this collection's time range does not include any activity from the user, use this
+   * When this collection's time range does not include any activity from the username, use this
    * to get a different collection from an earlier time range that does have activity.
    */
   mostRecentCollectionWithActivity?: Maybe<ContributionsCollection>
@@ -2559,57 +2559,57 @@ export type ContributionsCollection = {
    */
   mostRecentCollectionWithoutActivity?: Maybe<ContributionsCollection>
   /**
-   * The issue the user opened on GitHub that received the most comments in the specified
+   * The issue the username opened on GitHub that received the most comments in the specified
    * time frame.
    */
   popularIssueContribution?: Maybe<CreatedIssueContribution>
   /**
-   * The pull request the user opened on GitHub that received the most comments in the
+   * The pull request the username opened on GitHub that received the most comments in the
    * specified time frame.
    */
   popularPullRequestContribution?: Maybe<CreatedPullRequestContribution>
-  /** Pull request contributions made by the user. */
+  /** Pull request contributions made by the username. */
   pullRequestContributions: CreatedPullRequestContributionConnection
-  /** Pull request contributions made by the user, grouped by repository. */
+  /** Pull request contributions made by the username, grouped by repository. */
   pullRequestContributionsByRepository: Array<PullRequestContributionsByRepository>
-  /** Pull request review contributions made by the user. */
+  /** Pull request review contributions made by the username. */
   pullRequestReviewContributions: CreatedPullRequestReviewContributionConnection
-  /** Pull request review contributions made by the user, grouped by repository. */
+  /** Pull request review contributions made by the username, grouped by repository. */
   pullRequestReviewContributionsByRepository: Array<PullRequestReviewContributionsByRepository>
-  /** A list of repositories owned by the user that the user created in this time range. */
+  /** A list of repositories owned by the username that the username created in this time range. */
   repositoryContributions: CreatedRepositoryContributionConnection
-  /** A count of contributions made by the user that the viewer cannot access. Only non-zero when the user has chosen to share their private contribution counts. */
+  /** A count of contributions made by the username that the viewer cannot access. Only non-zero when the username has chosen to share their private contribution counts. */
   restrictedContributionsCount: Scalars['Int']
   /** The beginning date and time of this collection. */
   startedAt: Scalars['DateTime']
-  /** How many commits were made by the user in this time span. */
+  /** How many commits were made by the username in this time span. */
   totalCommitContributions: Scalars['Int']
-  /** How many issues the user opened. */
+  /** How many issues the username opened. */
   totalIssueContributions: Scalars['Int']
-  /** How many pull requests the user opened. */
+  /** How many pull requests the username opened. */
   totalPullRequestContributions: Scalars['Int']
-  /** How many pull request reviews the user left. */
+  /** How many pull request reviews the username left. */
   totalPullRequestReviewContributions: Scalars['Int']
-  /** How many different repositories the user committed to. */
+  /** How many different repositories the username committed to. */
   totalRepositoriesWithContributedCommits: Scalars['Int']
-  /** How many different repositories the user opened issues in. */
+  /** How many different repositories the username opened issues in. */
   totalRepositoriesWithContributedIssues: Scalars['Int']
-  /** How many different repositories the user left pull request reviews in. */
+  /** How many different repositories the username left pull request reviews in. */
   totalRepositoriesWithContributedPullRequestReviews: Scalars['Int']
-  /** How many different repositories the user opened pull requests in. */
+  /** How many different repositories the username opened pull requests in. */
   totalRepositoriesWithContributedPullRequests: Scalars['Int']
-  /** How many repositories the user created. */
+  /** How many repositories the username created. */
   totalRepositoryContributions: Scalars['Int']
-  /** The user who made the contributions in this collection. */
+  /** The username who made the contributions in this collection. */
   user: User
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionCommitContributionsByRepositoryArgs = {
   maxRepositories?: InputMaybe<Scalars['Int']>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionIssueContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -2620,14 +2620,14 @@ export type ContributionsCollectionIssueContributionsArgs = {
   orderBy?: InputMaybe<ContributionOrder>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionIssueContributionsByRepositoryArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']>
   excludePopular?: InputMaybe<Scalars['Boolean']>
   maxRepositories?: InputMaybe<Scalars['Int']>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionPullRequestContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -2638,14 +2638,14 @@ export type ContributionsCollectionPullRequestContributionsArgs = {
   orderBy?: InputMaybe<ContributionOrder>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionPullRequestContributionsByRepositoryArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']>
   excludePopular?: InputMaybe<Scalars['Boolean']>
   maxRepositories?: InputMaybe<Scalars['Int']>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionPullRequestReviewContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -2654,13 +2654,13 @@ export type ContributionsCollectionPullRequestReviewContributionsArgs = {
   orderBy?: InputMaybe<ContributionOrder>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionPullRequestReviewContributionsByRepositoryArgs =
   {
     maxRepositories?: InputMaybe<Scalars['Int']>
   }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionRepositoryContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -2670,33 +2670,33 @@ export type ContributionsCollectionRepositoryContributionsArgs = {
   orderBy?: InputMaybe<ContributionOrder>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionTotalIssueContributionsArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']>
   excludePopular?: InputMaybe<Scalars['Boolean']>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionTotalPullRequestContributionsArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']>
   excludePopular?: InputMaybe<Scalars['Boolean']>
 }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionTotalRepositoriesWithContributedIssuesArgs =
   {
     excludeFirst?: InputMaybe<Scalars['Boolean']>
     excludePopular?: InputMaybe<Scalars['Boolean']>
   }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionTotalRepositoriesWithContributedPullRequestsArgs =
   {
     excludeFirst?: InputMaybe<Scalars['Boolean']>
     excludePopular?: InputMaybe<Scalars['Boolean']>
   }
 
-/** A contributions collection aggregates contributions such as opened issues and commits created by a user. */
+/** A contributions collection aggregates contributions such as opened issues and commits created by a username. */
 export type ContributionsCollectionTotalRepositoryContributionsArgs = {
   excludeFirst?: InputMaybe<Scalars['Boolean']>
 }
@@ -2845,7 +2845,7 @@ export type CreateBranchProtectionRulePayload = {
 
 /** Autogenerated input type of CreateCheckRun */
 export type CreateCheckRunInput = {
-  /** Possible further actions the integrator can perform, which a user may trigger. */
+  /** Possible further actions the integrator can perform, which a username may trigger. */
   actions?: InputMaybe<Array<CheckRunAction>>
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']>
@@ -3018,7 +3018,7 @@ export type CreateIpAllowListEntryPayload = {
 
 /** Autogenerated input type of CreateIssue */
 export type CreateIssueInput = {
-  /** The Node ID for the user assignee for this issue. */
+  /** The Node ID for the username assignee for this issue. */
   assigneeIds?: InputMaybe<Array<Scalars['ID']>>
   /** The body for the issue description. */
   body?: InputMaybe<Scalars['String']>
@@ -3053,7 +3053,7 @@ export type CreateMigrationSourceInput = {
   accessToken?: InputMaybe<Scalars['String']>
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']>
-  /** The GitHub personal access token of the user importing to the target repository. */
+  /** The GitHub personal access token of the username importing to the target repository. */
   githubPat?: InputMaybe<Scalars['String']>
   /** The Octoshift migration source name. */
   name: Scalars['String']
@@ -3115,7 +3115,7 @@ export type CreatePullRequestInput = {
   draft?: InputMaybe<Scalars['Boolean']>
   /**
    * The name of the branch where your changes are implemented. For cross-repository pull requests
-   * in the same network, namespace `head_ref_name` with a user like this: `username:branch`.
+   * in the same network, namespace `head_ref_name` with a username like this: `username:branch`.
    */
   headRefName: Scalars['String']
   /** Indicates whether maintainers can modify the pull request. */
@@ -3207,9 +3207,9 @@ export type CreateSponsorsTierInput = {
   repositoryName?: InputMaybe<Scalars['String']>
   /** Optional login of the organization owner of the private repository that sponsors at this tier should gain read-only access to. Necessary if repositoryName is given. Will be ignored if repositoryId is given. */
   repositoryOwnerLogin?: InputMaybe<Scalars['String']>
-  /** The ID of the user or organization who owns the GitHub Sponsors profile. Defaults to the current user if omitted and sponsorableLogin is not given. */
+  /** The ID of the username or organization who owns the GitHub Sponsors profile. Defaults to the current username if omitted and sponsorableLogin is not given. */
   sponsorableId?: InputMaybe<Scalars['ID']>
-  /** The username of the user or organization who owns the GitHub Sponsors profile. Defaults to the current user if omitted and sponsorableId is not given. */
+  /** The username of the username or organization who owns the GitHub Sponsors profile. Defaults to the current username if omitted and sponsorableId is not given. */
   sponsorableLogin?: InputMaybe<Scalars['String']>
   /** Optional message new sponsors at this tier will receive. */
   welcomeMessage?: InputMaybe<Scalars['String']>
@@ -3236,13 +3236,13 @@ export type CreateSponsorshipInput = {
   privacyLevel?: InputMaybe<SponsorshipPrivacy>
   /** Whether the sponsor should receive email updates from the sponsorable. */
   receiveEmails?: InputMaybe<Scalars['Boolean']>
-  /** The ID of the user or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorLogin is not given. */
+  /** The ID of the username or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorLogin is not given. */
   sponsorId?: InputMaybe<Scalars['ID']>
-  /** The username of the user or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorId is not given. */
+  /** The username of the username or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorId is not given. */
   sponsorLogin?: InputMaybe<Scalars['String']>
-  /** The ID of the user or organization who is receiving the sponsorship. Required if sponsorableLogin is not given. */
+  /** The ID of the username or organization who is receiving the sponsorship. Required if sponsorableLogin is not given. */
   sponsorableId?: InputMaybe<Scalars['ID']>
-  /** The username of the user or organization who is receiving the sponsorship. Required if sponsorableId is not given. */
+  /** The username of the username or organization who is receiving the sponsorship. Required if sponsorableId is not given. */
   sponsorableLogin?: InputMaybe<Scalars['String']>
   /** The ID of one of sponsorable's existing tiers to sponsor at. Required if amount is not specified. */
   tierId?: InputMaybe<Scalars['ID']>
@@ -3299,10 +3299,10 @@ export type CreateTeamDiscussionPayload = {
   teamDiscussion?: Maybe<TeamDiscussion>
 }
 
-/** Represents the contribution a user made by committing to a repository. */
+/** Represents the contribution a username made by committing to a repository. */
 export type CreatedCommitContribution = Contribution & {
   __typename?: 'CreatedCommitContribution'
-  /** How many commits were made on this day to this repository by the user. */
+  /** How many commits were made on this day to this repository by the username. */
   commitCount: Scalars['Int']
   /**
    * Whether this contribution is associated with a record you do not have access to. For
@@ -3312,13 +3312,13 @@ export type CreatedCommitContribution = Contribution & {
   isRestricted: Scalars['Boolean']
   /** When this contribution was made. */
   occurredAt: Scalars['DateTime']
-  /** The repository the user made a commit in. */
+  /** The repository the username made a commit in. */
   repository: Repository
   /** The HTTP path for this contribution. */
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
@@ -3344,7 +3344,7 @@ export type CreatedCommitContributionEdge = {
   node?: Maybe<CreatedCommitContribution>
 }
 
-/** Represents the contribution a user made on GitHub by opening an issue. */
+/** Represents the contribution a username made on GitHub by opening an issue. */
 export type CreatedIssueContribution = Contribution & {
   __typename?: 'CreatedIssueContribution'
   /**
@@ -3361,7 +3361,7 @@ export type CreatedIssueContribution = Contribution & {
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
@@ -3392,7 +3392,7 @@ export type CreatedIssueOrRestrictedContribution =
   | CreatedIssueContribution
   | RestrictedContribution
 
-/** Represents the contribution a user made on GitHub by opening a pull request. */
+/** Represents the contribution a username made on GitHub by opening a pull request. */
 export type CreatedPullRequestContribution = Contribution & {
   __typename?: 'CreatedPullRequestContribution'
   /**
@@ -3409,7 +3409,7 @@ export type CreatedPullRequestContribution = Contribution & {
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
@@ -3440,7 +3440,7 @@ export type CreatedPullRequestOrRestrictedContribution =
   | CreatedPullRequestContribution
   | RestrictedContribution
 
-/** Represents the contribution a user made by leaving a review on a pull request. */
+/** Represents the contribution a username made by leaving a review on a pull request. */
 export type CreatedPullRequestReviewContribution = Contribution & {
   __typename?: 'CreatedPullRequestReviewContribution'
   /**
@@ -3451,17 +3451,17 @@ export type CreatedPullRequestReviewContribution = Contribution & {
   isRestricted: Scalars['Boolean']
   /** When this contribution was made. */
   occurredAt: Scalars['DateTime']
-  /** The pull request the user reviewed. */
+  /** The pull request the username reviewed. */
   pullRequest: PullRequest
-  /** The review the user left on the pull request. */
+  /** The review the username left on the pull request. */
   pullRequestReview: PullRequestReview
-  /** The repository containing the pull request that the user reviewed. */
+  /** The repository containing the pull request that the username reviewed. */
   repository: Repository
   /** The HTTP path for this contribution. */
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
@@ -3487,7 +3487,7 @@ export type CreatedPullRequestReviewContributionEdge = {
   node?: Maybe<CreatedPullRequestReviewContribution>
 }
 
-/** Represents the contribution a user made on GitHub by creating a repository. */
+/** Represents the contribution a username made on GitHub by creating a repository. */
 export type CreatedRepositoryContribution = Contribution & {
   __typename?: 'CreatedRepositoryContribution'
   /**
@@ -3504,7 +3504,7 @@ export type CreatedRepositoryContribution = Contribution & {
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
@@ -4161,7 +4161,7 @@ export enum DeploymentProtectionRuleType {
 /** A request to deploy a workflow run to an environment. */
 export type DeploymentRequest = {
   __typename?: 'DeploymentRequest'
-  /** Whether or not the current user can approve the deployment */
+  /** Whether or not the current username can approve the deployment */
   currentUserCanApprove: Scalars['Boolean']
   /** The target environment of the deployment */
   environment: Environment
@@ -4206,16 +4206,16 @@ export type DeploymentRequestEdge = {
 /** A deployment review. */
 export type DeploymentReview = Node & {
   __typename?: 'DeploymentReview'
-  /** The comment the user left. */
+  /** The comment the username left. */
   comment: Scalars['String']
   /** Identifies the primary key from the database. */
   databaseId?: Maybe<Scalars['Int']>
   /** The environments approved or rejected */
   environments: EnvironmentConnection
   id: Scalars['ID']
-  /** The decision of the user. */
+  /** The decision of the username. */
   state: DeploymentReviewState
-  /** The user that reviewed the deployment. */
+  /** The username that reviewed the deployment. */
   user: User
 }
 
@@ -4429,9 +4429,9 @@ export type Discussion = Comment &
     activeLockReason?: Maybe<LockReason>
     /** The comment chosen as this discussion's answer, if any. */
     answer?: Maybe<DiscussionComment>
-    /** The time when a user chose this discussion's answer, if answered. */
+    /** The time when a username chose this discussion's answer, if answered. */
     answerChosenAt?: Maybe<Scalars['DateTime']>
-    /** The user who chose this discussion's answer, if answered. */
+    /** The username who chose this discussion's answer, if answered. */
     answerChosenBy?: Maybe<Actor>
     /** The actor who authored the comment. */
     author?: Maybe<Actor>
@@ -4488,17 +4488,17 @@ export type Discussion = Comment &
     userContentEdits?: Maybe<UserContentEditConnection>
     /** Check if the current viewer can delete this object. */
     viewerCanDelete: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the viewer is able to change their subscription status for the repository. */
     viewerCanSubscribe: Scalars['Boolean']
     /** Check if the current viewer can update this object. */
     viewerCanUpdate: Scalars['Boolean']
-    /** Whether or not the current user can add or remove an upvote on this subject. */
+    /** Whether or not the current username can add or remove an upvote on this subject. */
     viewerCanUpvote: Scalars['Boolean']
     /** Did the viewer author this comment. */
     viewerDidAuthor: Scalars['Boolean']
-    /** Whether or not the current user has already upvoted this subject. */
+    /** Whether or not the current username has already upvoted this subject. */
     viewerHasUpvoted: Scalars['Boolean']
     /** Identifies if the viewer is watching, not watching, or ignoring the subscribable entity. */
     viewerSubscription?: Maybe<SubscriptionState>
@@ -4649,23 +4649,23 @@ export type DiscussionComment = Comment &
     userContentEdits?: Maybe<UserContentEditConnection>
     /** Check if the current viewer can delete this object. */
     viewerCanDelete: Scalars['Boolean']
-    /** Can the current user mark this comment as an answer? */
+    /** Can the current username mark this comment as an answer? */
     viewerCanMarkAsAnswer: Scalars['Boolean']
     /** Check if the current viewer can minimize this object. */
     viewerCanMinimize: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
-    /** Can the current user unmark this comment as an answer? */
+    /** Can the current username unmark this comment as an answer? */
     viewerCanUnmarkAsAnswer: Scalars['Boolean']
     /** Check if the current viewer can update this object. */
     viewerCanUpdate: Scalars['Boolean']
-    /** Whether or not the current user can add or remove an upvote on this subject. */
+    /** Whether or not the current username can add or remove an upvote on this subject. */
     viewerCanUpvote: Scalars['Boolean']
     /** Reasons why the current viewer can not update this comment. */
     viewerCannotUpdateReasons: Array<CommentCannotUpdateReason>
     /** Did the viewer author this comment. */
     viewerDidAuthor: Scalars['Boolean']
-    /** Whether or not the current user has already upvoted this subject. */
+    /** Whether or not the current username has already upvoted this subject. */
     viewerHasUpvoted: Scalars['Boolean']
   }
 
@@ -4927,7 +4927,7 @@ export type Enterprise = Node & {
   /** The HTTP URL for this enterprise. */
   url: Scalars['URI']
   /**
-   * A list of user accounts on this enterprise.
+   * A list of username accounts on this enterprise.
    * @deprecated The `Enterprise.userAccounts` field is being removed. Use the `Enterprise.members` field instead. Removal on 2022-07-01 UTC.
    */
   userAccounts: EnterpriseUserAccountConnection
@@ -4998,7 +4998,7 @@ export type EnterpriseAdministratorEdge = {
   role: EnterpriseAdministratorRole
 }
 
-/** An invitation for a user to become an owner or billing manager of an enterprise. */
+/** An invitation for a username to become an owner or billing manager of an enterprise. */
 export type EnterpriseAdministratorInvitation = Node & {
   __typename?: 'EnterpriseAdministratorInvitation'
   /** Identifies the date and time when the object was created. */
@@ -5008,9 +5008,9 @@ export type EnterpriseAdministratorInvitation = Node & {
   /** The enterprise the invitation is for. */
   enterprise: Enterprise
   id: Scalars['ID']
-  /** The user who was invited to the enterprise. */
+  /** The username who was invited to the enterprise. */
   invitee?: Maybe<User>
-  /** The user who created the invitation. */
+  /** The username who created the invitation. */
   inviter?: Maybe<User>
   /** The invitee's pending role in the enterprise (owner or billing_manager). */
   role: EnterpriseAdministratorRole
@@ -5236,14 +5236,14 @@ export type EnterpriseOrganizationMembershipConnection = {
   totalCount: Scalars['Int']
 }
 
-/** An enterprise organization that a user is a member of. */
+/** An enterprise organization that a username is a member of. */
 export type EnterpriseOrganizationMembershipEdge = {
   __typename?: 'EnterpriseOrganizationMembershipEdge'
   /** A cursor for use in pagination. */
   cursor: Scalars['String']
   /** The item at the end of the edge. */
   node?: Maybe<Organization>
-  /** The role of the user in the enterprise membership. */
+  /** The role of the username in the enterprise membership. */
   role: EnterpriseUserAccountMembershipRole
 }
 
@@ -5267,7 +5267,7 @@ export type EnterpriseOutsideCollaboratorEdge = {
   cursor: Scalars['String']
   /** The item at the end of the edge. */
   node?: Maybe<User>
-  /** The enterprise organization repositories this user is a member of. */
+  /** The enterprise organization repositories this username is a member of. */
   repositories: EnterpriseRepositoryInfoConnection
 }
 
@@ -5772,31 +5772,31 @@ export enum EnterpriseServerInstallationOrderField {
   HostName = 'HOST_NAME',
 }
 
-/** A user account on an Enterprise Server installation. */
+/** A username account on an Enterprise Server installation. */
 export type EnterpriseServerUserAccount = Node & {
   __typename?: 'EnterpriseServerUserAccount'
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** User emails belonging to this user account. */
+  /** User emails belonging to this username account. */
   emails: EnterpriseServerUserAccountEmailConnection
-  /** The Enterprise Server installation on which this user account exists. */
+  /** The Enterprise Server installation on which this username account exists. */
   enterpriseServerInstallation: EnterpriseServerInstallation
   id: Scalars['ID']
-  /** Whether the user account is a site administrator on the Enterprise Server installation. */
+  /** Whether the username account is a site administrator on the Enterprise Server installation. */
   isSiteAdmin: Scalars['Boolean']
-  /** The login of the user account on the Enterprise Server installation. */
+  /** The login of the username account on the Enterprise Server installation. */
   login: Scalars['String']
-  /** The profile name of the user account on the Enterprise Server installation. */
+  /** The profile name of the username account on the Enterprise Server installation. */
   profileName?: Maybe<Scalars['String']>
-  /** The date and time when the user account was created on the Enterprise Server installation. */
+  /** The date and time when the username account was created on the Enterprise Server installation. */
   remoteCreatedAt: Scalars['DateTime']
-  /** The ID of the user account on the Enterprise Server installation. */
+  /** The ID of the username account on the Enterprise Server installation. */
   remoteUserId: Scalars['Int']
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['DateTime']
 }
 
-/** A user account on an Enterprise Server installation. */
+/** A username account on an Enterprise Server installation. */
 export type EnterpriseServerUserAccountEmailsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -5827,7 +5827,7 @@ export type EnterpriseServerUserAccountEdge = {
   node?: Maybe<EnterpriseServerUserAccount>
 }
 
-/** An email belonging to a user account on an Enterprise Server installation. */
+/** An email belonging to a username account on an Enterprise Server installation. */
 export type EnterpriseServerUserAccountEmail = Node & {
   __typename?: 'EnterpriseServerUserAccountEmail'
   /** Identifies the date and time when the object was created. */
@@ -5835,11 +5835,11 @@ export type EnterpriseServerUserAccountEmail = Node & {
   /** The email address. */
   email: Scalars['String']
   id: Scalars['ID']
-  /** Indicates whether this is the primary email of the associated user account. */
+  /** Indicates whether this is the primary email of the associated username account. */
   isPrimary: Scalars['Boolean']
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['DateTime']
-  /** The user account to which the email belongs. */
+  /** The username account to which the email belongs. */
   userAccount: EnterpriseServerUserAccount
 }
 
@@ -5865,7 +5865,7 @@ export type EnterpriseServerUserAccountEmailEdge = {
   node?: Maybe<EnterpriseServerUserAccountEmail>
 }
 
-/** Ordering options for Enterprise Server user account email connections. */
+/** Ordering options for Enterprise Server username account email connections. */
 export type EnterpriseServerUserAccountEmailOrder = {
   /** The ordering direction. */
   direction: OrderDirection
@@ -5873,29 +5873,29 @@ export type EnterpriseServerUserAccountEmailOrder = {
   field: EnterpriseServerUserAccountEmailOrderField
 }
 
-/** Properties by which Enterprise Server user account email connections can be ordered. */
+/** Properties by which Enterprise Server username account email connections can be ordered. */
 export enum EnterpriseServerUserAccountEmailOrderField {
   /** Order emails by email */
   Email = 'EMAIL',
 }
 
-/** Ordering options for Enterprise Server user account connections. */
+/** Ordering options for Enterprise Server username account connections. */
 export type EnterpriseServerUserAccountOrder = {
   /** The ordering direction. */
   direction: OrderDirection
-  /** The field to order user accounts by. */
+  /** The field to order username accounts by. */
   field: EnterpriseServerUserAccountOrderField
 }
 
-/** Properties by which Enterprise Server user account connections can be ordered. */
+/** Properties by which Enterprise Server username account connections can be ordered. */
 export enum EnterpriseServerUserAccountOrderField {
-  /** Order user accounts by login */
+  /** Order username accounts by login */
   Login = 'LOGIN',
-  /** Order user accounts by creation time on the Enterprise Server installation */
+  /** Order username accounts by creation time on the Enterprise Server installation */
   RemoteCreatedAt = 'REMOTE_CREATED_AT',
 }
 
-/** A user accounts upload from an Enterprise Server installation. */
+/** A username accounts upload from an Enterprise Server installation. */
 export type EnterpriseServerUserAccountsUpload = Node & {
   __typename?: 'EnterpriseServerUserAccountsUpload'
   /** Identifies the date and time when the object was created. */
@@ -5935,21 +5935,21 @@ export type EnterpriseServerUserAccountsUploadEdge = {
   node?: Maybe<EnterpriseServerUserAccountsUpload>
 }
 
-/** Ordering options for Enterprise Server user accounts upload connections. */
+/** Ordering options for Enterprise Server username accounts upload connections. */
 export type EnterpriseServerUserAccountsUploadOrder = {
   /** The ordering direction. */
   direction: OrderDirection
-  /** The field to order user accounts uploads by. */
+  /** The field to order username accounts uploads by. */
   field: EnterpriseServerUserAccountsUploadOrderField
 }
 
-/** Properties by which Enterprise Server user accounts upload connections can be ordered. */
+/** Properties by which Enterprise Server username accounts upload connections can be ordered. */
 export enum EnterpriseServerUserAccountsUploadOrderField {
-  /** Order user accounts uploads by creation time */
+  /** Order username accounts uploads by creation time */
   CreatedAt = 'CREATED_AT',
 }
 
-/** Synchronization state of the Enterprise Server user accounts upload */
+/** Synchronization state of the Enterprise Server username accounts upload */
 export enum EnterpriseServerUserAccountsUploadSyncState {
   /** The synchronization of the upload failed. */
   Failure = 'FAILURE',
@@ -5959,39 +5959,39 @@ export enum EnterpriseServerUserAccountsUploadSyncState {
   Success = 'SUCCESS',
 }
 
-/** An account for a user who is an admin of an enterprise or a member of an enterprise through one or more organizations. */
+/** An account for a username who is an admin of an enterprise or a member of an enterprise through one or more organizations. */
 export type EnterpriseUserAccount = Actor &
   Node & {
     __typename?: 'EnterpriseUserAccount'
-    /** A URL pointing to the enterprise user account's public avatar. */
+    /** A URL pointing to the enterprise username account's public avatar. */
     avatarUrl: Scalars['URI']
     /** Identifies the date and time when the object was created. */
     createdAt: Scalars['DateTime']
-    /** The enterprise in which this user account exists. */
+    /** The enterprise in which this username account exists. */
     enterprise: Enterprise
     id: Scalars['ID']
-    /** An identifier for the enterprise user account, a login or email address */
+    /** An identifier for the enterprise username account, a login or email address */
     login: Scalars['String']
-    /** The name of the enterprise user account */
+    /** The name of the enterprise username account */
     name?: Maybe<Scalars['String']>
-    /** A list of enterprise organizations this user is a member of. */
+    /** A list of enterprise organizations this username is a member of. */
     organizations: EnterpriseOrganizationMembershipConnection
-    /** The HTTP path for this user. */
+    /** The HTTP path for this username. */
     resourcePath: Scalars['URI']
     /** Identifies the date and time when the object was last updated. */
     updatedAt: Scalars['DateTime']
-    /** The HTTP URL for this user. */
+    /** The HTTP URL for this username. */
     url: Scalars['URI']
-    /** The user within the enterprise. */
+    /** The username within the enterprise. */
     user?: Maybe<User>
   }
 
-/** An account for a user who is an admin of an enterprise or a member of an enterprise through one or more organizations. */
+/** An account for a username who is an admin of an enterprise or a member of an enterprise through one or more organizations. */
 export type EnterpriseUserAccountAvatarUrlArgs = {
   size?: InputMaybe<Scalars['Int']>
 }
 
-/** An account for a user who is an admin of an enterprise or a member of an enterprise through one or more organizations. */
+/** An account for a username who is an admin of an enterprise or a member of an enterprise through one or more organizations. */
 export type EnterpriseUserAccountOrganizationsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -6026,17 +6026,17 @@ export type EnterpriseUserAccountEdge = {
 
 /** The possible roles for enterprise membership. */
 export enum EnterpriseUserAccountMembershipRole {
-  /** The user is a member of the enterprise membership. */
+  /** The username is a member of the enterprise membership. */
   Member = 'MEMBER',
-  /** The user is an owner of the enterprise membership. */
+  /** The username is an owner of the enterprise membership. */
   Owner = 'OWNER',
 }
 
-/** The possible GitHub Enterprise deployments where this user can exist. */
+/** The possible GitHub Enterprise deployments where this username can exist. */
 export enum EnterpriseUserDeployment {
-  /** The user is part of a GitHub Enterprise Cloud deployment. */
+  /** The username is part of a GitHub Enterprise Cloud deployment. */
   Cloud = 'CLOUD',
-  /** The user is part of a GitHub Enterprise Server deployment. */
+  /** The username is part of a GitHub Enterprise Server deployment. */
   Server = 'SERVER',
 }
 
@@ -6319,7 +6319,7 @@ export type FollowOrganizationPayload = {
 export type FollowUserInput = {
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']>
-  /** ID of the user to follow. */
+  /** ID of the username to follow. */
   userId: Scalars['ID']
 }
 
@@ -6328,7 +6328,7 @@ export type FollowUserPayload = {
   __typename?: 'FollowUserPayload'
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>
-  /** The user that was followed. */
+  /** The username that was followed. */
   user?: Maybe<User>
 }
 
@@ -6438,7 +6438,7 @@ export type Gist = Node &
     updatedAt: Scalars['DateTime']
     /** The HTTP URL for this Gist. */
     url: Scalars['URI']
-    /** Returns a boolean indicating whether the viewing user has starred this starrable. */
+    /** Returns a boolean indicating whether the viewing username has starred this starrable. */
     viewerHasStarred: Scalars['Boolean']
   }
 
@@ -6648,7 +6648,7 @@ export type GitActor = {
   email?: Maybe<Scalars['String']>
   /** The name in the Git commit. */
   name?: Maybe<Scalars['String']>
-  /** The GitHub user corresponding to the email field. Null if no such user exists. */
+  /** The GitHub username corresponding to the email field. Null if no such username exists. */
   user?: Maybe<User>
 }
 
@@ -6721,7 +6721,7 @@ export type GitSignature = {
   payload: Scalars['String']
   /** ASCII-armored signature header from object. */
   signature: Scalars['String']
-  /** GitHub user corresponding to the email signing this commit. */
+  /** GitHub username corresponding to the email signing this commit. */
   signer?: Maybe<User>
   /** The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid. */
   state: GitSignatureState
@@ -6780,7 +6780,7 @@ export type GpgSignature = GitSignature & {
   payload: Scalars['String']
   /** ASCII-armored signature header from object. */
   signature: Scalars['String']
-  /** GitHub user corresponding to the email signing this commit. */
+  /** GitHub username corresponding to the email signing this commit. */
   signer?: Maybe<User>
   /** The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid. */
   state: GitSignatureState
@@ -6794,7 +6794,7 @@ export type GrantEnterpriseOrganizationsMigratorRoleInput = {
   clientMutationId?: InputMaybe<Scalars['String']>
   /** The ID of the enterprise to which all organizations managed by it will be granted the migrator role. */
   enterpriseId: Scalars['ID']
-  /** The login of the user to grant the migrator role */
+  /** The login of the username to grant the migrator role */
   login: Scalars['String']
 }
 
@@ -6803,7 +6803,7 @@ export type GrantEnterpriseOrganizationsMigratorRolePayload = {
   __typename?: 'GrantEnterpriseOrganizationsMigratorRolePayload'
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>
-  /** The organizations that had the migrator role applied to for the given user. */
+  /** The organizations that had the migrator role applied to for the given username. */
   organizations?: Maybe<OrganizationConnection>
 }
 
@@ -6817,13 +6817,13 @@ export type GrantEnterpriseOrganizationsMigratorRolePayloadOrganizationsArgs = {
 
 /** Autogenerated input type of GrantMigratorRole */
 export type GrantMigratorRoleInput = {
-  /** The user login or Team slug to grant the migrator role. */
+  /** The username login or Team slug to grant the migrator role. */
   actor: Scalars['String']
   /** Specifies the type of the actor, can be either USER or TEAM. */
   actorType: ActorType
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']>
-  /** The ID of the organization that the user/team belongs to. */
+  /** The ID of the organization that the username/team belongs to. */
   organizationId: Scalars['ID']
 }
 
@@ -6882,7 +6882,7 @@ export type HeadRefRestoredEvent = Node & {
   pullRequest: PullRequest
 }
 
-/** Detail needed to display a hovercard for a user */
+/** Detail needed to display a hovercard for a username */
 export type Hovercard = {
   __typename?: 'Hovercard'
   /** Each of the contexts for this hovercard */
@@ -6915,7 +6915,7 @@ export type InviteEnterpriseAdminInput = {
   email?: InputMaybe<Scalars['String']>
   /** The ID of the enterprise to which you want to invite an administrator. */
   enterpriseId: Scalars['ID']
-  /** The login of a user to invite as an administrator. */
+  /** The login of a username to invite as an administrator. */
   invitee?: InputMaybe<Scalars['String']>
   /** The role of the administrator. */
   role?: InputMaybe<EnterpriseAdministratorRole>
@@ -7117,7 +7117,7 @@ export type Issue = Assignable &
     url: Scalars['URI']
     /** A list of edits to this content. */
     userContentEdits?: Maybe<UserContentEditConnection>
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the viewer is able to change their subscription status for the repository. */
     viewerCanSubscribe: Scalars['Boolean']
@@ -7326,7 +7326,7 @@ export type IssueComment = Comment &
     viewerCanDelete: Scalars['Boolean']
     /** Check if the current viewer can minimize this object. */
     viewerCanMinimize: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the current viewer can update this object. */
     viewerCanUpdate: Scalars['Boolean']
@@ -7403,7 +7403,7 @@ export type IssueConnection = {
   totalCount: Scalars['Int']
 }
 
-/** This aggregates issues opened by a user within one repository. */
+/** This aggregates issues opened by a username within one repository. */
 export type IssueContributionsByRepository = {
   __typename?: 'IssueContributionsByRepository'
   /** The issue contributions. */
@@ -7412,7 +7412,7 @@ export type IssueContributionsByRepository = {
   repository: Repository
 }
 
-/** This aggregates issues opened by a user within one repository. */
+/** This aggregates issues opened by a username within one repository. */
 export type IssueContributionsByRepositoryContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -7432,7 +7432,7 @@ export type IssueEdge = {
 
 /** Ways in which to filter lists of issues. */
 export type IssueFilters = {
-  /** List issues assigned to given name. Pass in `null` for issues with no assigned user, and `*` for issues assigned to any user. */
+  /** List issues assigned to given name. Pass in `null` for issues with no assigned username, and `*` for issues assigned to any username. */
   assignee?: InputMaybe<Scalars['String']>
   /** List issues created by given name. */
   createdBy?: InputMaybe<Scalars['String']>
@@ -7662,11 +7662,11 @@ export enum IssueTimelineItemsItemType {
   UnpinnedEvent = 'UNPINNED_EVENT',
   /** Represents an 'unsubscribed' event on a given `Subscribable`. */
   UnsubscribedEvent = 'UNSUBSCRIBED_EVENT',
-  /** Represents a 'user_blocked' event on a given user. */
+  /** Represents a 'user_blocked' event on a given username. */
   UserBlockedEvent = 'USER_BLOCKED_EVENT',
 }
 
-/** Represents a user signing up for a GitHub account. */
+/** Represents a username signing up for a GitHub account. */
 export type JoinedGitHubContribution = Contribution & {
   __typename?: 'JoinedGitHubContribution'
   /**
@@ -7681,7 +7681,7 @@ export type JoinedGitHubContribution = Contribution & {
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
@@ -7974,14 +7974,14 @@ export type LockedEvent = Node & {
   lockable: Lockable
 }
 
-/** A placeholder user for attribution of imported data on GitHub. */
+/** A placeholder username for attribution of imported data on GitHub. */
 export type Mannequin = Actor &
   Node &
   UniformResourceLocatable & {
     __typename?: 'Mannequin'
     /** A URL pointing to the GitHub App's public avatar. */
     avatarUrl: Scalars['URI']
-    /** The user that has claimed the data attributed to this mannequin. */
+    /** The username that has claimed the data attributed to this mannequin. */
     claimant?: Maybe<User>
     /** Identifies the date and time when the object was created. */
     createdAt: Scalars['DateTime']
@@ -8000,7 +8000,7 @@ export type Mannequin = Actor &
     url: Scalars['URI']
   }
 
-/** A placeholder user for attribution of imported data on GitHub. */
+/** A placeholder username for attribution of imported data on GitHub. */
 export type MannequinAvatarUrlArgs = {
   size?: InputMaybe<Scalars['Int']>
 }
@@ -8216,11 +8216,11 @@ export type MarketplaceListing = Node & {
    * the Marketplace as verified.
    */
   viewerCanRequestApproval: Scalars['Boolean']
-  /** Indicates whether the current user has an active subscription to this Marketplace listing. */
+  /** Indicates whether the current username has an active subscription to this Marketplace listing. */
   viewerHasPurchased: Scalars['Boolean']
   /**
-   * Indicates if the current user has purchased a subscription to this Marketplace listing
-   * for all of the organizations the user owns.
+   * Indicates if the current username has purchased a subscription to this Marketplace listing
+   * for all of the organizations the username owns.
    */
   viewerHasPurchasedForAllOrganizations: Scalars['Boolean']
   /** Does the current viewer role allow them to administer this Marketplace listing. */
@@ -8277,13 +8277,13 @@ export type MembersCanDeleteReposClearAuditEntry = AuditEntry &
     __typename?: 'MembersCanDeleteReposClearAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -8308,13 +8308,13 @@ export type MembersCanDeleteReposClearAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -8326,13 +8326,13 @@ export type MembersCanDeleteReposDisableAuditEntry = AuditEntry &
     __typename?: 'MembersCanDeleteReposDisableAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -8357,13 +8357,13 @@ export type MembersCanDeleteReposDisableAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -8375,13 +8375,13 @@ export type MembersCanDeleteReposEnableAuditEntry = AuditEntry &
     __typename?: 'MembersCanDeleteReposEnableAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -8406,13 +8406,13 @@ export type MembersCanDeleteReposEnableAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -8794,7 +8794,7 @@ export type Mutation = {
   __typename?: 'Mutation'
   /** Clear all of a customer's queued migrations */
   abortQueuedMigrations?: Maybe<AbortQueuedMigrationsPayload>
-  /** Accepts a pending invitation for a user to become an administrator of an enterprise. */
+  /** Accepts a pending invitation for a username to become an administrator of an enterprise. */
   acceptEnterpriseAdministratorInvitation?: Maybe<AcceptEnterpriseAdministratorInvitationPayload>
   /** Applies a suggested topic to the repository. */
   acceptTopicSuggestion?: Maybe<AcceptTopicSuggestionPayload>
@@ -8863,7 +8863,7 @@ export type Mutation = {
   /** Create a check suite */
   createCheckSuite?: Maybe<CreateCheckSuitePayload>
   /**
-   * Appends a commit to the given branch as the authenticated user.
+   * Appends a commit to the given branch as the authenticated username.
    *
    * This mutation creates a commit whose parent is the HEAD of the provided
    * branch and also updates that branch to point to the new commit.
@@ -8904,7 +8904,7 @@ export type Mutation = {
    * ### Commit Signing
    *
    * Commits made using this mutation are automatically signed by GitHub if
-   * supported and will be marked as verified in the user interface.
+   * supported and will be marked as verified in the username interface.
    */
   createCommitOnBranch?: Maybe<CreateCommitOnBranchPayload>
   /** Create a discussion. */
@@ -8983,11 +8983,11 @@ export type Mutation = {
   enablePullRequestAutoMerge?: Maybe<EnablePullRequestAutoMergePayload>
   /** Follow an organization. */
   followOrganization?: Maybe<FollowOrganizationPayload>
-  /** Follow a user. */
+  /** Follow a username. */
   followUser?: Maybe<FollowUserPayload>
-  /** Grant the migrator role to a user for all organizations under an enterprise account. */
+  /** Grant the migrator role to a username for all organizations under an enterprise account. */
   grantEnterpriseOrganizationsMigratorRole?: Maybe<GrantEnterpriseOrganizationsMigratorRolePayload>
-  /** Grant the migrator role to a user or a team. */
+  /** Grant the migrator role to a username or a team. */
   grantMigratorRole?: Maybe<GrantMigratorRolePayload>
   /** Invite someone to become an administrator of the enterprise. */
   inviteEnterpriseAdmin?: Maybe<InviteEnterpriseAdminPayload>
@@ -9049,9 +9049,9 @@ export type Mutation = {
   rerequestCheckSuite?: Maybe<RerequestCheckSuitePayload>
   /** Marks a review thread as resolved. */
   resolveReviewThread?: Maybe<ResolveReviewThreadPayload>
-  /** Revoke the migrator role to a user for all organizations under an enterprise account. */
+  /** Revoke the migrator role to a username for all organizations under an enterprise account. */
   revokeEnterpriseOrganizationsMigratorRole?: Maybe<RevokeEnterpriseOrganizationsMigratorRolePayload>
-  /** Revoke the migrator role from a user or a team. */
+  /** Revoke the migrator role from a username or a team. */
   revokeMigratorRole?: Maybe<RevokeMigratorRolePayload>
   /** Creates or updates the identity provider for an enterprise. */
   setEnterpriseIdentityProvider?: Maybe<SetEnterpriseIdentityProviderPayload>
@@ -9059,7 +9059,7 @@ export type Mutation = {
   setOrganizationInteractionLimit?: Maybe<SetOrganizationInteractionLimitPayload>
   /** Sets an interaction limit setting for a repository. */
   setRepositoryInteractionLimit?: Maybe<SetRepositoryInteractionLimitPayload>
-  /** Set a user level interaction limit for an user's public repositories. */
+  /** Set a username level interaction limit for an username's public repositories. */
   setUserInteractionLimit?: Maybe<SetUserInteractionLimitPayload>
   /** Start a repository migration. */
   startRepositoryMigration?: Maybe<StartRepositoryMigrationPayload>
@@ -9071,7 +9071,7 @@ export type Mutation = {
   unarchiveRepository?: Maybe<UnarchiveRepositoryPayload>
   /** Unfollow an organization. */
   unfollowOrganization?: Maybe<UnfollowOrganizationPayload>
-  /** Unfollow a user. */
+  /** Unfollow a username. */
   unfollowUser?: Maybe<UnfollowUserPayload>
   /** Deletes a repository link from a project. */
   unlinkRepositoryFromProject?: Maybe<UnlinkRepositoryFromProjectPayload>
@@ -10137,13 +10137,13 @@ export type OauthApplicationCreateAuditEntry = AuditEntry &
     __typename?: 'OauthApplicationCreateAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10176,13 +10176,13 @@ export type OauthApplicationCreateAuditEntry = AuditEntry &
     rateLimit?: Maybe<Scalars['Int']>
     /** The state of the OAuth Application. */
     state?: Maybe<OauthApplicationCreateAuditEntryState>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10229,13 +10229,13 @@ export type OrgAddBillingManagerAuditEntry = AuditEntry &
     __typename?: 'OrgAddBillingManagerAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10256,13 +10256,13 @@ export type OrgAddBillingManagerAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10273,13 +10273,13 @@ export type OrgAddMemberAuditEntry = AuditEntry &
     __typename?: 'OrgAddMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10300,13 +10300,13 @@ export type OrgAddMemberAuditEntry = AuditEntry &
     organizationUrl?: Maybe<Scalars['URI']>
     /** The permission level of the member added to the organization. */
     permission?: Maybe<OrgAddMemberAuditEntryPermission>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10325,25 +10325,25 @@ export type OrgBlockUserAuditEntry = AuditEntry &
     __typename?: 'OrgBlockUserAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the actor. */
     actorUrl?: Maybe<Scalars['URI']>
-    /** The blocked user. */
+    /** The blocked username. */
     blockedUser?: Maybe<User>
-    /** The username of the blocked user. */
+    /** The username of the blocked username. */
     blockedUserName?: Maybe<Scalars['String']>
-    /** The HTTP path for the blocked user. */
+    /** The HTTP path for the blocked username. */
     blockedUserResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the blocked user. */
+    /** The HTTP URL for the blocked username. */
     blockedUserUrl?: Maybe<Scalars['URI']>
     /** The time the action was initiated */
     createdAt: Scalars['PreciseDateTime']
@@ -10358,13 +10358,13 @@ export type OrgBlockUserAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10375,13 +10375,13 @@ export type OrgConfigDisableCollaboratorsOnlyAuditEntry = AuditEntry &
     __typename?: 'OrgConfigDisableCollaboratorsOnlyAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10400,13 +10400,13 @@ export type OrgConfigDisableCollaboratorsOnlyAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10417,13 +10417,13 @@ export type OrgConfigEnableCollaboratorsOnlyAuditEntry = AuditEntry &
     __typename?: 'OrgConfigEnableCollaboratorsOnlyAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10442,13 +10442,13 @@ export type OrgConfigEnableCollaboratorsOnlyAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10459,13 +10459,13 @@ export type OrgCreateAuditEntry = AuditEntry &
     __typename?: 'OrgCreateAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10486,13 +10486,13 @@ export type OrgCreateAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10517,13 +10517,13 @@ export type OrgDisableOauthAppRestrictionsAuditEntry = AuditEntry &
     __typename?: 'OrgDisableOauthAppRestrictionsAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10542,13 +10542,13 @@ export type OrgDisableOauthAppRestrictionsAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10559,13 +10559,13 @@ export type OrgDisableSamlAuditEntry = AuditEntry &
     __typename?: 'OrgDisableSamlAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10592,13 +10592,13 @@ export type OrgDisableSamlAuditEntry = AuditEntry &
     signatureMethodUrl?: Maybe<Scalars['URI']>
     /** The SAML provider's single sign-on URL. */
     singleSignOnUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10609,13 +10609,13 @@ export type OrgDisableTwoFactorRequirementAuditEntry = AuditEntry &
     __typename?: 'OrgDisableTwoFactorRequirementAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10634,13 +10634,13 @@ export type OrgDisableTwoFactorRequirementAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10651,13 +10651,13 @@ export type OrgEnableOauthAppRestrictionsAuditEntry = AuditEntry &
     __typename?: 'OrgEnableOauthAppRestrictionsAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10676,13 +10676,13 @@ export type OrgEnableOauthAppRestrictionsAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10693,13 +10693,13 @@ export type OrgEnableSamlAuditEntry = AuditEntry &
     __typename?: 'OrgEnableSamlAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10726,13 +10726,13 @@ export type OrgEnableSamlAuditEntry = AuditEntry &
     signatureMethodUrl?: Maybe<Scalars['URI']>
     /** The SAML provider's single sign-on URL. */
     singleSignOnUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10743,13 +10743,13 @@ export type OrgEnableTwoFactorRequirementAuditEntry = AuditEntry &
     __typename?: 'OrgEnableTwoFactorRequirementAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10768,13 +10768,13 @@ export type OrgEnableTwoFactorRequirementAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10799,13 +10799,13 @@ export type OrgInviteMemberAuditEntry = AuditEntry &
     __typename?: 'OrgInviteMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10828,13 +10828,13 @@ export type OrgInviteMemberAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10846,13 +10846,13 @@ export type OrgInviteToBusinessAuditEntry = AuditEntry &
     __typename?: 'OrgInviteToBusinessAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10877,13 +10877,13 @@ export type OrgInviteToBusinessAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10895,13 +10895,13 @@ export type OrgOauthAppAccessApprovedAuditEntry = AuditEntry &
     __typename?: 'OrgOauthAppAccessApprovedAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10926,13 +10926,13 @@ export type OrgOauthAppAccessApprovedAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10944,13 +10944,13 @@ export type OrgOauthAppAccessDeniedAuditEntry = AuditEntry &
     __typename?: 'OrgOauthAppAccessDeniedAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -10975,13 +10975,13 @@ export type OrgOauthAppAccessDeniedAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -10993,13 +10993,13 @@ export type OrgOauthAppAccessRequestedAuditEntry = AuditEntry &
     __typename?: 'OrgOauthAppAccessRequestedAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11024,13 +11024,13 @@ export type OrgOauthAppAccessRequestedAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -11041,13 +11041,13 @@ export type OrgRemoveBillingManagerAuditEntry = AuditEntry &
     __typename?: 'OrgRemoveBillingManagerAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11068,13 +11068,13 @@ export type OrgRemoveBillingManagerAuditEntry = AuditEntry &
     organizationUrl?: Maybe<Scalars['URI']>
     /** The reason for the billing manager being removed. */
     reason?: Maybe<OrgRemoveBillingManagerAuditEntryReason>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -11084,7 +11084,7 @@ export enum OrgRemoveBillingManagerAuditEntryReason {
   SamlExternalIdentityMissing = 'SAML_EXTERNAL_IDENTITY_MISSING',
   /** SAML SSO enforcement requires an external identity */
   SamlSsoEnforcementRequiresExternalIdentity = 'SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY',
-  /** The organization required 2FA of its billing managers and this user did not have 2FA enabled. */
+  /** The organization required 2FA of its billing managers and this username did not have 2FA enabled. */
   TwoFactorRequirementNonCompliance = 'TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE',
 }
 
@@ -11095,13 +11095,13 @@ export type OrgRemoveMemberAuditEntry = AuditEntry &
     __typename?: 'OrgRemoveMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11124,23 +11124,23 @@ export type OrgRemoveMemberAuditEntry = AuditEntry &
     organizationUrl?: Maybe<Scalars['URI']>
     /** The reason for the member being removed. */
     reason?: Maybe<OrgRemoveMemberAuditEntryReason>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
-/** The type of membership a user has with an Organization. */
+/** The type of membership a username has with an Organization. */
 export enum OrgRemoveMemberAuditEntryMembershipType {
   /** Organization administrators have full access and can change several settings, including the names of repositories that belong to the Organization and Owners team membership. In addition, organization admins can delete the organization and all of its repositories. */
   Admin = 'ADMIN',
-  /** A billing manager is a user who manages the billing settings for the Organization, such as updating payment information. */
+  /** A billing manager is a username who manages the billing settings for the Organization, such as updating payment information. */
   BillingManager = 'BILLING_MANAGER',
-  /** A direct member is a user that is a member of the Organization. */
+  /** A direct member is a username that is a member of the Organization. */
   DirectMember = 'DIRECT_MEMBER',
   /** An outside collaborator is a person who isn't explicitly a member of the Organization, but who has Read, Write, or Admin permissions to one or more repositories in the organization. */
   OutsideCollaborator = 'OUTSIDE_COLLABORATOR',
@@ -11156,7 +11156,7 @@ export enum OrgRemoveMemberAuditEntryReason {
   SamlSsoEnforcementRequiresExternalIdentity = 'SAML_SSO_ENFORCEMENT_REQUIRES_EXTERNAL_IDENTITY',
   /** User was removed from organization during account recovery */
   TwoFactorAccountRecovery = 'TWO_FACTOR_ACCOUNT_RECOVERY',
-  /** The organization required 2FA of its billing managers and this user did not have 2FA enabled. */
+  /** The organization required 2FA of its billing managers and this username did not have 2FA enabled. */
   TwoFactorRequirementNonCompliance = 'TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE',
   /** User account has been deleted */
   UserAccountDeleted = 'USER_ACCOUNT_DELETED',
@@ -11169,13 +11169,13 @@ export type OrgRemoveOutsideCollaboratorAuditEntry = AuditEntry &
     __typename?: 'OrgRemoveOutsideCollaboratorAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11200,19 +11200,19 @@ export type OrgRemoveOutsideCollaboratorAuditEntry = AuditEntry &
     organizationUrl?: Maybe<Scalars['URI']>
     /** The reason for the outside collaborator being removed from the Organization. */
     reason?: Maybe<OrgRemoveOutsideCollaboratorAuditEntryReason>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
-/** The type of membership a user has with an Organization. */
+/** The type of membership a username has with an Organization. */
 export enum OrgRemoveOutsideCollaboratorAuditEntryMembershipType {
-  /** A billing manager is a user who manages the billing settings for the Organization, such as updating payment information. */
+  /** A billing manager is a username who manages the billing settings for the Organization, such as updating payment information. */
   BillingManager = 'BILLING_MANAGER',
   /** An outside collaborator is a person who isn't explicitly a member of the Organization, but who has Read, Write, or Admin permissions to one or more repositories in the organization. */
   OutsideCollaborator = 'OUTSIDE_COLLABORATOR',
@@ -11224,7 +11224,7 @@ export enum OrgRemoveOutsideCollaboratorAuditEntryMembershipType {
 export enum OrgRemoveOutsideCollaboratorAuditEntryReason {
   /** SAML external identity missing */
   SamlExternalIdentityMissing = 'SAML_EXTERNAL_IDENTITY_MISSING',
-  /** The organization required 2FA of its billing managers and this user did not have 2FA enabled. */
+  /** The organization required 2FA of its billing managers and this username did not have 2FA enabled. */
   TwoFactorRequirementNonCompliance = 'TWO_FACTOR_REQUIREMENT_NON_COMPLIANCE',
 }
 
@@ -11235,13 +11235,13 @@ export type OrgRestoreMemberAuditEntry = AuditEntry &
     __typename?: 'OrgRestoreMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11274,13 +11274,13 @@ export type OrgRestoreMemberAuditEntry = AuditEntry &
     restoredRepositoryStarsCount?: Maybe<Scalars['Int']>
     /** The number of watched repositories for the restored member. */
     restoredRepositoryWatchesCount?: Maybe<Scalars['Int']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -11339,25 +11339,25 @@ export type OrgUnblockUserAuditEntry = AuditEntry &
     __typename?: 'OrgUnblockUserAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the actor. */
     actorUrl?: Maybe<Scalars['URI']>
-    /** The user being unblocked by the organization. */
+    /** The username being unblocked by the organization. */
     blockedUser?: Maybe<User>
-    /** The username of the blocked user. */
+    /** The username of the blocked username. */
     blockedUserName?: Maybe<Scalars['String']>
-    /** The HTTP path for the blocked user. */
+    /** The HTTP path for the blocked username. */
     blockedUserResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the blocked user. */
+    /** The HTTP URL for the blocked username. */
     blockedUserUrl?: Maybe<Scalars['URI']>
     /** The time the action was initiated */
     createdAt: Scalars['PreciseDateTime']
@@ -11372,13 +11372,13 @@ export type OrgUnblockUserAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -11389,13 +11389,13 @@ export type OrgUpdateDefaultRepositoryPermissionAuditEntry = AuditEntry &
     __typename?: 'OrgUpdateDefaultRepositoryPermissionAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11418,13 +11418,13 @@ export type OrgUpdateDefaultRepositoryPermissionAuditEntry = AuditEntry &
     permission?: Maybe<OrgUpdateDefaultRepositoryPermissionAuditEntryPermission>
     /** The former base repository permission level for the organization. */
     permissionWas?: Maybe<OrgUpdateDefaultRepositoryPermissionAuditEntryPermission>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -11447,13 +11447,13 @@ export type OrgUpdateMemberAuditEntry = AuditEntry &
     __typename?: 'OrgUpdateMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11476,13 +11476,13 @@ export type OrgUpdateMemberAuditEntry = AuditEntry &
     permission?: Maybe<OrgUpdateMemberAuditEntryPermission>
     /** The former member permission level for the organization. */
     permissionWas?: Maybe<OrgUpdateMemberAuditEntryPermission>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -11501,13 +11501,13 @@ export type OrgUpdateMemberRepositoryCreationPermissionAuditEntry = AuditEntry &
     __typename?: 'OrgUpdateMemberRepositoryCreationPermissionAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -11528,13 +11528,13 @@ export type OrgUpdateMemberRepositoryCreationPermissionAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
     /** The permission for visibility level of repositories for this organization. */
     visibility?: Maybe<OrgUpdateMemberRepositoryCreationPermissionAuditEntryVisibility>
@@ -11568,13 +11568,13 @@ export type OrgUpdateMemberRepositoryInvitationPermissionAuditEntry =
       __typename?: 'OrgUpdateMemberRepositoryInvitationPermissionAuditEntry'
       /** The action name */
       action: Scalars['String']
-      /** The user who initiated the action */
+      /** The username who initiated the action */
       actor?: Maybe<AuditEntryActor>
       /** The IP address of the actor */
       actorIp?: Maybe<Scalars['String']>
       /** A readable representation of the actor's location */
       actorLocation?: Maybe<ActorLocation>
-      /** The username of the user who initiated the action */
+      /** The username of the username who initiated the action */
       actorLogin?: Maybe<Scalars['String']>
       /** The HTTP path for the actor. */
       actorResourcePath?: Maybe<Scalars['URI']>
@@ -11595,13 +11595,13 @@ export type OrgUpdateMemberRepositoryInvitationPermissionAuditEntry =
       organizationResourcePath?: Maybe<Scalars['URI']>
       /** The HTTP URL for the organization */
       organizationUrl?: Maybe<Scalars['URI']>
-      /** The user affected by the action */
+      /** The username affected by the action */
       user?: Maybe<User>
-      /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+      /** For actions involving two users, the actor is the initiator and the username is the affected username. */
       userLogin?: Maybe<Scalars['String']>
-      /** The HTTP path for the user. */
+      /** The HTTP path for the username. */
       userResourcePath?: Maybe<Scalars['URI']>
-      /** The HTTP URL for the user. */
+      /** The HTTP URL for the username. */
       userUrl?: Maybe<Scalars['URI']>
     }
 
@@ -11640,9 +11640,9 @@ export type Organization = Actor &
     email?: Maybe<Scalars['String']>
     /** A list of owners of the organization's enterprise account. */
     enterpriseOwners: OrganizationEnterpriseOwnerConnection
-    /** The estimated next GitHub Sponsors payout for this user/organization in cents (USD). */
+    /** The estimated next GitHub Sponsors payout for this username/organization in cents (USD). */
     estimatedNextSponsorsPayoutInCents: Scalars['Int']
-    /** True if this user/organization has a GitHub Sponsors listing. */
+    /** True if this username/organization has a GitHub Sponsors listing. */
     hasSponsorsListing: Scalars['Boolean']
     id: Scalars['ID']
     /** The interaction ability settings for this organization. */
@@ -11653,9 +11653,9 @@ export type Organization = Actor &
     ipAllowListEntries: IpAllowListEntryConnection
     /** The setting value for whether the organization has IP allow list configuration for installed GitHub Apps enabled. */
     ipAllowListForInstalledAppsEnabledSetting: IpAllowListForInstalledAppsEnabledSettingValue
-    /** Check if the given account is sponsoring this user/organization. */
+    /** Check if the given account is sponsoring this username/organization. */
     isSponsoredBy: Scalars['Boolean']
-    /** True if the viewer is sponsored by this user/organization. */
+    /** True if the viewer is sponsored by this username/organization. */
     isSponsoringViewer: Scalars['Boolean']
     /** Whether the organization has verified its profile email and website. */
     isVerified: Scalars['Boolean']
@@ -11671,7 +11671,7 @@ export type Organization = Actor &
     membersCanForkPrivateRepositories: Scalars['Boolean']
     /** A list of users who are members of this organization. */
     membersWithRole: OrganizationMemberConnection
-    /** The estimated monthly GitHub Sponsors income for this user/organization in cents (USD). */
+    /** The estimated monthly GitHub Sponsors income for this username/organization in cents (USD). */
     monthlyEstimatedSponsorsIncomeInCents: Scalars['Int']
     /** The organization's public profile name. */
     name?: Maybe<Scalars['String']>
@@ -11705,13 +11705,13 @@ export type Organization = Actor &
     projectsResourcePath: Scalars['URI']
     /** The HTTP URL listing organization's projects */
     projectsUrl: Scalars['URI']
-    /** A list of repositories that the user owns. */
+    /** A list of repositories that the username owns. */
     repositories: RepositoryConnection
     /** Find Repository. */
     repository?: Maybe<Repository>
-    /** Discussion comments this user has authored. */
+    /** Discussion comments this username has authored. */
     repositoryDiscussionComments: DiscussionCommentConnection
-    /** Discussions this user has started. */
+    /** Discussions this username has started. */
     repositoryDiscussions: DiscussionConnection
     /** A list of all repository migrations for this organization. */
     repositoryMigrations: RepositoryMigrationConnection
@@ -11723,15 +11723,15 @@ export type Organization = Actor &
     samlIdentityProvider?: Maybe<OrganizationIdentityProvider>
     /** List of users and organizations this entity is sponsoring. */
     sponsoring: SponsorConnection
-    /** List of sponsors for this user or organization. */
+    /** List of sponsors for this username or organization. */
     sponsors: SponsorConnection
     /** Events involving this sponsorable, such as new sponsorships. */
     sponsorsActivities: SponsorsActivityConnection
-    /** The GitHub Sponsors listing for this user or organization. */
+    /** The GitHub Sponsors listing for this username or organization. */
     sponsorsListing?: Maybe<SponsorsListing>
-    /** The sponsorship from the viewer to this user/organization; that is, the sponsorship where you're the sponsor. Only returns a sponsorship if it is active. */
+    /** The sponsorship from the viewer to this username/organization; that is, the sponsorship where you're the sponsor. Only returns a sponsorship if it is active. */
     sponsorshipForViewerAsSponsor?: Maybe<Sponsorship>
-    /** The sponsorship from this user/organization to the viewer; that is, the sponsorship you're receiving. Only returns a sponsorship if it is active. */
+    /** The sponsorship from this username/organization to the viewer; that is, the sponsorship you're receiving. Only returns a sponsorship if it is active. */
     sponsorshipForViewerAsSponsorable?: Maybe<Sponsorship>
     /** List of sponsorship updates sent from this sponsorable to sponsors. */
     sponsorshipNewsletters: SponsorshipNewsletterConnection
@@ -11763,11 +11763,11 @@ export type Organization = Actor &
     viewerCanCreateRepositories: Scalars['Boolean']
     /** Viewer can create teams on this organization. */
     viewerCanCreateTeams: Scalars['Boolean']
-    /** Whether or not the viewer is able to sponsor this user/organization. */
+    /** Whether or not the viewer is able to sponsor this username/organization. */
     viewerCanSponsor: Scalars['Boolean']
     /** Viewer is an active member of this organization. */
     viewerIsAMember: Scalars['Boolean']
-    /** True if the viewer is sponsoring this user/organization. */
+    /** True if the viewer is sponsoring this username/organization. */
     viewerIsSponsoring: Scalars['Boolean']
     /** The organization's public profile URL. */
     websiteUrl?: Maybe<Scalars['URI']>
@@ -12216,23 +12216,23 @@ export type OrganizationIdentityProviderExternalIdentitiesArgs = {
   userName?: InputMaybe<Scalars['String']>
 }
 
-/** An Invitation for a user to an organization. */
+/** An Invitation for a username to an organization. */
 export type OrganizationInvitation = Node & {
   __typename?: 'OrganizationInvitation'
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** The email address of the user invited to the organization. */
+  /** The email address of the username invited to the organization. */
   email?: Maybe<Scalars['String']>
   id: Scalars['ID']
-  /** The type of invitation that was sent (e.g. email, user). */
+  /** The type of invitation that was sent (e.g. email, username). */
   invitationType: OrganizationInvitationType
-  /** The user who was invited to the organization. */
+  /** The username who was invited to the organization. */
   invitee?: Maybe<User>
-  /** The user who created the invitation. */
+  /** The username who created the invitation. */
   inviter: User
   /** The organization the invite is for */
   organization: Organization
-  /** The user's pending role in the organization (e.g. member, owner). */
+  /** The username's pending role in the organization (e.g. member, owner). */
   role: OrganizationInvitationRole
 }
 
@@ -12260,13 +12260,13 @@ export type OrganizationInvitationEdge = {
 
 /** The possible organization invitation roles. */
 export enum OrganizationInvitationRole {
-  /** The user is invited to be an admin of the organization. */
+  /** The username is invited to be an admin of the organization. */
   Admin = 'ADMIN',
-  /** The user is invited to be a billing manager of the organization. */
+  /** The username is invited to be a billing manager of the organization. */
   BillingManager = 'BILLING_MANAGER',
-  /** The user is invited to be a direct member of the organization. */
+  /** The username is invited to be a direct member of the organization. */
   DirectMember = 'DIRECT_MEMBER',
-  /** The user's previous role will be reinstated. */
+  /** The username's previous role will be reinstated. */
   Reinstate = 'REINSTATE',
 }
 
@@ -12274,7 +12274,7 @@ export enum OrganizationInvitationRole {
 export enum OrganizationInvitationType {
   /** The invitation was to an email address. */
   Email = 'EMAIL',
-  /** The invitation was to an existing user. */
+  /** The invitation was to an existing username. */
   User = 'USER',
 }
 
@@ -12291,7 +12291,7 @@ export type OrganizationMemberConnection = {
   totalCount: Scalars['Int']
 }
 
-/** Represents a user within an organization. */
+/** Represents a username within an organization. */
 export type OrganizationMemberEdge = {
   __typename?: 'OrganizationMemberEdge'
   /** A cursor for use in pagination. */
@@ -12300,15 +12300,15 @@ export type OrganizationMemberEdge = {
   hasTwoFactorEnabled?: Maybe<Scalars['Boolean']>
   /** The item at the end of the edge. */
   node?: Maybe<User>
-  /** The role this user has in the organization. */
+  /** The role this username has in the organization. */
   role?: Maybe<OrganizationMemberRole>
 }
 
 /** The possible roles within an organization for its members. */
 export enum OrganizationMemberRole {
-  /** The user is an administrator of the organization. */
+  /** The username is an administrator of the organization. */
   Admin = 'ADMIN',
-  /** The user is a member of the organization. */
+  /** The username is a member of the organization. */
   Member = 'MEMBER',
 }
 
@@ -12347,13 +12347,13 @@ export type OrganizationTeamsHovercardContext = HovercardContext & {
   message: Scalars['String']
   /** An octicon to accompany this context */
   octicon: Scalars['String']
-  /** Teams in this organization the user is a member of that are relevant */
+  /** Teams in this organization the username is a member of that are relevant */
   relevantTeams: TeamConnection
-  /** The path for the full team list for this user */
+  /** The path for the full team list for this username */
   teamsResourcePath: Scalars['URI']
-  /** The URL for the full team list for this user */
+  /** The URL for the full team list for this username */
   teamsUrl: Scalars['URI']
-  /** The total number of teams the user is on in the organization */
+  /** The total number of teams the username is on in the organization */
   totalTeamCount: Scalars['Int']
 }
 
@@ -12372,9 +12372,9 @@ export type OrganizationsHovercardContext = HovercardContext & {
   message: Scalars['String']
   /** An octicon to accompany this context */
   octicon: Scalars['String']
-  /** Organizations this user is a member of that are relevant */
+  /** Organizations this username is a member of that are relevant */
   relevantOrganizations: OrganizationConnection
-  /** The total number of organizations this user is in */
+  /** The total number of organizations this username is in */
   totalOrganizationCount: Scalars['Int']
 }
 
@@ -12676,15 +12676,15 @@ export enum PatchStatus {
   Renamed = 'RENAMED',
 }
 
-/** Types that can grant permissions on a repository to a user */
+/** Types that can grant permissions on a repository to a username */
 export type PermissionGranter = Organization | Repository | Team
 
-/** A level of permission and source for a user's access to a repository. */
+/** A level of permission and source for a username's access to a repository. */
 export type PermissionSource = {
   __typename?: 'PermissionSource'
   /** The organization the repository belongs to. */
   organization: Organization
-  /** The level of access this source has granted to the user. */
+  /** The level of access this source has granted to the username. */
   permission: DefaultRepositoryPermissionField
   /** The source of this permission. */
   source: PermissionGranter
@@ -12748,7 +12748,7 @@ export enum PinnableItemType {
   Repository = 'REPOSITORY',
   /** A team. */
   Team = 'TEAM',
-  /** A user. */
+  /** A username. */
   User = 'USER',
 }
 
@@ -12886,13 +12886,13 @@ export type PrivateRepositoryForkingDisableAuditEntry = AuditEntry &
     __typename?: 'PrivateRepositoryForkingDisableAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -12925,13 +12925,13 @@ export type PrivateRepositoryForkingDisableAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -12944,13 +12944,13 @@ export type PrivateRepositoryForkingEnableAuditEntry = AuditEntry &
     __typename?: 'PrivateRepositoryForkingEnableAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -12983,13 +12983,13 @@ export type PrivateRepositoryForkingEnableAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -13790,21 +13790,21 @@ export enum ProjectViewLayout {
   TableLayout = 'TABLE_LAYOUT',
 }
 
-/** A user's public key. */
+/** A username's public key. */
 export type PublicKey = Node & {
   __typename?: 'PublicKey'
-  /** The last time this authorization was used to perform an action. Values will be null for keys not owned by the user. */
+  /** The last time this authorization was used to perform an action. Values will be null for keys not owned by the username. */
   accessedAt?: Maybe<Scalars['DateTime']>
-  /** Identifies the date and time when the key was created. Keys created before March 5th, 2014 have inaccurate values. Values will be null for keys not owned by the user. */
+  /** Identifies the date and time when the key was created. Keys created before March 5th, 2014 have inaccurate values. Values will be null for keys not owned by the username. */
   createdAt?: Maybe<Scalars['DateTime']>
   /** The fingerprint for this PublicKey. */
   fingerprint: Scalars['String']
   id: Scalars['ID']
-  /** Whether this PublicKey is read-only or not. Values will be null for keys not owned by the user. */
+  /** Whether this PublicKey is read-only or not. Values will be null for keys not owned by the username. */
   isReadOnly?: Maybe<Scalars['Boolean']>
   /** The public key string. */
   key: Scalars['String']
-  /** Identifies the date and time when the key was updated. Keys created before March 5th, 2014 may have inaccurate values. Values will be null for keys not owned by the user. */
+  /** Identifies the date and time when the key was updated. Keys created before March 5th, 2014 may have inaccurate values. Values will be null for keys not owned by the username. */
   updatedAt?: Maybe<Scalars['DateTime']>
 }
 
@@ -13925,9 +13925,9 @@ export type PullRequest = Assignable &
     labels?: Maybe<LabelConnection>
     /** The moment the editor made the last edit */
     lastEditedAt?: Maybe<Scalars['DateTime']>
-    /** A list of latest reviews per user associated with the pull request. */
+    /** A list of latest reviews per username associated with the pull request. */
     latestOpinionatedReviews?: Maybe<PullRequestReviewConnection>
-    /** A list of latest reviews per user associated with the pull request that are not also pending review. */
+    /** A list of latest reviews per username associated with the pull request that are not also pending review. */
     latestReviews?: Maybe<PullRequestReviewConnection>
     /** `true` if the pull request is locked */
     locked: Scalars['Boolean']
@@ -14014,7 +14014,7 @@ export type PullRequest = Assignable &
     viewerCanEnableAutoMerge: Scalars['Boolean']
     /** Indicates whether the viewer can bypass branch protections and merge the pull request immediately */
     viewerCanMergeAsAdmin: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the viewer is able to change their subscription status for the repository. */
     viewerCanSubscribe: Scalars['Boolean']
@@ -14339,7 +14339,7 @@ export type PullRequestConnection = {
   totalCount: Scalars['Int']
 }
 
-/** This aggregates pull requests opened by a user within one repository. */
+/** This aggregates pull requests opened by a username within one repository. */
 export type PullRequestContributionsByRepository = {
   __typename?: 'PullRequestContributionsByRepository'
   /** The pull request contributions. */
@@ -14348,7 +14348,7 @@ export type PullRequestContributionsByRepository = {
   repository: Repository
 }
 
-/** This aggregates pull requests opened by a user within one repository. */
+/** This aggregates pull requests opened by a username within one repository. */
 export type PullRequestContributionsByRepositoryContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -14456,7 +14456,7 @@ export type PullRequestReview = Comment &
     userContentEdits?: Maybe<UserContentEditConnection>
     /** Check if the current viewer can delete this object. */
     viewerCanDelete: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the current viewer can update this object. */
     viewerCanUpdate: Scalars['Boolean']
@@ -14581,7 +14581,7 @@ export type PullRequestReviewComment = Comment &
     viewerCanDelete: Scalars['Boolean']
     /** Check if the current viewer can minimize this object. */
     viewerCanMinimize: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the current viewer can update this object. */
     viewerCanUpdate: Scalars['Boolean']
@@ -14652,7 +14652,7 @@ export type PullRequestReviewConnection = {
   totalCount: Scalars['Int']
 }
 
-/** This aggregates pull request reviews made by a user within one repository. */
+/** This aggregates pull request reviews made by a username within one repository. */
 export type PullRequestReviewContributionsByRepository = {
   __typename?: 'PullRequestReviewContributionsByRepository'
   /** The pull request review contributions. */
@@ -14661,7 +14661,7 @@ export type PullRequestReviewContributionsByRepository = {
   repository: Repository
 }
 
-/** This aggregates pull request reviews made by a user within one repository. */
+/** This aggregates pull request reviews made by a username within one repository. */
 export type PullRequestReviewContributionsByRepositoryContributionsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -14741,7 +14741,7 @@ export type PullRequestReviewThread = Node & {
   pullRequest: PullRequest
   /** Identifies the repository associated with this thread. */
   repository: Repository
-  /** The user who resolved this thread */
+  /** The username who resolved this thread */
   resolvedBy?: Maybe<User>
   /** The side of the diff that the first line of the thread starts on (multi-line only) */
   startDiffSide?: Maybe<DiffSide>
@@ -15079,7 +15079,7 @@ export enum PullRequestTimelineItemsItemType {
   UnpinnedEvent = 'UNPINNED_EVENT',
   /** Represents an 'unsubscribed' event on a given `Subscribable`. */
   UnsubscribedEvent = 'UNSUBSCRIBED_EVENT',
-  /** Represents a 'user_blocked' event on a given user. */
+  /** Represents a 'user_blocked' event on a given username. */
   UserBlockedEvent = 'USER_BLOCKED_EVENT',
 }
 
@@ -15107,12 +15107,12 @@ export type Push = Node & {
   repository: Repository
 }
 
-/** A team, user or app who has the ability to push to a protected branch. */
+/** A team, username or app who has the ability to push to a protected branch. */
 export type PushAllowance = Node & {
   __typename?: 'PushAllowance'
   /** The actor that can push. */
   actor?: Maybe<PushAllowanceActor>
-  /** Identifies the branch protection rule associated with the allowed user or team. */
+  /** Identifies the branch protection rule associated with the allowed username or team. */
   branchProtectionRule?: Maybe<BranchProtectionRule>
   id: Scalars['ID']
 }
@@ -15197,9 +15197,9 @@ export type Query = {
   sponsorables: SponsorableItemConnection
   /** Look up a topic by name. */
   topic?: Maybe<Topic>
-  /** Lookup a user by login. */
+  /** Lookup a username by login. */
   user?: Maybe<User>
-  /** The currently authenticated user. */
+  /** The currently authenticated username. */
   viewer: User
 }
 
@@ -15391,7 +15391,7 @@ export type Reactable = {
   reactionGroups?: Maybe<Array<ReactionGroup>>
   /** A list of Reactions left on the Issue. */
   reactions: ReactionConnection
-  /** Can user react to this subject */
+  /** Can username react to this subject */
   viewerCanReact: Scalars['Boolean']
 }
 
@@ -15418,13 +15418,13 @@ export type ReactingUserConnection = {
   totalCount: Scalars['Int']
 }
 
-/** Represents a user that's made a reaction. */
+/** Represents a username that's made a reaction. */
 export type ReactingUserEdge = {
   __typename?: 'ReactingUserEdge'
   /** A cursor for use in pagination. */
   cursor: Scalars['String']
   node: User
-  /** The moment when the user made the reaction. */
+  /** The moment when the username made the reaction. */
   reactedAt: Scalars['DateTime']
 }
 
@@ -15440,7 +15440,7 @@ export type Reaction = Node & {
   id: Scalars['ID']
   /** The reactable piece of content */
   reactable: Reactable
-  /** Identifies the user who created this reaction. */
+  /** Identifies the username who created this reaction. */
   user?: Maybe<User>
 }
 
@@ -15455,7 +15455,7 @@ export type ReactionConnection = {
   pageInfo: PageInfo
   /** Identifies the total count of items in the connection. */
   totalCount: Scalars['Int']
-  /** Whether or not the authenticated user has left a reaction on the subject. */
+  /** Whether or not the authenticated username has left a reaction on the subject. */
   viewerHasReacted: Scalars['Boolean']
 }
 
@@ -15504,7 +15504,7 @@ export type ReactionGroup = {
    * @deprecated Reactors can now be mannequins, bots, and organizations. Use the `reactors` field instead. Removal on 2021-10-01 UTC.
    */
   users: ReactingUserConnection
-  /** Whether or not the authenticated user has left a reaction on the subject. */
+  /** Whether or not the authenticated username has left a reaction on the subject. */
   viewerHasReacted: Scalars['Boolean']
 }
 
@@ -15561,7 +15561,7 @@ export type ReactorEdge = {
   cursor: Scalars['String']
   /** The author of the reaction. */
   node: Reactor
-  /** The moment when the user made the reaction. */
+  /** The moment when the username made the reaction. */
   reactedAt: Scalars['DateTime']
 }
 
@@ -15810,7 +15810,7 @@ export type Release = Node &
     updatedAt: Scalars['DateTime']
     /** The HTTP URL for this issue */
     url: Scalars['URI']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
   }
 
@@ -15866,7 +15866,7 @@ export type ReleaseAsset = Node & {
   size: Scalars['Int']
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['DateTime']
-  /** The user that performed the upload */
+  /** The username that performed the upload */
   uploadedBy: User
   /** Identifies the URL of the release asset. */
   url: Scalars['URI']
@@ -15957,14 +15957,14 @@ export type RemoveEnterpriseAdminInput = {
   clientMutationId?: InputMaybe<Scalars['String']>
   /** The Enterprise ID from which to remove the administrator. */
   enterpriseId: Scalars['ID']
-  /** The login of the user to remove as an administrator. */
+  /** The login of the username to remove as an administrator. */
   login: Scalars['String']
 }
 
 /** Autogenerated return type of RemoveEnterpriseAdmin */
 export type RemoveEnterpriseAdminPayload = {
   __typename?: 'RemoveEnterpriseAdminPayload'
-  /** The user who was removed as an administrator. */
+  /** The username who was removed as an administrator. */
   admin?: Maybe<User>
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>
@@ -16069,7 +16069,7 @@ export type RemoveOutsideCollaboratorPayload = {
   __typename?: 'RemoveOutsideCollaboratorPayload'
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>
-  /** The user that was removed as an outside collaborator. */
+  /** The username that was removed as an outside collaborator. */
   removedUser?: Maybe<User>
 }
 
@@ -16213,13 +16213,13 @@ export type RepoAccessAuditEntry = AuditEntry &
     __typename?: 'RepoAccessAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16246,13 +16246,13 @@ export type RepoAccessAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
     /** The visibility of the repository */
     visibility?: Maybe<RepoAccessAuditEntryVisibility>
@@ -16276,13 +16276,13 @@ export type RepoAddMemberAuditEntry = AuditEntry &
     __typename?: 'RepoAddMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16309,13 +16309,13 @@ export type RepoAddMemberAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
     /** The visibility of the repository */
     visibility?: Maybe<RepoAddMemberAuditEntryVisibility>
@@ -16340,13 +16340,13 @@ export type RepoAddTopicAuditEntry = AuditEntry &
     __typename?: 'RepoAddTopicAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16377,13 +16377,13 @@ export type RepoAddTopicAuditEntry = AuditEntry &
     topic?: Maybe<Topic>
     /** The name of the topic added to the repository */
     topicName?: Maybe<Scalars['String']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16395,13 +16395,13 @@ export type RepoArchivedAuditEntry = AuditEntry &
     __typename?: 'RepoArchivedAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16428,13 +16428,13 @@ export type RepoArchivedAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
     /** The visibility of the repository */
     visibility?: Maybe<RepoArchivedAuditEntryVisibility>
@@ -16458,13 +16458,13 @@ export type RepoChangeMergeSettingAuditEntry = AuditEntry &
     __typename?: 'RepoChangeMergeSettingAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16495,13 +16495,13 @@ export type RepoChangeMergeSettingAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16523,13 +16523,13 @@ export type RepoConfigDisableAnonymousGitAccessAuditEntry = AuditEntry &
     __typename?: 'RepoConfigDisableAnonymousGitAccessAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16556,13 +16556,13 @@ export type RepoConfigDisableAnonymousGitAccessAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16574,13 +16574,13 @@ export type RepoConfigDisableCollaboratorsOnlyAuditEntry = AuditEntry &
     __typename?: 'RepoConfigDisableCollaboratorsOnlyAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16607,13 +16607,13 @@ export type RepoConfigDisableCollaboratorsOnlyAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16625,13 +16625,13 @@ export type RepoConfigDisableContributorsOnlyAuditEntry = AuditEntry &
     __typename?: 'RepoConfigDisableContributorsOnlyAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16658,13 +16658,13 @@ export type RepoConfigDisableContributorsOnlyAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16676,13 +16676,13 @@ export type RepoConfigDisableSockpuppetDisallowedAuditEntry = AuditEntry &
     __typename?: 'RepoConfigDisableSockpuppetDisallowedAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16709,13 +16709,13 @@ export type RepoConfigDisableSockpuppetDisallowedAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16727,13 +16727,13 @@ export type RepoConfigEnableAnonymousGitAccessAuditEntry = AuditEntry &
     __typename?: 'RepoConfigEnableAnonymousGitAccessAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16760,13 +16760,13 @@ export type RepoConfigEnableAnonymousGitAccessAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16778,13 +16778,13 @@ export type RepoConfigEnableCollaboratorsOnlyAuditEntry = AuditEntry &
     __typename?: 'RepoConfigEnableCollaboratorsOnlyAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16811,13 +16811,13 @@ export type RepoConfigEnableCollaboratorsOnlyAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16829,13 +16829,13 @@ export type RepoConfigEnableContributorsOnlyAuditEntry = AuditEntry &
     __typename?: 'RepoConfigEnableContributorsOnlyAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16862,13 +16862,13 @@ export type RepoConfigEnableContributorsOnlyAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16880,13 +16880,13 @@ export type RepoConfigEnableSockpuppetDisallowedAuditEntry = AuditEntry &
     __typename?: 'RepoConfigEnableSockpuppetDisallowedAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16913,13 +16913,13 @@ export type RepoConfigEnableSockpuppetDisallowedAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16931,13 +16931,13 @@ export type RepoConfigLockAnonymousGitAccessAuditEntry = AuditEntry &
     __typename?: 'RepoConfigLockAnonymousGitAccessAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -16964,13 +16964,13 @@ export type RepoConfigLockAnonymousGitAccessAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -16982,13 +16982,13 @@ export type RepoConfigUnlockAnonymousGitAccessAuditEntry = AuditEntry &
     __typename?: 'RepoConfigUnlockAnonymousGitAccessAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -17015,13 +17015,13 @@ export type RepoConfigUnlockAnonymousGitAccessAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -17033,13 +17033,13 @@ export type RepoCreateAuditEntry = AuditEntry &
     __typename?: 'RepoCreateAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -17070,13 +17070,13 @@ export type RepoCreateAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
     /** The visibility of the repository */
     visibility?: Maybe<RepoCreateAuditEntryVisibility>
@@ -17100,13 +17100,13 @@ export type RepoDestroyAuditEntry = AuditEntry &
     __typename?: 'RepoDestroyAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -17133,13 +17133,13 @@ export type RepoDestroyAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
     /** The visibility of the repository */
     visibility?: Maybe<RepoDestroyAuditEntryVisibility>
@@ -17163,13 +17163,13 @@ export type RepoRemoveMemberAuditEntry = AuditEntry &
     __typename?: 'RepoRemoveMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -17196,13 +17196,13 @@ export type RepoRemoveMemberAuditEntry = AuditEntry &
     repositoryResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the repository */
     repositoryUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
     /** The visibility of the repository */
     visibility?: Maybe<RepoRemoveMemberAuditEntryVisibility>
@@ -17227,13 +17227,13 @@ export type RepoRemoveTopicAuditEntry = AuditEntry &
     __typename?: 'RepoRemoveTopicAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -17264,13 +17264,13 @@ export type RepoRemoveTopicAuditEntry = AuditEntry &
     topic?: Maybe<Topic>
     /** The name of the topic added to the repository */
     topicName?: Maybe<Scalars['String']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -17384,7 +17384,7 @@ export type Repository = Node &
     isSecurityPolicyEnabled?: Maybe<Scalars['Boolean']>
     /** Identifies if the repository is a template that can be used to generate new repositories. */
     isTemplate: Scalars['Boolean']
-    /** Is this repository a user configuration repository? */
+    /** Is this repository a username configuration repository? */
     isUserConfigurationRepository: Scalars['Boolean']
     /** Returns a single issue from the current repository by number. */
     issue?: Maybe<Issue>
@@ -17506,7 +17506,7 @@ export type Repository = Node &
     viewerDefaultCommitEmail?: Maybe<Scalars['String']>
     /** The last used merge method by the viewer or the default for the repository. */
     viewerDefaultMergeMethod: PullRequestMergeMethod
-    /** Returns a boolean indicating whether the viewing user has starred this starrable. */
+    /** Returns a boolean indicating whether the viewing username has starred this starrable. */
     viewerHasStarred: Scalars['Boolean']
     /** The users permission level on the repository. Will return null if authenticated as an GitHub App. */
     viewerPermission?: Maybe<RepositoryPermission>
@@ -17862,13 +17862,13 @@ export type RepositoryWatchersArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
-/** The affiliation of a user to a repository */
+/** The affiliation of a username to a repository */
 export enum RepositoryAffiliation {
-  /** Repositories that the user has been added to as a collaborator. */
+  /** Repositories that the username has been added to as a collaborator. */
   Collaborator = 'COLLABORATOR',
-  /** Repositories that the user has access to through being a member of an organization. This includes every repository on every team that the user is on. */
+  /** Repositories that the username has access to through being a member of an organization. This includes every repository on every team that the username is on. */
   OrganizationMember = 'ORGANIZATION_MEMBER',
-  /** Repositories that are owned by the authenticated user. */
+  /** Repositories that are owned by the authenticated username. */
   Owner = 'OWNER',
 }
 
@@ -17923,15 +17923,15 @@ export type RepositoryCollaboratorConnection = {
   totalCount: Scalars['Int']
 }
 
-/** Represents a user who is a collaborator of a repository. */
+/** Represents a username who is a collaborator of a repository. */
 export type RepositoryCollaboratorEdge = {
   __typename?: 'RepositoryCollaboratorEdge'
   /** A cursor for use in pagination. */
   cursor: Scalars['String']
   node: User
-  /** The permission the user has on the repository. */
+  /** The permission the username has on the repository. */
   permission: RepositoryPermission
-  /** A list of sources for the user's access to the repository. */
+  /** A list of sources for the username's access to the repository. */
   permissionSources?: Maybe<Array<PermissionSource>>
 }
 
@@ -17977,7 +17977,7 @@ export enum RepositoryContributionType {
 
 /** Represents an author of discussions in repositories. */
 export type RepositoryDiscussionAuthor = {
-  /** Discussions this user has started. */
+  /** Discussions this username has started. */
   repositoryDiscussions: DiscussionConnection
 }
 
@@ -17994,7 +17994,7 @@ export type RepositoryDiscussionAuthorRepositoryDiscussionsArgs = {
 
 /** Represents an author of discussion comments in repositories. */
 export type RepositoryDiscussionCommentAuthor = {
-  /** Discussion comments this user has authored. */
+  /** Discussion comments this username has authored. */
   repositoryDiscussionComments: DiscussionCommentConnection
 }
 
@@ -18128,25 +18128,25 @@ export enum RepositoryInteractionLimitOrigin {
   Organization = 'ORGANIZATION',
   /** A limit that is configured at the repository level. */
   Repository = 'REPOSITORY',
-  /** A limit that is configured at the user-wide level. */
+  /** A limit that is configured at the username-wide level. */
   User = 'USER',
 }
 
-/** An invitation for a user to be added to a repository. */
+/** An invitation for a username to be added to a repository. */
 export type RepositoryInvitation = Node & {
   __typename?: 'RepositoryInvitation'
   /** The email address that received the invitation. */
   email?: Maybe<Scalars['String']>
   id: Scalars['ID']
-  /** The user who received the invitation. */
+  /** The username who received the invitation. */
   invitee?: Maybe<User>
-  /** The user who created the invitation. */
+  /** The username who created the invitation. */
   inviter: User
   /** The permalink for this repository invitation. */
   permalink: Scalars['URI']
   /** The permission granted on this repository by this invitation. */
   permission: RepositoryPermission
-  /** The Repository the user is invited to. */
+  /** The Repository the username is invited to. */
   repository?: Maybe<RepositoryInfo>
 }
 
@@ -18300,7 +18300,7 @@ export type RepositoryOwner = {
   id: Scalars['ID']
   /** The username used to login. */
   login: Scalars['String']
-  /** A list of repositories that the user owns. */
+  /** A list of repositories that the username owns. */
   repositories: RepositoryConnection
   /** Find Repository. */
   repository?: Maybe<Repository>
@@ -18410,13 +18410,13 @@ export type RepositoryVisibilityChangeDisableAuditEntry = AuditEntry &
     __typename?: 'RepositoryVisibilityChangeDisableAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -18441,13 +18441,13 @@ export type RepositoryVisibilityChangeDisableAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -18459,13 +18459,13 @@ export type RepositoryVisibilityChangeEnableAuditEntry = AuditEntry &
     __typename?: 'RepositoryVisibilityChangeEnableAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -18490,13 +18490,13 @@ export type RepositoryVisibilityChangeEnableAuditEntry = AuditEntry &
     organizationResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for the organization */
     organizationUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -18512,7 +18512,7 @@ export type RepositoryVulnerabilityAlert = Node &
     dismissReason?: Maybe<Scalars['String']>
     /** When was the alert dismissed? */
     dismissedAt?: Maybe<Scalars['DateTime']>
-    /** The user who dismissed the alert */
+    /** The username who dismissed the alert */
     dismisser?: Maybe<User>
     /** The reason the alert was marked as fixed. */
     fixReason?: Maybe<Scalars['String']>
@@ -18561,7 +18561,7 @@ export type RepositoryVulnerabilityAlertEdge = {
 
 /** The possible states of an alert */
 export enum RepositoryVulnerabilityAlertState {
-  /** An alert that has been manually closed by a user. */
+  /** An alert that has been manually closed by a username. */
   Dismissed = 'DISMISSED',
   /** An alert that has been resolved by a code change. */
   Fixed = 'FIXED',
@@ -18579,7 +18579,7 @@ export type RequestReviewsInput = {
   teamIds?: InputMaybe<Array<Scalars['ID']>>
   /** Add users to the set rather than replace. */
   union?: InputMaybe<Scalars['Boolean']>
-  /** The Node IDs of the user to request. */
+  /** The Node IDs of the username to request. */
   userIds?: InputMaybe<Array<Scalars['ID']>>
 }
 
@@ -18678,7 +18678,7 @@ export type ResolveReviewThreadPayload = {
   thread?: Maybe<PullRequestReviewThread>
 }
 
-/** Represents a private contribution a user made on GitHub. */
+/** Represents a private contribution a username made on GitHub. */
 export type RestrictedContribution = Contribution & {
   __typename?: 'RestrictedContribution'
   /**
@@ -18693,16 +18693,16 @@ export type RestrictedContribution = Contribution & {
   resourcePath: Scalars['URI']
   /** The HTTP URL for this contribution. */
   url: Scalars['URI']
-  /** The user who made this contribution. */
+  /** The username who made this contribution. */
   user: User
 }
 
-/** A team or user who has the ability to dismiss a review on a protected branch. */
+/** A team or username who has the ability to dismiss a review on a protected branch. */
 export type ReviewDismissalAllowance = Node & {
   __typename?: 'ReviewDismissalAllowance'
   /** The actor that can dismiss. */
   actor?: Maybe<ReviewDismissalAllowanceActor>
-  /** Identifies the branch protection rule associated with the allowed user or team. */
+  /** Identifies the branch protection rule associated with the allowed username or team. */
   branchProtectionRule?: Maybe<BranchProtectionRule>
   id: Scalars['ID']
 }
@@ -18761,7 +18761,7 @@ export type ReviewDismissedEvent = Node &
     url: Scalars['URI']
   }
 
-/** A request for a user to review a pull request. */
+/** A request for a username to review a pull request. */
 export type ReviewRequest = Node & {
   __typename?: 'ReviewRequest'
   /** Whether this request was created for a code owner */
@@ -18845,7 +18845,7 @@ export type RevokeEnterpriseOrganizationsMigratorRoleInput = {
   clientMutationId?: InputMaybe<Scalars['String']>
   /** The ID of the enterprise to which all organizations managed by it will be granted the migrator role. */
   enterpriseId: Scalars['ID']
-  /** The login of the user to revoke the migrator role */
+  /** The login of the username to revoke the migrator role */
   login: Scalars['String']
 }
 
@@ -18854,7 +18854,7 @@ export type RevokeEnterpriseOrganizationsMigratorRolePayload = {
   __typename?: 'RevokeEnterpriseOrganizationsMigratorRolePayload'
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>
-  /** The organizations that had the migrator role revoked for the given user. */
+  /** The organizations that had the migrator role revoked for the given username. */
   organizations?: Maybe<OrganizationConnection>
 }
 
@@ -18869,13 +18869,13 @@ export type RevokeEnterpriseOrganizationsMigratorRolePayloadOrganizationsArgs =
 
 /** Autogenerated input type of RevokeMigratorRole */
 export type RevokeMigratorRoleInput = {
-  /** The user login or Team slug to revoke the migrator role from. */
+  /** The username login or Team slug to revoke the migrator role from. */
   actor: Scalars['String']
   /** Specifies the type of the actor, can be either USER or TEAM. */
   actorType: ActorType
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']>
-  /** The ID of the organization that the user/team belongs to. */
+  /** The ID of the organization that the username/team belongs to. */
   organizationId: Scalars['ID']
 }
 
@@ -18888,13 +18888,13 @@ export type RevokeMigratorRolePayload = {
   success?: Maybe<Scalars['Boolean']>
 }
 
-/** Possible roles a user may have in relation to an organization. */
+/** Possible roles a username may have in relation to an organization. */
 export enum RoleInOrganization {
-  /** A user who is a direct member of the organization. */
+  /** A username who is a direct member of the organization. */
   DirectMember = 'DIRECT_MEMBER',
-  /** A user with full administrative access to the organization. */
+  /** A username with full administrative access to the organization. */
   Owner = 'OWNER',
-  /** A user who is unaffiliated with the organization. */
+  /** A username who is unaffiliated with the organization. */
   Unaffiliated = 'UNAFFILIATED',
 }
 
@@ -18922,7 +18922,7 @@ export enum SamlSignatureAlgorithm {
   RsaSha512 = 'RSA_SHA512',
 }
 
-/** A Saved Reply is text a user can use to reply quickly. */
+/** A Saved Reply is text a username can use to reply quickly. */
 export type SavedReply = Node & {
   __typename?: 'SavedReply'
   /** The body of the saved reply. */
@@ -18934,7 +18934,7 @@ export type SavedReply = Node & {
   id: Scalars['ID']
   /** The title of the saved reply. */
   title: Scalars['String']
-  /** The user that saved this reply. */
+  /** The username that saved this reply. */
   user?: Maybe<Actor>
 }
 
@@ -19345,7 +19345,7 @@ export type SetUserInteractionLimitInput = {
   expiry?: InputMaybe<RepositoryInteractionLimitExpiry>
   /** The limit to set. */
   limit: RepositoryInteractionLimit
-  /** The ID of the user to set a limit for. */
+  /** The ID of the username to set a limit for. */
   userId: Scalars['ID']
 }
 
@@ -19354,7 +19354,7 @@ export type SetUserInteractionLimitPayload = {
   __typename?: 'SetUserInteractionLimitPayload'
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>
-  /** The user that the interaction limit was set for. */
+  /** The username that the interaction limit was set for. */
   user?: Maybe<User>
 }
 
@@ -19369,7 +19369,7 @@ export type SmimeSignature = GitSignature & {
   payload: Scalars['String']
   /** ASCII-armored signature header from object. */
   signature: Scalars['String']
-  /** GitHub user corresponding to the email signing this commit. */
+  /** GitHub username corresponding to the email signing this commit. */
   signer?: Maybe<User>
   /** The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid. */
   state: GitSignatureState
@@ -19402,7 +19402,7 @@ export type SponsorConnection = {
   totalCount: Scalars['Int']
 }
 
-/** Represents a user or organization who is sponsoring someone in GitHub Sponsors. */
+/** Represents a username or organization who is sponsoring someone in GitHub Sponsors. */
 export type SponsorEdge = {
   __typename?: 'SponsorEdge'
   /** A cursor for use in pagination. */
@@ -19429,27 +19429,27 @@ export enum SponsorOrderField {
 
 /** Entities that can be sponsored through GitHub Sponsors */
 export type Sponsorable = {
-  /** The estimated next GitHub Sponsors payout for this user/organization in cents (USD). */
+  /** The estimated next GitHub Sponsors payout for this username/organization in cents (USD). */
   estimatedNextSponsorsPayoutInCents: Scalars['Int']
-  /** True if this user/organization has a GitHub Sponsors listing. */
+  /** True if this username/organization has a GitHub Sponsors listing. */
   hasSponsorsListing: Scalars['Boolean']
-  /** Check if the given account is sponsoring this user/organization. */
+  /** Check if the given account is sponsoring this username/organization. */
   isSponsoredBy: Scalars['Boolean']
-  /** True if the viewer is sponsored by this user/organization. */
+  /** True if the viewer is sponsored by this username/organization. */
   isSponsoringViewer: Scalars['Boolean']
-  /** The estimated monthly GitHub Sponsors income for this user/organization in cents (USD). */
+  /** The estimated monthly GitHub Sponsors income for this username/organization in cents (USD). */
   monthlyEstimatedSponsorsIncomeInCents: Scalars['Int']
   /** List of users and organizations this entity is sponsoring. */
   sponsoring: SponsorConnection
-  /** List of sponsors for this user or organization. */
+  /** List of sponsors for this username or organization. */
   sponsors: SponsorConnection
   /** Events involving this sponsorable, such as new sponsorships. */
   sponsorsActivities: SponsorsActivityConnection
-  /** The GitHub Sponsors listing for this user or organization. */
+  /** The GitHub Sponsors listing for this username or organization. */
   sponsorsListing?: Maybe<SponsorsListing>
-  /** The sponsorship from the viewer to this user/organization; that is, the sponsorship where you're the sponsor. Only returns a sponsorship if it is active. */
+  /** The sponsorship from the viewer to this username/organization; that is, the sponsorship where you're the sponsor. Only returns a sponsorship if it is active. */
   sponsorshipForViewerAsSponsor?: Maybe<Sponsorship>
-  /** The sponsorship from this user/organization to the viewer; that is, the sponsorship you're receiving. Only returns a sponsorship if it is active. */
+  /** The sponsorship from this username/organization to the viewer; that is, the sponsorship you're receiving. Only returns a sponsorship if it is active. */
   sponsorshipForViewerAsSponsorable?: Maybe<Sponsorship>
   /** List of sponsorship updates sent from this sponsorable to sponsors. */
   sponsorshipNewsletters: SponsorshipNewsletterConnection
@@ -19457,9 +19457,9 @@ export type Sponsorable = {
   sponsorshipsAsMaintainer: SponsorshipConnection
   /** This object's sponsorships as the sponsor. */
   sponsorshipsAsSponsor: SponsorshipConnection
-  /** Whether or not the viewer is able to sponsor this user/organization. */
+  /** Whether or not the viewer is able to sponsor this username/organization. */
   viewerCanSponsor: Scalars['Boolean']
-  /** True if the viewer is sponsoring this user/organization. */
+  /** True if the viewer is sponsoring this username/organization. */
   viewerIsSponsoring: Scalars['Boolean']
 }
 
@@ -19572,9 +19572,9 @@ export type SponsorsActivity = Node & {
   id: Scalars['ID']
   /** The tier that the sponsorship used to use, for tier change events. */
   previousSponsorsTier?: Maybe<SponsorsTier>
-  /** The user or organization who triggered this activity and was/is sponsoring the sponsorable. */
+  /** The username or organization who triggered this activity and was/is sponsoring the sponsorable. */
   sponsor?: Maybe<Sponsor>
-  /** The user or organization that is being sponsored, the maintainer. */
+  /** The username or organization that is being sponsored, the maintainer. */
   sponsorable: Sponsorable
   /** The associated sponsorship tier. */
   sponsorsTier?: Maybe<SponsorsTier>
@@ -19809,11 +19809,11 @@ export type Sponsorship = Node & {
   /** The privacy level for this sponsorship. */
   privacyLevel: SponsorshipPrivacy
   /**
-   * The user that is sponsoring. Returns null if the sponsorship is private or if sponsor is not a user.
+   * The username that is sponsoring. Returns null if the sponsorship is private or if sponsor is not a username.
    * @deprecated `Sponsorship.sponsor` will be removed. Use `Sponsorship.sponsorEntity` instead. Removal on 2020-10-01 UTC.
    */
   sponsor?: Maybe<User>
-  /** The user or organization that is sponsoring, if you have permission to view them. */
+  /** The username or organization that is sponsoring, if you have permission to view them. */
   sponsorEntity?: Maybe<Sponsor>
   /** The entity that is being sponsored */
   sponsorable: Sponsorable
@@ -19849,7 +19849,7 @@ export type SponsorshipEdge = {
   node?: Maybe<Sponsorship>
 }
 
-/** An update sent to sponsors of a user or organization on GitHub Sponsors. */
+/** An update sent to sponsors of a username or organization on GitHub Sponsors. */
 export type SponsorshipNewsletter = Node & {
   __typename?: 'SponsorshipNewsletter'
   /** The contents of the newsletter, the message the sponsorable wanted to give. */
@@ -19859,7 +19859,7 @@ export type SponsorshipNewsletter = Node & {
   id: Scalars['ID']
   /** Indicates if the newsletter has been made available to sponsors. */
   isPublished: Scalars['Boolean']
-  /** The user or organization this newsletter is from. */
+  /** The username or organization this newsletter is from. */
   sponsorable: Sponsorable
   /** The subject of the newsletter, what it's about. */
   subject: Scalars['String']
@@ -19952,7 +19952,7 @@ export type StargazerConnection = {
   totalCount: Scalars['Int']
 }
 
-/** Represents a user that's starred a repository. */
+/** Represents a username that's starred a repository. */
 export type StargazerEdge = {
   __typename?: 'StargazerEdge'
   /** A cursor for use in pagination. */
@@ -19969,7 +19969,7 @@ export type Starrable = {
   stargazerCount: Scalars['Int']
   /** A list of users who have starred this starrable. */
   stargazers: StargazerConnection
-  /** Returns a boolean indicating whether the viewing user has starred this starrable. */
+  /** Returns a boolean indicating whether the viewing username has starred this starrable. */
   viewerHasStarred: Scalars['Boolean']
 }
 
@@ -19987,7 +19987,7 @@ export type StarredRepositoryConnection = {
   __typename?: 'StarredRepositoryConnection'
   /** A list of edges. */
   edges?: Maybe<Array<Maybe<StarredRepositoryEdge>>>
-  /** Is the list of stars for this user truncated? This is true for users that have many stars. */
+  /** Is the list of stars for this username truncated? This is true for users that have many stars. */
   isOverLimit: Scalars['Boolean']
   /** A list of nodes. */
   nodes?: Maybe<Array<Maybe<Repository>>>
@@ -20015,11 +20015,11 @@ export type StartRepositoryMigrationInput = {
   clientMutationId?: InputMaybe<Scalars['String']>
   /** Whether to continue the migration on error */
   continueOnError?: InputMaybe<Scalars['Boolean']>
-  /** The signed URL to access the user-uploaded git archive */
+  /** The signed URL to access the username-uploaded git archive */
   gitArchiveUrl?: InputMaybe<Scalars['String']>
-  /** The GitHub personal access token of the user importing to the target repository. */
+  /** The GitHub personal access token of the username importing to the target repository. */
   githubPat?: InputMaybe<Scalars['String']>
-  /** The signed URL to access the user-uploaded metadata archive */
+  /** The signed URL to access the username-uploaded metadata archive */
   metadataArchiveUrl?: InputMaybe<Scalars['String']>
   /** The ID of the organization that will own the imported repository. */
   ownerId: Scalars['ID']
@@ -20120,7 +20120,7 @@ export type StatusCheckRollupContextEdge = {
 export type StatusContext = Node &
   RequirableByPullRequest & {
     __typename?: 'StatusContext'
-    /** The avatar of the OAuth application or the user that created the status */
+    /** The avatar of the OAuth application or the username that created the status */
     avatarUrl?: Maybe<Scalars['URI']>
     /** This commit this status context is attached to. */
     commit?: Maybe<Commit>
@@ -20257,14 +20257,14 @@ export enum SubscriptionState {
   Unsubscribed = 'UNSUBSCRIBED',
 }
 
-/** A suggestion to review a pull request based on a user's commit history and review comments. */
+/** A suggestion to review a pull request based on a username's commit history and review comments. */
 export type SuggestedReviewer = {
   __typename?: 'SuggestedReviewer'
   /** Is this suggestion based on past commits? */
   isAuthor: Scalars['Boolean']
   /** Is this suggestion based on past review comments? */
   isCommenter: Scalars['Boolean']
-  /** Identifies the user suggested to review the pull request. */
+  /** Identifies the username suggested to review the pull request. */
   reviewer: User
 }
 
@@ -20459,13 +20459,13 @@ export type TeamAddMemberAuditEntry = AuditEntry &
     __typename?: 'TeamAddMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -20494,13 +20494,13 @@ export type TeamAddMemberAuditEntry = AuditEntry &
     teamResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for this team */
     teamUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -20513,13 +20513,13 @@ export type TeamAddRepositoryAuditEntry = AuditEntry &
     __typename?: 'TeamAddRepositoryAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -20556,13 +20556,13 @@ export type TeamAddRepositoryAuditEntry = AuditEntry &
     teamResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for this team */
     teamUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -20586,13 +20586,13 @@ export type TeamChangeParentTeamAuditEntry = AuditEntry &
     __typename?: 'TeamChangeParentTeamAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -20637,13 +20637,13 @@ export type TeamChangeParentTeamAuditEntry = AuditEntry &
     teamResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for this team */
     teamUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -20729,7 +20729,7 @@ export type TeamDiscussion = Comment &
     viewerCanDelete: Scalars['Boolean']
     /** Whether or not the current viewer can pin this discussion. */
     viewerCanPin: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the viewer is able to change their subscription status for the repository. */
     viewerCanSubscribe: Scalars['Boolean']
@@ -20825,7 +20825,7 @@ export type TeamDiscussionComment = Comment &
     userContentEdits?: Maybe<UserContentEditConnection>
     /** Check if the current viewer can delete this object. */
     viewerCanDelete: Scalars['Boolean']
-    /** Can user react to this subject */
+    /** Can username react to this subject */
     viewerCanReact: Scalars['Boolean']
     /** Check if the current viewer can update this object. */
     viewerCanUpdate: Scalars['Boolean']
@@ -20947,7 +20947,7 @@ export type TeamMemberConnection = {
   totalCount: Scalars['Int']
 }
 
-/** Represents a user who is a member of a team. */
+/** Represents a username who is a member of a team. */
 export type TeamMemberEdge = {
   __typename?: 'TeamMemberEdge'
   /** A cursor for use in pagination. */
@@ -21025,13 +21025,13 @@ export type TeamRemoveMemberAuditEntry = AuditEntry &
     __typename?: 'TeamRemoveMemberAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -21060,13 +21060,13 @@ export type TeamRemoveMemberAuditEntry = AuditEntry &
     teamResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for this team */
     teamUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -21079,13 +21079,13 @@ export type TeamRemoveRepositoryAuditEntry = AuditEntry &
     __typename?: 'TeamRemoveRepositoryAuditEntry'
     /** The action name */
     action: Scalars['String']
-    /** The user who initiated the action */
+    /** The username who initiated the action */
     actor?: Maybe<AuditEntryActor>
     /** The IP address of the actor */
     actorIp?: Maybe<Scalars['String']>
     /** A readable representation of the actor's location */
     actorLocation?: Maybe<ActorLocation>
-    /** The username of the user who initiated the action */
+    /** The username of the username who initiated the action */
     actorLogin?: Maybe<Scalars['String']>
     /** The HTTP path for the actor. */
     actorResourcePath?: Maybe<Scalars['URI']>
@@ -21122,13 +21122,13 @@ export type TeamRemoveRepositoryAuditEntry = AuditEntry &
     teamResourcePath?: Maybe<Scalars['URI']>
     /** The HTTP URL for this team */
     teamUrl?: Maybe<Scalars['URI']>
-    /** The user affected by the action */
+    /** The username affected by the action */
     user?: Maybe<User>
-    /** For actions involving two users, the actor is the initiator and the user is the affected user. */
+    /** For actions involving two users, the actor is the initiator and the username is the affected username. */
     userLogin?: Maybe<Scalars['String']>
-    /** The HTTP path for the user. */
+    /** The HTTP path for the username. */
     userResourcePath?: Maybe<Scalars['URI']>
-    /** The HTTP URL for the user. */
+    /** The HTTP URL for the username. */
     userUrl?: Maybe<Scalars['URI']>
   }
 
@@ -21179,7 +21179,7 @@ export enum TeamRepositoryOrderField {
   UpdatedAt = 'UPDATED_AT',
 }
 
-/** The role of a user on a team. */
+/** The role of a username on a team. */
 export enum TeamRole {
   /** User has admin rights on the team. */
   Admin = 'ADMIN',
@@ -21227,7 +21227,7 @@ export type Topic = Node &
     stargazerCount: Scalars['Int']
     /** A list of users who have starred this starrable. */
     stargazers: StargazerConnection
-    /** Returns a boolean indicating whether the viewing user has starred this starrable. */
+    /** Returns a boolean indicating whether the viewing username has starred this starrable. */
     viewerHasStarred: Scalars['Boolean']
   }
 
@@ -21390,13 +21390,13 @@ export type UnassignedEvent = Node & {
   actor?: Maybe<Actor>
   /** Identifies the assignable associated with the event. */
   assignable: Assignable
-  /** Identifies the user or mannequin that was unassigned. */
+  /** Identifies the username or mannequin that was unassigned. */
   assignee?: Maybe<Assignee>
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
   id: Scalars['ID']
   /**
-   * Identifies the subject (user) who was unassigned.
+   * Identifies the subject (username) who was unassigned.
    * @deprecated Assignees can now be mannequins. Use the `assignee` field instead. Removal on 2020-01-01 UTC.
    */
   user?: Maybe<User>
@@ -21423,7 +21423,7 @@ export type UnfollowOrganizationPayload = {
 export type UnfollowUserInput = {
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: InputMaybe<Scalars['String']>
-  /** ID of the user to unfollow. */
+  /** ID of the username to unfollow. */
   userId: Scalars['ID']
 }
 
@@ -21432,7 +21432,7 @@ export type UnfollowUserPayload = {
   __typename?: 'UnfollowUserPayload'
   /** A unique identifier for the client performing the mutation. */
   clientMutationId?: Maybe<Scalars['String']>
-  /** The user that was unfollowed. */
+  /** The username that was unfollowed. */
   user?: Maybe<User>
 }
 
@@ -21455,7 +21455,7 @@ export type UnknownSignature = GitSignature & {
   payload: Scalars['String']
   /** ASCII-armored signature header from object. */
   signature: Scalars['String']
-  /** GitHub user corresponding to the email signing this commit. */
+  /** GitHub username corresponding to the email signing this commit. */
   signer?: Maybe<User>
   /** The state of this signature. `VALID` if signature is valid and verified by GitHub, otherwise represents reason why signature is considered invalid. */
   state: GitSignatureState
@@ -21750,7 +21750,7 @@ export type UpdateBranchProtectionRulePayload = {
 
 /** Autogenerated input type of UpdateCheckRun */
 export type UpdateCheckRunInput = {
-  /** Possible further actions the integrator can perform, which a user may trigger. */
+  /** Possible further actions the integrator can perform, which a username may trigger. */
   actions?: InputMaybe<Array<CheckRunAction>>
   /** The node of the check. */
   checkRunId: Scalars['ID']
@@ -22685,13 +22685,13 @@ export type UpdateSponsorshipPreferencesInput = {
   privacyLevel?: InputMaybe<SponsorshipPrivacy>
   /** Whether the sponsor should receive email updates from the sponsorable. */
   receiveEmails?: InputMaybe<Scalars['Boolean']>
-  /** The ID of the user or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorLogin is not given. */
+  /** The ID of the username or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorLogin is not given. */
   sponsorId?: InputMaybe<Scalars['ID']>
-  /** The username of the user or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorId is not given. */
+  /** The username of the username or organization who is acting as the sponsor, paying for the sponsorship. Required if sponsorId is not given. */
   sponsorLogin?: InputMaybe<Scalars['String']>
-  /** The ID of the user or organization who is receiving the sponsorship. Required if sponsorableLogin is not given. */
+  /** The ID of the username or organization who is receiving the sponsorship. Required if sponsorableLogin is not given. */
   sponsorableId?: InputMaybe<Scalars['ID']>
-  /** The username of the user or organization who is receiving the sponsorship. Required if sponsorableId is not given. */
+  /** The username of the username or organization who is receiving the sponsorship. Required if sponsorableId is not given. */
   sponsorableLogin?: InputMaybe<Scalars['String']>
 }
 
@@ -22813,7 +22813,7 @@ export type UpdateTopicsPayload = {
   repository?: Maybe<Repository>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type User = Actor &
   Node &
   PackageOwner &
@@ -22829,88 +22829,88 @@ export type User = Actor &
     __typename?: 'User'
     /** Determine if this repository owner has any items that can be pinned to their profile. */
     anyPinnableItems: Scalars['Boolean']
-    /** A URL pointing to the user's public avatar. */
+    /** A URL pointing to the username's public avatar. */
     avatarUrl: Scalars['URI']
-    /** The user's public profile bio. */
+    /** The username's public profile bio. */
     bio?: Maybe<Scalars['String']>
-    /** The user's public profile bio as HTML. */
+    /** The username's public profile bio as HTML. */
     bioHTML: Scalars['HTML']
-    /** Could this user receive email notifications, if the organization had notification restrictions enabled? */
+    /** Could this username receive email notifications, if the organization had notification restrictions enabled? */
     canReceiveOrganizationEmailsWhenNotificationsRestricted: Scalars['Boolean']
-    /** A list of commit comments made by this user. */
+    /** A list of commit comments made by this username. */
     commitComments: CommitCommentConnection
-    /** The user's public profile company. */
+    /** The username's public profile company. */
     company?: Maybe<Scalars['String']>
-    /** The user's public profile company as HTML. */
+    /** The username's public profile company as HTML. */
     companyHTML: Scalars['HTML']
-    /** The collection of contributions this user has made to different repositories. */
+    /** The collection of contributions this username has made to different repositories. */
     contributionsCollection: ContributionsCollection
     /** Identifies the date and time when the object was created. */
     createdAt: Scalars['DateTime']
     /** Identifies the primary key from the database. */
     databaseId?: Maybe<Scalars['Int']>
-    /** The user's publicly visible profile email. */
+    /** The username's publicly visible profile email. */
     email: Scalars['String']
-    /** The estimated next GitHub Sponsors payout for this user/organization in cents (USD). */
+    /** The estimated next GitHub Sponsors payout for this username/organization in cents (USD). */
     estimatedNextSponsorsPayoutInCents: Scalars['Int']
-    /** A list of users the given user is followed by. */
+    /** A list of users the given username is followed by. */
     followers: FollowerConnection
-    /** A list of users the given user is following. */
+    /** A list of users the given username is following. */
     following: FollowingConnection
     /** Find gist by repo name. */
     gist?: Maybe<Gist>
-    /** A list of gist comments made by this user. */
+    /** A list of gist comments made by this username. */
     gistComments: GistCommentConnection
-    /** A list of the Gists the user has created. */
+    /** A list of the Gists the username has created. */
     gists: GistConnection
-    /** True if this user/organization has a GitHub Sponsors listing. */
+    /** True if this username/organization has a GitHub Sponsors listing. */
     hasSponsorsListing: Scalars['Boolean']
-    /** The hovercard information for this user in a given context */
+    /** The hovercard information for this username in a given context */
     hovercard: Hovercard
     id: Scalars['ID']
-    /** The interaction ability settings for this user. */
+    /** The interaction ability settings for this username. */
     interactionAbility?: Maybe<RepositoryInteractionAbility>
-    /** Whether or not this user is a participant in the GitHub Security Bug Bounty. */
+    /** Whether or not this username is a participant in the GitHub Security Bug Bounty. */
     isBountyHunter: Scalars['Boolean']
-    /** Whether or not this user is a participant in the GitHub Campus Experts Program. */
+    /** Whether or not this username is a participant in the GitHub Campus Experts Program. */
     isCampusExpert: Scalars['Boolean']
-    /** Whether or not this user is a GitHub Developer Program member. */
+    /** Whether or not this username is a GitHub Developer Program member. */
     isDeveloperProgramMember: Scalars['Boolean']
-    /** Whether or not this user is a GitHub employee. */
+    /** Whether or not this username is a GitHub employee. */
     isEmployee: Scalars['Boolean']
-    /** Whether or not this user is following the viewer. Inverse of viewer_is_following */
+    /** Whether or not this username is following the viewer. Inverse of viewer_is_following */
     isFollowingViewer: Scalars['Boolean']
-    /** Whether or not this user is a member of the GitHub Stars Program. */
+    /** Whether or not this username is a member of the GitHub Stars Program. */
     isGitHubStar: Scalars['Boolean']
-    /** Whether or not the user has marked themselves as for hire. */
+    /** Whether or not the username has marked themselves as for hire. */
     isHireable: Scalars['Boolean']
-    /** Whether or not this user is a site administrator. */
+    /** Whether or not this username is a site administrator. */
     isSiteAdmin: Scalars['Boolean']
-    /** Check if the given account is sponsoring this user/organization. */
+    /** Check if the given account is sponsoring this username/organization. */
     isSponsoredBy: Scalars['Boolean']
-    /** True if the viewer is sponsored by this user/organization. */
+    /** True if the viewer is sponsored by this username/organization. */
     isSponsoringViewer: Scalars['Boolean']
-    /** Whether or not this user is the viewing user. */
+    /** Whether or not this username is the viewing username. */
     isViewer: Scalars['Boolean']
-    /** A list of issue comments made by this user. */
+    /** A list of issue comments made by this username. */
     issueComments: IssueCommentConnection
-    /** A list of issues associated with this user. */
+    /** A list of issues associated with this username. */
     issues: IssueConnection
     /** Showcases a selection of repositories and gists that the profile owner has either curated or that have been selected automatically based on popularity. */
     itemShowcase: ProfileItemShowcase
-    /** The user's public profile location. */
+    /** The username's public profile location. */
     location?: Maybe<Scalars['String']>
     /** The username used to login. */
     login: Scalars['String']
-    /** The estimated monthly GitHub Sponsors income for this user/organization in cents (USD). */
+    /** The estimated monthly GitHub Sponsors income for this username/organization in cents (USD). */
     monthlyEstimatedSponsorsIncomeInCents: Scalars['Int']
-    /** The user's public profile name. */
+    /** The username's public profile name. */
     name?: Maybe<Scalars['String']>
-    /** Find an organization by its login that the user belongs to. */
+    /** Find an organization by its login that the username belongs to. */
     organization?: Maybe<Organization>
-    /** Verified email addresses that match verified domains for a specified organization the user is a member of. */
+    /** Verified email addresses that match verified domains for a specified organization the username is a member of. */
     organizationVerifiedDomainEmails: Array<Scalars['String']>
-    /** A list of organizations the user belongs to. */
+    /** A list of organizations the username belongs to. */
     organizations: OrganizationConnection
     /** A list of packages under the owner. */
     packages: PackageConnection
@@ -22928,39 +22928,39 @@ export type User = Actor &
     projects: ProjectConnection
     /** A list of projects (beta) under the owner. */
     projectsNext: ProjectNextConnection
-    /** The HTTP path listing user's projects */
+    /** The HTTP path listing username's projects */
     projectsResourcePath: Scalars['URI']
-    /** The HTTP URL listing user's projects */
+    /** The HTTP URL listing username's projects */
     projectsUrl: Scalars['URI']
-    /** A list of public keys associated with this user. */
+    /** A list of public keys associated with this username. */
     publicKeys: PublicKeyConnection
-    /** A list of pull requests associated with this user. */
+    /** A list of pull requests associated with this username. */
     pullRequests: PullRequestConnection
-    /** A list of repositories that the user owns. */
+    /** A list of repositories that the username owns. */
     repositories: RepositoryConnection
-    /** A list of repositories that the user recently contributed to. */
+    /** A list of repositories that the username recently contributed to. */
     repositoriesContributedTo: RepositoryConnection
     /** Find Repository. */
     repository?: Maybe<Repository>
-    /** Discussion comments this user has authored. */
+    /** Discussion comments this username has authored. */
     repositoryDiscussionComments: DiscussionCommentConnection
-    /** Discussions this user has started. */
+    /** Discussions this username has started. */
     repositoryDiscussions: DiscussionConnection
-    /** The HTTP path for this user */
+    /** The HTTP path for this username */
     resourcePath: Scalars['URI']
-    /** Replies this user has saved */
+    /** Replies this username has saved */
     savedReplies?: Maybe<SavedReplyConnection>
     /** List of users and organizations this entity is sponsoring. */
     sponsoring: SponsorConnection
-    /** List of sponsors for this user or organization. */
+    /** List of sponsors for this username or organization. */
     sponsors: SponsorConnection
     /** Events involving this sponsorable, such as new sponsorships. */
     sponsorsActivities: SponsorsActivityConnection
-    /** The GitHub Sponsors listing for this user or organization. */
+    /** The GitHub Sponsors listing for this username or organization. */
     sponsorsListing?: Maybe<SponsorsListing>
-    /** The sponsorship from the viewer to this user/organization; that is, the sponsorship where you're the sponsor. Only returns a sponsorship if it is active. */
+    /** The sponsorship from the viewer to this username/organization; that is, the sponsorship where you're the sponsor. Only returns a sponsorship if it is active. */
     sponsorshipForViewerAsSponsor?: Maybe<Sponsorship>
-    /** The sponsorship from this user/organization to the viewer; that is, the sponsorship you're receiving. Only returns a sponsorship if it is active. */
+    /** The sponsorship from this username/organization to the viewer; that is, the sponsorship you're receiving. Only returns a sponsorship if it is active. */
     sponsorshipForViewerAsSponsorable?: Maybe<Sponsorship>
     /** List of sponsorship updates sent from this sponsorable to sponsors. */
     sponsorshipNewsletters: SponsorshipNewsletterConnection
@@ -22968,52 +22968,52 @@ export type User = Actor &
     sponsorshipsAsMaintainer: SponsorshipConnection
     /** This object's sponsorships as the sponsor. */
     sponsorshipsAsSponsor: SponsorshipConnection
-    /** Repositories the user has starred. */
+    /** Repositories the username has starred. */
     starredRepositories: StarredRepositoryConnection
-    /** The user's description of what they're currently doing. */
+    /** The username's description of what they're currently doing. */
     status?: Maybe<UserStatus>
-    /** Repositories the user has contributed to, ordered by contribution rank, plus repositories the user has created */
+    /** Repositories the username has contributed to, ordered by contribution rank, plus repositories the username has created */
     topRepositories: RepositoryConnection
-    /** The user's Twitter username. */
+    /** The username's Twitter username. */
     twitterUsername?: Maybe<Scalars['String']>
     /** Identifies the date and time when the object was last updated. */
     updatedAt: Scalars['DateTime']
-    /** The HTTP URL for this user */
+    /** The HTTP URL for this username */
     url: Scalars['URI']
     /** Can the viewer pin repositories and gists to the profile? */
     viewerCanChangePinnedItems: Scalars['Boolean']
     /** Can the current viewer create new projects on this owner. */
     viewerCanCreateProjects: Scalars['Boolean']
-    /** Whether or not the viewer is able to follow the user. */
+    /** Whether or not the viewer is able to follow the username. */
     viewerCanFollow: Scalars['Boolean']
-    /** Whether or not the viewer is able to sponsor this user/organization. */
+    /** Whether or not the viewer is able to sponsor this username/organization. */
     viewerCanSponsor: Scalars['Boolean']
-    /** Whether or not this user is followed by the viewer. Inverse of is_following_viewer. */
+    /** Whether or not this username is followed by the viewer. Inverse of is_following_viewer. */
     viewerIsFollowing: Scalars['Boolean']
-    /** True if the viewer is sponsoring this user/organization. */
+    /** True if the viewer is sponsoring this username/organization. */
     viewerIsSponsoring: Scalars['Boolean']
-    /** A list of repositories the given user is watching. */
+    /** A list of repositories the given username is watching. */
     watching: RepositoryConnection
-    /** A URL pointing to the user's public website/blog. */
+    /** A URL pointing to the username's public website/blog. */
     websiteUrl?: Maybe<Scalars['URI']>
   }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserAnyPinnableItemsArgs = {
   type?: InputMaybe<PinnableItemType>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserAvatarUrlArgs = {
   size?: InputMaybe<Scalars['Int']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserCanReceiveOrganizationEmailsWhenNotificationsRestrictedArgs = {
   login: Scalars['String']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserCommitCommentsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23021,14 +23021,14 @@ export type UserCommitCommentsArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserContributionsCollectionArgs = {
   from?: InputMaybe<Scalars['DateTime']>
   organizationID?: InputMaybe<Scalars['ID']>
   to?: InputMaybe<Scalars['DateTime']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserFollowersArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23036,7 +23036,7 @@ export type UserFollowersArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserFollowingArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23044,12 +23044,12 @@ export type UserFollowingArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserGistArgs = {
   name: Scalars['String']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserGistCommentsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23057,7 +23057,7 @@ export type UserGistCommentsArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserGistsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23067,17 +23067,17 @@ export type UserGistsArgs = {
   privacy?: InputMaybe<GistPrivacy>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserHovercardArgs = {
   primarySubjectId?: InputMaybe<Scalars['ID']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserIsSponsoredByArgs = {
   accountLogin: Scalars['String']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserIssueCommentsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23086,7 +23086,7 @@ export type UserIssueCommentsArgs = {
   orderBy?: InputMaybe<IssueCommentOrder>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserIssuesArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23098,17 +23098,17 @@ export type UserIssuesArgs = {
   states?: InputMaybe<Array<IssueState>>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserOrganizationArgs = {
   login: Scalars['String']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserOrganizationVerifiedDomainEmailsArgs = {
   login: Scalars['String']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserOrganizationsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23116,7 +23116,7 @@ export type UserOrganizationsArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserPackagesArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23128,7 +23128,7 @@ export type UserPackagesArgs = {
   repositoryId?: InputMaybe<Scalars['ID']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserPinnableItemsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23137,7 +23137,7 @@ export type UserPinnableItemsArgs = {
   types?: InputMaybe<Array<PinnableItemType>>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserPinnedItemsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23146,17 +23146,17 @@ export type UserPinnedItemsArgs = {
   types?: InputMaybe<Array<PinnableItemType>>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserProjectArgs = {
   number: Scalars['Int']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserProjectNextArgs = {
   number: Scalars['Int']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserProjectsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23167,7 +23167,7 @@ export type UserProjectsArgs = {
   states?: InputMaybe<Array<ProjectState>>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserProjectsNextArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23177,7 +23177,7 @@ export type UserProjectsNextArgs = {
   sortBy?: InputMaybe<ProjectNextOrderField>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserPublicKeysArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23185,7 +23185,7 @@ export type UserPublicKeysArgs = {
   last?: InputMaybe<Scalars['Int']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserPullRequestsArgs = {
   after?: InputMaybe<Scalars['String']>
   baseRefName?: InputMaybe<Scalars['String']>
@@ -23198,7 +23198,7 @@ export type UserPullRequestsArgs = {
   states?: InputMaybe<Array<PullRequestState>>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserRepositoriesArgs = {
   affiliations?: InputMaybe<Array<InputMaybe<RepositoryAffiliation>>>
   after?: InputMaybe<Scalars['String']>
@@ -23212,7 +23212,7 @@ export type UserRepositoriesArgs = {
   privacy?: InputMaybe<RepositoryPrivacy>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserRepositoriesContributedToArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23225,13 +23225,13 @@ export type UserRepositoriesContributedToArgs = {
   privacy?: InputMaybe<RepositoryPrivacy>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserRepositoryArgs = {
   followRenames?: InputMaybe<Scalars['Boolean']>
   name: Scalars['String']
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserRepositoryDiscussionCommentsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23241,7 +23241,7 @@ export type UserRepositoryDiscussionCommentsArgs = {
   repositoryId?: InputMaybe<Scalars['ID']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserRepositoryDiscussionsArgs = {
   after?: InputMaybe<Scalars['String']>
   answered?: InputMaybe<Scalars['Boolean']>
@@ -23252,7 +23252,7 @@ export type UserRepositoryDiscussionsArgs = {
   repositoryId?: InputMaybe<Scalars['ID']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserSavedRepliesArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23261,7 +23261,7 @@ export type UserSavedRepliesArgs = {
   orderBy?: InputMaybe<SavedReplyOrder>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserSponsoringArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23270,7 +23270,7 @@ export type UserSponsoringArgs = {
   orderBy?: InputMaybe<SponsorOrder>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserSponsorsArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23280,7 +23280,7 @@ export type UserSponsorsArgs = {
   tierId?: InputMaybe<Scalars['ID']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserSponsorsActivitiesArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23290,7 +23290,7 @@ export type UserSponsorsActivitiesArgs = {
   period?: InputMaybe<SponsorsActivityPeriod>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserSponsorshipNewslettersArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23299,7 +23299,7 @@ export type UserSponsorshipNewslettersArgs = {
   orderBy?: InputMaybe<SponsorshipNewsletterOrder>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserSponsorshipsAsMaintainerArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23309,7 +23309,7 @@ export type UserSponsorshipsAsMaintainerArgs = {
   orderBy?: InputMaybe<SponsorshipOrder>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserSponsorshipsAsSponsorArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23318,7 +23318,7 @@ export type UserSponsorshipsAsSponsorArgs = {
   orderBy?: InputMaybe<SponsorshipOrder>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserStarredRepositoriesArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23328,7 +23328,7 @@ export type UserStarredRepositoriesArgs = {
   ownedByViewer?: InputMaybe<Scalars['Boolean']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserTopRepositoriesArgs = {
   after?: InputMaybe<Scalars['String']>
   before?: InputMaybe<Scalars['String']>
@@ -23338,7 +23338,7 @@ export type UserTopRepositoriesArgs = {
   since?: InputMaybe<Scalars['DateTime']>
 }
 
-/** A user is an individual's account on GitHub that owns repositories and can make new content. */
+/** A username is an individual's account on GitHub that owns repositories and can make new content. */
 export type UserWatchingArgs = {
   affiliations?: InputMaybe<Array<InputMaybe<RepositoryAffiliation>>>
   after?: InputMaybe<Scalars['String']>
@@ -23351,31 +23351,31 @@ export type UserWatchingArgs = {
   privacy?: InputMaybe<RepositoryPrivacy>
 }
 
-/** The possible durations that a user can be blocked for. */
+/** The possible durations that a username can be blocked for. */
 export enum UserBlockDuration {
-  /** The user was blocked for 1 day */
+  /** The username was blocked for 1 day */
   OneDay = 'ONE_DAY',
-  /** The user was blocked for 30 days */
+  /** The username was blocked for 30 days */
   OneMonth = 'ONE_MONTH',
-  /** The user was blocked for 7 days */
+  /** The username was blocked for 7 days */
   OneWeek = 'ONE_WEEK',
-  /** The user was blocked permanently */
+  /** The username was blocked permanently */
   Permanent = 'PERMANENT',
-  /** The user was blocked for 3 days */
+  /** The username was blocked for 3 days */
   ThreeDays = 'THREE_DAYS',
 }
 
-/** Represents a 'user_blocked' event on a given user. */
+/** Represents a 'user_blocked' event on a given username. */
 export type UserBlockedEvent = Node & {
   __typename?: 'UserBlockedEvent'
   /** Identifies the actor who performed the event. */
   actor?: Maybe<Actor>
-  /** Number of days that the user was blocked for. */
+  /** Number of days that the username was blocked for. */
   blockDuration: UserBlockDuration
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
   id: Scalars['ID']
-  /** The user who was blocked. */
+  /** The username who was blocked. */
   subject?: Maybe<User>
 }
 
@@ -23392,7 +23392,7 @@ export type UserConnection = {
   totalCount: Scalars['Int']
 }
 
-/** An edit on user content */
+/** An edit on username content */
 export type UserContentEdit = Node & {
   __typename?: 'UserContentEdit'
   /** Identifies the date and time when the object was created. */
@@ -23434,7 +23434,7 @@ export type UserContentEditEdge = {
   node?: Maybe<UserContentEdit>
 }
 
-/** Represents a user. */
+/** Represents a username. */
 export type UserEdge = {
   __typename?: 'UserEdge'
   /** A cursor for use in pagination. */
@@ -23454,27 +23454,27 @@ export type UserEmailMetadata = {
   value: Scalars['String']
 }
 
-/** The user's description of what they're currently doing. */
+/** The username's description of what they're currently doing. */
 export type UserStatus = Node & {
   __typename?: 'UserStatus'
   /** Identifies the date and time when the object was created. */
   createdAt: Scalars['DateTime']
-  /** An emoji summarizing the user's status. */
+  /** An emoji summarizing the username's status. */
   emoji?: Maybe<Scalars['String']>
   /** The status emoji as HTML. */
   emojiHTML?: Maybe<Scalars['HTML']>
   /** If set, the status will not be shown after this date. */
   expiresAt?: Maybe<Scalars['DateTime']>
   id: Scalars['ID']
-  /** Whether this status indicates the user is not fully available on GitHub. */
+  /** Whether this status indicates the username is not fully available on GitHub. */
   indicatesLimitedAvailability: Scalars['Boolean']
-  /** A brief message describing what the user is doing. */
+  /** A brief message describing what the username is doing. */
   message?: Maybe<Scalars['String']>
   /** The organization whose members can see this status. If null, this status is publicly visible. */
   organization?: Maybe<Organization>
   /** Identifies the date and time when the object was last updated. */
   updatedAt: Scalars['DateTime']
-  /** The user who has this status. */
+  /** The username who has this status. */
   user: User
 }
 
@@ -23500,17 +23500,17 @@ export type UserStatusEdge = {
   node?: Maybe<UserStatus>
 }
 
-/** Ordering options for user status connections. */
+/** Ordering options for username status connections. */
 export type UserStatusOrder = {
   /** The ordering direction. */
   direction: OrderDirection
-  /** The field to order user statuses by. */
+  /** The field to order username statuses by. */
   field: UserStatusOrderField
 }
 
-/** Properties by which user status connections can be ordered. */
+/** Properties by which username status connections can be ordered. */
 export enum UserStatusOrderField {
-  /** Order user statuses by when they were updated. */
+  /** Order username statuses by when they were updated. */
   UpdatedAt = 'UPDATED_AT',
 }
 
@@ -23613,7 +23613,7 @@ export type ViewerHovercardContext = HovercardContext & {
   message: Scalars['String']
   /** An octicon to accompany this context */
   octicon: Scalars['String']
-  /** Identifies the user who is related to this context. */
+  /** Identifies the username who is related to this context. */
   viewer: User
 }
 
@@ -23621,9 +23621,9 @@ export type ViewerHovercardContext = HovercardContext & {
 export type Votable = {
   /** Number of upvotes that this subject has received. */
   upvoteCount: Scalars['Int']
-  /** Whether or not the current user can add or remove an upvote on this subject. */
+  /** Whether or not the current username can add or remove an upvote on this subject. */
   viewerCanUpvote: Scalars['Boolean']
-  /** Whether or not the current user has already upvoted this subject. */
+  /** Whether or not the current username has already upvoted this subject. */
   viewerHasUpvoted: Scalars['Boolean']
 }
 
