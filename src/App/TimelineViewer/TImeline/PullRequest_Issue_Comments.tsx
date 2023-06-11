@@ -1,6 +1,6 @@
 import {
   CircularProgress,
-  Container,
+  Box,
   List,
   ListItem,
   Typography as Text,
@@ -46,9 +46,9 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ user }) => {
 
   if (status === 'loading' || isFetching)
     return (
-      <Container sx={{ padfding: '20px' }}>
+      <Box style={{ maxWidth: 360, textAlign: 'center', width: '100%' }}>
         <CircularProgress />
-      </Container>
+      </Box>
     )
 
   if (status === 'success' && data.length > 0)
