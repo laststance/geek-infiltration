@@ -69,12 +69,10 @@ const CommentCard: React.FC<Props> = memo(
             </Grid>
           </Box>
           <Box>
-            <div
+            <Text
+              variant="body1"
+              className="comment-card-comment-body"
               dangerouslySetInnerHTML={{ __html: bodyHTML }}
-              style={{
-                maxWidth: '100%',
-                overflowWrap: 'break-word',
-              }}
             />
           </Box>
         </CardContent>

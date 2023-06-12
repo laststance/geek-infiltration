@@ -1,0 +1,7 @@
+.comment-card-comment-body {
+  min-width: 100%;
+  overflow-wrap: break-word;
+}
+.comment-card-comment-body a {
+  color: #0288d1;
+}
