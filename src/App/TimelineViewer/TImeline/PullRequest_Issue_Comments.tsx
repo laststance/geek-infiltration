@@ -46,7 +46,7 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
 
   if (status === 'loading' || isFetching)
     return (
-      <Box style={{ textAlign: 'center', width: '100%' }}>
+      <Box style={{ paddingTop: '20px', textAlign: 'center', width: '100%' }}>
         <CircularProgress />
       </Box>
     )

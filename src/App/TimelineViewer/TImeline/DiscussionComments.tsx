@@ -43,7 +43,7 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
 
   if (status === 'loading' || isFetching)
     return (
-      <Box style={{ textAlign: 'center', width: '100%' }}>
+      <Box style={{ textAlign: 'center', width: '100%', paddingTop: '20px' }}>
         <CircularProgress />
       </Box>
     )
