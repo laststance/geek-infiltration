@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import authenticationReducer from './Authenticator/authenticationState'
+import authenticationReducer from './Authenticator/authenticationSlice'
 
 export const store = configureStore({
   devTools: import.meta.env.DEV ? true : false,

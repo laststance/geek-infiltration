@@ -1,21 +1,21 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 
-export interface AuthenticationState {
+export interface AuthenticationSlice {
   accessToken: string | null
 }
 
-const initialState: AuthenticationState = {
+const initialState: AuthenticationSlice = {
   accessToken: null,
 }
 
-export const AuthenticationSlice = createSlice({
+export const authenticationSlice = createSlice({
   initialState,
   name: 'authentication',
   reducers: {
     login: (
       state,
-      action: PayloadAction<AuthenticationState['accessToken']>
+      action: PayloadAction<AuthenticationSlice['accessToken']>
     ) => {
       state.accessToken = action.payload
     },
@@ -25,6 +25,6 @@ export const AuthenticationSlice = createSlice({
   },
 })
 
-export const { login, logout } = AuthenticationSlice.actions
+export const { login, logout } = authenticationSlice.actions
 
-export default AuthenticationSlice.reducer
+export default authenticationSlice.reducer
