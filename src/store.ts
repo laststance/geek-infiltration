@@ -8,7 +8,7 @@ import authenticatorReducer from './Authenticator/authenticatorSlice'
 const persistConfig = {
   key: 'Geek-Infiltration',
   storage,
-  whitelist: ['authenticator'],
+  whitelist: ['authenticator', 'subscribed'],
 }
 
 const reducers = combineReducers({

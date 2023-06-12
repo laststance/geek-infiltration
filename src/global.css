@@ -1,3 +1,7 @@
+:root {
+  color-scheme: dark;
+}
+
 .comment-card-comment-body {
   min-width: 100%;
   overflow-wrap: break-word;
