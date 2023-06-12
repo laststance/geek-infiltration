@@ -5,6 +5,7 @@ import { Provider as JotaiProvider } from 'jotai'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClientProvider, QueryClient } from 'react-query'
+import { Provider as ReduxProvider } from 'react-redux'
 
 import './global.css'
 import '@fontsource/roboto/300.css'
@@ -15,6 +16,7 @@ import '@fontsource/roboto/700.css'
 import Authenticator from './Authenticator'
 import ErrorBoundary from './components/ErrorBoundary'
 import { theme } from './constants/theme'
+import { store } from './store'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -61,13 +63,15 @@ const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
   <ErrorBoundary>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <JotaiProvider>
-        <QueryClientProvider client={queryClient}>
-          <Authenticator />
-        </QueryClientProvider>
-      </JotaiProvider>
-    </ThemeProvider>
+    <ReduxProvider store={store}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <JotaiProvider>
+          <QueryClientProvider client={queryClient}>
+            <Authenticator />
+          </QueryClientProvider>
+        </JotaiProvider>
+      </ThemeProvider>
+    </ReduxProvider>
   </ErrorBoundary>
 )

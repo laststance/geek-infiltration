@@ -1,6 +1,5 @@
 import { Container } from '@mui/material'
 import { useAtomValue } from 'jotai'
-import { useAtomDevtools } from 'jotai-devtools'
 import React, { memo } from 'react'
 
 import { subscribedAtom } from '../atom'
@@ -11,7 +10,7 @@ import TimelineViewer from './TimelineViewer'
 const App: React.FC = memo(
   () => {
     const subscribed = useAtomValue(subscribedAtom)
-    useAtomDevtools(subscribedAtom)
+
     return (
       <Container
         fixed

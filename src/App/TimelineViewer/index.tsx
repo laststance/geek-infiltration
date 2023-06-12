@@ -12,7 +12,7 @@ interface Props {
 
 const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
   return (
-    <Grid container component="section">
+    <Grid container component="section" sx={{ overflowX: 'scroll' }}>
       {subscribed.length
         ? subscribed.map(({ username, selectedTimeline }: SearchQuery, i) => {
             return (
