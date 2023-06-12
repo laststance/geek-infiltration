@@ -14,7 +14,7 @@ import '@fontsource/roboto/700.css'
 
 import Authenticator from './Authenticator'
 import ErrorBoundary from './components/ErrorBoundary'
-import { theme } from './variables/theme'
+import { theme } from './constants/theme'
 
 const queryClient = new QueryClient({
   defaultOptions: {

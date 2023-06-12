@@ -12,7 +12,7 @@ import { accessTokenAtom } from '../../../atom'
 import CommentCard from '../../../components/CommentCard'
 import { useGetDiscussionCommentsQuery } from '../../../generated/graphql'
 import type { DiscussionComment, Actor } from '../../../generated/graphql'
-import { endpoint } from '../../../variables/endpoint'
+import { endpoint } from '../../../constants/endpoint'
 
 interface Props {
   username: string
@@ -43,7 +43,7 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
 
   if (status === 'loading' || isFetching)
     return (
-      <Box style={{ textAlign: 'center', width: '100%', paddingTop: '20px' }}>
+      <Box style={{ paddingTop: '20px', textAlign: 'center', width: '100%' }}>
         <CircularProgress />
       </Box>
     )

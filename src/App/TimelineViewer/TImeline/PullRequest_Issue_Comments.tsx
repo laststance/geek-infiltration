@@ -12,7 +12,7 @@ import { accessTokenAtom } from '../../../atom'
 import CommentCard from '../../../components/CommentCard'
 import { useGetIssueCommentsQuery } from '../../../generated/graphql'
 import type { IssueComment, Actor } from '../../../generated/graphql'
-import { endpoint } from '../../../variables/endpoint'
+import { endpoint } from '../../../constants/endpoint'
 
 interface Props {
   username: string
