@@ -13,15 +13,13 @@ const SubscribeFormModalButton: React.FC<Props> = memo(({ openModal }) => {
         borderRadius: '15px',
         borderWidth: '3px',
         fontSize: '35px',
-        padding: 0,
-      }}
-      variant="outlined"
-      style={{
         maxHeight: '46px',
         maxWidth: '46px',
         minHeight: '46px',
         minWidth: '46px',
+        padding: 0,
       }}
+      variant="outlined"
       onClick={openModal}
     >
       +
