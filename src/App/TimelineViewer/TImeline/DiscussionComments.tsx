@@ -10,9 +10,9 @@ import React, { memo } from 'react'
 
 import { accessTokenAtom } from '../../../atom'
 import CommentCard from '../../../components/CommentCard'
+import { endpoint } from '../../../constants/endpoint'
 import { useGetDiscussionCommentsQuery } from '../../../generated/graphql'
 import type { DiscussionComment, Actor } from '../../../generated/graphql'
-import { endpoint } from '../../../constants/endpoint'
 
 interface Props {
   username: string

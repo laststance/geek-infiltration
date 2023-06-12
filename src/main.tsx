@@ -6,6 +6,8 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClientProvider, QueryClient } from 'react-query'
 import { Provider as ReduxProvider } from 'react-redux'
+import { persistStore } from 'redux-persist'
+import { PersistGate as ReduxPersistGate } from 'redux-persist/integration/react'
 
 import './global.css'
 import '@fontsource/roboto/300.css'
@@ -17,6 +19,8 @@ import Authenticator from './Authenticator'
 import ErrorBoundary from './components/ErrorBoundary'
 import { theme } from './constants/theme'
 import { store } from './store'
+
+const persistor = persistStore(store)
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -64,14 +68,16 @@ const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   <ErrorBoundary>
     <ReduxProvider store={store}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <JotaiProvider>
-          <QueryClientProvider client={queryClient}>
-            <Authenticator />
-          </QueryClientProvider>
-        </JotaiProvider>
-      </ThemeProvider>
+      <ReduxPersistGate persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <JotaiProvider>
+            <QueryClientProvider client={queryClient}>
+              <Authenticator />
+            </QueryClientProvider>
+          </JotaiProvider>
+        </ThemeProvider>
+      </ReduxPersistGate>
     </ReduxProvider>
   </ErrorBoundary>
 )
