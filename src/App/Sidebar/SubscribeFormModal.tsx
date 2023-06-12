@@ -12,45 +12,44 @@ import {
   FormControlLabel,
   Stack,
 } from '@mui/material'
-import { useAtom } from 'jotai'
-import React, { memo } from 'react'
+import React, { memo, useCallback } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
-import { subscribedAtom } from '../../atom'
-import type { SearchQuery } from '../../atom'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
 import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
 
+import { subscribe } from './subscribedSlice'
+
+export type SearchQuery = {
+  username: string
+  selectedTimeline: 'PullRequest_Issue_Comments' | 'discussionComments'
+}
 interface Props {
   isModalVisible: UseModalHandlersReturnValues['isModalVisible']
   closeModal: UseModalHandlersReturnValues['closeModal']
 }
 
-interface FormData {
-  username: SearchQuery['username']
-  selectedTimeline: SearchQuery['selectedTimeline']
-}
-
 const SubscribeFormModal: React.FC<Props> = memo(
   ({ isModalVisible, closeModal }) => {
+    const dispatch = useAppDispatch()
     const {
       control,
       handleSubmit,
       formState: { errors },
-    } = useForm<FormData>({
+    } = useForm<SearchQuery>({
       defaultValues: {
         selectedTimeline: 'PullRequest_Issue_Comments',
         username: '',
       },
     })
 
-    const [subscribed, setSubscribed] = useAtom(subscribedAtom)
-    const onSubmit = (data: FormData) => {
-      setSubscribed([
-        ...subscribed,
-        { selectedTimeline: data.selectedTimeline, username: data.username },
-      ])
-      closeModal()
-    }
+    const onSubmit = useCallback(
+      (data: SearchQuery) => {
+        dispatch(subscribe(data))
+        closeModal()
+      },
+      [dispatch]
+    )
 
     return (
       <Dialog open={isModalVisible} onClose={closeModal}>

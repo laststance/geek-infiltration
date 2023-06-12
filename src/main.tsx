@@ -1,7 +1,6 @@
 import CssBaseline from '@mui/material/CssBaseline'
 import { ThemeProvider } from '@mui/material/styles'
 import * as Sentry from '@sentry/react'
-import { Provider as JotaiProvider } from 'jotai'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { QueryClientProvider, QueryClient } from 'react-query'
@@ -33,8 +32,6 @@ const queryClient = new QueryClient({
   },
 })
 
-// @ts-expect-error Property 'displayName' does not exist on type '({ children, initialValues, scope, unstable_createStore, unstable_enableVersionedWrite, }: PropsWithChildren<{ initialValues?: Iterable<readonly [Atom<unknown>, unknown]> | undefined; scope?: Scope | undefined; unstable_createStore?: ((initialValues?: Iterable<readonly [AnyAtom, unknown]> | undefined) => { ...; }) |...'.Property 'displayName' does not exist on type '({ children, initialValues, scope, unstable_createStore, unstable_enableVersionedWrite, }: PropsWithChildren<{ initialValues?: Iterable<readonly [Atom<unknown>, unknown]> | undefined; scope?: Scope | undefined; unstable_createStore?: ((initialValues?: Iterable<readonly [AnyAtom, unknown]> | undefined) => { ...; }) |...'.
-JotaiProvider.displayName = 'JotaiProvider'
 // @ts-expect-error Property 'displayName' does not exist on type '({ client, children, context, contextSharing, }: QueryClientProviderProps) => Element'.
 QueryClientProvider.displayName = 'QueryClientProvider'
 
@@ -71,11 +68,9 @@ root.render(
       <ReduxPersistGate persistor={persistor}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <JotaiProvider>
-            <QueryClientProvider client={queryClient}>
-              <Authenticator />
-            </QueryClientProvider>
-          </JotaiProvider>
+          <QueryClientProvider client={queryClient}>
+            <Authenticator />
+          </QueryClientProvider>
         </ThemeProvider>
       </ReduxPersistGate>
     </ReduxProvider>

@@ -1,16 +1,14 @@
 import { Grid } from '@mui/material'
 import React, { memo } from 'react'
 
-import type { SearchQuery, Subscribed } from '../../atom'
+import { useAppSelector } from '../../hooks/useAppSelector'
+import type { SearchQuery } from '../Sidebar/SubscribeFormModal'
 
 import DiscussionComments from './TImeline/DiscussionComments'
 import PullRequest_Issue_Comments from './TImeline/PullRequest_Issue_Comments'
 
-interface Props {
-  subscribed: [] | Subscribed
-}
-
-const TimelineViewer: React.FC<Props> = memo(({ subscribed }) => {
+const TimelineViewer: React.FC = memo(() => {
+  const subscribed = useAppSelector((state) => state.subscribed.subscribed)
   return (
     <Grid container component="section" sx={{ overflowX: 'scroll' }}>
       {subscribed.length

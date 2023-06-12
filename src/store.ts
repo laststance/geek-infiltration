@@ -1,11 +1,11 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit'
-import type { PersistConfig } from 'redux-persist'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
+import subscribedReducer from './App/Sidebar/subscribedSlice'
 import authenticatorReducer from './Authenticator/authenticatorSlice'
 
-const persistConfig: PersistConfig<any> = {
+const persistConfig = {
   key: 'Geek-Infiltration',
   storage,
   whitelist: ['authenticator'],
@@ -13,6 +13,7 @@ const persistConfig: PersistConfig<any> = {
 
 const reducers = combineReducers({
   authenticator: authenticatorReducer,
+  subscribed: subscribedReducer,
 })
 
 const persistedReducer = persistReducer(persistConfig, reducers)
