@@ -5,14 +5,13 @@ import {
   ListItem,
   Typography as Text,
 } from '@mui/material'
-import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
-import { accessTokenAtom } from '../../../atom'
 import CommentCard from '../../../components/CommentCard'
 import { endpoint } from '../../../constants/endpoint'
 import { useGetIssueCommentsQuery } from '../../../generated/graphql'
 import type { IssueComment, Actor } from '../../../generated/graphql'
+import { useAppSelector } from '../../../hooks/useAppSelector'
 
 interface Props {
   username: string
@@ -24,7 +23,9 @@ interface Props {
  * So currently I can only view them at the same time.
  */
 const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
-  const accessToken = useAtomValue(accessTokenAtom)
+  const accessToken = useAppSelector(
+    ({ authenticator }) => authenticator.accessToken
+  )
   const { status, data, isFetching } = useGetIssueCommentsQuery(
     {
       endpoint: endpoint,

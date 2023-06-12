@@ -5,21 +5,22 @@ import {
   ListItem,
   Typography as Text,
 } from '@mui/material'
-import { useAtomValue } from 'jotai'
 import React, { memo } from 'react'
 
-import { accessTokenAtom } from '../../../atom'
 import CommentCard from '../../../components/CommentCard'
 import { endpoint } from '../../../constants/endpoint'
 import { useGetDiscussionCommentsQuery } from '../../../generated/graphql'
 import type { DiscussionComment, Actor } from '../../../generated/graphql'
+import { useAppSelector } from '../../../hooks/useAppSelector'
 
 interface Props {
   username: string
 }
 
 const DiscussionComments: React.FC<Props> = memo(({ username }) => {
-  const accessToken = useAtomValue(accessTokenAtom)
+  const accessToken = useAppSelector(
+    ({ authenticator }) => authenticator.accessToken
+  )
 
   const { status, data, isFetching } = useGetDiscussionCommentsQuery(
     {

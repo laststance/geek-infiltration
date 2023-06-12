@@ -1,16 +1,20 @@
 import { CircularProgress } from '@mui/material'
 import axios from 'axios'
-import { useAtom } from 'jotai'
 import { useState, memo, useLayoutEffect } from 'react'
 
 import App from '../App'
-import { accessTokenAtom } from '../atom'
+import { useAppDispatch } from '../hooks/useAppDispatch'
+import { useAppSelector } from '../hooks/useAppSelector'
 import LandingPage from '../LandingPage'
+
+import { login } from './authenticatorSlice'
 
 const Authenticator = memo(() => {
   const [loading, setLoading] = useState(false)
-  const [accessToken, setAccessToken] = useAtom(accessTokenAtom)
+  const dispatch = useAppDispatch()
+  const accessToken = useAppSelector((state) => state.authenticator.accessToken)
   const isAuthenticated = window.location.href.includes('?code=')
+
   useLayoutEffect(() => {
     if (isAuthenticated) {
       const [url, code] = window.location.href.split('?code=')
@@ -30,7 +34,7 @@ const Authenticator = memo(() => {
           }
         )
         .then(({ data }) => {
-          setAccessToken(data['access_token'])
+          dispatch(login(data['access_token']))
           setLoading(false)
         })
       window.history.pushState({}, '', url.split('login')[0])

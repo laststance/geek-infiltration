@@ -1,20 +1,19 @@
 import { Avatar } from '@mui/material'
-import { useSetAtom } from 'jotai'
-import { RESET } from 'jotai/utils'
 import React, { memo, useCallback } from 'react'
 
-import { accessTokenAtom } from '../../atom'
+import { logout } from '../../Authenticator/authenticatorSlice'
+import { useAppDispatch } from '../../hooks/useAppDispatch'
 
 const UserMenuButton: React.FC = memo(() => {
-  const setAccessTokenAtom = useSetAtom(accessTokenAtom)
+  const dispatch = useAppDispatch()
 
-  const logout = useCallback(() => {
-    setAccessTokenAtom(RESET)
-  }, [setAccessTokenAtom])
+  const lgout = useCallback(() => {
+    dispatch(logout())
+  }, [dispatch])
 
   return (
     <Avatar
-      onClick={logout}
+      onClick={lgout}
       src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4"
       sx={{ cursor: 'pointer' }}
     />
