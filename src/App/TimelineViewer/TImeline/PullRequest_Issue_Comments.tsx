@@ -48,13 +48,14 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
           flexDirection: 'column-reverse',
           width: '100%',
         }}
+        component="ul"
       >
         {nodeList.map(
           (
             { node: { author, bodyHTML, publishedAt, url, repository, issue } },
             i: number
           ) => (
-            <ListItem disableGutters style={{ padding: '8px' }} key={i}>
+            <ListItem disableGutters key={i} component="li">
               <CommentCard
                 author={author as Actor}
                 repositoryName={repository.nameWithOwner}

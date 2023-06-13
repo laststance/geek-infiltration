@@ -13,6 +13,7 @@ const TimelineViewer: React.FC = memo(() => {
     <Grid
       container
       wrap="nowrap"
+      spacing={1}
       component="section"
       sx={{ overflowX: 'scroll' }}
     >

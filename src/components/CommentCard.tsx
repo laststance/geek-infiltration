@@ -34,8 +34,11 @@ const CommentCard: React.FC<Props> = memo(
     bodyHTML,
   }) => {
     return (
-      <Card style={{ borderRadius: '20px' }}>
-        <CardContent>
+      <Card
+        sx={{ borderRadius: '20px', padding: '0 20px', width: '100%' }}
+        component="article"
+      >
+        <CardContent sx={{ paddingLeft: 0, paddingRight: 0 }}>
           <Box>
             <Link variant="subtitle2" target="_blank" href={ticketLink}>
               {repositoryName}

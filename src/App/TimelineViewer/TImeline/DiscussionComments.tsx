@@ -37,13 +37,13 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
       node: DiscussionComment
     }>
     return (
-      <List sx={{ bgcolor: 'background.paper', width: '100%' }}>
+      <List sx={{ bgcolor: 'background.paper', width: '100%' }} component="ul">
         {nodeList.map(
           (
             { node: { author, bodyHTML, publishedAt, url, discussion } },
             i: number
           ) => (
-            <ListItem disableGutters style={{ padding: '8px' }} key={i}>
+            <ListItem disableGutters key={i} component="li">
               <CommentCard
                 author={author as Actor}
                 repositoryName={discussion!.repository.nameWithOwner}
