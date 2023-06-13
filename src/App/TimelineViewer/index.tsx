@@ -1,4 +1,4 @@
-import { Grid } from '@mui/material'
+import Grid from '@mui/material/Unstable_Grid2'
 import React, { memo } from 'react'
 
 import { useAppSelector } from '../../hooks/useAppSelector'
@@ -10,19 +10,23 @@ import PullRequest_Issue_Comments from './TImeline/PullRequest_Issue_Comments'
 const TimelineViewer: React.FC = memo(() => {
   const subscribed = useAppSelector((state) => state.subscribed.subscribed)
   return (
-    <Grid container component="section" sx={{ overflowX: 'scroll' }}>
+    <Grid
+      container
+      wrap="nowrap"
+      component="section"
+      sx={{ overflowX: 'scroll' }}
+    >
       {subscribed.length
         ? subscribed.map(({ username, selectedTimeline }: SearchQuery, i) => {
             return (
               <Grid
-                style={{
+                sx={{
                   maxHeight: '100vh',
                   maxWidth: '344px',
                   minHeight: '100vh',
                   minWidth: '344px',
                   overflow: 'scroll',
                 }}
-                item
                 key={i}
               >
                 {selectedTimeline === 'PullRequest_Issue_Comments' && (
