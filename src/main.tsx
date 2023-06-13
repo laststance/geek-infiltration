@@ -3,7 +3,6 @@ import { ThemeProvider } from '@mui/material/styles'
 import * as Sentry from '@sentry/react'
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { QueryClientProvider, QueryClient } from 'react-query'
 import { Provider as ReduxProvider } from 'react-redux'
 import { persistStore } from 'redux-persist'
 import { PersistGate as ReduxPersistGate } from 'redux-persist/integration/react'
@@ -20,20 +19,6 @@ import { theme } from './constants/theme'
 import { store } from './store'
 
 const persistor = persistStore(store)
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnMount: false,
-      refetchOnReconnect: false,
-      refetchOnWindowFocus: false,
-      retryOnMount: false,
-    },
-  },
-})
-
-// @ts-expect-error Property 'displayName' does not exist on type '({ client, children, context, contextSharing, }: QueryClientProviderProps) => Element'.
-QueryClientProvider.displayName = 'QueryClientProvider'
 
 if (import.meta.env.PROD === true) {
   Sentry.init({
@@ -68,9 +53,7 @@ root.render(
       <ReduxPersistGate persistor={persistor}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <QueryClientProvider client={queryClient}>
-            <Authenticator />
-          </QueryClientProvider>
+          <Authenticator />
         </ThemeProvider>
       </ReduxPersistGate>
     </ReduxProvider>

@@ -3,7 +3,7 @@ query getDiscussionComments($query: String!) {
     edges {
       node {
         ... on User {
-          repositoryDiscussionComments(first: 100) {
+          repositoryDiscussionComments(first: 30) {
             edges {
               node {
                 author {

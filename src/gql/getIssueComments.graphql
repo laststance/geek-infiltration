@@ -3,7 +3,7 @@ query getIssueComments($query: String!) {
     edges {
       node {
         ... on User {
-          issueComments(last: 100) {
+          issueComments(last: 30) {
             edges {
               node {
                 author {

@@ -1,12 +1,17 @@
 overwrite: true
 schema: 'schema.docs.graphql'
 documents: 'src/**/*.graphql'
+watchConfig:
+  usePolling: true
+  interval: 60000
 generates:
   src/generated/graphql.ts:
     plugins:
-      - 'typescript'
-      - 'typescript-operations'
-      - 'typescript-document-nodes'
-      - 'typescript-react-query'
+      - typescript
+      - typescript-operations
+      - typescript-document-nodes
+      - typescript-rtk-query:
+          importBaseApiFrom: '../constants/api'
+          exportHooks: true
     config:
       fetcher: fetch
