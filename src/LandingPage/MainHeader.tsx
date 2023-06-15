@@ -83,11 +83,11 @@ export default function MainHeader() {
 
           <Button
             variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
+            href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
+              import.meta.env.VITE_CLIENT_ID
+            }&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}`}
           >
-            Purchase Now
+            GitHub Login
           </Button>
 
           {!isDesktop && (
