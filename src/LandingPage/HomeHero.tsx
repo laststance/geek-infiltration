@@ -43,13 +43,13 @@ const ContentStyle = styled((props: StackProps) => (
   },
 }))
 
-const HeroOverlayStyle = styled(m.img)({
-  height: '100%',
-  objectFit: 'cover',
-  position: 'absolute',
-  width: '100%',
-  zIndex: 9,
-})
+// const HeroOverlayStyle = styled(m.img)({
+//   height: '100%',
+//   objectFit: 'cover',
+//   position: 'absolute',
+//   width: '100%',
+//   zIndex: 9,
+// })
 
 const HeroImgStyle = styled(m.img)(({ theme }) => ({
   bottom: 0,
