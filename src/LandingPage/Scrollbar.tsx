@@ -5,10 +5,6 @@ import type { PropsWithChildren } from 'react'
 import type { Props as ScrollbarProps } from 'simplebar-react'
 import SimpleBarReact from 'simplebar-react'
 
-// @mui
-
-// ----------------------------------------------------------------------
-
 const RootStyle = styled('div')(() => ({
   flexGrow: 1,
   height: '100%',
