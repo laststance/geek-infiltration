@@ -6,8 +6,6 @@ import useOffSetTop from '../hooks/useOffSetTop'
 
 import { MAIN_HEADER_DESKTOP } from './config'
 import cssStyles from './cssStyles'
-import navConfig from './MenuConfig'
-import MenuDesktop from './MenuDesktop'
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: MAIN_HEADER_DESKTOP,
@@ -29,8 +27,6 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   width: `calc(100% - 48px)`,
   zIndex: -1,
 }))
-
-// ----------------------------------------------------------------------
 
 export default function MainHeader() {
   const isOffset = useOffSetTop(MAIN_HEADER_DESKTOP)
@@ -57,9 +53,14 @@ export default function MainHeader() {
         >
           <Box sx={{ flexGrow: 1 }} />
 
-          <MenuDesktop isOffset={isOffset} navConfig={navConfig} />
-          <Button variant="contained" href={GITHUB_AUTH_URL}>
-            GitHub Login
+          <Button
+            href={GITHUB_AUTH_URL}
+            sx={{
+              backgroundColor: 'black',
+              color: 'white',
+            }}
+          >
+            Login with GitHub
           </Button>
         </Container>
       </ToolbarStyle>
