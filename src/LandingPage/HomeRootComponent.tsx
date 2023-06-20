@@ -9,7 +9,6 @@ import { HomeColorPresets } from './HomeColorPresets'
 import { HomeDarkMode } from './HomeDarkMode'
 import { HomeHugePackElements } from './HomeHugePackElements'
 import { HomeLookingFor } from './HomeLookingFor'
-import { HomeMinimal } from './HomeMinimal'
 import { HomePricingPlans } from './HomePricingPlans'
 import Page from './Page'
 
@@ -30,7 +29,6 @@ export default function HomePage() {
     <Page title="The starting point for your next project">
       <RootStyle>
         <ContentStyle>
-          <HomeMinimal />
 
           <HomeHugePackElements />
 
