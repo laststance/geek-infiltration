@@ -1,33 +1,20 @@
-// @mui
 import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 
-// hooks
-// utils
-import { MAIN_HEADER_DESKTOP, MAIN_HEADER_MOBILE } from './config'
+import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+
+import { MAIN_HEADER_DESKTOP } from './config'
 import cssStyles from './cssStyles'
-// config
-// components
-import Label from './Label'
-import Logo from './Logo'
-//
 import navConfig from './MenuConfig'
 import MenuDesktop from './MenuDesktop'
-import MenuMobile from './MenuMobile'
 import useOffSetTop from './useOffSetTop'
-import useResponsive from './useResponsive'
-
-// ----------------------------------------------------------------------
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
-  height: MAIN_HEADER_MOBILE,
+  height: MAIN_HEADER_DESKTOP,
   transition: theme.transitions.create(['height', 'background-color'], {
     duration: theme.transitions.duration.shorter,
     easing: theme.transitions.easing.easeInOut,
   }),
-  [theme.breakpoints.up('md')]: {
-    height: MAIN_HEADER_DESKTOP,
-  },
 }))
 
 const ToolbarShadowStyle = styled('div')(({ theme }) => ({
@@ -50,8 +37,6 @@ export default function MainHeader() {
 
   const theme = useTheme()
 
-  const isDesktop = useResponsive('up', 'md')
-
   return (
     <AppBar sx={{ bgcolor: 'transparent', boxShadow: 0 }}>
       <ToolbarStyle
@@ -70,29 +55,12 @@ export default function MainHeader() {
             justifyContent: 'space-between',
           }}
         >
-          <Logo />
-
-          <Label color="info" sx={{ ml: 1 }}>
-            TS v2.8.0
-          </Label>
           <Box sx={{ flexGrow: 1 }} />
 
-          {isDesktop && (
-            <MenuDesktop isOffset={isOffset} navConfig={navConfig} />
-          )}
-
-          <Button
-            variant="contained"
-            href={`https://github.com/login/oauth/authorize?scope=user&client_id=${
-              import.meta.env.VITE_CLIENT_ID
-            }&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}`}
-          >
+          <MenuDesktop isOffset={isOffset} navConfig={navConfig} />
+          <Button variant="contained" href={GITHUB_AUTH_URL}>
             GitHub Login
           </Button>
-
-          {!isDesktop && (
-            <MenuMobile isOffset={isOffset} navConfig={navConfig} />
-          )}
         </Container>
       </ToolbarStyle>
 

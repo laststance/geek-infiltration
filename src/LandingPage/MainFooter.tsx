@@ -9,10 +9,7 @@ import {
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-// routes
-import Logo from './Logo'
 import { PATH_PAGE } from './paths'
-// components
 import SocialsButton from './SocialsButton'
 
 // ----------------------------------------------------------------------
@@ -59,9 +56,6 @@ export default function MainFooter() {
           justifyContent={{ md: 'space-between', xs: 'center' }}
           sx={{ textAlign: { md: 'left', xs: 'center' } }}
         >
-          <Grid item xs={12} sx={{ mb: 3 }}>
-            <Logo sx={{ mx: { md: 'inherit', xs: 'auto' } }} />
-          </Grid>
           <Grid item xs={8} md={3}>
             <Typography variant="body2" sx={{ pr: { md: 5 } }}>
               The starting point for your next project with Minimal UI Kit,

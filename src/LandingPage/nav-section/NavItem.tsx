@@ -3,13 +3,13 @@ import { Box, ListItemText, ListItemButton, ListItemIcon } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 import type { ReactNode } from 'react'
 
-import Iconify from '../Iconify'
-
 import {
   DASHBOARD_NAVBAR_ROOT_ITEM_HEIGHT,
   DASHBOARD_NAVBAR_SUB_ITEM_HEIGHT,
   DASHBOARD_NAVBAR_ICON_ITEM_SIZE,
-} from './../config'
+} from '../config'
+import Iconify from '../Iconify'
+
 import type { NavItemProps } from './type'
 
 // ----------------------------------------------------------------------
