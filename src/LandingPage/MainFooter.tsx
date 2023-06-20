@@ -111,7 +111,11 @@ export default function MainFooter() {
             textAlign: { md: 'left', xs: 'center' },
           }}
         >
-          © 2021. All rights reserved
+          © 2023.{' '}
+          <Link href="https://laststance.io/" target="_blank" rel="noreferrer">
+            Laststance.io
+          </Link>{' '}
+          All rights reserved
         </Typography>
       </Container>
     </RootStyle>

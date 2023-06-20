@@ -2,12 +2,12 @@ import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 
 import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+import useOffSetTop from '../hooks/useOffSetTop'
 
 import { MAIN_HEADER_DESKTOP } from './config'
 import cssStyles from './cssStyles'
 import navConfig from './MenuConfig'
 import MenuDesktop from './MenuDesktop'
-import useOffSetTop from './useOffSetTop'
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: MAIN_HEADER_DESKTOP,
@@ -42,10 +42,8 @@ export default function MainHeader() {
       <ToolbarStyle
         disableGutters
         sx={{
-          ...(isOffset && {
-            ...cssStyles(theme).bgBlur(),
-            height: { md: MAIN_HEADER_DESKTOP - 16 },
-          }),
+          ...cssStyles(theme).bgBlur(),
+          height: { md: MAIN_HEADER_DESKTOP - 16 },
         }}
       >
         <Container
