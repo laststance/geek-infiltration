@@ -57,7 +57,9 @@ export default function MainHeader() {
             href={GITHUB_AUTH_URL}
             sx={{
               backgroundColor: 'black',
+              borderRadius: '10px',
               color: 'white',
+              padding: '12px',
             }}
           >
             Login with GitHub
