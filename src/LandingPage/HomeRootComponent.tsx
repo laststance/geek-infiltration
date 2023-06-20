@@ -29,7 +29,6 @@ export default function HomePage() {
     <Page title="The starting point for your next project">
       <RootStyle>
         <ContentStyle>
-
           <HomeHugePackElements />
 
           <HomeDarkMode />

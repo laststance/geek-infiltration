@@ -11,7 +11,6 @@ import { styled } from '@mui/material/styles'
 
 import SocialsButton from './SocialsButton'
 
-
 const RootStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   position: 'relative',
