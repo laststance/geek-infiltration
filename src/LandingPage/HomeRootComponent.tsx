@@ -7,7 +7,6 @@ import { HomeAdvertisement } from './HomeAdvertisement'
 import { HomeCleanInterfaces } from './HomeCleanInterfaces'
 import { HomeColorPresets } from './HomeColorPresets'
 import { HomeDarkMode } from './HomeDarkMode'
-import { HomeHero } from './HomeHero'
 import { HomeHugePackElements } from './HomeHugePackElements'
 import { HomeLookingFor } from './HomeLookingFor'
 import { HomeMinimal } from './HomeMinimal'
@@ -30,7 +29,6 @@ export default function HomePage() {
   return (
     <Page title="The starting point for your next project">
       <RootStyle>
-        <HomeHero />
         <ContentStyle>
           <HomeMinimal />
 
