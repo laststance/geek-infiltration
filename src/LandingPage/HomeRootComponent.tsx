@@ -5,7 +5,6 @@ import { styled } from '@mui/material/styles'
 
 import { HomeAdvertisement } from './HomeAdvertisement'
 import { HomeCleanInterfaces } from './HomeCleanInterfaces'
-import { HomeColorPresets } from './HomeColorPresets'
 import { HomeDarkMode } from './HomeDarkMode'
 import { HomeHugePackElements } from './HomeHugePackElements'
 import { HomeLookingFor } from './HomeLookingFor'
@@ -32,8 +31,6 @@ export default function HomePage() {
           <HomeHugePackElements />
 
           <HomeDarkMode />
-
-          <HomeColorPresets />
 
           <HomeCleanInterfaces />
 
