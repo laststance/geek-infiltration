@@ -101,8 +101,6 @@ export function HomePricingPlans() {
   )
 }
 
-// ----------------------------------------------------------------------
-
 type PlanCardProps = {
   plan: {
     license: string
