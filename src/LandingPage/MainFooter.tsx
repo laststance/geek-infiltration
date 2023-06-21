@@ -1,4 +1,3 @@
-// @mui
 import {
   Grid,
   Link,
@@ -6,6 +5,7 @@ import {
   Container,
   Typography,
   Stack,
+  Box,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
@@ -13,7 +13,6 @@ import SocialsButton from './SocialsButton'
 
 const RootStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
-  position: 'relative',
 }))
 
 // ----------------------------------------------------------------------
@@ -23,24 +22,24 @@ export default function MainFooter() {
     <RootStyle>
       <Divider />
       <Container>
-        <Grid container justifyContent="center" alignItems="center">
+        <Grid container justifyContent="flex-end" alignItems="center">
           <Grid item md={3}>
             <Stack
               direction="row"
-              justifyContent={{ md: 'flex-start', xs: 'center' }}
+              justifyContent={{ md: 'flex-end', xs: 'center' }}
               sx={{ mb: 5, mt: 5 }}
             >
               <SocialsButton sx={{ mx: 0.5 }} />
             </Stack>
           </Grid>
         </Grid>
-        <Container>
+        <Box>
           <Typography
             component="p"
             variant="body2"
             sx={{
               fontSize: 13,
-              mt: 10,
+              mt: 0,
               pb: 5,
               textAlign: 'center',
             }}
@@ -55,7 +54,7 @@ export default function MainFooter() {
             </Link>{' '}
             All rights reserved
           </Typography>
-        </Container>
+        </Box>
       </Container>
     </RootStyle>
   )

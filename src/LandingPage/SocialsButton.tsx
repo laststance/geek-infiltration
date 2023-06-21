@@ -35,6 +35,7 @@ export default function SocialsButton({
             <Tooltip title={name} placement="top">
               <IconButton
                 color="inherit"
+                size="large"
                 sx={{
                   ...(initialColor && {
                     '&:hover': {
