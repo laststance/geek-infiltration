@@ -1,13 +1,9 @@
-// @mui
 import { Button, Container, Typography, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-// components
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
 import Image from './Image'
-
-// ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(10, 0),
@@ -15,8 +11,6 @@ const RootStyle = styled('div')(({ theme }) => ({
     padding: theme.spacing(15, 0),
   },
 }))
-
-// ----------------------------------------------------------------------
 
 export function HomeLookingFor() {
   return (

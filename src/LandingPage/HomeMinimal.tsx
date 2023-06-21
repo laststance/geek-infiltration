@@ -1,8 +1,6 @@
-// @mui
 import { Box, Card, Container, Typography } from '@mui/material'
 import { alpha, useTheme, styled } from '@mui/material/styles'
 
-// components
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
 

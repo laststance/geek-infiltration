@@ -1,8 +1,6 @@
 import type { Theme } from '@mui/material/styles'
 import { alpha } from '@mui/material/styles'
 
-// ----------------------------------------------------------------------
-
 type BackgroundBlurProps = {
   blur?: number
   opacity?: number

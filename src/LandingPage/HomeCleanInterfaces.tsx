@@ -1,12 +1,8 @@
-// @mui
 import { Box, Container, Typography, useTheme } from '@mui/material'
 import { alpha, styled } from '@mui/material/styles'
 
-// components
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
-
-// ----------------------------------------------------------------------
 
 const IMG = [...Array(10)].map(
   (_, index) =>

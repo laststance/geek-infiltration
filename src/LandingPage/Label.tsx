@@ -1,12 +1,8 @@
-// @mui
 import type { BoxProps } from '@mui/material'
 import type { Theme } from '@mui/material/styles'
 import { alpha, useTheme, styled } from '@mui/material/styles'
 
-// theme
 import type { ColorSchema } from './palette'
-
-// ----------------------------------------------------------------------
 
 type LabelColor =
   | 'default'

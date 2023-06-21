@@ -3,9 +3,6 @@ import { Box } from '@mui/material'
 import type { Theme } from '@mui/material/styles'
 import type { LazyLoadImageProps } from 'react-lazy-load-image-component'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
-// @mui
-
-// ----------------------------------------------------------------------
 
 export type ImageRato =
   | '4/3'

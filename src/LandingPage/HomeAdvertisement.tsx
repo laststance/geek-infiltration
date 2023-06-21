@@ -2,12 +2,8 @@ import { Button, Box, Container, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { m } from 'framer-motion'
 
-// @mui
-// components
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
-
-// ----------------------------------------------------------------------
 
 const ContentStyle = styled('div')(({ theme }) => ({
   backgroundImage: `linear-gradient(135deg,

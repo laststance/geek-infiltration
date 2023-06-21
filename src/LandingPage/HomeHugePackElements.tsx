@@ -1,13 +1,8 @@
-// @mui
 import { Box, Grid, Button, Container, Typography } from '@mui/material'
 import { alpha, useTheme, styled } from '@mui/material/styles'
 
-// routes
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
-// components
-
-// ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(24, 0),

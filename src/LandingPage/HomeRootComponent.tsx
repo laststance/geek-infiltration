@@ -1,7 +1,4 @@
-// @mui
 import { styled } from '@mui/material/styles'
-
-// components
 
 import { HomeAdvertisement } from './HomeAdvertisement'
 import { HomeCleanInterfaces } from './HomeCleanInterfaces'
@@ -20,8 +17,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
   overflow: 'hidden',
   position: 'relative',
 }))
-
-// ----------------------------------------------------------------------
 
 export default function HomePage() {
   return (

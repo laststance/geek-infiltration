@@ -1,6 +1,5 @@
 import { sub } from 'date-fns'
 
-//
 import { fullAddress, country } from './_mock/address'
 import { boolean } from './_mock/boolean'
 import { company } from './_mock/company'
@@ -10,8 +9,6 @@ import { price, rating, age, percent } from './_mock/number'
 import { phoneNumber } from './_mock/phoneNumber'
 import { role } from './_mock/role'
 import { title, sentence, description } from './_mock/text'
-
-// ----------------------------------------------------------------------
 
 const mock = {
   address: {

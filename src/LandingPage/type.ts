@@ -1,7 +1,5 @@
 import type { ReactElement } from 'react'
 
-// ----------------------------------------------------------------------
-
 export type MenuItemProps = {
   title: string
   path: string

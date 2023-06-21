@@ -1,12 +1,8 @@
-// @mui
 import { Grid, Container, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-// components
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
-
-// ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.grey[900],
@@ -27,8 +23,6 @@ const ContentStyle = styled('div')(({ theme }) => ({
     textAlign: 'left',
   },
 }))
-
-// ----------------------------------------------------------------------
 
 export function HomeDarkMode() {
   return (

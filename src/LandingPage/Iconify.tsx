@@ -1,7 +1,5 @@
-// icons
 import type { IconifyIcon } from '@iconify/react'
 import { Icon } from '@iconify/react'
-// @mui
 import type { BoxProps, SxProps } from '@mui/material'
 import { Box } from '@mui/material'
 

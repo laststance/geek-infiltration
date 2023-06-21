@@ -1,4 +1,3 @@
-// @mui
 import {
   Box,
   Grid,
@@ -12,14 +11,10 @@ import {
 } from '@mui/material'
 import { useTheme, styled } from '@mui/material/styles'
 
-// _mock_
 import { _homePlans } from './_plans'
-// components
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
 import Image from './Image'
-
-// ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.neutral,
@@ -28,8 +23,6 @@ const RootStyle = styled('div')(({ theme }) => ({
     padding: theme.spacing(15, 0),
   },
 }))
-
-// ----------------------------------------------------------------------
 
 export function HomePricingPlans() {
   const theme = useTheme()
