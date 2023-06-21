@@ -1,4 +1,4 @@
-import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
+import { Box, IconButton, AppBar, Toolbar, Container } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 
 import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
@@ -6,6 +6,7 @@ import useOffSetTop from '../hooks/useOffSetTop'
 
 import { MAIN_HEADER_DESKTOP } from './config'
 import cssStyles from './cssStyles'
+import Iconify from './Iconify'
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: MAIN_HEADER_DESKTOP,
@@ -53,17 +54,28 @@ export default function MainHeader() {
         >
           <Box sx={{ flexGrow: 1 }} />
 
-          <Button
+          <IconButton
             href={GITHUB_AUTH_URL}
             sx={{
               backgroundColor: 'black',
               borderRadius: '10px',
               color: 'white',
-              padding: '12px',
+
+              fontSize: '16px',
+              fontWeight: 600,
+              lineHeight: '24px',
+              paddingBottom: '8px',
+              paddingLeft: '20px',
+              paddingRight: '20px',
+              paddingTop: '8px',
             }}
           >
+            <Iconify
+              icon="bytesize:github"
+              sx={{ lineHeight: '24px', marginRight: '8px' }}
+            />
             Login with GitHub
-          </Button>
+          </IconButton>
         </Container>
       </ToolbarStyle>
 

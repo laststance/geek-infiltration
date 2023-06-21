@@ -6,7 +6,6 @@ import { HomeDarkMode } from './HomeDarkMode'
 import { HomeHugePackElements } from './HomeHugePackElements'
 import { HomeLookingFor } from './HomeLookingFor'
 import { HomePricingPlans } from './HomePricingPlans'
-import Page from './Page'
 
 const RootStyle = styled('div')(() => ({
   height: '100%',
@@ -20,22 +19,20 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 export default function HomePage() {
   return (
-    <Page title="The starting point for your next project">
-      <RootStyle>
-        <ContentStyle>
-          <HomeHugePackElements />
+    <RootStyle>
+      <ContentStyle>
+        <HomeHugePackElements />
 
-          <HomeDarkMode />
+        <HomeDarkMode />
 
-          <HomeCleanInterfaces />
+        <HomeCleanInterfaces />
 
-          <HomePricingPlans />
+        <HomePricingPlans />
 
-          <HomeLookingFor />
+        <HomeLookingFor />
 
-          <HomeAdvertisement />
-        </ContentStyle>
-      </RootStyle>
-    </Page>
+        <HomeAdvertisement />
+      </ContentStyle>
+    </RootStyle>
   )
 }
