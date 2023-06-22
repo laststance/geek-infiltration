@@ -48,14 +48,16 @@ if (import.meta.env.PROD === true) {
 const root = ReactDOM.createRoot(document.getElementById('root')!)
 
 root.render(
-  <ErrorBoundary>
-    <ReduxProvider store={store}>
-      <ReduxPersistGate persistor={persistor}>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <Authenticator />
-        </ThemeProvider>
-      </ReduxPersistGate>
-    </ReduxProvider>
-  </ErrorBoundary>
+  <React.StrictMode>
+    <ErrorBoundary>
+      <ReduxProvider store={store}>
+        <ReduxPersistGate persistor={persistor}>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <Authenticator />
+          </ThemeProvider>
+        </ReduxPersistGate>
+      </ReduxProvider>
+    </ErrorBoundary>
+  </React.StrictMode>
 )
