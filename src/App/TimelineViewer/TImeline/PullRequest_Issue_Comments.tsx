@@ -46,6 +46,7 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
           bgcolor: 'background.paper',
           display: 'flex',
           flexDirection: 'column-reverse',
+          paddingTop: 0,
           width: '100%',
         }}
         component="ul"

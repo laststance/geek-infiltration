@@ -37,7 +37,10 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
       node: DiscussionComment
     }>
     return (
-      <List sx={{ bgcolor: 'background.paper', width: '100%' }} component="ul">
+      <List
+        sx={{ bgcolor: 'background.paper', paddingTop: 0, width: '100%' }}
+        component="ul"
+      >
         {nodeList.map(
           (
             { node: { author, bodyHTML, publishedAt, url, discussion } },
