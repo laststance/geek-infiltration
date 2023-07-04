@@ -5,6 +5,7 @@ const TimelineToolbar = styled(Toolbar)(({ theme }) => ({
   '@media (min-width: 0)': {
     border: `solid 2px ${theme.palette.grey[800]}`,
     borderRadius: theme.shape.borderRadius,
+    boxSizing: 'border-box',
     display: 'flex',
     flexDirection: 'row-reverse',
     marginTop: theme.spacing(0.5),
