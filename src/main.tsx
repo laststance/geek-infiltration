@@ -50,7 +50,7 @@ const root = ReactDOM.createRoot(document.getElementById('root')!)
 root.render(
   <React.StrictMode>
     <ErrorBoundary>
-      <ReduxProvider store={store}>
+      <ReduxProvider store={store} noopCheck="always">
         <ReduxPersistGate persistor={persistor}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
