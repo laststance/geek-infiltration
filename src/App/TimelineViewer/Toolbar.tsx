@@ -41,7 +41,6 @@ const Toolbar: React.FC<Props> = ({ timelimeIndex }) => {
         onClose={handleClose}
       >
         <MenuList>
-          
           <RemoveMenuItem key={1} handleClick={handleRemove} />
         </MenuList>
       </Menu>
