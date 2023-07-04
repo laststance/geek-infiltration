@@ -1,7 +1,7 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
-import type { SearchQuery } from './SubscribeFormModal'
+import type { SearchQuery } from '../App/Sidebar/SubscribeFormModal'
 
 export interface SubscribedState {
   subscribed: SearchQuery[]

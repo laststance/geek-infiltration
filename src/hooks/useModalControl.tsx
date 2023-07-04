@@ -5,6 +5,10 @@ export interface UseModalHandlersReturnValues {
   closeModal: () => void
 }
 
+/**
+ * Use for MUI <Modal /> components state preparation
+ * @see https://mui.com/material-ui/react-modal/
+ */
 const useModalControl = (): UseModalHandlersReturnValues => {
   const [isModalVisible, setIsModalVisible] = useState(false)
 

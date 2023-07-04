@@ -17,8 +17,7 @@ import { useForm, Controller } from 'react-hook-form'
 
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
-
-import { subscribe } from './subscribedSlice'
+import { subscribe } from '../../redux/subscribedSlice'
 
 export type SearchQuery = {
   username: string

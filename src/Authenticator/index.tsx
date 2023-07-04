@@ -6,8 +6,7 @@ import App from '../App'
 import { useAppDispatch } from '../hooks/useAppDispatch'
 import { useAppSelector } from '../hooks/useAppSelector'
 import LandingPage from '../LandingPage'
-
-import { login } from './authenticatorSlice'
+import { login } from '../redux/authenticatorSlice'
 
 const Authenticator = memo(() => {
   const [loading, setLoading] = useState(false)

@@ -1,8 +1,8 @@
 import { Avatar } from '@mui/material'
 import React, { memo, useCallback } from 'react'
 
-import { logout } from '../../Authenticator/authenticatorSlice'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
+import { logout } from '../../redux/authenticatorSlice'
 
 const UserMenuButton: React.FC = memo(() => {
   const dispatch = useAppDispatch()

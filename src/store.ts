@@ -3,9 +3,9 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { persistReducer } from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
 
-import subscribedReducer from './App/Sidebar/subscribedSlice'
-import authenticatorReducer from './Authenticator/authenticatorSlice'
 import { api } from './constants/api'
+import authenticatorReducer from './redux/authenticatorSlice'
+import subscribedReducer from './redux/subscribedSlice'
 
 const persistConfig = {
   key: 'Geek-Infiltration',
