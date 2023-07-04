@@ -11,9 +11,9 @@ const RemoveMenuItem: React.FC<Props> = ({ handleClick }) => {
   return (
     <MenuItem onClick={handleClick}>
       <ListItemIcon>
-        <DeleteIcon />
+        <DeleteIcon color="primary" />
       </ListItemIcon>
-      <ListItemText>delete</ListItemText>
+      <ListItemText color="palette.error">delete</ListItemText>
     </MenuItem>
   )
 }
