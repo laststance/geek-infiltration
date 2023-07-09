@@ -2858,10 +2858,10 @@ combined-stream@^1.0.8:
   dependencies:
     delayed-stream "~1.0.0"
 
-commander@^10.0.1:
-  version "10.0.1"
-  resolved "https://registry.yarnpkg.com/commander/-/commander-10.0.1.tgz#881ee46b4f77d1c1dccc5823433aa39b022cbe06"
-  integrity sha512-y4Mg2tXshplEbSGzx7amzPwKKOCGuoSRP/CjEdwwk0FOGlUbq6lKuoyDZTNZkmxHdJtp54hdfY/JUrdL7Xfdug==
+commander@^11.0.0:
+  version "11.0.0"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-11.0.0.tgz#43e19c25dbedc8256203538e8d7e9346877a6f67"
+  integrity sha512-9HMlXtt/BNoYr8ooyjjNRdIilOTkVJXB+GhxMTtOKwk0R4j4lS4NpjuqmRxroBfnfTSHQIHQB7wryHhXarNjmQ==
 
 common-tags@1.8.2:
   version "1.8.2"
@@ -3328,12 +3328,12 @@ escape-string-regexp@^4.0.0:
   resolved "https://registry.yarnpkg.com/escape-string-regexp/-/escape-string-regexp-4.0.0.tgz#14ba83a5d373e3d311e5afca29cf5bfad965bf34"
   integrity sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==
 
-eslint-config-ts-prefixer@^0.16.0:
-  version "0.16.0"
-  resolved "https://registry.yarnpkg.com/eslint-config-ts-prefixer/-/eslint-config-ts-prefixer-0.16.0.tgz#89475985bb35aadd89afd1fc4cd495b5337f593e"
-  integrity sha512-JbJxv3jB3nV2mP567+XGMhHgqB9dkU/9iTee4MmEkil4ISAUIYLSpYZ0hWNwNrjzb7q53RBLM+RjbmMV5VUD3w==
+eslint-config-ts-prefixer@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/eslint-config-ts-prefixer/-/eslint-config-ts-prefixer-0.17.0.tgz#8d055b8545c423206ce36b98d0fc06f7117fd681"
+  integrity sha512-tffAx2aUOo53JbkpDKxgwPu2IVwDdj7Wj6y4K/6BE1p3De3RvMC/Lo9YKBCV1KTIDMgz2ErTt7bIkSOuUCFcFQ==
   dependencies:
-    commander "^10.0.1"
+    commander "^11.0.0"
     inquirer "^8.0.0"
 
 eslint-import-resolver-node@^0.3.7:
