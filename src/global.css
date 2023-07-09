@@ -1,7 +1,3 @@
-body {
-  overflow-y: hidden; /* Hide browser default vertical scrollbar. because it overrap with Timeline scrollbar. */
-}
-
 :root {
   color-scheme: dark;
 }

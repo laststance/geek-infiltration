@@ -15,6 +15,7 @@ const App: React.FC = memo(() => {
         maxHeight: '100vh',
         minHeight: '100vh',
         minWidth: '100%',
+        overflowY: 'hidden',
       }}
     >
       <Sidebar />
