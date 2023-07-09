@@ -1,4 +1,4 @@
-import { Box, IconButton, AppBar, Toolbar, Container } from '@mui/material'
+import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 
 import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
@@ -54,28 +54,18 @@ export default function MainHeader() {
         >
           <Box sx={{ flexGrow: 1 }} />
 
-          <IconButton
+          <Button
             href={GITHUB_AUTH_URL}
-            sx={{
-              backgroundColor: 'black',
-              borderRadius: '10px',
-              color: 'white',
-
-              fontSize: '16px',
-              fontWeight: 600,
-              lineHeight: '24px',
-              paddingBottom: '8px',
-              paddingLeft: '20px',
-              paddingRight: '20px',
-              paddingTop: '8px',
-            }}
+            size="large"
+            color="inherit"
+            variant="outlined"
           >
             <Iconify
               icon="bytesize:github"
               sx={{ lineHeight: '24px', marginRight: '8px' }}
             />
             Login with GitHub
-          </IconButton>
+          </Button>
         </Container>
       </ToolbarStyle>
 
