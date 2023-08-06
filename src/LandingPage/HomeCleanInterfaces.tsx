@@ -8,7 +8,7 @@ const IMG = [...Array(10)].map(
   (_, index) =>
     `https://minimal-assets-api.vercel.app/assets/images/home/clean-${
       index + 1
-    }.png`
+    }.png`,
 )
 
 const RootStyle = styled('div')(({ theme }) => ({

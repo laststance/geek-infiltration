@@ -14,7 +14,7 @@ const Page = forwardRef<HTMLDivElement, Props>(
         {children}
       </Box>
     )
-  }
+  },
 )
 Page.displayName = 'Page'
 

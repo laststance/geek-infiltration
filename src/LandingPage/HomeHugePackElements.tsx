@@ -144,7 +144,7 @@ export function HomeHugePackElements() {
                       isLight
                         ? theme.palette.grey[600]
                         : theme.palette.common.black,
-                      0.48
+                      0.48,
                     )}`,
                     ...(index === 0 && {
                       position: 'absolute',

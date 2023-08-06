@@ -47,7 +47,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
         dispatch(subscribe(data))
         closeModal()
       },
-      [dispatch]
+      [dispatch],
     )
 
     return (
@@ -110,7 +110,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
         </form>
       </Dialog>
     )
-  }
+  },
 )
 
 SubscribeFormModal.displayName = 'SubscribeModal'

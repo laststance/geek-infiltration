@@ -44,7 +44,7 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
         {nodeList.map(
           (
             { node: { author, bodyHTML, publishedAt, url, discussion } },
-            i: number
+            i: number,
           ) => (
             <ListItem disableGutters key={i} component="li">
               <CommentCard
@@ -58,7 +58,7 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
                 ticketTitle={discussion!.title}
               />
             </ListItem>
-          )
+          ),
         )}
       </List>
     )

@@ -30,7 +30,7 @@ const Authenticator = memo(() => {
             headers: {
               Accept: 'application/json',
             },
-          }
+          },
         )
         .then(({ data }) => {
           dispatch(login(data['access_token']))

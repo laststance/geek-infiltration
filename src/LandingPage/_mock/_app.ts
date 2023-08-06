@@ -1,5 +1,3 @@
-import { noCase } from 'change-case'
-
 // mock
 import mock from '../Mock'
 
@@ -20,9 +18,7 @@ export const _appRelated = [
     index === 0 || index === 2 || index === 4 ? 0 : mock.number.price(index),
   rating: mock.number.rating(index),
   review: randomNumberRange(999, 99999),
-  shortcut: `https://minimal-assets-api.vercel.app/assets/icons/ic_${noCase(
-    appName
-  )}.svg`,
+  shortcut: `https://minimal-assets-api.vercel.app/assets/icons/ic_${appName}.svg`,
   system: (index === 2 && 'Windows') || (index === 4 && 'Windows') || 'Mac',
 }))
 
@@ -34,7 +30,7 @@ export const _appInstalled = ['de', 'en', 'fr', 'kr', 'us'].map(
     id: mock.id(index),
     name: ['Germany', 'England', 'France', 'Korean', 'USA'][index],
     windows: randomNumberRange(999, 99999),
-  })
+  }),
 )
 
 export const _appAuthors = [...Array(3)].map((_, index) => ({

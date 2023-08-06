@@ -24,7 +24,7 @@ interface Props extends Omit<FabProps, 'color'> {
 const FabButtonAnimate = forwardRef<HTMLButtonElement, Props>(
   (
     { color = 'primary', size = 'large', children, sx, sxWrap, ...other },
-    ref
+    ref,
   ) => {
     const theme = useTheme()
 
@@ -63,7 +63,7 @@ const FabButtonAnimate = forwardRef<HTMLButtonElement, Props>(
         </Fab>
       </AnimateWrap>
     )
-  }
+  },
 )
 FabButtonAnimate.displayName = 'FabButtonAnimate'
 

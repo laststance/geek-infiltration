@@ -14,7 +14,7 @@ const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
         {children}
       </IconButton>
     </AnimateWrap>
-  )
+  ),
 )
 IconButtonAnimate.displayName = 'IconButtonAnimate'
 

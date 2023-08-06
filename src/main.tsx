@@ -59,5 +59,5 @@ root.render(
         </ReduxPersistGate>
       </ReduxProvider>
     </ErrorBoundary>
-  </React.StrictMode>
+  </React.StrictMode>,
 )
