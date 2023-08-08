@@ -143,8 +143,8 @@ devDependencies:
     specifier: ^8.46.0
     version: 8.46.0
   eslint-config-ts-prefixer:
-    specifier: ^0.21.0
-    version: 0.21.0
+    specifier: ^0.22.0
+    version: 0.22.0
   eslint-import-resolver-typescript:
     specifier: ^3.5.5
     version: 3.5.5(@typescript-eslint/parser@6.2.1)(eslint-plugin-import@2.28.0)(eslint@8.46.0)
@@ -3956,8 +3956,8 @@ packages:
     resolution: {integrity: sha512-TtpcNJ3XAzx3Gq8sWRzJaVajRs0uVxA2YAkdb1jm2YkPz4G6egUFAyA3n5vtEIZefPk5Wa4UXbKuS5fKkJWdgA==}
     engines: {node: '>=10'}
 
-  /eslint-config-ts-prefixer@0.21.0:
-    resolution: {integrity: sha512-Kao56X3KcCgg3KUYfNVDED86pXbfqgOoejZlIk5PB/QPBKb6CJtS0yuyDc71JbHje8+wQ6zJlrdN9Rp7s3oTtA==}
+  /eslint-config-ts-prefixer@0.22.0:
+    resolution: {integrity: sha512-PIhkGyYIyJZxSb3pFgzHTNh4kTyvPJEA/S6UsuyoMOV4ibb5IkbOVgvZJVcG11QkcV3FWh1EcmM2DDIBoXkSxg==}
     hasBin: true
     dependencies:
       commander: 11.0.0
