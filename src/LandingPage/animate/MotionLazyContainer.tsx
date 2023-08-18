@@ -4,7 +4,8 @@ import type { ReactNode } from 'react'
 // ----------------------------------------------------------------------
 
 // eslint-disable-next-line import/extensions
-const loadFeatures = () => import('./features.js').then((res) => res.default)
+const loadFeatures = async () =>
+  import('./features.js').then((res) => res.default)
 
 type Props = {
   children: ReactNode

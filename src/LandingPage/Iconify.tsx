@@ -11,6 +11,6 @@ interface Props extends BoxProps {
 }
 
 export default function Iconify({ icon, sx, ...other }: Props) {
-  //@ts-expect-error idk 
+  //@ts-expect-error idk
   return <Box component={Icon} icon={icon} sx={{ ...sx }} {...other} />
 }
