@@ -11,7 +11,7 @@
     "@emotion/serialize": "^1.1.2",
     "@emotion/styled": "^11.11.0",
     "@emotion/utils": "^1.2.1",
-    "@fontsource/roboto": "^5.0.7",
+    "@fontsource/roboto": "^5.0.8",
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.14.3",
     "@mui/material": "^5.14.3",

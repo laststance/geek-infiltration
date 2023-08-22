@@ -21,8 +21,8 @@ dependencies:
     specifier: ^1.2.1
     version: 1.2.1
   '@fontsource/roboto':
-    specifier: ^5.0.7
-    version: 5.0.7
+    specifier: ^5.0.8
+    version: 5.0.8
   '@iconify/react':
     specifier: ^4.1.1
     version: 4.1.1(react@18.2.0)
@@ -1155,8 +1155,8 @@ packages:
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
     dev: true
 
-  /@fontsource/roboto@5.0.7:
-    resolution: {integrity: sha512-Hcl5xloy9PH+hCGnKTl9Xg7SOXbvSFIg+AW2JZ5qrsAZBI9IEC4kwma6D/aTl9ywvsdEp+7TeVT2fmFImXyHTw==}
+  /@fontsource/roboto@5.0.8:
+    resolution: {integrity: sha512-XxPltXs5R31D6UZeLIV1td3wTXU3jzd3f2DLsXI8tytMGBkIsGcc9sIyiupRtA8y73HAhuSCeweOoBqf6DbWCA==}
     dev: false
 
   /@graphql-codegen/cli@5.0.0(graphql@16.8.0):
