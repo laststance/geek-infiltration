@@ -131,8 +131,8 @@ devDependencies:
     specifier: ^3.3.2
     version: 3.3.2(vite@4.4.9)
   all-contributors-cli:
-    specifier: ^6.26.0
-    version: 6.26.0
+    specifier: ^6.26.1
+    version: 6.26.1
   autoprefixer:
     specifier: ^10.4.15
     version: 10.4.15(postcss@8.4.27)
@@ -2912,8 +2912,8 @@ packages:
       uri-js: 4.4.1
     dev: true
 
-  /all-contributors-cli@6.26.0:
-    resolution: {integrity: sha512-HOMfawD0XyNbOvLUn7rOAP5N9RLnbH+Y/9/IoxwPzCmy6srHSFyRMwbpD0H7Tw+1QzdJT8RH7bTe1IZkPhF+NQ==}
+  /all-contributors-cli@6.26.1:
+    resolution: {integrity: sha512-Ymgo3FJACRBEd1eE653FD1J/+uD0kqpUNYfr9zNC1Qby0LgbhDBzB3EF6uvkAbYpycStkk41J+0oo37Lc02yEw==}
     engines: {node: '>=4'}
     hasBin: true
     dependencies:
