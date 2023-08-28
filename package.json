@@ -16,7 +16,7 @@
     "@mui/icons-material": "^5.14.6",
     "@mui/material": "^5.14.6",
     "@reduxjs/toolkit": "^1.9.5",
-    "@sentry/react": "^7.64.0",
+    "@sentry/react": "^7.65.0",
     "@tauri-apps/api": "^1.4.0",
     "axios": "^1.4.0",
     "date-fns": "^2.30.0",
