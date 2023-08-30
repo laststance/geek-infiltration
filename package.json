@@ -18,7 +18,7 @@
     "@reduxjs/toolkit": "^1.9.5",
     "@sentry/react": "^7.65.0",
     "@tauri-apps/api": "^1.4.0",
-    "axios": "^1.4.0",
+    "axios": "^1.5.0",
     "date-fns": "^2.30.0",
     "framer-motion": "^10.16.1",
     "graphql": "16.8.0",
