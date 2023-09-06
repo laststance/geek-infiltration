@@ -3,7 +3,6 @@ import type { ReactNode } from 'react'
 
 // ----------------------------------------------------------------------
 
-// eslint-disable-next-line import/extensions
 const loadFeatures = async () =>
   import('./features.js').then((res) => res.default)
 
