@@ -52,7 +52,7 @@
     "all-contributors-cli": "^6.26.1",
     "autoprefixer": "^10.4.15",
     "change-case": "^4.1.2",
-    "eslint": "^8.48.0",
+    "eslint": "^8.49.0",
     "eslint-config-ts-prefixer": "^1.4.1",
     "eslint-import-resolver-typescript": "^3.6.0",
     "eslint-plugin-import": "^2.28.1",
