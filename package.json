@@ -67,7 +67,7 @@
     "serve": "^14.2.1",
     "typescript": "^5.2.2",
     "vite": "^4.4.9",
-    "vitest": "^0.34.4"
+    "vitest": "^0.34.5"
   },
   "scripts": {
     "build": "tsc && vite build",
