@@ -38,7 +38,7 @@
     "@graphql-codegen/cli": "5.0.0",
     "@graphql-codegen/typescript": "4.0.1",
     "@graphql-codegen/typescript-document-nodes": "4.0.1",
-    "@graphql-codegen/typescript-graphql-files-modules": "2.2.1",
+    "@graphql-codegen/typescript-graphql-files-modules": "3.0.0",
     "@graphql-codegen/typescript-operations": "4.0.1",
     "@graphql-codegen/typescript-rtk-query": "^2.4.1",
     "@rtk-query/graphql-request-base-query": "^2.2.0",

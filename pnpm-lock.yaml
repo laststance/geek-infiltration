@@ -98,8 +98,8 @@ devDependencies:
     specifier: 4.0.1
     version: 4.0.1(graphql@16.8.1)
   '@graphql-codegen/typescript-graphql-files-modules':
-    specifier: 2.2.1
-    version: 2.2.1(graphql@16.8.1)
+    specifier: 3.0.0
+    version: 3.0.0(graphql@16.8.1)
   '@graphql-codegen/typescript-operations':
     specifier: 4.0.1
     version: 4.0.1(graphql@16.8.1)
@@ -1328,14 +1328,15 @@ packages:
       - supports-color
     dev: true
 
-  /@graphql-codegen/typescript-graphql-files-modules@2.2.1(graphql@16.8.1):
-    resolution: {integrity: sha512-E9k7AOZx4w4Qxll6tDbQKLJnriATowhrKobALaTcOG73SWtcZDDDitHjrm2DcV99XxlAFBV0J2ua/2r+nrvfvg==}
+  /@graphql-codegen/typescript-graphql-files-modules@3.0.0(graphql@16.8.1):
+    resolution: {integrity: sha512-d0/LKTrt5eVG/vUrbst9GNJx3ZNrBchZ8Q62QbXtxejMNS8YsHlzySfaKGmzvHyOGrYCGXUdrraqq6oPbGUp3w==}
+    engines: {node: '>= 16.0.0'}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
-      '@graphql-codegen/plugin-helpers': 2.7.2(graphql@16.8.1)
+      '@graphql-codegen/plugin-helpers': 3.1.2(graphql@16.8.1)
       graphql: 16.8.1
-      tslib: 2.4.1
+      tslib: 2.6.1
     dev: true
 
   /@graphql-codegen/typescript-operations@4.0.1(graphql@16.8.1):
