@@ -104,8 +104,8 @@ devDependencies:
     specifier: 4.0.1
     version: 4.0.1(graphql@16.8.1)
   '@graphql-codegen/typescript-rtk-query':
-    specifier: ^2.4.1
-    version: 2.4.1(@reduxjs/toolkit@1.9.6)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1)
+    specifier: ^3.0.0
+    version: 3.0.0(@reduxjs/toolkit@1.9.6)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1)
   '@rtk-query/graphql-request-base-query':
     specifier: ^2.2.0
     version: 2.2.0(@reduxjs/toolkit@1.9.6)(graphql@16.8.1)
@@ -459,6 +459,7 @@ packages:
   /@babel/plugin-proposal-class-properties@7.18.6(@babel/core@7.22.9):
     resolution: {integrity: sha512-cumfXOF0+nzZrrN8Rf0t7M+tF6sZc7vhQwYQck9q1/5w2OExlD+b4v4RpMJFaV1Z7WcDRgO6FqvxqxGlwo+RHQ==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-class-properties instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -470,6 +471,7 @@ packages:
   /@babel/plugin-proposal-object-rest-spread@7.20.7(@babel/core@7.22.9):
     resolution: {integrity: sha512-d2S98yCiLxDVmBmE8UjGcfPvNEUbA1U5q5WxaWFUGRzJSVAZqm5W6MbPct0jxnegUZ0niLeNX+IOzEs7wYg9Dg==}
     engines: {node: '>=6.9.0'}
+    deprecated: This proposal has been merged to the ECMAScript standard and thus this plugin is no longer maintained. Please use @babel/plugin-transform-object-rest-spread instead.
     peerDependencies:
       '@babel/core': ^7.0.0-0
     dependencies:
@@ -1355,13 +1357,17 @@ packages:
       - supports-color
     dev: true
 
-  /@graphql-codegen/typescript-rtk-query@2.4.1(@reduxjs/toolkit@1.9.6)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1):
-    resolution: {integrity: sha512-ouqy16Jt410nJxuUXgt3Zb5KxczsMpMe/s2lRYdWN+48ZgLCvULBXG+mMLq3HgSJxXHnouA+Ncak7FrGUrElYw==}
+  /@graphql-codegen/typescript-rtk-query@3.0.0(@reduxjs/toolkit@1.9.6)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1):
+    resolution: {integrity: sha512-rqb3FE5NVGaWFNhHMQWnw3L+FaHf3ap30R6GTdTHHDgNrc6MVXcdQKWBj9+xFa9tqth+BR0CkcNU3Q3v/FTPSA==}
+    engines: {node: '>= 16.0.0'}
     peerDependencies:
       '@reduxjs/toolkit': ^1.6.0
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-request: ^3.4.0 || ^4.0.0 || ^5.0.0
       graphql-tag: ^2.0.0
+    peerDependenciesMeta:
+      graphql-request:
+        optional: true
     dependencies:
       '@graphql-codegen/plugin-helpers': 3.1.2(graphql@16.8.1)
       '@graphql-codegen/visitor-plugin-common': 2.13.1(graphql@16.8.1)
@@ -1371,7 +1377,7 @@ packages:
       graphql: 16.8.1
       graphql-request: 6.1.0(graphql@16.8.1)
       graphql-tag: 2.12.6(graphql@16.8.1)
-      tslib: 2.4.1
+      tslib: 2.6.1
     transitivePeerDependencies:
       - encoding
       - supports-color
