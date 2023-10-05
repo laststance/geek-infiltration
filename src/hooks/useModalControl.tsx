@@ -1,8 +1,8 @@
 import { useState, useCallback } from 'react'
 export interface UseModalHandlersReturnValues {
+  closeModal: () => void
   isModalVisible: boolean
   openModal: () => void
-  closeModal: () => void
 }
 
 /**

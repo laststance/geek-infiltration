@@ -2,16 +2,16 @@ import type { ReactElement } from 'react'
 
 export type MenuItemProps = {
   title: string
-  path: string
-  icon?: ReactElement
-  to?: string
   children?: {
-    subheader: string
     items: {
       title: string
       path: string
     }[]
+    subheader: string
   }[]
+  icon?: ReactElement
+  path: string
+  to?: string
 }
 
 export type MenuProps = {
@@ -30,33 +30,33 @@ export type ThemeColorPresets =
 export type ThemeStretch = boolean
 type ColorVariants = {
   name: string
-  lighter: string
-  light: string
-  main: string
+  contrastText: string
   dark: string
   darker: string
-  contrastText: string
+  light: string
+  lighter: string
+  main: string
 }
 export type SettingsValueProps = {
-  themeMode: ThemeMode
-  themeDirection: ThemeDirection
   themeColorPresets: ThemeColorPresets
+  themeDirection: ThemeDirection
+  themeMode: ThemeMode
   themeStretch: ThemeStretch
 }
 export type SettingsContextProps = {
-  themeMode: ThemeMode
-  themeDirection: ThemeDirection
-  themeColorPresets: ThemeColorPresets
-  themeStretch: boolean
-  setColor: ColorVariants
   colorOption: {
     name: string
     value: string
   }[]
-  onToggleMode: VoidFunction
-  onChangeMode: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onChangeDirection: (event: React.ChangeEvent<HTMLInputElement>) => void
   onChangeColor: (event: React.ChangeEvent<HTMLInputElement>) => void
-  onToggleStretch: VoidFunction
+  onChangeDirection: (event: React.ChangeEvent<HTMLInputElement>) => void
+  onChangeMode: (event: React.ChangeEvent<HTMLInputElement>) => void
   onResetSetting: VoidFunction
+  onToggleMode: VoidFunction
+  onToggleStretch: VoidFunction
+  setColor: ColorVariants
+  themeColorPresets: ThemeColorPresets
+  themeDirection: ThemeDirection
+  themeMode: ThemeMode
+  themeStretch: boolean
 }

@@ -21,17 +21,19 @@ export const _ecommerceSalesOverview = [...Array(3)].map((_, index) => ({
 }))
 
 export const _ecommerceBestSalesman = [...Array(5)].map((_, index) => ({
+  id: mock.id(index),
+  name: mock.name.fullName(index),
   avatar: mock.image.avatar(index + 8),
   category: CATEGORY[index],
   email: mock.email(index),
   flag: `https://minimal-assets-api.vercel.app/assets/icons/ic_flag_${COUNTRY[index]}.svg`,
-  id: mock.id(index),
-  name: mock.name.fullName(index),
   rank: `Top ${index + 1}`,
   total: mock.number.price(index),
 }))
 
 export const _ecommerceLatestProducts = [...Array(5)].map((_, index) => ({
+  id: mock.id(index),
+  name: PRODUCT_NAME[index],
   colors: (index === 0 && ['#2EC4B6', '#E71D36', '#FF9F1C', '#011627']) ||
     (index === 1 && ['#92140C', '#FFCF99']) ||
     (index === 2 && [
@@ -43,16 +45,13 @@ export const _ecommerceLatestProducts = [...Array(5)].map((_, index) => ({
       '#046582',
     ]) ||
     (index === 3 && ['#845EC2', '#E4007C', '#2A1A5E']) || ['#090088'],
-  id: mock.id(index),
   image: mock.image.product(index),
-  name: PRODUCT_NAME[index],
   price: mock.number.price(index),
   priceSale: index === 0 || index === 3 ? 0 : mock.number.price(index),
 }))
 
 export const _ecommerceNewProducts = [...Array(5)].map((_, index) => ({
   id: mock.id(index),
-  image: mock.image.product(index),
   name: [
     'Nike Air Max 97',
     'Nike Zoom Gravity',
@@ -60,4 +59,5 @@ export const _ecommerceNewProducts = [...Array(5)].map((_, index) => ({
     'Kyrie Flytrap 3 EP Basketball Shoe',
     'Nike Air Max Fusion Men',
   ][index],
+  image: mock.image.product(index),
 }))

@@ -12,8 +12,8 @@ const initialState: SubscribedState = {
 }
 
 export const subscribedSlice = createSlice({
-  initialState,
   name: 'subscribed',
+  initialState,
   reducers: {
     subscribe: (state, action: PayloadAction<SearchQuery>) => {
       state.subscribed.push(action.payload)

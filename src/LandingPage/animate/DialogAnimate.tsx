@@ -9,16 +9,16 @@ import { varFade } from './variants'
 // ----------------------------------------------------------------------
 
 export interface Props extends DialogProps {
-  variants?: Record<string, unknown>
   onClose?: VoidFunction
+  variants?: Record<string, unknown>
 }
 
 export default function DialogAnimate({
-  open = false,
-  variants,
-  onClose,
   children,
+  onClose,
+  open = false,
   sx,
+  variants,
   ...other
 }: Props) {
   return (

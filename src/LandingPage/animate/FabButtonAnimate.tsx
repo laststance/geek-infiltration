@@ -9,7 +9,6 @@ import { forwardRef } from 'react'
 // ----------------------------------------------------------------------
 
 interface Props extends Omit<FabProps, 'color'> {
-  sxWrap?: SxProps
   color?:
     | 'inherit'
     | 'default'
@@ -19,11 +18,12 @@ interface Props extends Omit<FabProps, 'color'> {
     | 'success'
     | 'warning'
     | 'error'
+  sxWrap?: SxProps
 }
 
 const FabButtonAnimate = forwardRef<HTMLButtonElement, Props>(
   (
-    { color = 'primary', size = 'large', children, sx, sxWrap, ...other },
+    { children, color = 'primary', size = 'large', sx, sxWrap, ...other },
     ref,
   ) => {
     const theme = useTheme()
@@ -92,7 +92,7 @@ const varLarge = {
   tap: { scale: 0.99 },
 }
 
-function AnimateWrap({ size, children, sxWrap }: AnimateWrapProp) {
+function AnimateWrap({ children, size, sxWrap }: AnimateWrapProp) {
   const isSmall = size === 'small'
   const isLarge = size === 'large'
 

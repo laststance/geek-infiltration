@@ -12,13 +12,13 @@ import { varContainer } from './variants'
 type IProps = BoxProps & MotionProps
 
 export interface Props extends IProps {
-  animate?: boolean
   action?: boolean
+  animate?: boolean
 }
 
 export default function MotionContainer({
-  animate,
   action = false,
+  animate,
   children,
   ...other
 }: Props) {

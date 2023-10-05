@@ -3,14 +3,14 @@ import { alpha } from '@mui/material/styles'
 
 type BackgroundBlurProps = {
   blur?: number
-  opacity?: number
   color?: string
+  opacity?: number
 }
 
 type BackgroundGradientProps = {
   direction?: string
-  startColor?: string
   endColor?: string
+  startColor?: string
 }
 
 interface BackgroundImageProps extends BackgroundGradientProps {
@@ -36,9 +36,9 @@ export default function cssStyles(theme?: Theme) {
       const opacity = props?.opacity || 0.8
 
       return {
-        WebkitBackdropFilter: `blur(${blur}px)`,
         backdropFilter: `blur(${blur}px)`, // Fix on Mobile
         backgroundColor: alpha(color, opacity),
+        WebkitBackdropFilter: `blur(${blur}px)`,
       }
     },
     bgGradient: (props?: BackgroundGradientProps) => {

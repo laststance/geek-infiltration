@@ -16,7 +16,7 @@ interface Props {
 }
 
 const DiscussionComments: React.FC<Props> = memo(({ username }) => {
-  const { data, isLoading, isFetching, isSuccess, error } =
+  const { data, error, isFetching, isLoading, isSuccess } =
     useGetDiscussionCommentsQuery({
       query: username,
     })
@@ -43,7 +43,7 @@ const DiscussionComments: React.FC<Props> = memo(({ username }) => {
       >
         {nodeList.map(
           (
-            { node: { author, bodyHTML, publishedAt, url, discussion } },
+            { node: { author, bodyHTML, discussion, publishedAt, url } },
             i: number,
           ) => (
             <ListItem disableGutters key={i} component="li">

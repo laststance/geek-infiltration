@@ -29,7 +29,7 @@ const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
 SideBarContainer.displayName = 'Sidebar.Container'
 
 const Sidebar = memo(() => {
-  const { isModalVisible, openModal, closeModal } = useModalControl()
+  const { closeModal, isModalVisible, openModal } = useModalControl()
 
   return (
     <>

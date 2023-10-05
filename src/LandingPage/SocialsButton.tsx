@@ -7,8 +7,8 @@ import Iconify from './Iconify'
 type IProps = IconButtonProps & ButtonProps
 
 interface Props extends IProps {
-  simple?: boolean
   initialColor?: boolean
+  simple?: boolean
 }
 
 export default function SocialsButton({
@@ -19,8 +19,8 @@ export default function SocialsButton({
 }: Props) {
   const SOCIALS = [
     {
-      icon: 'eva:github-fill',
       name: 'Github',
+      icon: 'eva:github-fill',
       path: 'https://github.com/laststance/geek-infiltration',
       socialColor: 'black',
     },

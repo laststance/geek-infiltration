@@ -8,22 +8,22 @@ import Image from './Image'
 
 const CARDS = [
   {
+    title: 'UI & UX Design',
     description:
       'The set is built on the principles of the atomic design system. It helps you to create projects fastest and easily customized packages for your projects.',
     icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_design.svg',
-    title: 'UI & UX Design',
   },
   {
+    title: 'Development',
     description:
       'Easy to customize and extend each component, saving you time and money.',
     icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_code.svg',
-    title: 'Development',
   },
   {
+    title: 'Branding',
     description:
       'Consistent design in colors, fonts ... makes brand recognition easy.',
     icon: '/logo/logo_single.svg',
-    title: 'Branding',
   },
 ]
 

@@ -19,7 +19,7 @@ const TimelineViewer: React.FC = memo(() => {
       sx={{ overflowX: 'scroll' }}
     >
       {subscribed.length
-        ? subscribed.map(({ username, selectedTimeline }: SearchQuery, i) => {
+        ? subscribed.map(({ selectedTimeline, username }: SearchQuery, i) => {
             return (
               <Grid
                 sx={{

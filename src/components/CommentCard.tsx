@@ -13,25 +13,25 @@ import type { Actor } from '../generated/graphql'
 
 interface Props {
   author: Actor
-  repositoryName: string
-  ticketLink: URL['href']
-  ticketTitle: string
-  ticketAuthorName: string
+  bodyHTML: string
   commentLink: URL['href']
   publishedAt: string
-  bodyHTML: string
+  repositoryName: string
+  ticketAuthorName: string
+  ticketLink: URL['href']
+  ticketTitle: string
 }
 
 const CommentCard: React.FC<Props> = memo(
   ({
     author,
-    repositoryName,
-    ticketLink,
-    ticketTitle,
-    ticketAuthorName,
+    bodyHTML,
     commentLink,
     publishedAt,
-    bodyHTML,
+    repositoryName,
+    ticketAuthorName,
+    ticketLink,
+    ticketTitle,
   }) => {
     return (
       <Card

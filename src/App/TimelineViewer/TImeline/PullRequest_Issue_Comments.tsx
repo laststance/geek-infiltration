@@ -21,7 +21,7 @@ interface Props {
  * So currently I can only view them at the same time.
  */
 const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
-  const { data, isLoading, isFetching, isSuccess, error } =
+  const { data, error, isFetching, isLoading, isSuccess } =
     useGetIssueCommentsQuery({
       query: username,
     })
@@ -53,7 +53,7 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
       >
         {nodeList.map(
           (
-            { node: { author, bodyHTML, publishedAt, url, repository, issue } },
+            { node: { author, bodyHTML, issue, publishedAt, repository, url } },
             i: number,
           ) => (
             <ListItem disableGutters key={i} component="li">

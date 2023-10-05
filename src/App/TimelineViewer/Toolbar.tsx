@@ -16,7 +16,7 @@ interface Props {
 
 const Toolbar: React.FC<Props> = ({ timelimeIndex }) => {
   const dispatch = useAppDispatch()
-  const { handleClose, handleClick, anchorEl, open } = useAnchorElement()
+  const { anchorEl, handleClick, handleClose, open } = useAnchorElement()
   const handleRemove = useCallback(() => {
     dispatch(unsubscribe(timelimeIndex))
   }, [timelimeIndex])

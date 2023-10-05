@@ -5,18 +5,18 @@ import type { Shadows } from '@mui/material/styles/shadows'
 import palette from './palette'
 
 interface CustomShadowOptions {
+  error: string
+  info: string
+  primary: string
+  secondary: string
+  success: string
+  warning: string
   z1: string
-  z8: string
   z12: string
   z16: string
   z20: string
   z24: string
-  primary: string
-  secondary: string
-  info: string
-  success: string
-  warning: string
-  error: string
+  z8: string
 }
 
 declare module '@mui/material/styles' {
@@ -88,8 +88,8 @@ export const customShadows = {
 }
 
 const shadows: {
-  light: Shadows
   dark: Shadows
+  light: Shadows
 } = {
   dark: createShadow(DARK_MODE),
   light: createShadow(LIGHT_MODE),

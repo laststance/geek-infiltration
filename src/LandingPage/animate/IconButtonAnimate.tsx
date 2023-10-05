@@ -42,7 +42,7 @@ const varLarge = {
   tap: { scale: 0.99 },
 }
 
-function AnimateWrap({ size, children }: AnimateWrapProp) {
+function AnimateWrap({ children, size }: AnimateWrapProp) {
   const isSmall = size === 'small'
   const isLarge = size === 'large'
 

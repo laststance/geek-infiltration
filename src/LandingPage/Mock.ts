@@ -11,6 +11,12 @@ import { role } from './_mock/role'
 import { title, sentence, description } from './_mock/text'
 
 const mock = {
+  id: (index: number) => `e99f09a7-dd88-49d5-b1c8-1daf80c2d7b${index + 1}`,
+  name: {
+    firstName: (index: number) => firstName[index],
+    fullName: (index: number) => fullName[index],
+    lastName: (index: number) => lastName[index],
+  },
   address: {
     country: (index: number) => country[index],
     fullAddress: (index: number) => fullAddress[index],
@@ -18,7 +24,6 @@ const mock = {
   boolean: (index: number) => boolean[index],
   company: (index: number) => company[index],
   email: (index: number) => email[index],
-  id: (index: number) => `e99f09a7-dd88-49d5-b1c8-1daf80c2d7b${index + 1}`,
   image: {
     avatar: (index: number) =>
       `https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_${
@@ -37,11 +42,6 @@ const mock = {
         index + 1
       }.jpg`,
   },
-  name: {
-    firstName: (index: number) => firstName[index],
-    fullName: (index: number) => fullName[index],
-    lastName: (index: number) => lastName[index],
-  },
   number: {
     age: (index: number) => age[index],
     percent: (index: number) => percent[index],
@@ -51,9 +51,9 @@ const mock = {
   phoneNumber: (index: number) => phoneNumber[index],
   role: (index: number) => role[index],
   text: {
+    title: (index: number) => title[index],
     description: (index: number) => description[index],
     sentence: (index: number) => sentence[index],
-    title: (index: number) => title[index],
   },
   time: (index: number) => sub(new Date(), { days: index, hours: index }),
 }

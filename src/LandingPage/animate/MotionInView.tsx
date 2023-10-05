@@ -16,9 +16,9 @@ interface MotionInViewProps extends Props {
 
 export default function MotionInView({
   children,
-  variants,
-  transition,
   threshold,
+  transition,
+  variants,
   ...other
 }: MotionInViewProps) {
   const controls = useAnimation()

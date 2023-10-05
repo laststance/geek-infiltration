@@ -20,21 +20,21 @@ import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
 import { subscribe } from '../../redux/subscribedSlice'
 
 export type SearchQuery = {
-  username: string
   selectedTimeline: 'PullRequest_Issue_Comments' | 'discussionComments'
+  username: string
 }
 interface Props {
-  isModalVisible: UseModalHandlersReturnValues['isModalVisible']
   closeModal: UseModalHandlersReturnValues['closeModal']
+  isModalVisible: UseModalHandlersReturnValues['isModalVisible']
 }
 
 const SubscribeFormModal: React.FC<Props> = memo(
-  ({ isModalVisible, closeModal }) => {
+  ({ closeModal, isModalVisible }) => {
     const dispatch = useAppDispatch()
     const {
       control,
-      handleSubmit,
       formState: { errors },
+      handleSubmit,
     } = useForm<SearchQuery>({
       defaultValues: {
         selectedTimeline: 'PullRequest_Issue_Comments',

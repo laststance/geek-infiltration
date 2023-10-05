@@ -16,9 +16,9 @@ interface TextAnimateProps extends Props {
 }
 
 export default function TextAnimate({
+  sx,
   text,
   variants,
-  sx,
   ...other
 }: TextAnimateProps) {
   return (

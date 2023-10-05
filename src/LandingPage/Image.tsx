@@ -18,15 +18,15 @@ export type ImageRato =
 type IProps = BoxProps & LazyLoadImageProps
 
 interface Props extends IProps {
-  sx?: SxProps<Theme>
-  ratio?: ImageRato
   disabledEffect?: boolean
+  ratio?: ImageRato
+  sx?: SxProps<Theme>
 }
 
 export default function Image({
-  ratio,
   disabledEffect = false,
   effect = 'blur',
+  ratio,
   sx,
   ...other
 }: Props) {

@@ -102,15 +102,15 @@ export function HomePricingPlans() {
 
 type PlanCardProps = {
   plan: {
-    license: string
     commons: string[]
-    options: string[]
     icons: string[]
+    license: string
+    options: string[]
   }
 }
 
 function PlanCard({ plan }: PlanCardProps) {
-  const { license, commons, options, icons } = plan
+  const { commons, icons, license, options } = plan
 
   const standard = license === 'Standard'
   const plus = license === 'Standard Plus'
