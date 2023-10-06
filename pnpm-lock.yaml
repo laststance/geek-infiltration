@@ -137,8 +137,8 @@ devDependencies:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
   change-case:
-    specifier: ^4.1.2
-    version: 4.1.2
+    specifier: ^5.0.2
+    version: 5.0.2
   eslint:
     specifier: ^8.50.0
     version: 8.50.0
@@ -3604,6 +3604,10 @@ packages:
       sentence-case: 3.0.4
       snake-case: 3.0.4
       tslib: 2.6.1
+    dev: true
+
+  /change-case@5.0.2:
+    resolution: {integrity: sha512-tH6YZXViaeC2/Mnt8m4gSmbZfNorC2rhwCX2bXw8SYZWr8ljCPB7iA+1TLG9t7yroWBFauc63LlOZ1gucMVCWw==}
     dev: true
 
   /chardet@0.7.0:
