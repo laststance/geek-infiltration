@@ -43,7 +43,7 @@
     "@graphql-codegen/typescript-rtk-query": "^3.0.0",
     "@rtk-query/graphql-request-base-query": "^2.2.0",
     "@tauri-apps/cli": "^1.5.1",
-    "@types/react": "^18.2.25",
+    "@types/react": "^18.2.27",
     "@types/react-dom": "^18.2.10",
     "@types/react-lazy-load-image-component": "^1.6.1",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
