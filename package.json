@@ -13,7 +13,7 @@
     "@emotion/utils": "^1.2.1",
     "@fontsource/roboto": "^5.0.8",
     "@iconify/react": "^4.1.1",
-    "@mui/icons-material": "^5.14.13",
+    "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.14",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/react": "^7.74.1",
