@@ -119,8 +119,8 @@ devDependencies:
     specifier: ^18.2.13
     version: 18.2.13
   '@types/react-lazy-load-image-component':
-    specifier: ^1.6.1
-    version: 1.6.1
+    specifier: ^1.6.2
+    version: 1.6.2
   '@typescript-eslint/eslint-plugin':
     specifier: ^6.8.0
     version: 6.8.0(@typescript-eslint/parser@6.8.0)(eslint@8.51.0)(typescript@5.2.2)
@@ -2733,8 +2733,8 @@ packages:
     dependencies:
       '@types/react': 18.2.29
 
-  /@types/react-lazy-load-image-component@1.6.1:
-    resolution: {integrity: sha512-+StHV0jW/O1eJW4tLhj0K9Znsltvgjnbcu+se+PBmGswEeMQfhvoe9iZA6nYQtj8b4bCKGLLjtJrNhsEF9seYA==}
+  /@types/react-lazy-load-image-component@1.6.2:
+    resolution: {integrity: sha512-JQnShH2oGxo2U0nQ9m++OzBfSRhZ+28fybS8cAkP6AFHREkC23sau40ixtjIB3XMB0JLixvIC+yNhAE4f2vR2w==}
     dependencies:
       '@types/react': 18.2.29
       csstype: 3.1.2
