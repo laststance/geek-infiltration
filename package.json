@@ -51,7 +51,7 @@
     "@vitejs/plugin-react-swc": "^3.4.0",
     "all-contributors-cli": "^6.26.1",
     "autoprefixer": "^10.4.16",
-    "change-case": "^5.0.2",
+    "change-case": "^5.1.0",
     "eslint": "^8.51.0",
     "eslint-config-ts-prefixer": "^1.9.1",
     "eslint-import-resolver-typescript": "^3.6.1",
