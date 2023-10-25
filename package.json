@@ -40,7 +40,7 @@
     "@graphql-codegen/typescript-document-nodes": "4.0.1",
     "@graphql-codegen/typescript-graphql-files-modules": "3.0.0",
     "@graphql-codegen/typescript-operations": "4.0.1",
-    "@graphql-codegen/typescript-rtk-query": "^3.0.0",
+    "@graphql-codegen/typescript-rtk-query": "^3.1.0",
     "@rtk-query/graphql-request-base-query": "^2.2.0",
     "@tauri-apps/cli": "^1.5.6",
     "@types/react": "^18.2.31",
