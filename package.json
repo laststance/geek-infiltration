@@ -14,7 +14,7 @@
     "@fontsource/roboto": "^5.0.8",
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.14.15",
-    "@mui/material": "^5.14.15",
+    "@mui/material": "^5.14.16",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/react": "^7.77.0",
     "@tauri-apps/api": "^1.5.1",
