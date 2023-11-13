@@ -59,7 +59,9 @@
     "eslint-plugin-react": "^7.33.2",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-sort-keys-custom-order": "^1.0.5",
+    "husky": "^8.0.0",
     "jsdom": "^22.1.0",
+    "lint-staged": "^15.1.0",
     "postcss": "^8.4.31",
     "prettier": "^3.1.0",
     "rimraf": "^5.0.5",
@@ -75,10 +77,14 @@
     "dev": "vite",
     "lint": "eslint src --ext .ts,.tsx,.js,jsx",
     "lint:fix": "eslint src --ext .ts,.tsx,.js,jsx --fix",
-    "prettier": "prettier --write \"**/*.+(json|yml|css|md|mdx|graphql)\"",
+    "prettier": "prettier --ignore-unknown --write .",
     "serve": "serve dist",
     "tauri": "tauri",
     "typecheck": "tsc --noEmit",
-    "validate": "./scripts/validate"
+    "validate": "./scripts/validate",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write"
   }
 }
