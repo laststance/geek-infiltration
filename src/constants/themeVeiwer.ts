@@ -1,5 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-var themeVeiwer = {
+export const themeVeiwer = {
   breakpoints: {
     keys: ['xs', 'sm', 'md', 'lg', 'xl'],
     unit: 'px',
@@ -433,4 +432,4 @@ var themeVeiwer = {
     speedDial: 1050,
     tooltip: 1500,
   },
-}
+} as const

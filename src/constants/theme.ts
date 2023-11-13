@@ -3,7 +3,9 @@ import type { ThemeOptions } from '@mui/material/styles/createTheme'
 
 import { customShadows } from '../LandingPage/shadows'
 
-export const theme = createTheme({
+import type { themeVeiwer } from './themeVeiwer'
+// @ts-expect-error helpfull for auto complete
+export const theme: typeof themeVeiwer = createTheme({
   components: {},
   customShadows: customShadows.dark,
   palette: {
