@@ -2,8 +2,7 @@
   "name": "geek-infiltration",
   "license": "MIT",
   "volta": {
-    "node": "18.17.1",
-    "yarn": "1.22.19"
+    "node": "18.18.2"
   },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
