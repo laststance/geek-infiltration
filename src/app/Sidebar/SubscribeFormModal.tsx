@@ -12,17 +12,18 @@ import {
   FormControlLabel,
   Stack,
 } from '@mui/material'
-import React, { memo, useCallback } from 'react'
+import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
 import { useAppDispatch } from '../../hooks/useAppDispatch'
 import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
 import { subscribe } from '../../redux/subscribedSlice'
 
-export type SearchQuery = {
-  selectedTimeline: 'PullRequest_Issue_Comments' | 'discussionComments'
-  username: string
+export type UserSearchQuery = {
+  information: TimelineProperty['information']
+  user: TimelineProperty['target']['user']
 }
+
 interface Props {
   closeModal: UseModalHandlersReturnValues['closeModal']
   isModalVisible: UseModalHandlersReturnValues['isModalVisible']
@@ -35,20 +36,21 @@ const SubscribeFormModal: React.FC<Props> = memo(
       control,
       formState: { errors },
       handleSubmit,
-    } = useForm<SearchQuery>({
+    } = useForm<UserSearchQuery>({
       defaultValues: {
-        selectedTimeline: 'PullRequest_Issue_Comments',
-        username: '',
+        information: 'PR_Issues',
+        user: '',
       },
     })
 
-    const onSubmit = useCallback(
-      (data: SearchQuery) => {
-        dispatch(subscribe(data))
-        closeModal()
-      },
-      [dispatch],
-    )
+    const onSubmit = (data: UserSearchQuery) => {
+      const tp: TimelineProperty = {
+        target: { user: data.user },
+        information: data.information,
+      }
+      dispatch(subscribe(tp))
+      closeModal()
+    }
 
     return (
       <Dialog open={isModalVisible} onClose={closeModal}>
@@ -57,44 +59,41 @@ const SubscribeFormModal: React.FC<Props> = memo(
           <DialogContent>
             <Stack spacing={1}>
               <Controller
-                name="username"
+                name="user"
                 rules={{ required: true }}
                 control={control}
                 render={({ field }) => (
                   <>
                     <TextField
                       {...field}
-                      aria-label="username"
+                      aria-label="user"
                       fullWidth
                       color="primary"
-                      placeholder="@username"
+                      placeholder="@user"
                     />
-                    {errors.username && <Text color="error">required</Text>}
+                    {errors.user && <Text color="error">required</Text>}
                   </>
                 )}
               />
 
               <Controller
-                name="selectedTimeline"
+                name="information"
                 rules={{ required: true }}
                 control={control}
                 render={({ field }) => (
                   <FormControl>
-                    <RadioGroup
-                      defaultValue="PullRequest_Issue_Comments"
-                      {...field}
-                    >
+                    <RadioGroup {...field}>
                       <FormControlLabel
-                        value="PullRequest_Issue_Comments"
+                        value="PR_Issues"
                         control={<Radio />}
                         label="PullRequest & Issue Comments"
                       />
                       <FormControlLabel
-                        value="discussionComments"
+                        value="Discussion"
                         control={<Radio />}
                         label="Disscussion Comments"
                       />
-                      {errors.selectedTimeline && (
+                      {errors.information && (
                         <Text color="error">required</Text>
                       )}
                     </RadioGroup>

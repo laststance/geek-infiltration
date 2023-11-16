@@ -13,7 +13,7 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
-import Authenticator from './Authenticator'
+import Authenticator from './authenticator'
 import ErrorBoundary from './components/ErrorBoundary'
 import { theme } from './constants/theme'
 import { store } from './store'

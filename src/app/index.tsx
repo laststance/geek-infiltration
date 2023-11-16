@@ -2,7 +2,7 @@ import { Container } from '@mui/material'
 import React, { memo } from 'react'
 
 import Sidebar from './Sidebar'
-import TimelineViewer from './TimelineViewer'
+import TimelineContainer from './TimelineContainer'
 
 const App: React.FC = memo(() => {
   return (
@@ -19,7 +19,7 @@ const App: React.FC = memo(() => {
       }}
     >
       <Sidebar />
-      <TimelineViewer />
+      <TimelineContainer />
     </Container>
   )
 })

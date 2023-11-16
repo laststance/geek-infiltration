@@ -7,18 +7,18 @@ import {
 } from '@mui/material'
 import React, { memo } from 'react'
 
-import CommentCard from '../../../components/CommentCard'
-import { useGetDiscussionCommentsQuery } from '../../../generated/graphql'
-import type { DiscussionComment, Actor } from '../../../generated/graphql'
+import CommentCard from '@/components/CommentCard'
+import { useGetDiscussionCommentsQuery } from '@/generated/graphql'
+import type { DiscussionComment, Actor } from '@/generated/graphql'
 
 interface Props {
-  username: string
+  user: NonNullable<TimelineProperty['target']['user']>
 }
 
-const DiscussionComments: React.FC<Props> = memo(({ username }) => {
+const DiscussionComments: React.FC<Props> = memo(({ user }) => {
   const { data, error, isFetching, isLoading, isSuccess } =
     useGetDiscussionCommentsQuery({
-      query: username,
+      query: user,
     })
 
   if (error) return <Text>Error in fetch from Github API.</Text>

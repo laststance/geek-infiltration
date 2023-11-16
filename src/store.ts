@@ -7,6 +7,7 @@ import storage from 'redux-persist/lib/storage'
 import { api } from './constants/api'
 import authenticatorReducer from './redux/authenticatorSlice'
 import subscribedReducer from './redux/subscribedSlice'
+import userInterfaceReducer from './redux/userInterfaceSlice'
 
 const persistConfig = {
   key: 'Geek-Infiltration',
@@ -17,6 +18,7 @@ const persistConfig = {
 const reducers = combineReducers({
   authenticator: authenticatorReducer,
   subscribed: subscribedReducer,
+  userInterface: userInterfaceReducer,
   [api.reducerPath]: api.reducer,
 })
 

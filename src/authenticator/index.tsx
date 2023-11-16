@@ -2,7 +2,7 @@ import { CircularProgress } from '@mui/material'
 import axios from 'axios'
 import { useState, memo, useLayoutEffect } from 'react'
 
-import App from '../App'
+import App from '../app'
 import { useAppDispatch } from '../hooks/useAppDispatch'
 import { useAppSelector } from '../hooks/useAppSelector'
 import LandingPage from '../LandingPage'

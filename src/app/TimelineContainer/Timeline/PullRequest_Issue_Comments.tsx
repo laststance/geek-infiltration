@@ -7,12 +7,12 @@ import {
 } from '@mui/material'
 import React, { memo } from 'react'
 
-import CommentCard from '../../../components/CommentCard'
-import { useGetIssueCommentsQuery } from '../../../generated/graphql'
-import type { IssueComment, Actor } from '../../../generated/graphql'
+import CommentCard from '@/components/CommentCard'
+import { useGetIssueCommentsQuery } from '@/generated/graphql'
+import type { IssueComment, Actor } from '@/generated/graphql'
 
 interface Props {
-  username: string
+  user: NonNullable<TimelineProperty['target']['user']>
 }
 
 /**
@@ -20,10 +20,10 @@ interface Props {
  * But the Github API spec does not distinguish between them.
  * So currently I can only view them at the same time.
  */
-const PullRequest_Issue_Comments: React.FC<Props> = memo(({ username }) => {
+const PullRequest_Issue_Comments: React.FC<Props> = memo(({ user }) => {
   const { data, error, isFetching, isLoading, isSuccess } =
     useGetIssueCommentsQuery({
-      query: username,
+      query: user,
     })
 
   if (error) return <Text>Error in fetch from Github API.</Text>

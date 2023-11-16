@@ -4,6 +4,9 @@
   "volta": {
     "node": "18.18.2"
   },
+  "lint-staged": {
+    "*": "prettier --ignore-unknown --write"
+  },
   "dependencies": {
     "@emotion/cache": "^11.11.0",
     "@emotion/react": "^11.11.1",
@@ -14,6 +17,7 @@
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.14.16",
     "@mui/material": "^5.14.17",
+    "@mui/system": "^5.14.17",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/react": "^7.80.0",
     "@tauri-apps/api": "^1.5.1",
@@ -68,6 +72,7 @@
     "serve": "^14.2.1",
     "typescript": "^5.2.2",
     "vite": "^4.5.0",
+    "vite-tsconfig-paths": "^4.2.1",
     "vitest": "^0.34.6"
   },
   "scripts": {
@@ -83,8 +88,5 @@
     "typecheck": "tsc --noEmit",
     "validate": "./scripts/validate",
     "prepare": "husky install"
-  },
-  "lint-staged": {
-    "*": "prettier --ignore-unknown --write"
   }
 }

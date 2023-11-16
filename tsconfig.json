@@ -14,9 +14,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["./src/*"]
+    },
     "jsx": "react-jsx",
-    "types": ["vitest/globals"],
+    "types": ["vitest/globals"]
   },
-  "include": ["src", "@types"],
+  "include": ["src", "@types", "./**.js", "./**.ts", "./**.cjs", "./**.mjs"],
   "exclude": ["dist", "src-tauri"]
 }

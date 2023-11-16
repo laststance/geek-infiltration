@@ -1,10 +1,8 @@
 import type { PayloadAction } from '@reduxjs/toolkit'
 import { createSlice } from '@reduxjs/toolkit'
 
-import type { SearchQuery } from '../App/Sidebar/SubscribeFormModal'
-
 export interface SubscribedState {
-  subscribed: SearchQuery[]
+  subscribed: TimelineProperty[]
 }
 
 const initialState: SubscribedState = {
@@ -15,7 +13,7 @@ export const subscribedSlice = createSlice({
   name: 'subscribed',
   initialState,
   reducers: {
-    subscribe: (state, action: PayloadAction<SearchQuery>) => {
+    subscribe: (state, action: PayloadAction<TimelineProperty>) => {
       state.subscribed.push(action.payload)
     },
     unsubscribe: (state, action: PayloadAction<ArrayMapIndex>) => {
