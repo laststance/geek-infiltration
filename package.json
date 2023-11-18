@@ -1,6 +1,7 @@
 {
   "name": "geek-infiltration",
   "license": "MIT",
+  "type": "module",
   "volta": {
     "node": "18.18.2"
   },
@@ -79,7 +80,7 @@
     "build": "tsc && vite build",
     "clean": "rimraf node_modules yarn.lock dist",
     "codegen": "graphql-codegen --config codegen.yml",
-    "dev": "vite",
+    "dev": "VITE_CJS_TRACE=true vite",
     "lint": "eslint src --ext .ts,.tsx,.js,jsx",
     "lint:fix": "eslint src --ext .ts,.tsx,.js,jsx --fix",
     "prettier": "prettier --ignore-unknown --write .",
