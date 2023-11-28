@@ -4,11 +4,11 @@ import Menu from '@mui/material/Menu'
 import MenuList from '@mui/material/MenuList'
 import React, { useCallback } from 'react'
 
-import RemoveMenuItem from '../../components/RemoveMenuItem'
-import TimelineToolbar from '../../components/TimelineToolbar'
-import useAnchorElement from '../../hooks/useAnchorElement'
-import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { unsubscribe } from '../../redux/subscribedSlice'
+import RemoveMenuItem from '@/components/RemoveMenuItem'
+import TimelineToolbar from '@/components/TimelineToolbar'
+import useAnchorElement from '@/hooks/useAnchorElement'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import { unsubscribe } from '@/redux/subscribedSlice'
 
 interface Props {
   timelimeIndex: ArrayMapIndex
