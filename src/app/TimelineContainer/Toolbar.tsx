@@ -5,6 +5,7 @@ import MenuList from '@mui/material/MenuList'
 import React, { useCallback } from 'react'
 
 import RemoveMenuItem from '@/components/RemoveMenuItem'
+import Text from '@/components/Text'
 import TimelineToolbar from '@/components/TimelineToolbar'
 import useAnchorElement from '@/hooks/useAnchorElement'
 import { useAppDispatch } from '@/hooks/useAppDispatch'
@@ -23,7 +24,8 @@ const Toolbar: React.FC<Props> = ({ timelimeIndex }) => {
 
   return (
     <TimelineToolbar>
-      <IconButton onClick={handleClick}>
+      <Text sx={{ flex: 'none' }}>TimeLine</Text>
+      <IconButton sx={{ flex: 'none' }} onClick={handleClick}>
         <SettingsIcon />
       </IconButton>
       <Menu
