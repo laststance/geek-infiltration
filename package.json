@@ -18,7 +18,7 @@
     "@iconify/react": "^4.1.1",
     "@mui/system": "^5.14.18",
     "@mui/icons-material": "^5.14.19",
-    "@mui/material": "^5.14.18",
+    "@mui/material": "^5.14.19",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/react": "^7.84.0",
     "@tauri-apps/api": "^1.5.1",
