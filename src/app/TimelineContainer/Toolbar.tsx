@@ -12,15 +12,15 @@ import { useAppDispatch } from '@/hooks/useAppDispatch'
 import { unsubscribe } from '@/redux/subscribedSlice'
 
 interface Props {
-  timelimeIndex: ArrayMapIndex
+  id: TimelineProperty['id']
 }
 
-const Toolbar: React.FC<Props> = ({ timelimeIndex }) => {
+const Toolbar: React.FC<Props> = ({ id }) => {
   const dispatch = useAppDispatch()
   const { anchorEl, handleClick, handleClose, open } = useAnchorElement()
   const handleRemove = useCallback(() => {
-    dispatch(unsubscribe(timelimeIndex))
-  }, [timelimeIndex])
+    dispatch(unsubscribe(id))
+  }, [id])
 
   return (
     <TimelineToolbar>

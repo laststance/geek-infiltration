@@ -1,13 +1,8 @@
-import {
-  CircularProgress,
-  Box,
-  List,
-  ListItem,
-  Typography as Text,
-} from '@mui/material'
+import { CircularProgress, Box, List, ListItem } from '@mui/material'
 import React, { memo } from 'react'
 
 import CommentCard from '@/components/CommentCard'
+import Text from '@/components/Text'
 import { useGetIssueCommentsQuery } from '@/generated/graphql'
 import type { IssueComment, Actor } from '@/generated/graphql'
 

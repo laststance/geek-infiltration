@@ -10,13 +10,15 @@ import DiscussionComments from './DiscussionComments'
 import PullRequest_Issue_Comments from './PullRequest_Issue_Comments'
 
 interface Props {
+  id: TimelineProperty['id']
   timelimeIndex: ArrayMapIndex
   target: TimelineProperty['target']
   information: TimelineProperty['information']
 }
 
 const TimeLine: React.FC<Props> = memo(
-  ({ timelimeIndex, information, target }) => {
+  //eslint-disable-next-line @typescript-eslint/no-unused-vars
+  ({ id, timelimeIndex, information, target }) => {
     const timelineWidth = useAppSelector(selectTimelineWidth)
     return (
       <Grid
@@ -28,7 +30,7 @@ const TimeLine: React.FC<Props> = memo(
           overflow: 'scroll',
         }}
       >
-        <Toolbar timelimeIndex={timelimeIndex} />
+        <Toolbar id={id} />
 
         {target.user && information === 'PR_Issues' && (
           <PullRequest_Issue_Comments user={target.user} />

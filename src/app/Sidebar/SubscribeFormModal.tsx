@@ -3,7 +3,6 @@ import {
   DialogActions,
   DialogTitle,
   DialogContent,
-  Typography as Text,
   Radio,
   Button,
   TextField,
@@ -15,8 +14,10 @@ import {
 import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
+import Text from '@/components/Text'
+
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
+import type useModalControl from '../../hooks/useModalControl'
 import { subscribe } from '../../redux/subscribedSlice'
 
 export type UserSearchQuery = {
@@ -25,8 +26,8 @@ export type UserSearchQuery = {
 }
 
 interface Props {
-  closeModal: UseModalHandlersReturnValues['closeModal']
-  isModalVisible: UseModalHandlersReturnValues['isModalVisible']
+  closeModal: ReturnType<typeof useModalControl>['closeModal']
+  isModalVisible: ReturnType<typeof useModalControl>['isModalVisible']
 }
 
 const SubscribeFormModal: React.FC<Props> = memo(
@@ -44,7 +45,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
     })
 
     const onSubmit = (data: UserSearchQuery) => {
-      const tp: TimelineProperty = {
+      const tp: Omit<TimelineProperty, 'id'> = {
         target: { user: data.user },
         information: data.information,
       }

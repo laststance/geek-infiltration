@@ -16,10 +16,11 @@ const TimelineContainer: React.FC = memo(() => {
       sx={{ overflowX: 'scroll' }}
     >
       {subscribed.length
-        ? subscribed.map(({ information, target }, i) => {
+        ? subscribed.map(({ id, information, target }, i) => {
             return (
               <TimeLine
-                key={i}
+                key={id}
+                id={id}
                 timelimeIndex={i}
                 information={information}
                 target={target}

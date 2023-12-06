@@ -1,10 +1,10 @@
 import { Button } from '@mui/material'
 import React, { memo } from 'react'
 
-import type { UseModalHandlersReturnValues } from '../../hooks/useModalControl'
+import type useModalControl from '../../hooks/useModalControl'
 
 interface Props {
-  openModal: UseModalHandlersReturnValues['openModal']
+  openModal: ReturnType<typeof useModalControl>['openModal']
 }
 const SubscribeFormModalButton: React.FC<Props> = memo(({ openModal }) => {
   return (
