@@ -33,8 +33,8 @@ dependencies:
     specifier: ^5.14.20
     version: 5.14.20(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.37)(react-dom@18.3.0-canary-6b3834a45-20231110)(react@18.3.0-canary-6b3834a45-20231110)
   '@mui/system':
-    specifier: ^5.14.19
-    version: 5.14.19(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
+    specifier: ^5.14.20
+    version: 5.14.20(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
   '@reduxjs/toolkit':
     specifier: ^1.9.7
     version: 1.9.7(react-redux@8.1.3)(react@18.3.0-canary-6b3834a45-20231110)
@@ -2167,23 +2167,6 @@ packages:
       react-transition-group: 4.4.5(react-dom@18.3.0-canary-6b3834a45-20231110)(react@18.3.0-canary-6b3834a45-20231110)
     dev: false
 
-  /@mui/private-theming@5.14.19(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110):
-    resolution: {integrity: sha512-U9w39VpXLGVM8wZlUU/47YGTsBSk60ZQRRxQZtdqPfN1N7OVllQeN4cEKZKR8PjqqR3aYRcSciQ4dc6CttRoXQ==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      '@types/react': ^17.0.0 || ^18.0.0
-      react: ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.23.5
-      '@mui/utils': 5.14.19(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
-      '@types/react': 18.2.37
-      prop-types: 15.8.1
-      react: 18.3.0-canary-6b3834a45-20231110
-    dev: false
-
   /@mui/private-theming@5.14.20(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110):
     resolution: {integrity: sha512-WV560e1vhs2IHCh0pgUaWHznrcrVoW9+cDCahU1VTkuwPokWVvb71ccWQ1f8Y3tRBPPcNkU2dChkkRJChLmQlQ==}
     engines: {node: '>=12.0.0'}
@@ -2218,36 +2201,6 @@ packages:
       '@emotion/cache': 11.11.0
       '@emotion/react': 11.11.1(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
       '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
-      csstype: 3.1.2
-      prop-types: 15.8.1
-      react: 18.3.0-canary-6b3834a45-20231110
-    dev: false
-
-  /@mui/system@5.14.19(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110):
-    resolution: {integrity: sha512-4e3Q+2nx+vgEsd0h5ftxlZGB7XtkkPos/zWqCqnxUs1l/T70s0lF2YNrWHHdSQ7LgtBu0eQ0qweZG2pR7KwkAw==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      '@emotion/react': ^11.5.0
-      '@emotion/styled': ^11.3.0
-      '@types/react': ^17.0.0 || ^18.0.0
-      react: ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@emotion/react':
-        optional: true
-      '@emotion/styled':
-        optional: true
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.23.5
-      '@emotion/react': 11.11.1(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
-      '@emotion/styled': 11.11.0(@emotion/react@11.11.1)(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
-      '@mui/private-theming': 5.14.19(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
-      '@mui/styled-engine': 5.14.19(@emotion/react@11.11.1)(@emotion/styled@11.11.0)(react@18.3.0-canary-6b3834a45-20231110)
-      '@mui/types': 7.2.10(@types/react@18.2.37)
-      '@mui/utils': 5.14.19(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110)
-      '@types/react': 18.2.37
-      clsx: 2.0.0
       csstype: 3.1.2
       prop-types: 15.8.1
       react: 18.3.0-canary-6b3834a45-20231110
@@ -2292,24 +2245,6 @@ packages:
         optional: true
     dependencies:
       '@types/react': 18.2.37
-    dev: false
-
-  /@mui/utils@5.14.19(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110):
-    resolution: {integrity: sha512-qAHvTXzk7basbyqPvhgWqN6JbmI2wLB/mf97GkSlz5c76MiKYV6Ffjvw9BjKZQ1YRb8rDX9kgdjRezOcoB91oQ==}
-    engines: {node: '>=12.0.0'}
-    peerDependencies:
-      '@types/react': ^17.0.0 || ^18.0.0
-      react: ^17.0.0 || ^18.0.0
-    peerDependenciesMeta:
-      '@types/react':
-        optional: true
-    dependencies:
-      '@babel/runtime': 7.23.5
-      '@types/prop-types': 15.7.11
-      '@types/react': 18.2.37
-      prop-types: 15.8.1
-      react: 18.3.0-canary-6b3834a45-20231110
-      react-is: 18.2.0
     dev: false
 
   /@mui/utils@5.14.20(@types/react@18.2.37)(react@18.3.0-canary-6b3834a45-20231110):
