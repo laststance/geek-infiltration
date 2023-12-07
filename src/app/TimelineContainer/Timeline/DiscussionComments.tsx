@@ -12,7 +12,7 @@ import { useGetDiscussionCommentsQuery } from '@/generated/graphql'
 import type { DiscussionComment, Actor } from '@/generated/graphql'
 
 interface Props {
-  user: NonNullable<TimelineProperty['target']['user']>
+  user: NonNullable<TimelineProperty['aim']['user']>
 }
 
 const DiscussionComments: React.FC<Props> = memo(({ user }) => {

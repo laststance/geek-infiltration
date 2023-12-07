@@ -13,9 +13,11 @@ import { unsubscribe } from '@/redux/subscribedSlice'
 
 interface Props {
   id: TimelineProperty['id']
+  information: TimelineProperty['information']
+  aim: TimelineProperty['aim']
 }
 
-const Toolbar: React.FC<Props> = ({ id }) => {
+const Toolbar: React.FC<Props> = ({ id, information, aim }) => {
   const dispatch = useAppDispatch()
   const { anchorEl, handleClick, handleClose, open } = useAnchorElement()
   const handleRemove = useCallback(() => {
@@ -24,7 +26,8 @@ const Toolbar: React.FC<Props> = ({ id }) => {
 
   return (
     <TimelineToolbar>
-      <Text sx={{ flex: 'none' }}>TimeLine</Text>
+      <Text sx={{ flex: 'none' }}>{aim.user ? aim.user : aim.repo}</Text>
+      <Text sx={{ flex: 'none' }}>{information}</Text>
       <IconButton sx={{ flex: 'none' }} onClick={handleClick}>
         <SettingsIcon />
       </IconButton>
