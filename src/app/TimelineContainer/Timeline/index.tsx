@@ -12,7 +12,7 @@ import PullRequest_Issue_Comments from './PullRequest_Issue_Comments'
 interface Props {
   id: TimelineProperty['id']
   timelimeIndex: ArrayMapIndex
-  target: TimelineProperty['target']
+  target: TimelineProperty['aim']
   information: TimelineProperty['information']
 }
 
@@ -30,7 +30,7 @@ const TimeLine: React.FC<Props> = memo(
           overflow: 'scroll',
         }}
       >
-        <Toolbar id={id} />
+        <Toolbar id={id} information={information} aim={target} />
 
         {target.user && information === 'PR_Issues' && (
           <PullRequest_Issue_Comments user={target.user} />

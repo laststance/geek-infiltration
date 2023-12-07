@@ -22,7 +22,7 @@ import { subscribe } from '../../redux/subscribedSlice'
 
 export type UserSearchQuery = {
   information: TimelineProperty['information']
-  user: TimelineProperty['target']['user']
+  user: NonNullable<TimelineProperty['aim']['user']>
 }
 
 interface Props {
@@ -46,7 +46,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
 
     const onSubmit = (data: UserSearchQuery) => {
       const tp: Omit<TimelineProperty, 'id'> = {
-        target: { user: data.user },
+        aim: { user: data.user },
         information: data.information,
       }
       dispatch(subscribe(tp))

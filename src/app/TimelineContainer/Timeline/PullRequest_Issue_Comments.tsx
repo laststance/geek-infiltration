@@ -7,7 +7,7 @@ import { useGetIssueCommentsQuery } from '@/generated/graphql'
 import type { IssueComment, Actor } from '@/generated/graphql'
 
 interface Props {
-  user: NonNullable<TimelineProperty['target']['user']>
+  user: NonNullable<TimelineProperty['aim']['user']>
 }
 
 /**
