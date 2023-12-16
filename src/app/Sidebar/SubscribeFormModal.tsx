@@ -15,10 +15,9 @@ import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
 
 import Text from '@/components/Text'
-
-import { useAppDispatch } from '../../hooks/useAppDispatch'
-import type useModalControl from '../../hooks/useModalControl'
-import { subscribe } from '../../redux/subscribedSlice'
+import { useAppDispatch } from '@/hooks/useAppDispatch'
+import type useModalControl from '@/hooks/useModalControl'
+import { subscribe } from '@/redux/subscribedSlice'
 
 export type UserSearchGQLParams = {
   information: TimelineProperty['information']
