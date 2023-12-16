@@ -21,6 +21,14 @@
     "jsx": "react-jsx",
     "types": ["vitest/globals"]
   },
-  "include": ["src", "@types", "./**.js", "./**.ts", "./**.cjs", "./**.mjs"],
+  "include": [
+    "src",
+    "@types",
+    "tests",
+    "./**.js",
+    "./**.ts",
+    "./**.cjs",
+    "./**.mjs"
+  ],
   "exclude": ["dist", "src-tauri"]
 }

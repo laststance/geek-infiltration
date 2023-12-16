@@ -46,8 +46,10 @@
     "@graphql-codegen/typescript-graphql-files-modules": "3.0.0",
     "@graphql-codegen/typescript-operations": "4.0.1",
     "@graphql-codegen/typescript-rtk-query": "^3.1.0",
+    "@playwright/test": "^1.40.1",
     "@rtk-query/graphql-request-base-query": "^2.2.0",
     "@tauri-apps/cli": "^1.5.7",
+    "@types/node": "^20.10.4",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
     "@types/react-lazy-load-image-component": "^1.6.3",
@@ -89,6 +91,11 @@
     "tauri": "tauri",
     "typecheck": "tsc --noEmit",
     "validate": "./scripts/validate",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "playwright": "playwright test",
+    "playwright:ui": "playwright test --ui",
+    "playwright:chromium": "playwright test --project=chromium",
+    "playwright:debug": "playwright test --debug",
+    "playwright:codegen": "playwright codegen"
   }
 }
