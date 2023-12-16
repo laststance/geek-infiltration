@@ -26,8 +26,12 @@ const Toolbar: React.FC<Props> = ({ id, information, aim }) => {
 
   return (
     <TimelineToolbar>
-      <Text sx={{ flex: 'none' }}>{aim.user ? aim.user : aim.repo}</Text>
-      <Text sx={{ flex: 'none' }}>{information}</Text>
+      <Text variant="h5" noWrap sx={{ flex: 'none' }}>
+        {aim.user ? aim.user : aim.repo}
+      </Text>
+      <Text variant="subtitle1" noWrap>
+        {information}
+      </Text>
       <IconButton sx={{ flex: 'none' }} onClick={handleClick}>
         <SettingsIcon />
       </IconButton>
