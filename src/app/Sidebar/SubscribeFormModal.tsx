@@ -20,7 +20,7 @@ import { useAppDispatch } from '../../hooks/useAppDispatch'
 import type useModalControl from '../../hooks/useModalControl'
 import { subscribe } from '../../redux/subscribedSlice'
 
-export type UserSearchQuery = {
+export type UserSearchGQLParams = {
   information: TimelineProperty['information']
   user: NonNullable<TimelineProperty['aim']['user']>
 }
@@ -37,14 +37,14 @@ const SubscribeFormModal: React.FC<Props> = memo(
       control,
       formState: { errors },
       handleSubmit,
-    } = useForm<UserSearchQuery>({
+    } = useForm<UserSearchGQLParams>({
       defaultValues: {
         information: 'PR_Issues',
         user: '',
       },
     })
 
-    const onSubmit = (data: UserSearchQuery) => {
+    const onSubmit = (data: UserSearchGQLParams) => {
       const tp: Omit<TimelineProperty, 'id'> = {
         aim: { user: data.user },
         information: data.information,
