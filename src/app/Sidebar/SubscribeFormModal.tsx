@@ -10,6 +10,7 @@ import {
   RadioGroup,
   FormControlLabel,
   Stack,
+  InputAdornment,
 } from '@mui/material'
 import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
@@ -69,7 +70,11 @@ const SubscribeFormModal: React.FC<Props> = memo(
                       aria-label="user"
                       fullWidth
                       color="primary"
-                      placeholder="@user"
+                      InputProps={{
+                        startAdornment: (
+                          <InputAdornment position="start">@</InputAdornment>
+                        ),
+                      }}
                     />
                     {errors.user && <Text color="error">required</Text>}
                   </>
