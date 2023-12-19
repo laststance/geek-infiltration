@@ -110,8 +110,8 @@ devDependencies:
     specifier: 4.0.1
     version: 4.0.1(graphql@16.8.1)
   '@graphql-codegen/typescript-rtk-query':
-    specifier: ^3.1.0
-    version: 3.1.0(@reduxjs/toolkit@1.9.7)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1)
+    specifier: ^3.1.1
+    version: 3.1.1(@reduxjs/toolkit@1.9.7)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1)
   '@playwright/test':
     specifier: ^1.40.1
     version: 1.40.1
@@ -1384,11 +1384,11 @@ packages:
       - supports-color
     dev: true
 
-  /@graphql-codegen/typescript-rtk-query@3.1.0(@reduxjs/toolkit@1.9.7)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1):
-    resolution: {integrity: sha512-9v79RDZbkSE63SaawuwSKOFgrrc9udKqFtXyIh8nhQfpMqBDU+Z+rbhEhkNyW8UGRblXhkd25yrPruugs66K6g==}
+  /@graphql-codegen/typescript-rtk-query@3.1.1(@reduxjs/toolkit@1.9.7)(graphql-request@6.1.0)(graphql-tag@2.12.6)(graphql@16.8.1):
+    resolution: {integrity: sha512-vU3uA3DUJ7GcWExanMxlhtupTySQkSxPNV7RemeRWAPbwCv0REmX/fLumfmp/cqSALGteB3z3n/c+5dvJ/xdiA==}
     engines: {node: '>= 16.0.0'}
     peerDependencies:
-      '@reduxjs/toolkit': ^1.6.0
+      '@reduxjs/toolkit': ^1.6.0 || ^2.0.0
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
       graphql-request: ^3.4.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
       graphql-tag: ^2.0.0
