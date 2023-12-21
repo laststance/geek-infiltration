@@ -20,7 +20,7 @@
     "@mui/material": "^5.15.1",
     "@mui/system": "^5.15.1",
     "@reduxjs/toolkit": "^1.9.7",
-    "@sentry/react": "^7.86.0",
+    "@sentry/react": "^7.90.0",
     "@tauri-apps/api": "^1.5.2",
     "axios": "^1.6.2",
     "date-fns": "^3.0.1",
