@@ -21,7 +21,7 @@
     "@mui/system": "^5.15.1",
     "@reduxjs/toolkit": "^1.9.7",
     "@sentry/react": "^7.90.0",
-    "@tauri-apps/api": "^1.5.2",
+    "@tauri-apps/api": "^1.5.3",
     "axios": "^1.6.2",
     "date-fns": "^3.0.1",
     "framer-motion": "^10.16.16",
