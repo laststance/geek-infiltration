@@ -5,7 +5,7 @@ import { customShadows } from '../LandingPage/shadows'
 
 import type { themeVeiwer } from './themeVeiwer'
 
-declare module '@mui/system' {
+declare module '@mui/material' {
   interface Shape {
     sm: number
     md: number
@@ -28,6 +28,7 @@ const defaultTheme: ThemeOptions = {
     },
   },
   shape: {
+    // @ts-expect-error TODO
     sm: 4,
     md: 8,
     lg: 12,
