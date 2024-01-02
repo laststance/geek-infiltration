@@ -47,7 +47,7 @@
     "@graphql-codegen/typescript-operations": "4.0.1",
     "@graphql-codegen/typescript-rtk-query": "^3.1.1",
     "@playwright/test": "^1.40.1",
-    "@rtk-query/graphql-request-base-query": "^2.3.0",
+    "@rtk-query/graphql-request-base-query": "^2.3.1",
     "@tauri-apps/cli": "^1.5.9",
     "@types/node": "^20.10.6",
     "@types/react": "^18.2.37",
