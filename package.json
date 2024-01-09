@@ -24,7 +24,7 @@
     "@tauri-apps/api": "^1.5.3",
     "axios": "^1.6.5",
     "date-fns": "^3.1.0",
-    "framer-motion": "^10.17.9",
+    "framer-motion": "^10.17.12",
     "graphql": "16.8.1",
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
