@@ -71,7 +71,7 @@
     "jsdom": "^23.2.0",
     "lint-staged": "^15.2.0",
     "postcss": "^8.4.33",
-    "prettier": "^3.2.2",
+    "prettier": "^3.2.4",
     "rimraf": "^5.0.5",
     "serve": "^14.2.1",
     "typescript": "^5.3.3",
