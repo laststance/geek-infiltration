@@ -23,7 +23,7 @@
     "@sentry/react": "^7.94.1",
     "@tauri-apps/api": "^1.5.3",
     "axios": "^1.6.5",
-    "date-fns": "^3.2.0",
+    "date-fns": "^3.3.1",
     "framer-motion": "^10.18.0",
     "graphql": "16.8.1",
     "graphql-request": "^6.1.0",
