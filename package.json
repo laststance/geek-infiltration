@@ -19,7 +19,7 @@
     "@mui/icons-material": "^5.15.6",
     "@mui/material": "^5.15.6",
     "@mui/system": "^5.15.6",
-    "@reduxjs/toolkit": "^2.0.1",
+    "@reduxjs/toolkit": "^2.1.0",
     "@sentry/react": "^7.94.1",
     "@tauri-apps/api": "^1.5.3",
     "axios": "^1.6.5",
