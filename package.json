@@ -80,7 +80,7 @@
     "vitest": "^1.2.2"
   },
   "scripts": {
-    "build": "tsc && vite build",
+    "build": "vite build",
     "clean": "rimraf node_modules yarn.lock dist",
     "codegen": "graphql-codegen --config codegen.yml",
     "dev": "VITE_CJS_TRACE=true vite",
