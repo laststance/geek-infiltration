@@ -24,7 +24,7 @@ const reducers = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, reducers)
 export const store = configureStore({
-  devTools: import.meta.env.DEV ? true : false,
+  devTools: !!import.meta.env.DEV,
   middleware: (getDefaultMiddleware) =>
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.
