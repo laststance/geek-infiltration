@@ -94,8 +94,8 @@
     "prepare": "husky install",
     "playwright": "playwright test",
     "playwright:ui": "playwright test --ui",
-    "playwright:chromium": "playwright test --project=chromium",
     "playwright:debug": "playwright test --debug",
-    "playwright:codegen": "playwright codegen"
+    "playwright:codegen": "playwright codegen",
+    "postinstall": "pnpm exec playwright install --with-deps"
   }
 }
