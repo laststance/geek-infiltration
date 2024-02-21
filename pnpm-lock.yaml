@@ -101,8 +101,8 @@ devDependencies:
     specifier: 4.0.4
     version: 4.0.4(graphql@16.8.1)
   '@graphql-codegen/typescript-document-nodes':
-    specifier: 4.0.4
-    version: 4.0.4(graphql@16.8.1)
+    specifier: 4.0.5
+    version: 4.0.5(graphql@16.8.1)
   '@graphql-codegen/typescript-graphql-files-modules':
     specifier: 3.0.0
     version: 3.0.0(graphql@16.8.1)
@@ -1397,13 +1397,13 @@ packages:
       - supports-color
     dev: true
 
-  /@graphql-codegen/typescript-document-nodes@4.0.4(graphql@16.8.1):
-    resolution: {integrity: sha512-dZCnaycqaqFZwb4gY3USF72dZp8qEel9RjgHBLquK1ZaDleA6F/7BW/iqHdeDeigS+463c0jxuySInDbDWVqwg==}
+  /@graphql-codegen/typescript-document-nodes@4.0.5(graphql@16.8.1):
+    resolution: {integrity: sha512-e4x5aTBSdA+2YgQT8XyyvN/3ko85Fsdzv9nSkqIdZLu7WgrdxqSzcDHd76B+HldisV8L4PJCWcj4psBa9sDhqw==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.0.3(graphql@16.8.1)
-      '@graphql-codegen/visitor-plugin-common': 4.1.2(graphql@16.8.1)
+      '@graphql-codegen/visitor-plugin-common': 5.0.0(graphql@16.8.1)
       auto-bind: 4.0.0
       graphql: 16.8.1
       tslib: 2.6.2
