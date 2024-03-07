@@ -21,7 +21,6 @@
     "@mui/system": "^5.15.12",
     "@reduxjs/toolkit": "^2.2.1",
     "@sentry/react": "^7.105.0",
-    "@tauri-apps/api": "^1.5.3",
     "axios": "^1.6.7",
     "date-fns": "^3.3.1",
     "framer-motion": "^11.0.8",
@@ -48,7 +47,6 @@
     "@graphql-codegen/typescript-rtk-query": "^3.1.1",
     "@playwright/test": "^1.42.1",
     "@rtk-query/graphql-request-base-query": "^2.3.1",
-    "@tauri-apps/cli": "^1.5.10",
     "@types/node": "^20.11.25",
     "@types/react": "^18.2.37",
     "@types/react-dom": "^18.2.15",
@@ -81,21 +79,20 @@
   },
   "scripts": {
     "build": "vite build",
-    "clean": "rimraf node_modules yarn.lock dist",
+    "preview": "vite preview",
+    "clean": "rimraf node_modules pnpm-lock.yaml dist",
     "codegen": "graphql-codegen --config codegen.yml",
     "dev": "VITE_CJS_TRACE=true vite",
     "lint": "eslint src --ext .ts,.tsx,.js,jsx",
     "lint:fix": "eslint src --ext .ts,.tsx,.js,jsx --fix",
     "prettier": "prettier --ignore-unknown --write .",
     "serve": "serve dist",
-    "tauri": "tauri",
     "typecheck": "tsc --noEmit",
     "validate": "./scripts/validate",
     "prepare": "husky install",
     "playwright": "playwright test",
     "playwright:ui": "playwright test --ui",
     "playwright:debug": "playwright test --debug",
-    "playwright:codegen": "playwright codegen",
-    "postinstall": "pnpm exec playwright install --with-deps"
+    "playwright:codegen": "playwright codegen"
   }
 }

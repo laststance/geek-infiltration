@@ -30,5 +30,5 @@
     "./**.cjs",
     "./**.mjs"
   ],
-  "exclude": ["dist", "src-tauri"]
+  "exclude": ["dist"]
 }
