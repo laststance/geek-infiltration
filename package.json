@@ -22,7 +22,7 @@
     "@reduxjs/toolkit": "^2.2.1",
     "@sentry/react": "^7.106.0",
     "axios": "^1.6.7",
-    "date-fns": "^3.3.1",
+    "date-fns": "^3.4.0",
     "framer-motion": "^11.0.8",
     "graphql": "16.8.1",
     "graphql-request": "^6.1.0",
