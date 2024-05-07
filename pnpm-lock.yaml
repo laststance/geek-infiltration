@@ -87,8 +87,8 @@ dependencies:
     specifier: ^6.0.0
     version: 6.0.0(react@18.3.0-canary-6b3834a45-20231110)(redux@5.0.1)
   simplebar-react:
-    specifier: ^3.2.4
-    version: 3.2.4(react@18.3.0-canary-6b3834a45-20231110)
+    specifier: ^3.2.5
+    version: 3.2.5(react@18.3.0-canary-6b3834a45-20231110)
 
 devDependencies:
   '@graphql-codegen/cli':
@@ -7264,8 +7264,8 @@ packages:
     resolution: {integrity: sha512-6+eerH9fEnNmi/hyM1DXcRK3pWdoMQtlkQ+ns0ntzunjKqp5i3sKCc80ym8Fib3iaYhdJUOPdhlJWj1tvge2Ww==}
     dev: true
 
-  /simplebar-core@1.2.4:
-    resolution: {integrity: sha512-P+Sqshef4fq3++gQ82TgNYcgl3qZFSCP5jS2/8NMmw18oagXOijMzs1G+vm6RUY3oMvpwH3wGoqh9u6SyDjHfQ==}
+  /simplebar-core@1.2.5:
+    resolution: {integrity: sha512-33AVCYXS8yavWId0GbE4TG1cYELsYybpCKWHJYuWEY/j6nccgz6zQdJ7nCqOpIGo7HgPPbkSSSIlJhi43fHP6A==}
     dependencies:
       '@types/lodash-es': 4.17.8
       can-use-dom: 0.1.0
@@ -7273,13 +7273,13 @@ packages:
       lodash-es: 4.17.21
     dev: false
 
-  /simplebar-react@3.2.4(react@18.3.0-canary-6b3834a45-20231110):
-    resolution: {integrity: sha512-ogLN79e7JUm82wJChD7NSUB+4EHCFvDkjXpiu8hT1Alk7DnCekUWds61NXcsP9jC97KOgF5To/AVjYFbX0olgg==}
+  /simplebar-react@3.2.5(react@18.3.0-canary-6b3834a45-20231110):
+    resolution: {integrity: sha512-ZstHCBF1Is2Lj+Un8NUYSHVCmn8ufi25ylP9UH2bDnASa+V+M+6/thGhUZOZ7YNpFFHTNgVIID3FHdwRqNuqZA==}
     peerDependencies:
       react: '>=16.8.0'
     dependencies:
       react: 18.3.0-canary-6b3834a45-20231110
-      simplebar-core: 1.2.4
+      simplebar-core: 1.2.5
     dev: false
 
   /slash@3.0.0:
