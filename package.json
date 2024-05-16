@@ -17,7 +17,7 @@
     "@fontsource/roboto": "^5.0.13",
     "@iconify/react": "^4.1.1",
     "@mui/icons-material": "^5.15.17",
-    "@mui/material": "^5.15.17",
+    "@mui/material": "^5.15.18",
     "@mui/system": "^5.15.15",
     "@reduxjs/toolkit": "^2.2.4",
     "@sentry/react": "^7.114.0",
