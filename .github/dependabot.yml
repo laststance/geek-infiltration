@@ -1,10 +1,10 @@
 version: 2
 updates:
-  - package-ecosystem: "npm"
+  - package-ecosystem: 'npm'
     # Files stored in `app` directory
-    directory: "/"
+    directory: '/'
     schedule:
-      interval: "daily"
+      interval: 'daily'
     ignore:
       - dependency-name: 'react'
       - dependency-name: 'react-dom'

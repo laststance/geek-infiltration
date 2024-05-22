@@ -24,14 +24,14 @@ if (import.meta.env.PROD === true) {
   Sentry.init({
     dsn: import.meta.env.VITE_SENTRY_DNS,
     integrations: [
-      new Sentry.BrowserTracing({
+      Sentry.browserTracingIntegration({
         // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
         tracePropagationTargets: [
           'localhost',
           /^https:\/\/yourserver\.io\/api/,
         ],
       }),
-      new Sentry.Replay(),
+      Sentry.replayIntegration(),
     ],
 
     // This sets the sample rate at 10%. You may want to change it to 100% while in development and then sample at a lower rate in production.
