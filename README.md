@@ -1,4 +1,4 @@
-🚧 It is a work in progress - help is wanted! 🚧
+🚧 It is a work in progress 🚧
 
 # License
 
