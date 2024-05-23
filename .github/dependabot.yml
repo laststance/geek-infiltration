@@ -5,6 +5,3 @@ updates:
     directory: '/'
     schedule:
       interval: 'daily'
-    ignore:
-      - dependency-name: 'react'
-      - dependency-name: 'react-dom'
