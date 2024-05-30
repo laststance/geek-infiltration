@@ -24,8 +24,8 @@ dependencies:
     specifier: ^5.0.13
     version: 5.0.13
   '@iconify/react':
-    specifier: ^4.1.1
-    version: 4.1.1(react@18.3.1)
+    specifier: ^5.0.0
+    version: 5.0.0(react@18.3.1)
   '@mui/icons-material':
     specifier: ^5.15.19
     version: 5.15.19(@mui/material@5.15.19)(@types/react@18.3.3)(react@18.3.1)
@@ -1954,8 +1954,8 @@ packages:
     resolution: {integrity: sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==}
     dev: true
 
-  /@iconify/react@4.1.1(react@18.3.1):
-    resolution: {integrity: sha512-jed14EjvKjee8mc0eoscGxlg7mSQRkwQG3iX3cPBCO7UlOjz0DtlvTqxqEcHUJGh+z1VJ31Yhu5B9PxfO0zbdg==}
+  /@iconify/react@5.0.0(react@18.3.1):
+    resolution: {integrity: sha512-XVRShEb+tdbcz+9PICo1IRb3dLtXxlMKuZKt5K9seq0w9VstIYeUMWpk6HkIJkVQYC5v3JuHVyusxGFrzF4dBA==}
     peerDependencies:
       react: '>=16'
     dependencies:
