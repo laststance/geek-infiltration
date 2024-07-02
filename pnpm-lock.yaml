@@ -100,8 +100,8 @@ importers:
         specifier: 4.0.8
         version: 4.0.8(graphql@16.9.0)
       '@graphql-codegen/typescript-document-nodes':
-        specifier: 4.0.8
-        version: 4.0.8(graphql@16.9.0)
+        specifier: 4.0.9
+        version: 4.0.9(graphql@16.9.0)
       '@graphql-codegen/typescript-graphql-files-modules':
         specifier: 3.0.0
         version: 3.0.0(graphql@16.9.0)
@@ -789,8 +789,8 @@ packages:
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
-  '@graphql-codegen/typescript-document-nodes@4.0.8':
-    resolution: {integrity: sha512-HjuuzXvl1kKc0zdxgXsKzPEgwICncNu+5ZUNx37t8Rh9Byk7ZH9SPFyMXRSUek21WPP1BX8giC3JzemrsR2UMw==}
+  '@graphql-codegen/typescript-document-nodes@4.0.9':
+    resolution: {integrity: sha512-Zf269Ua2KQeeo/cNYdEsWo0T1/ua6eMJKzgXGE+vaXOe3dj+LCsM+TZdwBUGwqmoAAAaDRFkZ3B8kx1W5owMfA==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
@@ -839,6 +839,11 @@ packages:
 
   '@graphql-codegen/visitor-plugin-common@5.3.0':
     resolution: {integrity: sha512-+kUk7gRD/72Wfkjd7D96Lonh9k4lFw9d3O1+I07Jyja4QN9H42kdFEO0hM/b4Q9lLkI1yJ66Oym7lWz2Ikj3aw==}
+    peerDependencies:
+      graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+
+  '@graphql-codegen/visitor-plugin-common@5.3.1':
+    resolution: {integrity: sha512-MktoBdNZhSmugiDjmFl1z6rEUUaqyxtFJYWnDilE7onkPgyw//O0M+TuPBJPBWdyV6J2ond0Hdqtq+rkghgSIQ==}
     peerDependencies:
       graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
 
@@ -5045,10 +5050,10 @@ snapshots:
       - encoding
       - supports-color
 
-  '@graphql-codegen/typescript-document-nodes@4.0.8(graphql@16.9.0)':
+  '@graphql-codegen/typescript-document-nodes@4.0.9(graphql@16.9.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.0.4(graphql@16.9.0)
-      '@graphql-codegen/visitor-plugin-common': 5.3.0(graphql@16.9.0)
+      '@graphql-codegen/visitor-plugin-common': 5.3.1(graphql@16.9.0)
       auto-bind: 4.0.0
       graphql: 16.9.0
       tslib: 2.6.2
@@ -5149,6 +5154,23 @@ snapshots:
       - supports-color
 
   '@graphql-codegen/visitor-plugin-common@5.3.0(graphql@16.9.0)':
+    dependencies:
+      '@graphql-codegen/plugin-helpers': 5.0.4(graphql@16.9.0)
+      '@graphql-tools/optimize': 2.0.0(graphql@16.9.0)
+      '@graphql-tools/relay-operation-optimizer': 7.0.1(graphql@16.9.0)
+      '@graphql-tools/utils': 10.2.0(graphql@16.9.0)
+      auto-bind: 4.0.0
+      change-case-all: 1.0.15
+      dependency-graph: 0.11.0
+      graphql: 16.9.0
+      graphql-tag: 2.12.6(graphql@16.9.0)
+      parse-filepath: 1.0.2
+      tslib: 2.6.2
+    transitivePeerDependencies:
+      - encoding
+      - supports-color
+
+  '@graphql-codegen/visitor-plugin-common@5.3.1(graphql@16.9.0)':
     dependencies:
       '@graphql-codegen/plugin-helpers': 5.0.4(graphql@16.9.0)
       '@graphql-tools/optimize': 2.0.0(graphql@16.9.0)
