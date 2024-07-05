@@ -18,7 +18,7 @@
     "@iconify/react": "^5.0.1",
     "@mui/icons-material": "^5.15.21",
     "@mui/material": "^5.16.0",
-    "@mui/system": "^5.15.20",
+    "@mui/system": "^5.16.0",
     "@reduxjs/toolkit": "^2.2.6",
     "@sentry/react": "^8.15.0",
     "axios": "^1.7.2",
