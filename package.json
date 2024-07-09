@@ -23,7 +23,7 @@
     "@sentry/react": "^8.15.0",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
-    "framer-motion": "^11.2.13",
+    "framer-motion": "^11.2.14",
     "graphql": "16.9.0",
     "graphql-request": "^6.1.0",
     "graphql-tag": "^2.12.6",
