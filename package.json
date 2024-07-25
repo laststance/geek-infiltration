@@ -9,7 +9,7 @@
     "*": "prettier --ignore-unknown --write"
   },
   "dependencies": {
-    "@emotion/cache": "^11.13.0",
+    "@emotion/cache": "^11.13.1",
     "@emotion/react": "^11.13.0",
     "@emotion/serialize": "^1.3.0",
     "@emotion/styled": "^11.13.0",
