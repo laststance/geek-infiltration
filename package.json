@@ -20,7 +20,7 @@
     "@mui/material": "^5.16.5",
     "@mui/system": "^5.16.4",
     "@reduxjs/toolkit": "^2.2.6",
-    "@sentry/react": "^8.19.0",
+    "@sentry/react": "^8.20.0",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
     "framer-motion": "^11.3.17",
