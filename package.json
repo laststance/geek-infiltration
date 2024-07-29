@@ -65,7 +65,7 @@
     "eslint-plugin-react": "^7.34.4",
     "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-sort-keys-custom-order": "^1.0.5",
-    "husky": "^9.1.2",
+    "husky": "^9.1.4",
     "jsdom": "^24.1.1",
     "lint-staged": "^15.2.7",
     "postcss": "^8.4.40",
