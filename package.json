@@ -19,7 +19,7 @@
     "@mui/icons-material": "^5.16.4",
     "@mui/material": "^5.16.5",
     "@mui/system": "^5.16.5",
-    "@reduxjs/toolkit": "^2.2.6",
+    "@reduxjs/toolkit": "^2.2.7",
     "@sentry/react": "^8.20.0",
     "axios": "^1.7.2",
     "date-fns": "^3.6.0",
