@@ -24,8 +24,8 @@ importers:
         specifier: ^1.4.0
         version: 1.4.0
       '@fontsource/roboto':
-        specifier: ^5.0.13
-        version: 5.0.13
+        specifier: ^5.0.14
+        version: 5.0.14
       '@iconify/react':
         specifier: ^5.0.2
         version: 5.0.2(react@18.3.1)
@@ -716,8 +716,8 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@fontsource/roboto@5.0.13':
-    resolution: {integrity: sha512-j61DHjsdUCKMXSdNLTOxcG701FWnF0jcqNNQi2iPCDxU8seN/sMxeh62dC++UiagCWq9ghTypX+Pcy7kX+QOeQ==}
+  '@fontsource/roboto@5.0.14':
+    resolution: {integrity: sha512-zHAxlTTm9RuRn9/StwclFJChf3z9+fBrOxC3fw71htjHP1BgXNISwRjdJtAKAmMe5S2BzgpnjkQR93P9EZYI/Q==}
 
   '@graphql-codegen/add@5.0.2':
     resolution: {integrity: sha512-ouBkSvMFUhda5VoKumo/ZvsZM9P5ZTyDsI8LW18VxSNWOjrTeLXBWHG8Gfaai0HwhflPtCYVABbriEcOmrRShQ==}
@@ -4868,7 +4868,7 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@fontsource/roboto@5.0.13': {}
+  '@fontsource/roboto@5.0.14': {}
 
   '@graphql-codegen/add@5.0.2(graphql@16.9.0)':
     dependencies:
