@@ -16,7 +16,7 @@
     "@emotion/utils": "^1.4.0",
     "@fontsource/roboto": "^5.0.14",
     "@iconify/react": "^5.0.2",
-    "@mui/icons-material": "^5.16.6",
+    "@mui/icons-material": "^5.16.7",
     "@mui/material": "^5.16.7",
     "@mui/system": "^5.16.7",
     "@reduxjs/toolkit": "^2.2.7",
