@@ -47,7 +47,7 @@
     "@graphql-codegen/typescript-rtk-query": "^3.1.1",
     "@playwright/test": "^1.46.1",
     "@rtk-query/graphql-request-base-query": "^2.3.1",
-    "@types/node": "^22.4.1",
+    "@types/node": "^22.5.0",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-lazy-load-image-component": "^1.6.4",
