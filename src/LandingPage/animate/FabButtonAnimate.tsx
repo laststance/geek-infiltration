@@ -3,7 +3,6 @@ import { Box, Fab } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { m } from 'framer-motion'
 import type { ReactNode } from 'react'
-import { forwardRef } from 'react'
 // @mui
 
 // ----------------------------------------------------------------------
@@ -18,53 +17,57 @@ interface Props extends Omit<FabProps, 'color'> {
     | 'success'
     | 'warning'
     | 'error'
+  ref?: React.Ref<HTMLButtonElement>
   sxWrap?: SxProps
 }
 
-const FabButtonAnimate = forwardRef<HTMLButtonElement, Props>(
-  (
-    { children, color = 'primary', size = 'large', sx, sxWrap, ...other },
-    ref,
-  ) => {
-    const theme = useTheme()
+const FabButtonAnimate = ({
+  children,
+  color = 'primary',
+  ref,
+  size = 'large',
+  sx,
+  sxWrap,
+  ...other
+}: Props) => {
+  const theme = useTheme()
 
-    if (
-      color === 'default' ||
-      color === 'inherit' ||
-      color === 'primary' ||
-      color === 'secondary'
-    ) {
-      return (
-        <AnimateWrap size={size} sxWrap={sxWrap}>
-          <Fab ref={ref} size={size} color={color} sx={sx} {...other}>
-            {children}
-          </Fab>
-        </AnimateWrap>
-      )
-    }
-
+  if (
+    color === 'default' ||
+    color === 'inherit' ||
+    color === 'primary' ||
+    color === 'secondary'
+  ) {
     return (
       <AnimateWrap size={size} sxWrap={sxWrap}>
-        <Fab
-          ref={ref}
-          size={size}
-          sx={{
-            '&:hover': {
-              bgcolor: theme.palette[color].dark,
-            },
-            bgcolor: theme.palette[color].main,
-            boxShadow: theme.customShadows[color],
-            color: theme.palette[color].contrastText,
-            ...sx,
-          }}
-          {...other}
-        >
+        <Fab ref={ref} size={size} color={color} sx={sx} {...other}>
           {children}
         </Fab>
       </AnimateWrap>
     )
-  },
-)
+  }
+
+  return (
+    <AnimateWrap size={size} sxWrap={sxWrap}>
+      <Fab
+        ref={ref}
+        size={size}
+        sx={{
+          '&:hover': {
+            bgcolor: theme.palette[color].dark,
+          },
+          bgcolor: theme.palette[color].main,
+          boxShadow: theme.customShadows[color],
+          color: theme.palette[color].contrastText,
+          ...sx,
+        }}
+        {...other}
+      >
+        {children}
+      </Fab>
+    </AnimateWrap>
+  )
+}
 FabButtonAnimate.displayName = 'FabButtonAnimate'
 
 export default FabButtonAnimate

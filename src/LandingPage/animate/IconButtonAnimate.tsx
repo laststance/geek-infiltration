@@ -2,19 +2,25 @@ import type { IconButtonProps } from '@mui/material'
 import { Box, IconButton } from '@mui/material'
 import { m } from 'framer-motion'
 import type { ReactNode } from 'react'
-import { forwardRef } from 'react'
 // @mui
 
 // ----------------------------------------------------------------------
 
-const IconButtonAnimate = forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ children, size = 'medium', ...other }, ref) => (
-    <AnimateWrap size={size}>
-      <IconButton size={size} ref={ref} {...other}>
-        {children}
-      </IconButton>
-    </AnimateWrap>
-  ),
+interface Props extends IconButtonProps {
+  ref?: React.Ref<HTMLButtonElement>
+}
+
+const IconButtonAnimate = ({
+  children,
+  ref,
+  size = 'medium',
+  ...other
+}: Props) => (
+  <AnimateWrap size={size}>
+    <IconButton size={size} ref={ref} {...other}>
+      {children}
+    </IconButton>
+  </AnimateWrap>
 )
 IconButtonAnimate.displayName = 'IconButtonAnimate'
 

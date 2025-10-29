@@ -7,7 +7,7 @@ const useDidUpdateEffect = (
   effect: () => void,
   deps: DependencyList | undefined = undefined,
 ): void => {
-  const mounted = useRef<boolean>()
+  const mounted = useRef<boolean>(undefined)
   useEffect(() => {
     if (!mounted.current) {
       // fire componentDidMount
