@@ -1,11 +1,11 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, type DependencyList } from 'react'
 /**
  * Simulate componentDidUpdate() method of Class Component
  * https://reactjs.org/docs/react-component.html#componentdidupdate
  */
 const useDidUpdateEffect = (
-  effect: AnyFunction,
-  deps: any[] | undefined = undefined,
+  effect: () => void,
+  deps: DependencyList | undefined = undefined,
 ): void => {
   const mounted = useRef<boolean>()
   useEffect(() => {
@@ -15,6 +15,7 @@ const useDidUpdateEffect = (
     } else {
       effect()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, deps)
 }
 
