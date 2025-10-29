@@ -1,6 +1,5 @@
 import {
   Box,
-  Grid,
   Card,
   Link,
   Stack,
@@ -8,6 +7,7 @@ import {
   Divider,
   Container,
   Typography,
+  Grid,
 } from '@mui/material'
 import { useTheme, styled } from '@mui/material/styles'
 
@@ -58,7 +58,7 @@ export function HomePricingPlans() {
 
         <Grid container spacing={5}>
           {_homePlans.map((plan) => (
-            <Grid key={plan.license} item xs={12} md={4}>
+            <Grid key={plan.license} size={{ xs: 12, md: 4 }}>
               <MotionInView
                 variants={
                   plan.license === 'Standard Plus'

@@ -66,6 +66,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
                 render={({ field }) => (
                   <>
                     <TextField
+                      variant="standard"
                       {...field}
                       aria-label="user"
                       fullWidth
@@ -86,7 +87,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
                 rules={{ required: true }}
                 control={control}
                 render={({ field }) => (
-                  <FormControl>
+                  <FormControl variant="standard">
                     <RadioGroup {...field}>
                       <FormControlLabel
                         value="PR_Issues"

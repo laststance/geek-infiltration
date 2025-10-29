@@ -4,8 +4,8 @@ import {
   CardContent,
   Link,
   Box,
-  Grid,
   Avatar,
+  Grid,
 } from '@mui/material'
 import React, { memo } from 'react'
 
@@ -61,10 +61,10 @@ const CommentCard: React.FC<Props> = memo(
           </Box>
           <Box style={{ marginTop: '20px' }}>
             <Grid container spacing={1}>
-              <Grid item>
+              <Grid>
                 <Avatar src={author.avatarUrl} alt={author.login} />
               </Grid>
-              <Grid item>
+              <Grid>
                 <Link href={author.url} target="_blank">
                   @{author.login}
                 </Link>

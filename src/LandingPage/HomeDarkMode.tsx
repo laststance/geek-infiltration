@@ -1,4 +1,4 @@
-import { Grid, Container, Typography } from '@mui/material'
+import { Container, Typography, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
 import { MotionInView, varFade } from './animate'
@@ -52,7 +52,7 @@ export function HomeDarkMode() {
           direction="row-reverse"
           justifyContent="space-between"
         >
-          <Grid item xs={12} md={4}>
+          <Grid size={{ xs: 12, md: 4 }}>
             <ContentStyle>
               <MotionInView variants={varFade().inUp}>
                 <Typography
@@ -78,7 +78,7 @@ export function HomeDarkMode() {
             </ContentStyle>
           </Grid>
 
-          <Grid item xs={12} md={7} sx={{ position: 'relative' }}>
+          <Grid size={{ xs: 12, md: 7 }} sx={{ position: 'relative' }}>
             <MotionInView threshold={0.5} variants={varFade().inUp}>
               <Image
                 disabledEffect

@@ -1,4 +1,4 @@
-import Grid from '@mui/material/Unstable_Grid2'
+import { Grid } from '@mui/material'
 import React, { memo } from 'react'
 
 import { useAppSelector } from '@/hooks/useAppSelector'
