@@ -3,7 +3,7 @@
   "license": "MIT",
   "type": "module",
   "volta": {
-    "node": "20.12.0"
+    "node": "22.21.1"
   },
   "lint-staged": {
     "*": "prettier --ignore-unknown --write"
