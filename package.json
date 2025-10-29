@@ -45,7 +45,7 @@
     "@graphql-codegen/typescript-graphql-files-modules": "3.0.1",
     "@graphql-codegen/typescript-operations": "5.0.2",
     "@graphql-codegen/typescript-rtk-query": "^3.1.2",
-    "@playwright/test": "^1.46.1",
+    "@playwright/test": "^1.56.1",
     "@rtk-query/graphql-request-base-query": "^2.3.1",
     "@types/node": "^22.5.2",
     "@types/react": "^18.3.5",
@@ -76,7 +76,7 @@
     "typescript": "^5.9.3",
     "vite": "^7.1.12",
     "vite-tsconfig-paths": "^5.0.1",
-    "vitest": "^2.0.5"
+    "vitest": "^4.0.4"
   },
   "scripts": {
     "build": "vite build",
