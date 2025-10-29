@@ -12,7 +12,7 @@ type EaseType =
   | 'backOut'
   | 'backInOut'
   | 'anticipate'
-  | number[]
+  | [number, number, number, number] // Changed from number[] to tuple for cubic bezier
 
 export type VariantsType = {
   distance?: number
