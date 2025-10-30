@@ -1,11 +1,11 @@
 import {
-  Grid,
   Link,
   Divider,
   Container,
   Typography,
   Stack,
   Box,
+  Grid,
 } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
@@ -21,7 +21,7 @@ export default function MainFooter() {
       <Divider />
       <Container>
         <Grid container justifyContent="flex-end" alignItems="center">
-          <Grid item md={3}>
+          <Grid size={{ md: 3 }}>
             <Stack
               direction="row"
               justifyContent={{ md: 'flex-end', xs: 'center' }}

@@ -10,7 +10,7 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
     host: true,
-    port: 3000,
+    port: 3005,
     proxy: {
       '/login/oauth/access_token': {
         changeOrigin: true,

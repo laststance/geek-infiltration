@@ -9,7 +9,7 @@ export type MenuItemProps = {
     }[]
     subheader: string
   }[]
-  icon?: ReactElement
+  icon?: ReactElement<unknown>
   path: string
   to?: string
 }

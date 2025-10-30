@@ -10,6 +10,7 @@ const App: React.FC = memo(() => {
       fixed
       disableGutters
       component="main"
+      data-testid="app-container"
       sx={{
         display: 'flex',
         maxHeight: '100vh',

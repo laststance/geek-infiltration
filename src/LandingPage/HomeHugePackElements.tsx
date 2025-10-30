@@ -1,4 +1,4 @@
-import { Box, Grid, Button, Container, Typography } from '@mui/material'
+import { Box, Button, Container, Typography, Grid } from '@mui/material'
 import { alpha, useTheme, styled } from '@mui/material/styles'
 
 import { MotionInView, varFade } from './animate'
@@ -77,9 +77,7 @@ export function HomeHugePackElements() {
       <Container>
         <Grid container spacing={5} justifyContent="center">
           <Grid
-            item
-            xs={12}
-            md={4}
+            size={{ xs: 12, md: 4 }}
             sx={{ alignItems: 'center', display: 'flex' }}
           >
             <ContentStyle>
@@ -120,7 +118,7 @@ export function HomeHugePackElements() {
             </ContentStyle>
           </Grid>
 
-          <Grid item xs={12} md={8} dir="ltr">
+          <Grid size={{ xs: 12, md: 8 }} dir="ltr">
             <Box
               sx={{
                 alignItems: 'center',

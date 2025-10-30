@@ -23,9 +23,7 @@ export function HomeLookingFor() {
           spacing={{ md: 3, xs: 8 }}
         >
           <Grid
-            item
-            xs={12}
-            md={4}
+            size={{ xs: 12, md: 4 }}
             sx={{ textAlign: { md: 'left', xs: 'center' } }}
           >
             <MotionInView variants={varFade().inDown}>
@@ -59,7 +57,7 @@ export function HomeLookingFor() {
             </MotionInView>
           </Grid>
 
-          <Grid item xs={12} md={7}>
+          <Grid size={{ xs: 12, md: 7 }}>
             <MotionInView
               variants={varFade().inUp}
               sx={{
