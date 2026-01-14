@@ -23897,6 +23897,27 @@ export type GetIssueCommentsQuery = {
   }
 }
 
+export type GetViewerFollowingQueryVariables = Exact<{
+  first?: InputMaybe<Scalars['Int']['input']>
+}>
+
+export type GetViewerFollowingQuery = {
+  __typename?: 'Query'
+  viewer: {
+    __typename?: 'User'
+    following: {
+      __typename?: 'FollowingConnection'
+      totalCount: number
+      nodes?: Array<{
+        __typename?: 'User'
+        login: string
+        name?: string | null
+        avatarUrl: any
+      } | null> | null
+    }
+  }
+}
+
 export const GetDiscussionComments = gql`
   query getDiscussionComments($query: String!) {
     search(query: $query, type: USER, first: 1) {
@@ -23980,6 +24001,20 @@ export const GetIssueComments = gql`
               }
             }
           }
+        }
+      }
+    }
+  }
+`
+export const GetViewerFollowing = gql`
+  query getViewerFollowing($first: Int = 100) {
+    viewer {
+      following(first: $first) {
+        totalCount
+        nodes {
+          login
+          name
+          avatarUrl
         }
       }
     }
@@ -24074,6 +24109,20 @@ export const GetIssueCommentsDocument = `
   }
 }
     `
+export const GetViewerFollowingDocument = `
+    query getViewerFollowing($first: Int = 100) {
+  viewer {
+    following(first: $first) {
+      totalCount
+      nodes {
+        login
+        name
+        avatarUrl
+      }
+    }
+  }
+}
+    `
 
 const injectedRtkApi = api.injectEndpoints({
   endpoints: (build) => ({
@@ -24092,6 +24141,15 @@ const injectedRtkApi = api.injectEndpoints({
     >({
       query: (variables) => ({ document: GetIssueCommentsDocument, variables }),
     }),
+    getViewerFollowing: build.query<
+      GetViewerFollowingQuery,
+      GetViewerFollowingQueryVariables | void
+    >({
+      query: (variables) => ({
+        document: GetViewerFollowingDocument,
+        variables,
+      }),
+    }),
   }),
 })
 
@@ -24101,4 +24159,6 @@ export const {
   useLazyGetDiscussionCommentsQuery,
   useGetIssueCommentsQuery,
   useLazyGetIssueCommentsQuery,
+  useGetViewerFollowingQuery,
+  useLazyGetViewerFollowingQuery,
 } = injectedRtkApi

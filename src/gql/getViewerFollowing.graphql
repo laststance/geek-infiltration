@@ -1,0 +1,12 @@
+query getViewerFollowing($first: Int = 100) {
+  viewer {
+    following(first: $first) {
+      totalCount
+      nodes {
+        login
+        name
+        avatarUrl
+      }
+    }
+  }
+}
