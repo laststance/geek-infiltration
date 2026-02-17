@@ -88,7 +88,7 @@ const SubscribeFormModal: React.FC<Props> = memo(
                       <FormControlLabel
                         value="Discussion"
                         control={<Radio />}
-                        label="Disscussion Comments"
+                        label="Discussion Comments"
                       />
                       {errors.information && (
                         <Text color="error">required</Text>

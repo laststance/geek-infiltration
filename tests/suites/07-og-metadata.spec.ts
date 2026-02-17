@@ -68,11 +68,17 @@ test.describe('Open Graph & Twitter Card Metadata', () => {
       )
     })
 
-    test('should have twitter:description meta tag', async ({ page }) => {
+    test('should have twitter:description matching og:description', async ({
+      page,
+    }) => {
+      const ogDescription = await page
+        .locator('meta[property="og:description"]')
+        .getAttribute('content')
       const twitterDescription = await page
         .locator('meta[name="twitter:description"]')
         .getAttribute('content')
       expect(twitterDescription).toBeTruthy()
+      expect(twitterDescription).toBe(ogDescription)
     })
 
     test('should have twitter:image meta tag', async ({ page }) => {

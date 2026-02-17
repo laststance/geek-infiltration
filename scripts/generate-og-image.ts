@@ -300,8 +300,8 @@ async function main() {
 
   await page.setContent(html, { waitUntil: 'networkidle' })
 
-  // Wait for fonts to load
-  await page.waitForTimeout(1500)
+  // Wait for web fonts to finish loading
+  await page.evaluate(() => document.fonts.ready)
 
   const outputPath = path.resolve(__dirname, '..', 'public', 'og-image.png')
   await page.screenshot({
