@@ -135,7 +135,7 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = memo(
             </Box>
           </Box>
         )}
-        renderInput={(params) => (
+        renderInput={({ InputProps, inputProps, ...params }) => (
           <TextField
             {...params}
             variant="standard"
@@ -144,11 +144,11 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = memo(
             aria-label="GitHub username"
             slotProps={{
               input: {
-                ...params.InputProps,
+                ...InputProps,
                 startAdornment: (
                   <>
                     <InputAdornment position="start">@</InputAdornment>
-                    {params.InputProps.startAdornment}
+                    {InputProps.startAdornment}
                   </>
                 ),
                 endAdornment: (
@@ -156,10 +156,11 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = memo(
                     {isLoading ? (
                       <CircularProgress color="inherit" size={20} />
                     ) : null}
-                    {params.InputProps.endAdornment}
+                    {InputProps.endAdornment}
                   </>
                 ),
               },
+              htmlInput: inputProps,
             }}
           />
         )}
