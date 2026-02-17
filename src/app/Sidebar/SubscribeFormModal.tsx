@@ -5,12 +5,10 @@ import {
   DialogContent,
   Radio,
   Button,
-  TextField,
   FormControl,
   RadioGroup,
   FormControlLabel,
   Stack,
-  InputAdornment,
 } from '@mui/material'
 import React, { memo } from 'react'
 import { useForm, Controller } from 'react-hook-form'
@@ -19,6 +17,8 @@ import Text from '@/components/Text'
 import { useAppDispatch } from '@/hooks/useAppDispatch'
 import type useModalControl from '@/hooks/useModalControl'
 import { subscribe } from '@/redux/subscribedSlice'
+
+import UserAutocomplete from './UserAutocomplete'
 
 export type UserSearchGQLParams = {
   information: TimelineProperty['information']
@@ -64,21 +64,12 @@ const SubscribeFormModal: React.FC<Props> = memo(
                 rules={{ required: true }}
                 control={control}
                 render={({ field }) => (
-                  <>
-                    <TextField
-                      variant="standard"
-                      {...field}
-                      aria-label="user"
-                      fullWidth
-                      color="primary"
-                      InputProps={{
-                        startAdornment: (
-                          <InputAdornment position="start">@</InputAdornment>
-                        ),
-                      }}
-                    />
-                    {errors.user && <Text color="error">required</Text>}
-                  </>
+                  <UserAutocomplete
+                    value={field.value}
+                    onChange={field.onChange}
+                    error={!!errors.user}
+                    helperText={errors.user ? 'required' : undefined}
+                  />
                 )}
               />
 
