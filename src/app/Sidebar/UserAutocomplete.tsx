@@ -141,7 +141,6 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = memo(
             variant="standard"
             error={error}
             helperText={helperText}
-            aria-label="GitHub username"
             slotProps={{
               input: {
                 ...InputProps,
@@ -160,7 +159,10 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = memo(
                   </>
                 ),
               },
-              htmlInput: inputProps,
+              htmlInput: {
+                ...inputProps,
+                'aria-label': 'GitHub username',
+              },
             }}
           />
         )}
