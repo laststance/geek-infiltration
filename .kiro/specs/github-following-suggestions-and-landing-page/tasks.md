@@ -32,9 +32,9 @@
 
 ---
 
-- [ ] 2. UI Component - UserAutocomplete with Following Suggestions
+- [x] 2. UI Component - UserAutocomplete with Following Suggestions
 
-- [ ] 2.1 Build autocomplete dropdown displaying followed users
+- [x] 2.1 Build autocomplete dropdown displaying followed users
   - Create component that shows avatar (32x32px), display name, and @username for each suggestion
   - Enable local filtering by both name and login as user types
   - Support freeSolo mode allowing entry of usernames not in following list
@@ -44,7 +44,7 @@
   - _Requirements: 1.1, 1.3_
   - _Contracts: Props Interface (design.md)_
 
-- [ ] 2.2 Integrate accessibility features for autocomplete
+- [x] 2.2 Integrate accessibility features for autocomplete
   - Add appropriate ARIA labels for screen readers
   - Ensure minimum 44x44px tap targets for mobile interaction
   - Verify focus management when dropdown opens/closes
