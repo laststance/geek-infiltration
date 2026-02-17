@@ -39,6 +39,7 @@
     "simplebar-react": "^3.3.2"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@graphql-codegen/cli": "6.1.1",
     "@graphql-codegen/typescript": "5.0.7",
     "@graphql-codegen/typescript-document-nodes": "5.0.7",
@@ -66,6 +67,7 @@
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-sort-keys-custom-order": "^2.2.1",
+    "globals": "^17.3.0",
     "husky": "^9.1.7",
     "jsdom": "^27.4.0",
     "lint-staged": "^16.2.7",
@@ -84,8 +86,8 @@
     "clean": "rimraf node_modules pnpm-lock.yaml dist",
     "codegen": "graphql-codegen --config codegen.yml",
     "dev": "VITE_CJS_TRACE=true vite",
-    "lint": "eslint src --ext .ts,.tsx,.js,jsx",
-    "lint:fix": "eslint src --ext .ts,.tsx,.js,jsx --fix",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
     "prettier": "prettier --ignore-unknown --write .",
     "serve": "serve dist",
     "typecheck": "tsc --noEmit",
