@@ -21,7 +21,7 @@
     "@mui/system": "^7.3.7",
     "@reduxjs/toolkit": "^2.11.2",
     "@sentry/react": "^10.36.0",
-    "axios": "^1.13.3",
+    "axios": "^1.16.0",
     "date-fns": "^4.1.0",
     "framer-motion": "^12.38.0",
     "graphql": "16.12.0",
