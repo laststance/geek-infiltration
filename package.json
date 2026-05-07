@@ -30,7 +30,7 @@
     "nanoid": "^5.1.11",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "react-hook-form": "^7.74.0",
+    "react-hook-form": "^7.75.0",
     "react-intersection-observer": "^10.0.2",
     "react-lazy-load-image-component": "^1.6.3",
     "react-redux": "^9.2.0",
