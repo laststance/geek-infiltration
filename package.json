@@ -44,7 +44,7 @@
     "@graphql-codegen/typescript": "6.0.1",
     "@graphql-codegen/typescript-document-nodes": "6.0.0",
     "@graphql-codegen/typescript-graphql-files-modules": "4.0.1",
-    "@graphql-codegen/typescript-operations": "5.0.7",
+    "@graphql-codegen/typescript-operations": "6.0.1",
     "@graphql-codegen/typescript-rtk-query": "^4.0.1",
     "@playwright/test": "^1.59.1",
     "@rtk-query/graphql-request-base-query": "^2.3.2",
