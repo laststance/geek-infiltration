@@ -24,8 +24,8 @@ importers:
         specifier: ^1.4.2
         version: 1.4.2
       '@fontsource/roboto':
-        specifier: ^5.2.9
-        version: 5.2.9
+        specifier: ^5.2.10
+        version: 5.2.10
       '@iconify/react':
         specifier: ^6.0.2
         version: 6.0.2(react@19.2.6)
@@ -651,8 +651,8 @@ packages:
   '@fastify/busboy@3.2.0':
     resolution: {integrity: sha512-m9FVDXU3GT2ITSe0UaMA5rU3QkfC/UXtCU8y0gSN/GugTqtVldOBWIB5V6V3sbmenVZUIpU6f+mPEO2+m5iTaA==}
 
-  '@fontsource/roboto@5.2.9':
-    resolution: {integrity: sha512-ZTkyHiPk74B/aj8BZWbsxD5Yu+Lq+nR64eV4wirlrac2qXR7jYk2h6JlLYuOuoruTkGQWNw2fMuKNavw7/rg0w==}
+  '@fontsource/roboto@5.2.10':
+    resolution: {integrity: sha512-8HlA5FtSfz//oFSr2eL7GFXAiE7eIkcGOtx7tjsLKq+as702x9+GU7K95iDeWFapHC4M2hv9RrpXKRTGGBI8Zg==}
 
   '@graphql-codegen/add@7.0.0':
     resolution: {integrity: sha512-fQGlUQd0BpoevCTOKi3b7M+kuXCI13udXmJrIh1QMtTCLXUTYGgsubNVcPLr0cVjVwyBK/ZRgwtxdCmkVXqTwQ==}
@@ -5017,7 +5017,7 @@ snapshots:
 
   '@fastify/busboy@3.2.0': {}
 
-  '@fontsource/roboto@5.2.9': {}
+  '@fontsource/roboto@5.2.10': {}
 
   '@graphql-codegen/add@7.0.0(graphql@16.14.0)':
     dependencies:
