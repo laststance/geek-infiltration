@@ -551,7 +551,6 @@ const ref = useRef<T>(undefined) // or null
 
 ```tsx
 import { Grid } from '@mui/material' // Named export!
-
 ;<Grid container spacing={3}>
   <Grid size={{ xs: 12, sm: 6, md: 4 }}>Content</Grid>
 </Grid>
