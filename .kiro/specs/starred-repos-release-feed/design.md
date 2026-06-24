@@ -243,6 +243,8 @@ createBrowserRouter([
 
 ### GraphQL Query Contract
 
+Initial starred repository page:
+
 ```graphql
 query getViewerStarredRepositoryReleases(
   $starredFirst: Int = 50
@@ -273,6 +275,10 @@ query getViewerStarredRepositoryReleases(
           first: $releaseCandidateFirst
           orderBy: { field: CREATED_AT, direction: DESC }
         ) {
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
           nodes {
             id
             name
@@ -291,6 +297,43 @@ query getViewerStarredRepositoryReleases(
 }
 ```
 
+Repository-specific release continuation:
+
+```graphql
+query getRepositoryReleaseCandidates(
+  $owner: String!
+  $name: String!
+  $releaseCandidateFirst: Int = 20
+  $releaseAfter: String
+) {
+  repository(owner: $owner, name: $name) {
+    id
+    nameWithOwner
+    releases(
+      first: $releaseCandidateFirst
+      after: $releaseAfter
+      orderBy: { field: CREATED_AT, direction: DESC }
+    ) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      nodes {
+        id
+        name
+        tagName
+        description
+        isDraft
+        isPrerelease
+        publishedAt
+        createdAt
+        url
+      }
+    }
+  }
+}
+```
+
 ### Normalization Rules
 
 - Ignore null repository nodes.
@@ -301,8 +344,9 @@ query getViewerStarredRepositoryReleases(
 - Flatten all repository releases into `ReleaseFeedItem[]`.
 - Sort flattened releases newest-first by timestamp.
 - Dedupe by release `id`.
-- Treat `releaseCandidateFirst` as an input candidate window, not as the final number of visible releases per repository.
-- Do not trim each repository to a display count until after flattening and sorting by release timestamp.
+- Treat `releaseCandidateFirst` as the per-request release page size, not as a fixed candidate cap.
+- Continue fetching additional release pages for a repository until the `publishedAt ?? createdAt` ordered candidate set satisfies the feed's required visible count or the repository release connection is exhausted.
+- Do not trim each repository or the combined feed to a display count until after flattening and sorting by release timestamp.
 - Include a normalization test where a later-published release with an older `createdAt` outranks a newer-created but earlier-published release.
 
 ### ReleaseFeedItem Interface
@@ -331,7 +375,8 @@ interface ReleaseFeedItem {
 
 - Initial query: `starredFirst = 50`, `releaseCandidateFirst = 20`.
 - GitHub GraphQL currently orders repository releases by `CREATED_AT` or `NAME`, not by publication time.
-- Fetch a wider created-order candidate window, then sort and select by `publishedAt ?? createdAt` in app code.
+- Fetch release pages as candidates, then sort and select by `publishedAt ?? createdAt` in app code.
+- If the first release page does not produce enough published-order candidates for the visible feed, request the next release page for that repository before final selection.
 - Store fetched pages in component state as an array of page results or flattened items.
 - Trigger the next query when a bottom sentinel enters view and `hasNextPage` is true.
 - Use `starredAfter = pageInfo.endCursor` for subsequent pages.

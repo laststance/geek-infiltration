@@ -70,10 +70,12 @@
 
 - [ ] 3. Data Layer - Fetch starred repository releases
 
-- [ ] 3.1 Add GraphQL query for starred repository releases
+- [ ] 3.1 Add GraphQL queries for starred repository releases
   - Create `src/gql/getViewerStarredRepositoryReleases.graphql`.
+  - Create `src/gql/getRepositoryReleaseCandidates.graphql` for repository-specific release continuation.
   - Fetch `viewer.starredRepositories` with `pageInfo`, `totalCount`, and repository identity fields.
-  - Fetch a created-order release candidate window per starred repository.
+  - Fetch release candidates per starred repository with release `pageInfo` for follow-up pages.
+  - Continue per-repository release pagination until `publishedAt ?? createdAt` ordered candidates satisfy the required visible feed count or the repository release connection is exhausted.
   - Include release id, title/name, tag, URL, description, pre-release/draft flags, and dates.
   - Include repository owner avatar and `nameWithOwner`.
   - _Requirements: 3, 4, 5_
@@ -83,7 +85,8 @@
 - [ ] 3.2 Generate and verify typed RTK Query hook
   - Run `pnpm codegen`.
   - Verify `useGetViewerStarredRepositoryReleasesQuery` is generated.
-  - Confirm variables for `starredFirst`, `starredAfter`, and `releaseCandidateFirst`.
+  - Verify `useGetRepositoryReleaseCandidatesQuery` is generated for release continuation.
+  - Confirm variables for `starredFirst`, `starredAfter`, `releaseCandidateFirst`, and `releaseAfter`.
   - Confirm existing auth header behavior is reused through `src/constants/api.ts`.
   - _Requirements: 4_
   - _GitHub Issue: #1268_
@@ -93,7 +96,7 @@
   - Filter null nodes and draft releases.
   - Use `publishedAt ?? createdAt` for sorting.
   - Sort newest-first and dedupe by release id.
-  - Add focused tests for sorting, fallback title, draft filtering, null handling, and later-published older-created releases.
+  - Add focused tests for sorting, fallback title, draft filtering, null handling, later-published older-created releases, and release-page continuation.
   - _Requirements: 3, 4, 5, 6_
   - _Contracts: ReleaseFeedItem Interface (design.md)_
   - _GitHub Issue: #1268_
