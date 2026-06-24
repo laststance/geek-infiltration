@@ -57,12 +57,12 @@ export class GraphQLMocker {
             body: JSON.stringify({ data: response }),
           })
         } else {
-          // No mock handler, let it through (or fail in test mode)
-          route.continue()
+          // Let earlier default mocks answer shared operations before falling through.
+          await route.fallback()
         }
       } catch (error) {
         console.error('GraphQL mock error:', error)
-        route.continue()
+        await route.fallback()
       }
     })
   }

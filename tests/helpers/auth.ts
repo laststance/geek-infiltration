@@ -16,6 +16,79 @@ export const MOCK_AUTH_CODE = 'mock_auth_code_12345'
 export const MOCK_OAUTH_STATE = 'mock_oauth_state_12345'
 
 const GITHUB_OAUTH_STATE_STORAGE_KEY = 'geek-infiltration:github-oauth-state'
+const GITHUB_GRAPHQL_API_URL = 'https://api.github.com/graphql'
+
+/**
+ * Detects the Release Feed operation even when the GraphQL client omits `operationName`.
+ * @param operation - Parsed GraphQL POST body from Playwright routing.
+ * @returns True when the request is the initial starred repository release query.
+ * @example
+ * isReleaseFeedQuery({ query: 'query getViewerStarredRepositoryReleases { viewer { login } }' })
+ */
+function isReleaseFeedQuery(operation: {
+  operationName?: string
+  query?: string
+}) {
+  return (
+    operation.operationName === 'getViewerStarredRepositoryReleases' ||
+    operation.query?.includes('query getViewerStarredRepositoryReleases') ===
+      true
+  )
+}
+
+/**
+ * Prevents authenticated E2E routing tests from reaching live GitHub when `/releases` mounts.
+ * @param page - Playwright page whose GraphQL requests should receive a safe empty Release Feed.
+ * @returns Resolves after the default Release Feed route mock is registered.
+ * @example
+ * await setupDefaultReleaseFeedMock(page)
+ */
+export async function setupDefaultReleaseFeedMock(page: Page) {
+  await page.route(GITHUB_GRAPHQL_API_URL, async (route) => {
+    const postData = route.request().postData()
+
+    if (!postData) {
+      await route.fallback()
+      return
+    }
+
+    let operation: { operationName?: string; query?: string }
+
+    try {
+      operation = JSON.parse(postData) as {
+        operationName?: string
+        query?: string
+      }
+    } catch {
+      await route.fallback()
+      return
+    }
+
+    if (!isReleaseFeedQuery(operation)) {
+      await route.fallback()
+      return
+    }
+
+    await route.fulfill({
+      status: 200,
+      contentType: 'application/json',
+      body: JSON.stringify({
+        data: {
+          viewer: {
+            starredRepositories: {
+              nodes: [],
+              pageInfo: {
+                endCursor: null,
+                hasNextPage: false,
+              },
+              totalCount: 0,
+            },
+          },
+        },
+      }),
+    })
+  })
+}
 
 /**
  * Persists the OAuth state expected by the callback route.
@@ -110,6 +183,7 @@ export async function setupAuthMocks(page: Page) {
  */
 export async function completeMockOAuthCallback(page: Page) {
   await setupAuthMocks(page)
+  await setupDefaultReleaseFeedMock(page)
   await setOAuthState(page)
   await page.goto(
     `/callback?code=${MOCK_AUTH_CODE}&state=${MOCK_OAUTH_STATE}`,
@@ -160,6 +234,7 @@ export async function setAuthState(
   page: Page,
   accessToken = MOCK_ACCESS_TOKEN,
 ) {
+  await setupDefaultReleaseFeedMock(page)
   await page.goto('/og-image.png', { timeout: 10000, waitUntil: 'load' })
   await writePersistedAuthState(page, accessToken)
 
