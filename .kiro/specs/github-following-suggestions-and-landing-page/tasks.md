@@ -117,7 +117,7 @@
   - Run ESLint and Prettier checks
   - Execute build to verify no compilation errors
   - Run complete E2E test suite
-  - 2026-06-24 validation evidence: UserAutocomplete Vitest 17 passed, typecheck passed, lint passed, Playwright 366 passed across Chromium/Firefox/WebKit
+  - 2026-06-24 validation evidence: UserAutocomplete Vitest 17 passed, typecheck passed, lint passed, `pnpm validate` passed including build, Playwright 366 passed across Chromium/Firefox/WebKit
   - _Requirements: NFR-1, NFR-2_
 
 ---

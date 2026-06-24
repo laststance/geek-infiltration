@@ -468,6 +468,7 @@ Validated on 2026-06-24 after PR #1274:
 - `pnpm exec vitest run src/app/Sidebar/UserAutocomplete.test.ts src/app/Sidebar/UserAutocomplete.test.tsx`: 17 tests passed
 - `pnpm typecheck`: passed
 - `pnpm lint`: passed
+- `pnpm validate`: passed, including the production build
 - `pnpm exec playwright test --reporter=list`: 366 browser-expanded E2E tests passed across Chromium, Firefox, and WebKit
 
 The implemented scope matches this design: first 100 following suggestions, freeSolo custom usernames, OG metadata/image coverage, and no pagination UI.

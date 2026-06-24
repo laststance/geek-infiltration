@@ -69,7 +69,8 @@ query getViewerFollowing($first: Int = 100) {
 - Use the current `@mui/material` `Autocomplete` component from `package.json`
 - `freeSolo={true}` to allow custom input
 - `renderOption` for custom layout: Avatar + Name + @login
-- `getOptionLabel` returns the login for form submission and handles string values from freeSolo mode
+- `getOptionLabel` resolves the visible label from either a suggestion option or a freeSolo string
+- Selection/input change handling writes the selected login or custom username string to the subscription form
 - `filterOptions` for local filtering by name OR login
 - Proper loading and empty states
 
@@ -228,6 +229,7 @@ Validated on 2026-06-24 after PR #1274:
 - `pnpm exec vitest run src/app/Sidebar/UserAutocomplete.test.ts src/app/Sidebar/UserAutocomplete.test.tsx`: 17 tests passed
 - `pnpm typecheck`: passed
 - `pnpm lint`: passed
+- `pnpm validate`: passed, including the production build
 - `pnpm exec playwright test --reporter=list`: 366 browser-expanded E2E tests passed across Chromium, Firefox, and WebKit
 - Scope clarification: following suggestions intentionally cover the first 100 followed accounts only; pagination UI/additional page fetching remains out of scope
 
