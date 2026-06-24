@@ -28,24 +28,6 @@ export function HomeDarkMode() {
   return (
     <RootStyle>
       <Container sx={{ position: 'relative' }}>
-        <Image
-          visibleByDefault
-          disabledEffect
-          alt="image shape"
-          src="https://minimal-assets-api.vercel.app/assets/images/home/shape.svg"
-          sx={{
-            bottom: 0,
-            display: { md: 'block', xs: 'none' },
-            height: 720,
-            my: 'auto',
-            opacity: 0.48,
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            width: 720,
-          }}
-        />
-
         <Grid
           container
           spacing={5}
@@ -62,19 +44,20 @@ export function HomeDarkMode() {
                   variant="overline"
                   sx={{ color: 'text.disabled', mb: 2 }}
                 >
-                  Easy switch between styles.
+                  Timeline focus
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography variant="h2" sx={{ color: 'common.white', mb: 3 }}>
-                  Dark mode
+                  Read GitHub without the noise
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography sx={{ color: 'common.white', mb: 5 }}>
-                  A dark theme that feels easier on the eyes.
+                  Group related PR, issue, and discussion comments into calm
+                  columns so review work stays scannable.
                 </Typography>
               </MotionInView>
             </ContentStyle>
@@ -84,8 +67,8 @@ export function HomeDarkMode() {
             <MotionInView threshold={0.5} variants={varFade().inUp}>
               <Image
                 disabledEffect
-                alt="light mode"
-                src="https://minimal-assets-api.vercel.app/assets/images/home/lightmode.png"
+                alt="GitHub activity timeline preview"
+                src="/og-image.png"
               />
             </MotionInView>
 
@@ -96,8 +79,8 @@ export function HomeDarkMode() {
             >
               <Image
                 disabledEffect
-                alt="dark mode"
-                src="https://minimal-assets-api.vercel.app/assets/images/home/darkmode.png"
+                alt="GitHub activity focused timeline preview"
+                src="/og-image.png"
               />
             </MotionInView>
           </Grid>

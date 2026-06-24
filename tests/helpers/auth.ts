@@ -154,6 +154,7 @@ export async function clearAuthState(page: Page) {
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   await page
     .getByRole('link', { name: /login with github/i })
+    .first()
     .waitFor({ state: 'visible' })
 }
 

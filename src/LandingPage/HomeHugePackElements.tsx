@@ -1,6 +1,8 @@
 import { Box, Button, Container, Typography, Grid } from '@mui/material'
 import { alpha, useTheme, styled } from '@mui/material/styles'
 
+import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
 
@@ -93,14 +95,14 @@ export function HomeHugePackElements() {
                   variant="overline"
                   sx={{ color: 'text.disabled', mb: 2 }}
                 >
-                  Interface Starter Kit
+                  Geek Infiltration
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
                 <Typography variant="h2" sx={{ mb: 3 }}>
-                  Huge pack <br />
-                  of elements
+                  GitHub Activity <br />
+                  Visualization
                 </Typography>
               </MotionInView>
 
@@ -111,14 +113,19 @@ export function HomeHugePackElements() {
                     mb: 5,
                   }}
                 >
-                  We collected most popular elements. Menu, sliders, buttons,
-                  inputs etc. are all here. Just dive in!
+                  Track pull requests, issues, and discussions from the
+                  developers and repositories you follow in one clean timeline.
                 </Typography>
               </MotionInView>
 
               <MotionInView variants={varFade().inUp}>
-                <Button size="large" color="inherit" variant="outlined">
-                  View All Components
+                <Button
+                  size="large"
+                  color="inherit"
+                  variant="contained"
+                  href={GITHUB_AUTH_URL}
+                >
+                  Login with GitHub
                 </Button>
               </MotionInView>
             </ContentStyle>
@@ -164,10 +171,8 @@ export function HomeHugePackElements() {
                 >
                   <Image
                     disabledEffect
-                    alt={`screen ${index + 1}`}
-                    src={`https://minimal-assets-api.vercel.app/assets/images/home/screen_${
-                      isLight ? 'light' : 'dark'
-                    }_${index + 1}.png`}
+                    alt={`Geek Infiltration activity preview ${index + 1}`}
+                    src="/og-image.png"
                   />
                 </ScreenStyle>
               ))}

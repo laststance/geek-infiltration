@@ -4,12 +4,7 @@ import { alpha, styled } from '@mui/material/styles'
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
 
-const IMG = [...Array(10)].map(
-  (_, index) =>
-    `https://minimal-assets-api.vercel.app/assets/images/home/clean-${
-      index + 1
-    }.png`,
-)
+const IMG = [...Array(10)].map(() => '/og-image.png')
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(10),
@@ -43,7 +38,7 @@ export function HomeCleanInterfaces() {
               variant="overline"
               sx={{ color: 'text.disabled', mb: 2 }}
             >
-              clean & clear
+              subscriptions
             </Typography>
           </MotionInView>
 
@@ -59,7 +54,7 @@ export function HomeCleanInterfaces() {
                 }),
               }}
             >
-              Beautiful, modern and clean user interfaces
+              Subscribe to people and repositories you care about
             </Typography>
           </MotionInView>
         </ContentStyle>
@@ -80,10 +75,8 @@ export function HomeCleanInterfaces() {
               <Image
                 disabledEffect
                 visibleByDefault
-                alt={`clean-${index + 1}`}
-                src={`https://minimal-assets-api.vercel.app/assets/images/home/clean-${
-                  index + 1
-                }.png`}
+                alt={`Geek Infiltration timeline preview ${index + 1}`}
+                src={IMG[index]}
               />
             </MotionInView>
           ))}

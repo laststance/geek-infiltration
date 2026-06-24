@@ -1,6 +1,8 @@
 import { Button, Container, Typography, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
+import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
 import Image from './Image'
@@ -34,13 +36,13 @@ export function HomeLookingFor() {
                 component="div"
                 sx={{ color: 'text.disabled' }}
               >
-                Looking For a
+                Ready to explore?
               </Typography>
             </MotionInView>
 
             <MotionInView variants={varFade().inDown}>
               <Typography variant="h2" sx={{ mb: 5, mt: 2 }}>
-                Landing Page Template?
+                Start with GitHub login
               </Typography>
             </MotionInView>
 
@@ -49,12 +51,10 @@ export function HomeLookingFor() {
                 color="inherit"
                 size="large"
                 variant="outlined"
-                target="_blank"
-                rel="noopener"
-                href="https://material-ui.com/store/items/zone-landing-page/"
+                href={GITHUB_AUTH_URL}
                 endIcon={<Iconify icon={'ic:round-arrow-right-alt'} />}
               >
-                Visit Zone Landing
+                Login with GitHub
               </Button>
             </MotionInView>
           </Grid>
@@ -68,8 +68,8 @@ export function HomeLookingFor() {
             >
               <Image
                 disabledEffect
-                alt="rocket"
-                src="https://minimal-assets-api.vercel.app/assets/images/home/zone_screen.png"
+                alt="GitHub activity dashboard"
+                src="/og-image.png"
               />
             </MotionInView>
           </Grid>

@@ -1,19 +1,18 @@
 import {
   Box,
   Card,
-  Link,
   Stack,
   Button,
-  Divider,
   Container,
   Typography,
   Grid,
 } from '@mui/material'
 import { useTheme, styled } from '@mui/material/styles'
 
+import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
-import Image from './Image'
 
 const RootStyle = styled('div')(({ theme }) => ({
   backgroundColor: theme.palette.background.neutral,
@@ -37,12 +36,12 @@ export function HomePricingPlans() {
               variant="overline"
               sx={{ color: 'text.disabled', mb: 2 }}
             >
-              pricing plans
+              workflow signals
             </Typography>
           </MotionInView>
           <MotionInView variants={varFade().inDown}>
             <Typography variant="h2" sx={{ mb: 3 }}>
-              The right plan for your business
+              Everything you need to follow GitHub work
             </Typography>
           </MotionInView>
           <MotionInView variants={varFade().inDown}>
@@ -51,17 +50,18 @@ export function HomePricingPlans() {
                 color: isLight ? 'text.secondary' : 'text.primary',
               }}
             >
-              Choose the perfect plan for your needs. Always flexible to grow
+              Connect once, choose subscriptions, and review activity from one
+              authenticated dashboard.
             </Typography>
           </MotionInView>
         </Box>
 
         <Grid container spacing={5}>
           {_homePlans.map((plan) => (
-            <Grid key={plan.license} size={{ xs: 12, md: 4 }}>
+            <Grid key={plan.title} size={{ xs: 12, md: 4 }}>
               <MotionInView
                 variants={
-                  plan.license === 'Standard Plus'
+                  plan.title === 'Timeline aggregation'
                     ? varFade().inDown
                     : varFade().inUp
                 }
@@ -75,22 +75,20 @@ export function HomePricingPlans() {
         <MotionInView variants={varFade().in}>
           <Box sx={{ mt: 10, p: 5, textAlign: 'center' }}>
             <MotionInView variants={varFade().inDown}>
-              <Typography variant="h3">Still have questions?</Typography>
+              <Typography variant="h3">Know what changed today</Typography>
             </MotionInView>
 
             <MotionInView variants={varFade().inDown}>
               <Typography sx={{ color: 'text.secondary', mb: 5, mt: 3 }}>
-                Please describe your case to receive the most accurate advice.
+                Login with GitHub, add the developers or repositories you care
+                about, and keep their activity visible without hunting through
+                tabs.
               </Typography>
             </MotionInView>
 
             <MotionInView variants={varFade().inUp}>
-              <Button
-                size="large"
-                variant="contained"
-                href="mailto:support@minimals.cc?subject=[Feedback] from Customer"
-              >
-                Contact us
+              <Button size="large" variant="contained" href={GITHUB_AUTH_URL}>
+                Login with GitHub
               </Button>
             </MotionInView>
           </Box>
@@ -102,25 +100,23 @@ export function HomePricingPlans() {
 
 type PlanCardProps = {
   plan: {
-    commons: string[]
-    icons: string[]
-    license: string
-    options: string[]
+    description: string
+    icon: string
+    points: string[]
+    title: string
   }
 }
 
 function PlanCard({ plan }: PlanCardProps) {
-  const { commons, icons, license, options } = plan
-
-  const standard = license === 'Standard'
-  const plus = license === 'Standard Plus'
+  const { description, icon, points, title } = plan
+  const highlighted = title === 'Timeline aggregation'
 
   return (
     <Card
       sx={{
         boxShadow: 0,
         p: 5,
-        ...(plus && {
+        ...(highlighted && {
           boxShadow: (theme) => theme.customShadows.z24,
         }),
       }}
@@ -132,23 +128,22 @@ function PlanCard({ plan }: PlanCardProps) {
             component="div"
             sx={{ color: 'text.disabled', mb: 2 }}
           >
-            LICENSE
+            FEATURE
           </Typography>
-          <Typography variant="h4">{license}</Typography>
+          <Typography variant="h4">{title}</Typography>
         </div>
 
-        {standard ? (
-          <Image src={icons[2]} sx={{ height: 40, width: 40 }} />
-        ) : (
-          <Stack direction="row" spacing={1}>
-            {icons.map((icon) => (
-              <Image key={icon} src={icon} sx={{ height: 40, width: 40 }} />
-            ))}
-          </Stack>
-        )}
+        <Iconify
+          icon={icon}
+          sx={{ color: 'primary.main', height: 40, width: 40 }}
+        />
+
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+          {description}
+        </Typography>
 
         <Stack spacing={2.5}>
-          {commons.map((option) => (
+          {points.map((option) => (
             <Stack
               key={option}
               spacing={1.5}
@@ -164,97 +159,52 @@ function PlanCard({ plan }: PlanCardProps) {
               <Typography variant="body2">{option}</Typography>
             </Stack>
           ))}
-
-          <Divider sx={{ borderStyle: 'dashed' }} />
-
-          {options.map((option, optionIndex) => {
-            const disabledLine =
-              (standard && optionIndex === 1) ||
-              (standard && optionIndex === 2) ||
-              (standard && optionIndex === 3) ||
-              (plus && optionIndex === 3)
-
-            return (
-              <Stack
-                spacing={1.5}
-                direction="row"
-                key={option}
-                sx={{
-                  alignItems: 'center',
-                  ...(disabledLine && { color: 'text.disabled' }),
-                }}
-              >
-                <Iconify
-                  icon={'eva:checkmark-fill'}
-                  sx={{
-                    color: 'primary.main',
-                    height: 20,
-                    width: 20,
-                    ...(disabledLine && { color: 'text.disabled' }),
-                  }}
-                />
-                <Typography variant="body2">{option}</Typography>
-              </Stack>
-            )
-          })}
-        </Stack>
-
-        <Stack
-          direction="row"
-          sx={{
-            justifyContent: 'flex-end',
-          }}
-        >
-          <Link
-            underline="always"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/license/#i-standard-license"
-            sx={{
-              color: 'text.secondary',
-              alignItems: 'center',
-              display: 'flex',
-              typography: 'body2',
-            }}
-          >
-            Learn more{' '}
-            <Iconify
-              icon={'eva:chevron-right-fill'}
-              sx={{ height: 20, width: 20 }}
-            />
-          </Link>
         </Stack>
 
         <Button
           size="large"
           fullWidth
-          variant={plus ? 'contained' : 'outlined'}
-          target="_blank"
-          rel="noopener"
-          href="https://material-ui.com/store/items/minimal-dashboard/"
+          variant={highlighted ? 'contained' : 'outlined'}
+          href={GITHUB_AUTH_URL}
         >
-          Choose Plan
+          Login with GitHub
         </Button>
       </Stack>
     </Card>
   )
 }
 
-const LICENSES = ['Standard', 'Standard Plus', 'Extended']
-
-const _homePlans = [...Array(3)].map((_, index) => ({
-  commons: ['One end products', '12 months updates', '6 months of support'],
-  icons: [
-    'https://minimal-assets-api.vercel.app/assets/images/home/ic_sketch.svg',
-    'https://minimal-assets-api.vercel.app/assets/images/home/ic_figma.svg',
-    'https://minimal-assets-api.vercel.app/assets/images/home/ic_js.svg',
-    'https://minimal-assets-api.vercel.app/assets/images/home/ic_ts.svg',
-  ],
-  license: LICENSES[index],
-  options: [
-    'JavaScript version',
-    'TypeScript version',
-    'Design Resources',
-    'Commercial applications',
-  ],
-}))
+const _homePlans = [
+  {
+    description: 'Collect the GitHub conversations that matter into one view.',
+    icon: 'eva:layers-fill',
+    points: [
+      'Pull requests, issues, and discussions in one timeline',
+      'Side-by-side columns for people or repositories',
+      'Readable cards with author, source, and time',
+    ],
+    title: 'Timeline aggregation',
+  },
+  {
+    description:
+      'Use GitHub OAuth so the app can read the activity you follow.',
+    icon: 'bytesize:github',
+    points: [
+      'One clear GitHub login entry point',
+      'Authenticated requests through the existing GraphQL API',
+      'No GitHub activity shown before login',
+    ],
+    title: 'GitHub login',
+  },
+  {
+    description:
+      'Pick the developers and repositories you want to keep nearby.',
+    icon: 'eva:bell-fill',
+    points: [
+      'Subscribe to developers or repositories',
+      'Choose PR/Issue or Discussion feeds',
+      'Remove timelines when they are no longer useful',
+    ],
+    title: 'Subscriptions',
+  },
+]

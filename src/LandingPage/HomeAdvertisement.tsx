@@ -2,6 +2,8 @@ import { Button, Box, Container, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { m } from 'framer-motion'
 
+import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
 
@@ -40,8 +42,8 @@ export function HomeAdvertisement() {
           >
             <Image
               visibleByDefault
-              alt="rocket"
-              src="https://minimal-assets-api.vercel.app/assets/images/home/rocket.png"
+              alt="Geek Infiltration GitHub activity preview"
+              src="/og-image.png"
               disabledEffect
               sx={{ maxWidth: 460 }}
             />
@@ -59,17 +61,15 @@ export function HomeAdvertisement() {
             sx={{ color: 'common.white', mb: 5 }}
           >
             <Typography variant="h2">
-              Get started with
-              <br /> minimal kit today
+              Track GitHub work
+              <br /> in one place
             </Typography>
           </MotionInView>
           <MotionInView variants={varFade().inDown}>
             <Button
               size="large"
               variant="contained"
-              target="_blank"
-              rel="noopener"
-              href="https://material-ui.com/store/items/minimal-dashboard/"
+              href={GITHUB_AUTH_URL}
               sx={{
                 '&:hover': { bgcolor: 'grey.300' },
                 bgcolor: 'common.white',
@@ -79,7 +79,7 @@ export function HomeAdvertisement() {
                 whiteSpace: 'nowrap',
               }}
             >
-              Purchase Now
+              Login with GitHub
             </Button>
           </MotionInView>
         </Box>
