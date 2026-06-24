@@ -28,11 +28,10 @@ export class LandingPagePO {
       .filter({ hasText: /Laststance\.io/ })
     this.homeSection = page.getByRole('main')
 
-    // GitHub OAuth button - actual implementation uses "Login with GitHub" text
-    this.githubLoginButton = page.locator(
-      'button:has-text("Login with GitHub"), ' +
-        '[href*="github.com/login/oauth/authorize"]',
-    )
+    // GitHub OAuth renders as links so tests can assert the href contract.
+    this.githubLoginButton = page
+      .getByRole('link', { name: /Login with GitHub/i })
+      .first()
 
     // Navigation links
     this.navLinks = page.locator('nav a, header a')

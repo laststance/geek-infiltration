@@ -39,6 +39,93 @@ test.describe('Authentication Flow', () => {
       )
     })
 
+    test('should explain GitHub activity visualization before login', async ({
+      page,
+      unauthenticatedPage,
+      landingPage,
+    }) => {
+      // Arrange
+      await landingPage.goto()
+
+      // Act
+      const main = landingPage.homeSection
+
+      // Assert
+      await expect(
+        main.getByRole('heading', {
+          name: /GitHub Activity Visualization/i,
+        }),
+      ).toBeVisible()
+      await expect(
+        main.getByText(/Track pull requests, issues, and discussions/i),
+      ).toBeVisible()
+      await expect(
+        main.getByRole('heading', {
+          exact: true,
+          name: 'Timeline aggregation',
+        }),
+      ).toBeVisible()
+      await expect(
+        main.getByRole('heading', { exact: true, name: 'GitHub login' }),
+      ).toBeVisible()
+      await expect(
+        main.getByRole('heading', { exact: true, name: 'Subscriptions' }),
+      ).toBeVisible()
+    })
+
+    test('should not show generic landing template marketing copy', async ({
+      page,
+      unauthenticatedPage,
+      landingPage,
+    }) => {
+      // Arrange
+      await landingPage.goto()
+
+      // Act
+      const main = landingPage.homeSection
+
+      // Assert
+      await expect(main.getByText(/Huge pack\s+of elements/i)).toHaveCount(0)
+      await expect(main.getByText(/Landing Page Template\?/i)).toHaveCount(0)
+      await expect(main.getByText(/Purchase Now/i)).toHaveCount(0)
+      await expect(main.getByText(/Choose Plan/i)).toHaveCount(0)
+    })
+
+    test('should keep landing product message visible on responsive viewports', async ({
+      page,
+      unauthenticatedPage,
+      landingPage,
+    }) => {
+      // Arrange
+      const viewports = [
+        { height: 667, name: 'mobile', width: 375 },
+        { height: 900, name: 'tablet', width: 768 },
+        { height: 900, name: 'desktop', width: 1280 },
+      ]
+
+      for (const viewport of viewports) {
+        await page.setViewportSize({
+          height: viewport.height,
+          width: viewport.width,
+        })
+
+        // Act
+        await landingPage.goto()
+
+        // Assert
+        await expect(
+          page.getByRole('heading', {
+            name: /GitHub Activity Visualization/i,
+          }),
+          `${viewport.name} should show the product hero`,
+        ).toBeVisible()
+        await expect(
+          landingPage.githubLoginButton,
+          `${viewport.name} should keep the GitHub login CTA reachable`,
+        ).toBeVisible()
+      }
+    })
+
     test('should have correct GitHub OAuth URL', async ({
       page,
       unauthenticatedPage,
