@@ -370,6 +370,20 @@ describe('formatReleaseFeedErrorMessage', () => {
     expect(message).toBe(RELEASE_FEED_RATE_LIMIT_ERROR_MESSAGE)
   })
 
+  it('shows friendly retry copy when a cyclic rate-limit payload reaches the Release Feed', () => {
+    // Arrange
+    const error: Record<string, unknown> = {
+      message: 'Secondary rate limit hit while loading releases.',
+    }
+    error.self = error
+
+    // Act
+    const message = formatReleaseFeedErrorMessage(error)
+
+    // Assert
+    expect(message).toBe(RELEASE_FEED_RATE_LIMIT_ERROR_MESSAGE)
+  })
+
   it('shows generic retry copy for non-rate-limit Release Feed errors', () => {
     // Arrange
     const error = new Error('Network request failed')

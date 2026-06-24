@@ -287,11 +287,15 @@ function getSortableTimestampMs(timestamp: string): number {
 /**
  * Walks an unknown error payload so nested GraphQL/RTK messages can trigger friendly rate-limit copy.
  * @param value - Unknown error payload.
+ * @param visitedObjects - Object references already visited during this recursive walk.
  * @returns Concatenated message-like text from strings, Error objects, arrays, and plain records.
  * @example
  * collectErrorText({ errors: [{ message: 'API rate limit exceeded' }] }) // => "API rate limit exceeded"
  */
-function collectErrorText(value: unknown): string {
+function collectErrorText(
+  value: unknown,
+  visitedObjects = new WeakSet<object>(),
+): string {
   if (typeof value === 'string') {
     return value
   }
@@ -301,11 +305,23 @@ function collectErrorText(value: unknown): string {
   }
 
   if (Array.isArray(value)) {
-    return value.map(collectErrorText).join(' ')
+    if (visitedObjects.has(value)) {
+      return ''
+    }
+
+    visitedObjects.add(value)
+    return value.map((item) => collectErrorText(item, visitedObjects)).join(' ')
   }
 
   if (isPlainRecord(value)) {
-    return Object.values(value).map(collectErrorText).join(' ')
+    if (visitedObjects.has(value)) {
+      return ''
+    }
+
+    visitedObjects.add(value)
+    return Object.values(value)
+      .map((item) => collectErrorText(item, visitedObjects))
+      .join(' ')
   }
 
   return ''
