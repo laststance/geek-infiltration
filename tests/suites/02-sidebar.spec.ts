@@ -43,6 +43,142 @@ test.describe('Sidebar Functionality', () => {
     })
   })
 
+  test.describe('Sidebar Route Navigation', () => {
+    test('shows Timeline and Release Feed route controls without hiding account actions', async ({
+      page,
+      appPage,
+    }) => {
+      // Arrange
+      await appPage.goto()
+
+      // Act
+      const timelineLink = appPage.sidebar.timelineNavigationLink
+      const releaseFeedLink = appPage.sidebar.releaseFeedNavigationLink
+
+      // Assert
+      await expect(timelineLink).toBeVisible()
+      await expect(timelineLink).toHaveAttribute('href', '/app')
+      await expect(releaseFeedLink).toBeVisible()
+      await expect(releaseFeedLink).toHaveAttribute('href', '/releases')
+      await expect(
+        page.getByRole('button', { name: 'Add subscription' }),
+      ).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Open account menu' }),
+      ).toBeVisible()
+    })
+
+    test('changes the URL, visible view, and active route state from Sidebar controls', async ({
+      page,
+      appPage,
+    }) => {
+      // Arrange
+      await appPage.goto()
+
+      // Assert
+      await expect(appPage.sidebar.timelineNavigationLink).toHaveAttribute(
+        'aria-current',
+        'page',
+      )
+
+      // Act
+      await appPage.sidebar.clickReleaseFeedNavigation()
+
+      // Assert
+      await expect(page).toHaveURL(/\/releases$/)
+      await expect(appPage.releaseFeedRoute).toBeVisible()
+      await expect(appPage.sidebar.releaseFeedNavigationLink).toHaveAttribute(
+        'aria-current',
+        'page',
+      )
+      await expect(appPage.sidebar.timelineNavigationLink).not.toHaveAttribute(
+        'aria-current',
+        'page',
+      )
+
+      // Act
+      await appPage.sidebar.clickTimelineNavigation()
+
+      // Assert
+      await expect(page).toHaveURL(/\/app$/)
+      await expect(appPage.timelineContainer).toBeVisible()
+      await expect(appPage.sidebar.timelineNavigationLink).toHaveAttribute(
+        'aria-current',
+        'page',
+      )
+      await expect(
+        appPage.sidebar.releaseFeedNavigationLink,
+      ).not.toHaveAttribute('aria-current', 'page')
+    })
+
+    test('keeps the same Sidebar instance mounted while switching authenticated views', async ({
+      page,
+      appPage,
+    }) => {
+      // Arrange
+      await appPage.goto()
+      await appPage.sidebar.sidebarContainer.evaluate((element) => {
+        element.setAttribute('data-e2e-sidebar-instance', 'persisted')
+      })
+
+      // Act
+      await appPage.sidebar.clickReleaseFeedNavigation()
+
+      // Assert
+      await expect(page).toHaveURL(/\/releases$/)
+      await expect(appPage.releaseFeedRoute).toBeVisible()
+      await expect(appPage.sidebar.sidebarContainer).toHaveAttribute(
+        'data-e2e-sidebar-instance',
+        'persisted',
+      )
+
+      // Act
+      await page.goBack({ waitUntil: 'domcontentloaded' })
+
+      // Assert
+      await expect(page).toHaveURL(/\/app$/)
+      await expect(appPage.timelineContainer).toBeVisible()
+      await expect(appPage.sidebar.sidebarContainer).toHaveAttribute(
+        'data-e2e-sidebar-instance',
+        'persisted',
+      )
+      await expect(appPage.sidebar.timelineNavigationLink).toHaveAttribute(
+        'aria-current',
+        'page',
+      )
+    })
+
+    test('updates the active Sidebar route when browser back and forward change views', async ({
+      page,
+      appPage,
+    }) => {
+      // Arrange
+      await appPage.goto()
+      await appPage.sidebar.clickReleaseFeedNavigation()
+      await expect(page).toHaveURL(/\/releases$/)
+
+      // Act
+      await page.goBack({ waitUntil: 'domcontentloaded' })
+
+      // Assert
+      await expect(page).toHaveURL(/\/app$/)
+      await expect(appPage.sidebar.timelineNavigationLink).toHaveAttribute(
+        'aria-current',
+        'page',
+      )
+
+      // Act
+      await page.goForward({ waitUntil: 'domcontentloaded' })
+
+      // Assert
+      await expect(page).toHaveURL(/\/releases$/)
+      await expect(appPage.sidebar.releaseFeedNavigationLink).toHaveAttribute(
+        'aria-current',
+        'page',
+      )
+    })
+  })
+
   test.describe('User Profile Display', () => {
     test('should display user avatar', async ({
       page,
