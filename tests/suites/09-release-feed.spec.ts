@@ -1,5 +1,7 @@
 import { test, expect } from '../fixtures/auth'
 
+const GITHUB_GRAPHQL_API_URL = 'https://api.github.com/graphql'
+
 type ReleaseNode = {
   createdAt: string
   description: string | null
@@ -20,6 +22,11 @@ type RepositoryNode = {
 }
 
 type ReleaseFeedResponse = Record<string, unknown>
+type ReleaseFeedResponseOptions = {
+  endCursor?: string | null
+  hasNextPage?: boolean
+  totalCount?: number
+}
 
 /**
  * Creates a pending promise so a Playwright test can observe the route loading state before GraphQL resolves.
@@ -45,7 +52,13 @@ function createDeferred<T>() {
  */
 function createReleaseFeedResponse(
   repositories: RepositoryNode[],
+  options: ReleaseFeedResponseOptions = {},
 ): ReleaseFeedResponse {
+  const pageInfo = {
+    endCursor: options.endCursor ?? null,
+    hasNextPage: options.hasNextPage ?? false,
+  }
+
   return {
     viewer: {
       starredRepositories: {
@@ -66,11 +79,8 @@ function createReleaseFeedResponse(
           },
           url: `https://github.com/${repository.nameWithOwner}`,
         })),
-        pageInfo: {
-          endCursor: null,
-          hasNextPage: false,
-        },
-        totalCount: repositories.length,
+        pageInfo,
+        totalCount: options.totalCount ?? repositories.length,
       },
     },
   }
@@ -95,6 +105,35 @@ function createReleaseNode(release: Partial<ReleaseNode>): ReleaseNode {
     tagName: 'v0.0.0',
     url: 'https://github.com/example/repo/releases/tag/v0.0.0',
     ...release,
+  }
+}
+
+/**
+ * Detects Release Feed GraphQL requests so tests can override the shared default mock safely.
+ * @param postData - Raw GraphQL request body from Playwright's route handler.
+ * @returns Parsed operation details when the request is a Release Feed operation, otherwise null.
+ * @example
+ * parseReleaseFeedOperation('{"operationName":"getViewerStarredRepositoryReleases"}')
+ */
+function parseReleaseFeedOperation(postData: string | null) {
+  if (!postData) {
+    return null
+  }
+
+  try {
+    const operation = JSON.parse(postData) as {
+      operationName?: string
+      query?: string
+      variables?: Record<string, unknown>
+    }
+    const isReleaseFeedOperation =
+      operation.operationName === 'getViewerStarredRepositoryReleases' ||
+      operation.query?.includes('query getViewerStarredRepositoryReleases') ===
+        true
+
+    return isReleaseFeedOperation ? operation : null
+  } catch {
+    return null
   }
 }
 
@@ -284,5 +323,267 @@ test.describe('Release Feed route', () => {
         'Star repositories on GitHub to start building your release feed.',
       ),
     ).toBeVisible()
+  })
+
+  test('shows an initial network error and retries the failed release query', async ({
+    page,
+    appPage,
+  }) => {
+    // Arrange
+    let releaseFeedRequestCount = 0
+    await page.route(GITHUB_GRAPHQL_API_URL, async (route) => {
+      const operation = parseReleaseFeedOperation(route.request().postData())
+
+      if (!operation) {
+        await route.fallback()
+        return
+      }
+
+      releaseFeedRequestCount += 1
+
+      if (releaseFeedRequestCount === 1) {
+        await route.fulfill({
+          status: 500,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            errors: [{ message: 'Network request failed' }],
+          }),
+        })
+        return
+      }
+
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          data: createReleaseFeedResponse([
+            {
+              id: 'repo-retry',
+              nameWithOwner: 'example/retry',
+              ownerLogin: 'example',
+              releases: [
+                createReleaseNode({
+                  id: 'release-retry',
+                  name: 'Retry Works',
+                  tagName: 'v1.0.0',
+                  url: 'https://github.com/example/retry/releases/tag/v1.0.0',
+                }),
+              ],
+            },
+          ]),
+        }),
+      })
+    })
+
+    // Act
+    await appPage.gotoReleases()
+
+    // Assert
+    await expect(
+      page.getByText('Release Feed could not load releases. Please try again.'),
+    ).toBeVisible()
+
+    // Act
+    await page.getByRole('button', { name: 'Retry' }).click()
+
+    // Assert
+    await expect(page.getByText('Retry Works')).toBeVisible()
+    expect(releaseFeedRequestCount).toBe(2)
+  })
+
+  test('loads the next starred repository page when the bottom sentinel enters view', async ({
+    page,
+    appPage,
+    graphqlMocker,
+  }) => {
+    // Arrange
+    const deferredNextPage = createDeferred<ReleaseFeedResponse>()
+    graphqlMocker.mockOperation(
+      'getViewerStarredRepositoryReleases',
+      (operation) => {
+        if (operation.variables?.starredAfter === 'starred-cursor-1') {
+          return deferredNextPage.promise
+        }
+
+        return createReleaseFeedResponse(
+          [
+            {
+              id: 'repo-first-page',
+              nameWithOwner: 'example/first-page',
+              ownerLogin: 'example',
+              releases: [
+                createReleaseNode({
+                  id: 'release-first-page',
+                  name: 'First Page Release',
+                  publishedAt: '2026-06-22T00:00:00Z',
+                  tagName: 'v1.0.0',
+                  url: 'https://github.com/example/first-page/releases/tag/v1.0.0',
+                }),
+              ],
+            },
+          ],
+          {
+            endCursor: 'starred-cursor-1',
+            hasNextPage: true,
+            totalCount: 2,
+          },
+        )
+      },
+    )
+
+    // Act
+    await appPage.gotoReleases()
+    await expect(page.getByText('First Page Release')).toBeVisible()
+    await page
+      .getByTestId('release-feed-pagination-sentinel')
+      .scrollIntoViewIfNeeded()
+
+    // Assert
+    await expect(
+      page.getByRole('status', { name: 'Loading more releases' }),
+    ).toBeVisible()
+
+    // Act
+    deferredNextPage.resolve(
+      createReleaseFeedResponse(
+        [
+          {
+            id: 'repo-second-page',
+            nameWithOwner: 'example/second-page',
+            ownerLogin: 'example',
+            releases: [
+              createReleaseNode({
+                id: 'release-second-page',
+                name: 'Second Page Release',
+                publishedAt: '2026-06-23T00:00:00Z',
+                tagName: 'v2.0.0',
+                url: 'https://github.com/example/second-page/releases/tag/v2.0.0',
+              }),
+            ],
+          },
+        ],
+        { totalCount: 2 },
+      ),
+    )
+
+    // Assert
+    const releaseCards = page.getByTestId('release-feed-card')
+    await expect(releaseCards).toHaveCount(2)
+    await expect(releaseCards.nth(0)).toContainText('Second Page Release')
+    await expect(releaseCards.nth(1)).toContainText('First Page Release')
+  })
+
+  test('keeps loaded releases visible when pagination fails and retry loads the next page', async ({
+    page,
+    appPage,
+  }) => {
+    // Arrange
+    let releaseFeedRequestCount = 0
+    await page.route(GITHUB_GRAPHQL_API_URL, async (route) => {
+      const operation = parseReleaseFeedOperation(route.request().postData())
+
+      if (!operation) {
+        await route.fallback()
+        return
+      }
+
+      releaseFeedRequestCount += 1
+
+      if (!operation.variables?.starredAfter) {
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            data: createReleaseFeedResponse(
+              [
+                {
+                  id: 'repo-cached',
+                  nameWithOwner: 'example/cached',
+                  ownerLogin: 'example',
+                  releases: [
+                    createReleaseNode({
+                      id: 'release-cached',
+                      name: 'Cached Release',
+                      tagName: 'v1.0.0',
+                      url: 'https://github.com/example/cached/releases/tag/v1.0.0',
+                    }),
+                  ],
+                },
+              ],
+              {
+                endCursor: 'starred-cursor-1',
+                hasNextPage: true,
+                totalCount: 2,
+              },
+            ),
+          }),
+        })
+        return
+      }
+
+      if (releaseFeedRequestCount === 2) {
+        await route.fulfill({
+          status: 500,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            errors: [{ message: 'Network request failed' }],
+          }),
+        })
+        return
+      }
+
+      await route.fulfill({
+        status: 200,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          data: createReleaseFeedResponse(
+            [
+              {
+                id: 'repo-recovered',
+                nameWithOwner: 'example/recovered',
+                ownerLogin: 'example',
+                releases: [
+                  createReleaseNode({
+                    id: 'release-recovered',
+                    name: 'Recovered Release',
+                    tagName: 'v2.0.0',
+                    url: 'https://github.com/example/recovered/releases/tag/v2.0.0',
+                  }),
+                ],
+              },
+            ],
+            { totalCount: 2 },
+          ),
+        }),
+      })
+    })
+
+    // Act
+    await appPage.gotoReleases()
+    await expect(page.getByText('Cached Release')).toBeVisible()
+    const paginationSentinel = page.getByTestId(
+      'release-feed-pagination-sentinel',
+    )
+    const shouldScrollSentinel = await paginationSentinel
+      .waitFor({ state: 'visible', timeout: 1000 })
+      .then(() => true)
+      .catch(() => false)
+
+    if (shouldScrollSentinel) {
+      await paginationSentinel.scrollIntoViewIfNeeded()
+    }
+
+    // Assert
+    await expect(
+      page.getByText('Release Feed could not load releases. Please try again.'),
+    ).toBeVisible()
+    await expect(page.getByText('Cached Release')).toBeVisible()
+
+    // Act
+    await page.getByRole('button', { name: 'Retry' }).click()
+
+    // Assert
+    await expect(page.getByText('Recovered Release')).toBeVisible()
+    expect(releaseFeedRequestCount).toBe(3)
   })
 })

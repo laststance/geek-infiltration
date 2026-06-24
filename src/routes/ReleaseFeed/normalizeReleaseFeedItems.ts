@@ -124,6 +124,40 @@ export function normalizeRepositoryReleaseCandidates(
 }
 
 /**
+ * Combines the initial page and later infinite-scroll pages into one Release Feed view model.
+ * @param pages - Already-normalized starred repository pages in fetch order.
+ * @returns Merged feed items plus the latest starred-repository pagination cursor.
+ * @example
+ * mergeNormalizedViewerStarredRepositoryReleasePages(firstPage, nextPage).items.length // => 10
+ */
+export function mergeNormalizedViewerStarredRepositoryReleasePages(
+  ...pages: readonly NormalizedViewerStarredRepositoryReleases[]
+): NormalizedViewerStarredRepositoryReleases {
+  const latestPage = pages.at(-1)
+  const repositoryReleasePageInfosById = new Map<
+    string,
+    ReleaseFeedRepositoryPageInfo
+  >()
+
+  for (const page of pages) {
+    for (const pageInfo of page.repositoryReleasePageInfos) {
+      // Later pages replace stale cursors while preserving one entry per repository.
+      repositoryReleasePageInfosById.set(pageInfo.repositoryId, pageInfo)
+    }
+  }
+
+  return {
+    items: mergeReleaseFeedItems(...pages.map((page) => page.items)),
+    repositoryReleasePageInfos: [...repositoryReleasePageInfosById.values()],
+    starredRepositoriesPageInfo: latestPage?.starredRepositoriesPageInfo ?? {
+      endCursor: null,
+      hasNextPage: false,
+    },
+    totalStarredRepositories: pages[0]?.totalStarredRepositories ?? 0,
+  }
+}
+
+/**
  * Merges cached and newly loaded pages when Release Feed pagination appends data from RTK Query.
  * @param itemGroups - One or more already-normalized feed item arrays.
  * @returns A newest-first array with duplicate release IDs removed.
