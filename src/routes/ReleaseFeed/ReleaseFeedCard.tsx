@@ -143,7 +143,14 @@ export const ReleaseFeedCard = memo(({ item }: ReleaseFeedCardProps) => {
                     title={absolutePublishedAt}
                     variant="caption"
                   >
-                    {relativePublishedAt} | {absolutePublishedAt}
+                    {relativePublishedAt}
+                    <Box
+                      component="span"
+                      sx={{ display: { xs: 'none', sm: 'inline' } }}
+                    >
+                      {' | '}
+                      {absolutePublishedAt}
+                    </Box>
                   </Typography>
                 </Box>
                 <LaunchIcon
