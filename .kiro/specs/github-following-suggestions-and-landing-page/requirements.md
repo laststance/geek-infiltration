@@ -58,7 +58,7 @@ query getViewerFollowing($first: Int = 100) {
 - [ ] Query fetches user's following list via GitHub GraphQL API
 - [ ] RTK Query hook `useGetViewerFollowingQuery` is generated via codegen
 - [ ] Results are cached to minimize API calls
-- [ ] Handles pagination if user follows more than 100 accounts
+- [ ] For users following more than 100 accounts, the current scope fetches the first 100 accounts, exposes `totalCount` for awareness, and defers pagination UI/additional page fetching to a later spec
 
 ### FR-1.3: Autocomplete UI Component
 
@@ -66,10 +66,10 @@ query getViewerFollowing($first: Int = 100) {
 
 **Technical Requirements**:
 
-- Use MUI v7 `Autocomplete` component
+- Use the current `@mui/material` `Autocomplete` component from `package.json`
 - `freeSolo={true}` to allow custom input
 - `renderOption` for custom layout: Avatar + Name + @login
-- `getOptionLabel` returns the login for form submission
+- `getOptionLabel` returns the login for form submission and handles string values from freeSolo mode
 - `filterOptions` for local filtering by name OR login
 - Proper loading and empty states
 
@@ -143,7 +143,7 @@ query getViewerFollowing($first: Int = 100) {
 
 ### NFR-2: Code Quality
 
-- Follow existing project patterns (RTK Query, MUI v7 sx prop)
+- Follow existing project patterns (RTK Query, current MUI sx prop)
 - Run codegen after adding GraphQL query
 - ESLint and Prettier compliance
 - Component memoization where appropriate
@@ -175,9 +175,9 @@ query getViewerFollowing($first: Int = 100) {
 
 | Dependency       | Version | Purpose                |
 | ---------------- | ------- | ---------------------- |
-| @mui/material    | ^7.3.7  | Autocomplete component |
+| @mui/material    | ^9.1.2  | Autocomplete component |
 | graphql-request  | ^7.4.0  | GraphQL data fetching  |
-| @reduxjs/toolkit | ^2.11.2 | RTK Query hooks        |
+| @reduxjs/toolkit | ^2.12.0 | RTK Query hooks        |
 
 ---
 
@@ -203,7 +203,7 @@ query getViewerFollowing($first: Int = 100) {
 
 ## Out of Scope
 
-- Pagination UI for following list (fetch first 100)
+- Pagination UI/additional page fetching for following list; this implementation fetches the first 100 accounts and retains `totalCount`
 - Following list refresh/sync functionality
 - User search beyond following list
 - Landing page A/B testing
@@ -213,11 +213,23 @@ query getViewerFollowing($first: Int = 100) {
 
 ## Risks & Mitigations
 
-| Risk                        | Probability | Impact | Mitigation                      |
-| --------------------------- | ----------- | ------ | ------------------------------- |
-| GitHub API rate limiting    | Medium      | High   | Cache results, batch requests   |
-| Large following list (>100) | Low         | Medium | Paginate or limit to first 100  |
-| OAuth token expiry          | Low         | High   | Handle token refresh gracefully |
+| Risk                        | Probability | Impact | Mitigation                                                                                         |
+| --------------------------- | ----------- | ------ | -------------------------------------------------------------------------------------------------- |
+| GitHub API rate limiting    | Medium      | High   | Cache results, batch requests                                                                      |
+| Large following list (>100) | Low         | Medium | Limit to first 100 in this scope, retain totalCount, and track pagination as future work if needed |
+| OAuth token expiry          | Low         | High   | Handle token refresh gracefully                                                                    |
+
+---
+
+## Validation Status
+
+Validated on 2026-06-24 after PR #1274:
+
+- `pnpm exec vitest run src/app/Sidebar/UserAutocomplete.test.ts src/app/Sidebar/UserAutocomplete.test.tsx`: 17 tests passed
+- `pnpm typecheck`: passed
+- `pnpm lint`: passed
+- `pnpm exec playwright test --reporter=list`: 366 browser-expanded E2E tests passed across Chromium, Firefox, and WebKit
+- Scope clarification: following suggestions intentionally cover the first 100 followed accounts only; pagination UI/additional page fetching remains out of scope
 
 ---
 

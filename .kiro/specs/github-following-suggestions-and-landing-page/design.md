@@ -17,7 +17,7 @@
 
 ### Non-Goals
 
-- Pagination UI for following lists exceeding 100 users
+- Pagination UI/additional page fetching for following lists exceeding 100 users
 - Dynamic OG image generation per page/user
 - User search functionality beyond following list
 - Landing page content restructuring or A/B testing
@@ -30,7 +30,7 @@ The application follows a client-side SPA architecture with:
 
 - **Data Layer**: RTK Query with GraphQL codegen for type-safe API calls
 - **State Management**: Redux Toolkit with redux-persist for token storage
-- **UI Layer**: MUI v7 with sx prop styling, Framer Motion for animations
+- **UI Layer**: Current MUI from `package.json` with sx prop styling, Framer Motion for animations
 - **Form Handling**: react-hook-form with Controller pattern
 
 The subscription flow currently uses `SubscribeFormModal` which dispatches to `subscribedSlice` after form submission. The authentication state is managed in `authenticatorSlice` with persisted OAuth tokens.
@@ -71,13 +71,13 @@ graph TB
 - Domain boundaries: UI components consume generated hooks, no direct API calls
 - Existing patterns preserved: Controller pattern for forms, sx prop styling
 - New components rationale: UserAutocomplete encapsulates suggestion logic
-- Steering compliance: Follows tech.md patterns (RTK Query, MUI v7, TypeScript strict)
+- Steering compliance: Follows tech.md patterns while verifying package versions against `package.json` (RTK Query, current MUI, TypeScript strict)
 
 ### Technology Stack
 
 | Layer           | Choice / Version                      | Role in Feature             | Notes                                  |
 | --------------- | ------------------------------------- | --------------------------- | -------------------------------------- |
-| Frontend        | MUI v7.3.7 Autocomplete               | User suggestion dropdown    | freeSolo mode for custom input         |
+| Frontend        | @mui/material ^9.1.2 Autocomplete     | User suggestion dropdown    | freeSolo mode for custom input         |
 | Data            | RTK Query + graphql-request           | Following list fetching     | Caches results automatically           |
 | Code Generation | @graphql-codegen/typescript-rtk-query | Type-safe hooks             | Generates `useGetViewerFollowingQuery` |
 | Assets          | Static PNG (1200x630px)               | OG image for social sharing | Manual creation required               |
@@ -172,7 +172,7 @@ query getViewerFollowing($first: Int = 100) {
 }
 ```
 
-- Pagination: `first` argument limits results (default 100)
+- Pagination: `first` argument limits this scope to 100 results by default; `totalCount` is retained for awareness, but pagination UI/additional page fetching is out of scope
 - Response type: `FollowingConnection` with `UserConnection` nodes
 - Authentication: Requires valid OAuth token in Authorization header
 
@@ -237,9 +237,10 @@ interface UserAutocompleteProps {
 
 **Implementation Notes**
 
-- Integration: Use MUI Autocomplete with `freeSolo={true}`, `renderOption` for custom layout
+- Integration: Use current MUI Autocomplete with `freeSolo={true}`, `renderOption` for custom layout, and string-aware freeSolo handlers
 - Validation: Required field, handled by parent form via react-hook-form
 - Risks: Empty following list shows only freeSolo input (acceptable per requirements)
+- Scope limit: Users following more than 100 accounts see the first 100 suggestions; pagination UI/additional page fetching is intentionally deferred
 
 #### SubscribeFormModal (Modified)
 
@@ -456,8 +457,20 @@ Graceful degradation with fallback to manual input when suggestions unavailable.
   - Autocomplete filter: < 16ms (60fps local filtering)
 - **Caching**: RTK Query default cache (60s) reduces API calls
 - **Optimization**: Avatar images lazy-loaded via GitHub CDN
+- **Large following lists**: Current implementation fetches the first 100 accounts and keeps `totalCount` available; pagination is future work, not part of this spec
 
 ---
+
+## Validation Status
+
+Validated on 2026-06-24 after PR #1274:
+
+- `pnpm exec vitest run src/app/Sidebar/UserAutocomplete.test.ts src/app/Sidebar/UserAutocomplete.test.tsx`: 17 tests passed
+- `pnpm typecheck`: passed
+- `pnpm lint`: passed
+- `pnpm exec playwright test --reporter=list`: 366 browser-expanded E2E tests passed across Chromium, Firefox, and WebKit
+
+The implemented scope matches this design: first 100 following suggestions, freeSolo custom usernames, OG metadata/image coverage, and no pagination UI.
 
 ## Supporting References
 

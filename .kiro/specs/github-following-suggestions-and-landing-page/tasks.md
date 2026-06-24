@@ -20,6 +20,7 @@
   - Define a query that fetches login, display name, and avatar URL for each followed user
   - Limit initial fetch to first 100 users (covers majority of use cases)
   - Include totalCount for awareness of pagination needs
+  - Keep pagination UI/additional page fetching out of scope for this spec
   - Ensure query uses viewer context (authenticated user scope)
   - _Requirements: 1.2_
 
@@ -116,6 +117,7 @@
   - Run ESLint and Prettier checks
   - Execute build to verify no compilation errors
   - Run complete E2E test suite
+  - 2026-06-24 validation evidence: UserAutocomplete Vitest 17 passed, typecheck passed, lint passed, Playwright 366 passed across Chromium/Firefox/WebKit
   - _Requirements: NFR-1, NFR-2_
 
 ---
@@ -135,6 +137,10 @@
 | NFR-3       | 2.2                     | ✅ Addressed                    |
 | NFR-4       | 1.2, 2.1                | ✅ Built-in (RTK Query caching) |
 | NFR-5       | All                     | ✅ Built-in (existing patterns) |
+
+## Current Validation Status
+
+All checked tasks reflect the current implementation truth as of 2026-06-24. The following-suggestions scope is first 100 followed accounts only, with `totalCount` retained for awareness and pagination UI/additional page fetching deferred to future work.
 
 ---
 
