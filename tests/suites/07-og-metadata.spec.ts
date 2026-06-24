@@ -2,6 +2,9 @@ import { test, expect } from '@playwright/test'
 
 const EXPECTED_OG_IMAGE_WIDTH = 1200
 const EXPECTED_OG_IMAGE_HEIGHT = 630
+const PNG_SIGNATURE = Buffer.from([
+  0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a,
+])
 
 /**
  * Reads PNG dimensions from the IHDR chunk so OG asset tests catch silent export-size regressions.
@@ -11,6 +14,14 @@ const EXPECTED_OG_IMAGE_HEIGHT = 630
  * readPngDimensions(await response.body())
  */
 function readPngDimensions(image: Buffer): { height: number; width: number } {
+  if (image.length < 24) {
+    throw new Error('PNG body is too short to contain IHDR dimensions')
+  }
+
+  if (!image.subarray(0, PNG_SIGNATURE.length).equals(PNG_SIGNATURE)) {
+    throw new Error('Response body is not a PNG image')
+  }
+
   return {
     height: image.readUInt32BE(20),
     width: image.readUInt32BE(16),
@@ -119,14 +130,15 @@ test.describe('Open Graph & Twitter Card Metadata', () => {
     }) => {
       // Arrange
       const response = await page.request.get('/og-image.png')
-      const body = await response.body()
-
-      // Act
-      const dimensions = readPngDimensions(body)
 
       // Assert
       expect(response.status()).toBe(200)
-      expect(response.headers()['content-type']).toContain('image/')
+      expect(response.headers()['content-type']).toContain('image/png')
+
+      // Act
+      const dimensions = readPngDimensions(await response.body())
+
+      // Assert
       expect(dimensions).toEqual({
         height: EXPECTED_OG_IMAGE_HEIGHT,
         width: EXPECTED_OG_IMAGE_WIDTH,
