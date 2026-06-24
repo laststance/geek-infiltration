@@ -362,7 +362,7 @@ test.describe('Error Handling', () => {
 
       // The authenticated app should stay usable without browser console errors.
       await expect(page.getByTestId('app-container')).toBeVisible()
-      expect(consoleErrors).toEqual([])
+      await expect.poll(() => consoleErrors).toEqual([])
     })
   })
 
