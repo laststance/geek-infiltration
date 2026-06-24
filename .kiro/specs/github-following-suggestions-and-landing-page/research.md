@@ -10,7 +10,7 @@
 - **Discovery Scope**: Extension (modifying existing components + adding web assets)
 - **Key Findings**:
   - GitHub GraphQL API supports `viewer.following` query with pagination
-  - MUI v7 Autocomplete supports freeSolo mode with custom renderOption
+  - Current MUI Autocomplete supports freeSolo mode with custom renderOption
   - OG image optimal size is 1200x630px with 1.91:1 aspect ratio
 
 ## Research Log
@@ -30,18 +30,18 @@
 - **Implications**:
   - Query structure: `viewer { following(first: 100) { nodes { login, name, avatarUrl } } }`
   - Caching via RTK Query will minimize API calls
-  - No need for complex pagination UI (first 100 sufficient per requirements)
+  - No pagination UI/additional page fetching in this scope (first 100 plus `totalCount` awareness)
 
-### MUI v7 Autocomplete Component
+### MUI Autocomplete Component
 
 - **Context**: Replace TextField with Autocomplete for user suggestions
 - **Sources Consulted**:
   - [MUI Autocomplete Documentation](https://mui.com/material-ui/react-autocomplete/)
-  - MUI v7.2.0 llms.txt via MUI MCP
+  - Current MUI documentation via Context7
 - **Findings**:
   - `freeSolo` prop allows arbitrary input beyond suggestions
   - `renderOption` prop enables custom rendering with Avatar
-  - `getOptionLabel` extracts display text from option objects
+  - `getOptionLabel` extracts display text from option objects and must handle freeSolo strings in current typings
   - `filterOptions` with `createFilterOptions` for custom filtering
   - `loading` and `loadingText` props for async state
 - **Implications**:
@@ -75,7 +75,7 @@
   - `SubscribeFormModal.tsx` uses react-hook-form with Controller
   - GraphQL queries in `src/gql/*.graphql`, generated via codegen
   - RTK Query hooks auto-generated in `src/generated/graphql.ts`
-  - MUI v7 with sx prop styling (no styled-components except LandingPage)
+  - Current MUI with sx prop styling (no styled-components except LandingPage)
   - Landing page uses Framer Motion animations (`MotionInView`, `varFade`)
 - **Implications**:
   - Follow existing Controller pattern for Autocomplete integration
@@ -85,11 +85,11 @@
 
 ## Architecture Pattern Evaluation
 
-| Option                       | Description                              | Strengths                                         | Risks / Limitations                        | Notes                                   |
-| ---------------------------- | ---------------------------------------- | ------------------------------------------------- | ------------------------------------------ | --------------------------------------- |
-| RTK Query for Following List | Use existing RTK Query + GraphQL pattern | Consistent with codebase, auto-caching, type-safe | Limited to 100 items without pagination UI | Selected - aligns with project patterns |
-| SWR/React Query              | Alternative data fetching                | Popular, good DX                                  | Adds new dependency, breaks consistency    | Rejected - would introduce new pattern  |
-| Direct graphql-request       | Manual fetching                          | Simple, no abstraction                            | No caching, no generated hooks             | Rejected - loses type safety benefits   |
+| Option                       | Description                              | Strengths                                         | Risks / Limitations                                                 | Notes                                   |
+| ---------------------------- | ---------------------------------------- | ------------------------------------------------- | ------------------------------------------------------------------- | --------------------------------------- |
+| RTK Query for Following List | Use existing RTK Query + GraphQL pattern | Consistent with codebase, auto-caching, type-safe | Limited to 100 items without pagination UI/additional page fetching | Selected - aligns with project patterns |
+| SWR/React Query              | Alternative data fetching                | Popular, good DX                                  | Adds new dependency, breaks consistency                             | Rejected - would introduce new pattern  |
+| Direct graphql-request       | Manual fetching                          | Simple, no abstraction                            | No caching, no generated hooks                                      | Rejected - loses type safety benefits   |
 
 ## Design Decisions
 
@@ -130,13 +130,13 @@
 ## Risks & Mitigations
 
 - **GitHub API Rate Limiting** — Mitigate with RTK Query caching, fetch once per session
-- **Large Following List (>100)** — Mitigate by limiting to first 100 per requirements scope
+- **Large Following List (>100)** — Mitigate by limiting to first 100, retaining `totalCount`, and deferring pagination UI/additional page fetching
 - **OAuth Token Expiry** — Existing token refresh mechanism in authenticatorSlice handles this
 - **OG Image Caching** — Add version query param if updates needed (e.g., `og-image.png?v=1`)
 
 ## References
 
 - [GitHub GraphQL API Documentation](https://docs.github.com/en/graphql) — Official API reference
-- [MUI Autocomplete v7](https://mui.com/material-ui/react-autocomplete/) — Component API
+- [MUI Autocomplete](https://mui.com/material-ui/react-autocomplete/) — Component API
 - [Open Graph Protocol](https://ogp.me/) — Meta tag specification
 - [OG Image Sizes 2025 Guide](https://www.krumzi.com/blog/open-graph-image-sizes-for-social-media-the-complete-2025-guide) — Best practices
