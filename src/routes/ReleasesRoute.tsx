@@ -91,16 +91,19 @@ function createNextReleaseFeedPageVariables(pageInfo: ReleaseFeedPageInfo) {
 
 /**
  * Renders the retryable error alert used by initial, partial, and pagination failures.
+ * @param actionLabel - Visible and accessible label for the retry button.
  * @param error - RTK Query or GraphQL error payload to format for users.
  * @param onRetry - Callback that retries the failed release feed request.
  * @returns A MUI error alert with a compact retry action.
  * @example
- * <ReleaseFeedErrorAlert error={error} onRetry={refetch} />
+ * <ReleaseFeedErrorAlert actionLabel="Retry" error={error} onRetry={refetch} />
  */
 function ReleaseFeedErrorAlert({
+  actionLabel,
   error,
   onRetry,
 }: {
+  actionLabel: string
   error: unknown
   onRetry: () => void
 }) {
@@ -108,7 +111,7 @@ function ReleaseFeedErrorAlert({
     <Alert
       action={
         <Button color="inherit" onClick={onRetry} size="small">
-          Retry
+          {actionLabel}
         </Button>
       }
       severity="error"
@@ -177,7 +180,13 @@ function ReleaseFeedPaginationStatus({
   }
 
   if (error) {
-    return <ReleaseFeedErrorAlert error={error} onRetry={onRetry} />
+    return (
+      <ReleaseFeedErrorAlert
+        actionLabel="Retry next page"
+        error={error}
+        onRetry={onRetry}
+      />
+    )
   }
 
   return null
@@ -343,6 +352,7 @@ export function Component() {
 
         {shouldShowInitialError ? (
           <ReleaseFeedErrorAlert
+            actionLabel="Retry"
             error={error}
             onRetry={() => {
               void refetch()
@@ -352,6 +362,7 @@ export function Component() {
 
         {shouldShowPartialError ? (
           <ReleaseFeedErrorAlert
+            actionLabel="Retry all releases"
             error={error}
             onRetry={() => {
               void refetch()

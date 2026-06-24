@@ -580,7 +580,7 @@ test.describe('Release Feed route', () => {
     await expect(page.getByText('Cached Release')).toBeVisible()
 
     // Act
-    await page.getByRole('button', { name: 'Retry' }).click()
+    await page.getByRole('button', { name: 'Retry next page' }).click()
 
     // Assert
     await expect(page.getByText('Recovered Release')).toBeVisible()

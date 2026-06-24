@@ -315,7 +315,7 @@ describe('ReleasesRoute', () => {
 
     // Act
     renderWithTheme(<Component />)
-    fireEvent.click(screen.getByRole('button', { name: 'Retry' }))
+    fireEvent.click(screen.getByRole('button', { name: 'Retry all releases' }))
 
     // Assert
     expect(screen.getByText('React Partial')).toBeVisible()
