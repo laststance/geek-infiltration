@@ -10,7 +10,12 @@ import SubscribeFormModalButton from './SubscribeFormModalButton'
 
 const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
   <Stack
+    direction="column-reverse"
+    aria-label="Main navigation"
+    component="aside"
+    data-testid="sidebar"
     sx={{
+      gap: 3,
       alignItems: 'center',
       border: 0,
       margin: 0,
@@ -19,9 +24,6 @@ const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
       minWidth: '70px',
       padding: '8px 0',
     }}
-    direction="column-reverse"
-    gap={3}
-    component="section"
   >
     {children}
   </Stack>

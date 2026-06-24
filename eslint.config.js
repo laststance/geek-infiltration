@@ -1,9 +1,10 @@
 import js from '@eslint/js'
+import eslintReact from '@eslint-react/eslint-plugin'
+import { fixupPluginRules } from '@eslint/compat'
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import importPlugin from 'eslint-plugin-import'
 import prettierPlugin from 'eslint-plugin-prettier/recommended'
-import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
 
@@ -34,9 +35,9 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
-      react,
+      '@eslint-react': eslintReact,
       'react-hooks': reactHooks,
-      import: importPlugin,
+      import: fixupPluginRules(importPlugin),
     },
     rules: {
       // TypeScript recommended (manual since we're not using the wrapper)
@@ -54,10 +55,12 @@ export default [
       '@typescript-eslint/consistent-type-imports': 'warn',
 
       // React
-      ...react.configs.flat.recommended.rules,
-      ...react.configs.flat['jsx-runtime'].rules,
-      'react/prop-types': 'off',
-      'react/display-name': 'warn',
+      ...eslintReact.configs.jsx.rules,
+      '@eslint-react/no-direct-mutation-state': 'error',
+      '@eslint-react/no-missing-key': 'error',
+      '@eslint-react/no-unsafe-component-will-mount': 'warn',
+      '@eslint-react/no-unsafe-component-will-receive-props': 'warn',
+      '@eslint-react/no-unsafe-component-will-update': 'warn',
 
       // React Hooks
       ...reactHooks.configs.recommended.rules,
@@ -94,8 +97,10 @@ export default [
       'no-undef': 'off',
     },
     settings: {
-      react: {
+      'react-x': {
         version: 'detect',
+        importSource: 'react',
+        polymorphicPropName: 'as',
       },
       'import/resolver': {
         typescript: {

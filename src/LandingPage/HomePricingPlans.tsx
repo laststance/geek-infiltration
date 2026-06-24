@@ -153,7 +153,9 @@ function PlanCard({ plan }: PlanCardProps) {
               key={option}
               spacing={1.5}
               direction="row"
-              alignItems="center"
+              sx={{
+                alignItems: 'center',
+              }}
             >
               <Iconify
                 icon={'eva:checkmark-fill'}
@@ -176,11 +178,11 @@ function PlanCard({ plan }: PlanCardProps) {
               <Stack
                 spacing={1.5}
                 direction="row"
-                alignItems="center"
+                key={option}
                 sx={{
+                  alignItems: 'center',
                   ...(disabledLine && { color: 'text.disabled' }),
                 }}
-                key={option}
               >
                 <Iconify
                   icon={'eva:checkmark-fill'}
@@ -197,17 +199,29 @@ function PlanCard({ plan }: PlanCardProps) {
           })}
         </Stack>
 
-        <Stack direction="row" justifyContent="flex-end">
+        <Stack
+          direction="row"
+          sx={{
+            justifyContent: 'flex-end',
+          }}
+        >
           <Link
-            color="text.secondary"
             underline="always"
             target="_blank"
             rel="noopener"
             href="https://material-ui.com/store/license/#i-standard-license"
-            sx={{ alignItems: 'center', display: 'flex', typography: 'body2' }}
+            sx={{
+              color: 'text.secondary',
+              alignItems: 'center',
+              display: 'flex',
+              typography: 'body2',
+            }}
           >
             Learn more{' '}
-            <Iconify icon={'eva:chevron-right-fill'} width={20} height={20} />
+            <Iconify
+              icon={'eva:chevron-right-fill'}
+              sx={{ height: 20, width: 20 }}
+            />
           </Link>
         </Stack>
 

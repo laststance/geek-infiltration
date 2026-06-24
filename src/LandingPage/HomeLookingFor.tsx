@@ -18,9 +18,11 @@ export function HomeLookingFor() {
       <Container>
         <Grid
           container
-          alignItems="center"
-          justifyContent="space-between"
           spacing={{ md: 3, xs: 8 }}
+          sx={{
+            alignItems: 'center',
+            justifyContent: 'space-between',
+          }}
         >
           <Grid
             size={{ xs: 12, md: 4 }}

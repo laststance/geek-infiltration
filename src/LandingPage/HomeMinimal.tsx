@@ -146,7 +146,7 @@ export function HomeMinimal() {
                     }),
                   }}
                 />
-                <Typography variant="h5" paragraph>
+                <Typography component="p" variant="h5" sx={{ mb: 2 }}>
                   {card.title}
                 </Typography>
                 <Typography

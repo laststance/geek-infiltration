@@ -28,7 +28,7 @@ interface ChartPaletteOptions {
   yellow: string[]
 }
 
-declare module '@mui/material/styles/createPalette' {
+declare module '@mui/material/styles' {
   interface TypeBackground {
     neutral: string
   }
@@ -45,8 +45,8 @@ declare module '@mui/material/styles/createPalette' {
     gradients: GradientsPaletteOptions
   }
   interface PaletteOptions {
-    chart: ChartPaletteOptions
-    gradients: GradientsPaletteOptions
+    chart?: ChartPaletteOptions
+    gradients?: GradientsPaletteOptions
   }
 }
 

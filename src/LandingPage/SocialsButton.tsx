@@ -27,7 +27,13 @@ export default function SocialsButton({
   ]
 
   return (
-    <Stack direction="row" flexWrap="wrap" alignItems="center">
+    <Stack
+      direction="row"
+      sx={{
+        flexWrap: 'wrap',
+        alignItems: 'center',
+      }}
+    >
       {SOCIALS.map((social) => {
         const { name, icon, path, socialColor } = social
         return simple ? (

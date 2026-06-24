@@ -20,12 +20,21 @@ export default function MainFooter() {
     <RootStyle>
       <Divider />
       <Container>
-        <Grid container justifyContent="flex-end" alignItems="center">
+        <Grid
+          container
+          sx={{
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+          }}
+        >
           <Grid size={{ md: 3 }}>
             <Stack
               direction="row"
-              justifyContent={{ md: 'flex-end', xs: 'center' }}
-              sx={{ mb: 5, mt: 5 }}
+              sx={{
+                justifyContent: { md: 'flex-end', xs: 'center' },
+                mb: 5,
+                mt: 5,
+              }}
             >
               <SocialsButton sx={{ mx: 0.5 }} />
             </Stack>

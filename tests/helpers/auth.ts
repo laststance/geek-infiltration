@@ -85,26 +85,31 @@ export async function loginWithMockOAuth(page: Page) {
 }
 
 /**
- * Set authentication state directly in localStorage
- * This bypasses the OAuth flow for tests that don't need to verify it
+ * Sets persisted authentication before tests that need app access without exercising OAuth.
+ * @param page - Playwright page whose localStorage should receive Redux Persist state.
+ * @param accessToken - Mock GitHub token to persist.
+ * @returns Resolves after the page reloads with persisted auth applied.
+ * @example
+ * await setAuthState(page, 'mock-token')
  */
 export async function setAuthState(
   page: Page,
   accessToken = MOCK_ACCESS_TOKEN,
 ) {
   await page.goto('/')
+  await page.waitForLoadState('networkidle')
 
   // Set Redux persist state with auth token
   await page.evaluate((token) => {
     const reduxState = {
-      authenticator: {
+      authenticator: JSON.stringify({
         accessToken: token,
-      },
-      subscribed: {},
-      _persist: {
+      }),
+      subscribed: JSON.stringify({ subscribed: [] }),
+      _persist: JSON.stringify({
         version: -1,
         rehydrated: true,
-      },
+      }),
     }
     localStorage.setItem(
       'persist:Geek-Infiltration',
