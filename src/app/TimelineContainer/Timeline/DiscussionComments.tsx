@@ -43,7 +43,16 @@ const DiscussionComments: React.FC<Props> = memo(({ user }) => {
       >
         {nodeList.map(
           (
-            { node: { author, bodyHTML, discussion, publishedAt, url } },
+            {
+              node: {
+                author,
+                bodyHTML,
+                createdAt,
+                discussion,
+                publishedAt,
+                url,
+              },
+            },
             i: number,
           ) => (
             <ListItem disableGutters key={i} component="li">
@@ -52,7 +61,7 @@ const DiscussionComments: React.FC<Props> = memo(({ user }) => {
                 repositoryName={discussion!.repository.nameWithOwner}
                 bodyHTML={bodyHTML}
                 commentLink={url}
-                publishedAt={publishedAt}
+                publishedAt={publishedAt ?? createdAt}
                 ticketAuthorName={discussion!.author!.login}
                 ticketLink={discussion!.url}
                 ticketTitle={discussion!.title}

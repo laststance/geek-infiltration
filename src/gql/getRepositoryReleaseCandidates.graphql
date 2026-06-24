@@ -1,0 +1,37 @@
+query getRepositoryReleaseCandidates(
+  $owner: String!
+  $name: String!
+  $releaseCandidateFirst: Int = 5
+  $releaseAfter: String
+) {
+  repository(owner: $owner, name: $name) {
+    id
+    nameWithOwner
+    url
+    owner {
+      login
+      avatarUrl
+    }
+    releases(
+      first: $releaseCandidateFirst
+      after: $releaseAfter
+      orderBy: { field: CREATED_AT, direction: DESC }
+    ) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      nodes {
+        id
+        name
+        tagName
+        description
+        isDraft
+        isPrerelease
+        publishedAt
+        createdAt
+        url
+      }
+    }
+  }
+}

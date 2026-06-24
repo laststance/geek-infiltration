@@ -48,7 +48,17 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ user }) => {
       >
         {nodeList.map(
           (
-            { node: { author, bodyHTML, issue, publishedAt, repository, url } },
+            {
+              node: {
+                author,
+                bodyHTML,
+                createdAt,
+                issue,
+                publishedAt,
+                repository,
+                url,
+              },
+            },
             i: number,
           ) => (
             <ListItem disableGutters key={i} component="li">
@@ -57,7 +67,7 @@ const PullRequest_Issue_Comments: React.FC<Props> = memo(({ user }) => {
                 repositoryName={repository.nameWithOwner}
                 bodyHTML={bodyHTML}
                 commentLink={url}
-                publishedAt={publishedAt}
+                publishedAt={publishedAt ?? createdAt}
                 ticketAuthorName={issue.author!.login}
                 ticketLink={issue.url}
                 ticketTitle={issue.title}

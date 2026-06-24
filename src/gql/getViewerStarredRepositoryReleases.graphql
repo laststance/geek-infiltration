@@ -1,0 +1,49 @@
+query getViewerStarredRepositoryReleases(
+  $starredFirst: Int = 50
+  $starredAfter: String
+  $releaseCandidateFirst: Int = 5
+) {
+  viewer {
+    starredRepositories(
+      first: $starredFirst
+      after: $starredAfter
+      orderBy: { field: STARRED_AT, direction: DESC }
+    ) {
+      totalCount
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
+      nodes {
+        id
+        name
+        nameWithOwner
+        url
+        owner {
+          login
+          avatarUrl
+        }
+        releases(
+          first: $releaseCandidateFirst
+          orderBy: { field: CREATED_AT, direction: DESC }
+        ) {
+          pageInfo {
+            hasNextPage
+            endCursor
+          }
+          nodes {
+            id
+            name
+            tagName
+            description
+            isDraft
+            isPrerelease
+            publishedAt
+            createdAt
+            url
+          }
+        }
+      }
+    }
+  }
+}
