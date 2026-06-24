@@ -1,0 +1,74 @@
+language: 'ja-JP'
+tone_instructions: '簡潔で実行可能に。挙動リスク、テスト不足、CI、依存関係の問題を優先し、コード識別子・コマンド・パスは英語のまま扱う。'
+
+reviews:
+  profile: 'assertive'
+  request_changes_workflow: false
+  high_level_summary: true
+  review_status: true
+  review_details: true
+  commit_status: true
+  fail_commit_status: true
+  collapse_walkthrough: true
+  changed_files_summary: true
+  sequence_diagrams: false
+  estimate_code_review_effort: true
+  assess_linked_issues: true
+  related_issues: true
+  related_prs: true
+  suggested_labels: true
+  auto_apply_labels: false
+  suggested_reviewers: false
+  auto_assign_reviewers: false
+  in_progress_fortune: false
+  poem: false
+  path_filters:
+    - '!dist/**'
+    - '!node_modules/**'
+    - '!coverage/**'
+    - '!playwright-report/**'
+    - '!test-results/**'
+    - '!src/generated/graphql.ts'
+  path_instructions:
+    - path: 'src/**/*.{ts,tsx}'
+      instructions: 'React/TypeScriptの挙動差分、Redux Persist/RTK Query state、MUI accessible name、ユーザーに見える退行を優先して確認してください。'
+    - path: 'tests/**/*.spec.ts'
+      instructions: 'Playwright E2Eは現在実装済みのユースケースをDAMPに検証し、web-first assertionを使い、networkidleや実GitHub依存を避けているか確認してください。'
+    - path: '.github/workflows/*.yml'
+      instructions: 'GitHub Actionsは最小権限、concurrency、pnpm frozen lockfile、remote action SHA pinning、Playwright browser install/report artifactの有無を確認してください。'
+    - path: 'package.json'
+      instructions: 'dependency/script変更はpnpm lockfile、Node/pnpm version、CI commandとの整合性を確認してください。'
+  auto_review:
+    enabled: true
+    drafts: false
+    auto_incremental_review: true
+  pre_merge_checks:
+    title:
+      mode: 'warning'
+      requirements: 'Title should be concise and describe the observable behavior or CI/review change.'
+    description:
+      mode: 'warning'
+    custom_checks:
+      - name: 'E2E coverage stays current'
+        mode: 'warning'
+        instructions: 'If a PR changes authentication, sidebar subscription flow, timeline rendering, GraphQL query behavior, or Playwright configuration, verify that E2E tests cover the observable user behavior and that CI runs Playwright.'
+      - name: 'No live GitHub dependency in E2E'
+        mode: 'warning'
+        instructions: 'Fail this check if Playwright E2E requires a real GitHub login/session or live GitHub GraphQL data instead of deterministic mocks, except for explicitly documented manual QA.'
+  tools:
+    github-checks:
+      enabled: true
+      timeout_ms: 900000
+    actionlint:
+      enabled: true
+    zizmor:
+      enabled: true
+    yamllint:
+      enabled: true
+    markdownlint:
+      enabled: true
+    gitleaks:
+      enabled: true
+
+chat:
+  auto_reply: true

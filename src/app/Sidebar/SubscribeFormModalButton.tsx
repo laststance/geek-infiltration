@@ -9,6 +9,7 @@ interface Props {
 const SubscribeFormModalButton: React.FC<Props> = memo(({ openModal }) => {
   return (
     <Button
+      aria-label="Add subscription"
       sx={{
         borderRadius: '15px',
         borderWidth: '3px',

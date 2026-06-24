@@ -62,44 +62,27 @@ export async function setupAuthMocks(page: Page) {
 }
 
 /**
- * Login with mocked OAuth flow
- * This navigates to the app, triggers OAuth, and completes authentication
+ * Opens the app OAuth callback URL so Authenticator exchanges the mocked code for a token.
+ * @param page - Playwright page that should receive the authenticated app state.
+ * @returns Resolves after the app renders with the mocked access token persisted.
+ * @example
+ * await completeMockOAuthCallback(page)
  */
-export async function loginWithMockOAuth(page: Page) {
+export async function completeMockOAuthCallback(page: Page) {
   await setupAuthMocks(page)
-
-  // Navigate to app
-  await page.goto('/')
-
-  // Click the GitHub OAuth button (assuming it exists on LandingPage)
-  // Note: Adjust selector based on actual implementation
-  await page.click('[data-testid="github-login-button"]')
-
-  // Wait for redirect and token storage
-  await page.waitForLoadState('networkidle')
-
-  // Verify we're authenticated (App should be visible, not LandingPage)
-  await page.waitForSelector('[data-testid="app-container"]', {
-    timeout: 5000,
-  })
+  await page.goto(`/?code=${MOCK_AUTH_CODE}`, { waitUntil: 'domcontentloaded' })
+  await page.getByTestId('app-container').waitFor({ state: 'visible' })
 }
 
 /**
- * Sets persisted authentication before tests that need app access without exercising OAuth.
- * @param page - Playwright page whose localStorage should receive Redux Persist state.
+ * Writes the Redux Persist auth shape directly so tests can start from an authenticated shell.
+ * @param page - Playwright page on the app origin.
  * @param accessToken - Mock GitHub token to persist.
- * @returns Resolves after the page reloads with persisted auth applied.
+ * @returns Resolves after localStorage and sessionStorage are updated.
  * @example
- * await setAuthState(page, 'mock-token')
+ * await writePersistedAuthState(page, 'mock-token')
  */
-export async function setAuthState(
-  page: Page,
-  accessToken = MOCK_ACCESS_TOKEN,
-) {
-  await page.goto('/')
-  await page.waitForLoadState('networkidle')
-
-  // Set Redux persist state with auth token
+async function writePersistedAuthState(page: Page, accessToken: string) {
   await page.evaluate((token) => {
     const reduxState = {
       authenticator: JSON.stringify({
@@ -115,24 +98,63 @@ export async function setAuthState(
       'persist:Geek-Infiltration',
       JSON.stringify(reduxState),
     )
+    sessionStorage.clear()
   }, accessToken)
-
-  // Reload to apply state
-  await page.reload()
-  await page.waitForLoadState('networkidle')
 }
 
 /**
- * Clear authentication state
+ * Sets persisted authentication before tests that need app access without exercising OAuth.
+ * @param page - Playwright page whose localStorage should receive Redux Persist state.
+ * @param accessToken - Mock GitHub token to persist.
+ * @returns Resolves after the page reloads with persisted auth applied.
+ * @example
+ * await setAuthState(page, 'mock-token')
+ */
+export async function setAuthState(
+  page: Page,
+  accessToken = MOCK_ACCESS_TOKEN,
+) {
+  await page.goto('/og-image.png', { timeout: 10000, waitUntil: 'load' })
+  await writePersistedAuthState(page, accessToken)
+
+  for (let attempt = 0; attempt < 3; attempt++) {
+    try {
+      // Load the app after storage is ready, then wait for the authenticated tree to hydrate.
+      await page.goto('/', {
+        timeout: 10000,
+        waitUntil: 'domcontentloaded',
+      })
+      await page
+        .getByTestId('app-container')
+        .waitFor({ state: 'visible', timeout: 7000 })
+      return
+    } catch (error) {
+      if (attempt === 2) throw error
+
+      // Retry from a static page to avoid staying stuck in a lazy-loading fallback.
+      await page.goto('/og-image.png', { timeout: 10000, waitUntil: 'load' })
+      await writePersistedAuthState(page, accessToken)
+    }
+  }
+}
+
+/**
+ * Clears persisted auth data before checking the unauthenticated landing state.
+ * @param page - Playwright page whose browser storage should be cleared.
+ * @returns Resolves after the landing page login button is visible.
+ * @example
+ * await clearAuthState(page)
  */
 export async function clearAuthState(page: Page) {
-  await page.goto('/')
+  await page.goto('/og-image.png', { waitUntil: 'load' })
   await page.evaluate(() => {
     localStorage.removeItem('persist:Geek-Infiltration')
     sessionStorage.clear()
   })
-  await page.reload()
-  await page.waitForLoadState('networkidle')
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
+  await page
+    .getByRole('link', { name: /login with github/i })
+    .waitFor({ state: 'visible' })
 }
 
 /**

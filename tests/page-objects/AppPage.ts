@@ -23,15 +23,11 @@ export class AppPagePO {
     this.page = page
 
     // Main app container
-    this.appContainer = page.locator('main[role="main"], main')
+    this.appContainer = page.getByTestId('app-container')
 
     // Sub-components
     this.sidebar = new SidebarPO(page)
-    this.timelineContainer = page.locator(
-      '[data-testid="timeline-container"], ' +
-        'main > div:nth-child(2), ' + // Second child of main (after sidebar)
-        'div:has(> article)', // Container with articles
-    )
+    this.timelineContainer = page.getByTestId('timeline-container')
 
     // Timeline items (repositories, issues, etc.)
     this.timelineItems = this.timelineContainer.locator(
@@ -48,7 +44,7 @@ export class AppPagePO {
    * Navigate to app (assumes authentication is already set)
    */
   async goto() {
-    await this.page.goto('/')
+    await this.page.goto('/', { waitUntil: 'domcontentloaded' })
     await this.waitForVisible()
   }
 
@@ -110,7 +106,6 @@ export class AppPagePO {
   async clickLoadMore() {
     if (await this.loadMoreButton.isVisible()) {
       await this.loadMoreButton.click()
-      await this.page.waitForLoadState('networkidle')
     }
   }
 
@@ -138,7 +133,6 @@ export class AppPagePO {
     if (await searchInput.isVisible()) {
       await searchInput.fill(query)
       await searchInput.press('Enter')
-      await this.page.waitForLoadState('networkidle')
     }
   }
 

@@ -11,7 +11,7 @@ import { styled } from '@mui/material/styles'
 
 import SocialsButton from './SocialsButton'
 
-const RootStyle = styled('div')(({ theme }) => ({
+const RootStyle = styled('footer')(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
 }))
 

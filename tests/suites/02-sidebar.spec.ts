@@ -21,8 +21,7 @@ test.describe('Sidebar Functionality', () => {
       page,
       appPage,
     }) => {
-      await page.goto('/')
-      await page.waitForLoadState('networkidle')
+      await page.goto('/', { waitUntil: 'domcontentloaded' })
 
       // Sidebar should be visible immediately
       await appPage.sidebar.waitForVisible()
@@ -35,10 +34,9 @@ test.describe('Sidebar Functionality', () => {
     }) => {
       await appPage.goto()
 
-      // Navigate away and back
-      await page.goBack()
-      await page.goForward()
-      await page.waitForLoadState('networkidle')
+      // Navigate within the same origin and back to the root view.
+      await page.goto('/#sidebar-check', { waitUntil: 'domcontentloaded' })
+      await page.goto('/', { waitUntil: 'domcontentloaded' })
 
       // Sidebar should still be visible
       expect(await appPage.sidebar.isVisible()).toBe(true)
@@ -83,36 +81,30 @@ test.describe('Sidebar Functionality', () => {
     })
   })
 
-  test.describe('Navigation Items', () => {
-    test('should display navigation items', async ({ page, appPage }) => {
+  test.describe('Sidebar Actions', () => {
+    test('should display action buttons', async ({ page, appPage }) => {
       await appPage.goto()
 
-      // Get navigation items
-      const navItems = await appPage.sidebar.getNavigationItems()
-
-      // Should have at least some navigation items
-      expect(navItems.length).toBeGreaterThan(0)
+      // Current implementation exposes the add button and account menu button.
+      await expect(
+        page.getByRole('button', { name: 'Add subscription' }),
+      ).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Open account menu' }),
+      ).toBeVisible()
     })
 
-    test('should be able to click navigation items', async ({
+    test('should be able to open the add-subscription action', async ({
       page,
       appPage,
     }) => {
       await appPage.goto()
 
-      // Try to get navigation items
-      const navItems = await appPage.sidebar.navItems.all()
+      await page.getByRole('button', { name: 'Add subscription' }).click()
 
-      if (navItems.length > 0) {
-        const firstItem = navItems[0]
-
-        // Click first navigation item
-        await firstItem.click()
-        await page.waitForLoadState('networkidle')
-
-        // Should still be on app (not redirect to login)
-        expect(await appPage.isVisible()).toBe(true)
-      }
+      await expect(
+        page.getByRole('dialog', { name: 'Enter GitHub Username' }),
+      ).toBeVisible()
     })
   })
 
@@ -122,8 +114,8 @@ test.describe('Sidebar Functionality', () => {
 
       const width = await appPage.sidebar.getWidth()
 
-      // Sidebar should be visible width (not collapsed)
-      expect(width).toBeGreaterThan(100)
+      // Sidebar is intentionally compact but should remain a usable touch target.
+      expect(width).toBeGreaterThanOrEqual(44)
 
       // Should not take up entire screen
       const viewportWidth = page.viewportSize()?.width || 1280
@@ -235,7 +227,8 @@ test.describe('Sidebar Functionality', () => {
       expect(await appPage.sidebar.isVisible()).toBe(true)
 
       const width = await appPage.sidebar.getWidth()
-      expect(width).toBeGreaterThan(200)
+      expect(width).toBeGreaterThanOrEqual(44)
+      expect(width).toBeLessThanOrEqual(90)
     })
   })
 

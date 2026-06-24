@@ -22,9 +22,11 @@ export class LandingPagePO {
     this.page = page
 
     // Main sections
-    this.mainHeader = page.locator('header, [role="banner"]')
-    this.mainFooter = page.locator('footer, [role="contentinfo"]')
-    this.homeSection = page.locator('main, [role="main"]')
+    this.mainHeader = page.locator('header, [role="banner"], .MuiAppBar-root')
+    this.mainFooter = page
+      .getByRole('contentinfo')
+      .filter({ hasText: /Laststance\.io/ })
+    this.homeSection = page.getByRole('main')
 
     // GitHub OAuth button - actual implementation uses "Login with GitHub" text
     this.githubLoginButton = page.locator(
@@ -40,8 +42,7 @@ export class LandingPagePO {
    * Navigate to landing page
    */
   async goto() {
-    await this.page.goto('/')
-    await this.page.waitForLoadState('networkidle')
+    await this.page.goto('/', { waitUntil: 'domcontentloaded' })
   }
 
   /**
@@ -55,7 +56,7 @@ export class LandingPagePO {
    * Wait for landing page to be visible
    */
   async waitForVisible() {
-    await this.mainHeader.waitFor({ state: 'visible' })
+    await this.githubLoginButton.waitFor({ state: 'visible' })
     await this.homeSection.waitFor({ state: 'visible' })
   }
 

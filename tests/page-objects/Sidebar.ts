@@ -23,6 +23,8 @@ export class SidebarPO {
   readonly navPullRequests: Locator
 
   // Actions
+  readonly addSubscriptionButton: Locator
+  readonly accountMenuButton: Locator
   readonly settingsButton: Locator
   readonly logoutButton: Locator
   readonly toggleButton: Locator
@@ -52,7 +54,7 @@ export class SidebarPO {
       .first()
 
     // Navigation items
-    this.navItems = this.sidebarContainer.locator('a, button[role="link"]')
+    this.navItems = this.sidebarContainer.getByRole('link')
     this.navHome = this.sidebarContainer.locator(
       'a:has-text("Home"), button:has-text("Home")',
     )
@@ -67,12 +69,16 @@ export class SidebarPO {
     )
 
     // Actions
+    this.addSubscriptionButton = this.sidebarContainer.getByRole('button', {
+      name: 'Add subscription',
+    })
+    this.accountMenuButton = this.sidebarContainer.getByRole('button', {
+      name: 'Open account menu',
+    })
     this.settingsButton = this.sidebarContainer.locator(
       '[data-testid="settings-button"], button[aria-label*="Settings"]',
     )
-    this.logoutButton = this.sidebarContainer.locator(
-      '[data-testid="logout-button"], button:has-text("Logout"), button:has-text("Sign out")',
-    )
+    this.logoutButton = page.getByRole('menuitem', { name: 'Logout' })
     this.toggleButton = this.sidebarContainer.locator(
       '[data-testid="sidebar-toggle"], button[aria-label*="toggle"]',
     )
@@ -101,6 +107,8 @@ export class SidebarPO {
    * Get user name from sidebar
    */
   async getUserName(): Promise<string> {
+    if ((await this.userName.count()) === 0) return ''
+    if (!(await this.userName.isVisible().catch(() => false))) return ''
     return (await this.userName.textContent()) || ''
   }
 
@@ -128,7 +136,6 @@ export class SidebarPO {
     await this.sidebarContainer
       .locator(`a:has-text("${text}"), button:has-text("${text}")`)
       .click()
-    await this.page.waitForLoadState('networkidle')
   }
 
   /**
@@ -136,7 +143,6 @@ export class SidebarPO {
    */
   async clickHome() {
     await this.navHome.click()
-    await this.page.waitForLoadState('networkidle')
   }
 
   /**
@@ -144,7 +150,6 @@ export class SidebarPO {
    */
   async clickRepositories() {
     await this.navRepositories.click()
-    await this.page.waitForLoadState('networkidle')
   }
 
   /**
@@ -152,7 +157,6 @@ export class SidebarPO {
    */
   async clickIssues() {
     await this.navIssues.click()
-    await this.page.waitForLoadState('networkidle')
   }
 
   /**
@@ -160,7 +164,6 @@ export class SidebarPO {
    */
   async clickPullRequests() {
     await this.navPullRequests.click()
-    await this.page.waitForLoadState('networkidle')
   }
 
   /**
@@ -174,8 +177,10 @@ export class SidebarPO {
    * Click logout button
    */
   async clickLogout() {
+    if (!(await this.logoutButton.isVisible().catch(() => false))) {
+      await this.accountMenuButton.click()
+    }
     await this.logoutButton.click()
-    await this.page.waitForLoadState('networkidle')
   }
 
   /**

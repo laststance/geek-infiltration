@@ -1,7 +1,6 @@
 import { test, expect } from '../fixtures/auth'
 import {
-  setupAuthMocks,
-  clearAuthState,
+  completeMockOAuthCallback,
   getAuthToken,
   isAuthenticated,
   MOCK_ACCESS_TOKEN,
@@ -34,7 +33,6 @@ test.describe('Authentication Flow', () => {
       await landingPage.goto()
 
       // Verify GitHub login button is visible
-      expect(await landingPage.isGitHubLoginButtonVisible()).toBe(true)
       await expect(landingPage.githubLoginButton).toBeVisible()
       await expect(landingPage.githubLoginButton).toHaveText(
         /Login with GitHub/i,
@@ -74,40 +72,21 @@ test.describe('Authentication Flow', () => {
       page,
       landingPage,
     }) => {
-      // Setup OAuth mocks
-      await setupAuthMocks(page)
-
-      // Navigate to landing page
-      await landingPage.goto()
-
-      // Verify we're on Landing Page
-      expect(await landingPage.isVisible()).toBe(true)
-
-      // Click GitHub login button
-      await landingPage.clickGitHubLogin()
-
-      // Wait for OAuth redirect and app to load
-      await page.waitForLoadState('networkidle')
+      await completeMockOAuthCallback(page)
 
       // Verify we're now authenticated and App is visible
       const authenticated = await isAuthenticated(page)
       expect(authenticated).toBe(true)
 
       // Verify App container is visible (not Landing Page)
-      await expect(page.locator('main[role="main"]')).toBeVisible()
+      await expect(page.getByTestId('app-container')).toBeVisible()
 
       // Verify Landing Page is no longer visible
-      expect(await landingPage.isVisible()).toBe(false)
+      await expect(landingPage.githubLoginButton).not.toBeVisible()
     })
 
-    test('should store access token in Redux persist', async ({
-      page,
-      landingPage,
-    }) => {
-      await setupAuthMocks(page)
-      await landingPage.goto()
-      await landingPage.clickGitHubLogin()
-      await page.waitForLoadState('networkidle')
+    test('should store access token in Redux persist', async ({ page }) => {
+      await completeMockOAuthCallback(page)
 
       // Verify token is stored
       const token = await getAuthToken(page)
@@ -136,11 +115,7 @@ test.describe('Authentication Flow', () => {
         })
       })
 
-      await landingPage.goto()
-
-      // Attempt OAuth (this will fail)
-      await landingPage.githubLoginButton.click()
-      await page.waitForLoadState('networkidle')
+      await page.goto('/?code=expired_code', { waitUntil: 'domcontentloaded' })
 
       // Should still be on Landing Page (not authenticated)
       expect(await landingPage.isVisible()).toBe(true)
@@ -178,8 +153,7 @@ test.describe('Authentication Flow', () => {
       expect(await isAuthenticated(page)).toBe(true)
 
       // Reload page
-      await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.reload({ waitUntil: 'domcontentloaded' })
 
       // Should still be authenticated
       expect(await isAuthenticated(page)).toBe(true)
@@ -193,10 +167,9 @@ test.describe('Authentication Flow', () => {
     }) => {
       await appPage.goto()
 
-      // Navigate away and back
-      await page.goto('/')
-      await page.goBack()
-      await page.waitForLoadState('networkidle')
+      // Navigate within the same origin and reload to verify persisted auth state survives navigation.
+      await page.goto('/#timeline', { waitUntil: 'domcontentloaded' })
+      await page.goto('/', { waitUntil: 'domcontentloaded' })
 
       // Should still be authenticated
       expect(await isAuthenticated(page)).toBe(true)
@@ -214,12 +187,8 @@ test.describe('Authentication Flow', () => {
       await appPage.goto()
       expect(await isAuthenticated(page)).toBe(true)
 
-      // Clear auth state (simulating logout)
-      await clearAuthState(page)
-
-      // Navigate to root
-      await page.goto('/')
-      await page.waitForLoadState('networkidle')
+      // Logout through the visible account menu.
+      await appPage.sidebar.clickLogout()
 
       // Should be back on Landing Page
       expect(await landingPage.isVisible()).toBe(true)
@@ -237,14 +206,30 @@ test.describe('Authentication Flow', () => {
       expect(await isAuthenticated(page)).toBe(true)
 
       // Logout
-      await clearAuthState(page)
+      await appPage.sidebar.clickLogout()
+      await page.waitForFunction(() => {
+        const persistedState = localStorage.getItem('persist:Geek-Infiltration')
+        if (!persistedState) return true
+
+        const state = JSON.parse(persistedState)
+        const authenticator = JSON.parse(state.authenticator || '{}')
+        return authenticator.accessToken === null
+      })
 
       // Verify all auth data is cleared
       const token = await getAuthToken(page)
       expect(token).toBeNull()
 
       const reduxState = await getReduxPersistedState(page)
-      expect(reduxState).toBeNull()
+      if (reduxState === null) {
+        expect(reduxState).toBeNull()
+      } else {
+        expect(reduxState).toHaveProperty('authenticator')
+        const authenticator = JSON.parse(
+          (reduxState as Record<string, string>).authenticator || '{}',
+        )
+        expect(authenticator.accessToken ?? null).toBeNull()
+      }
     })
   })
 
@@ -307,7 +292,7 @@ test.describe('Authentication Flow', () => {
       })
 
       await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should fallback to unauthenticated state
       expect(await isAuthenticated(page)).toBe(false)
@@ -321,26 +306,22 @@ test.describe('Authentication Flow', () => {
 
       // Navigate with missing code parameter
       await page.goto('/?error=access_denied')
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should remain unauthenticated
       expect(await isAuthenticated(page)).toBe(false)
     })
 
-    test('should handle concurrent auth attempts', async ({
-      page,
-      landingPage,
-    }) => {
-      await setupAuthMocks(page)
-      await landingPage.goto()
-
-      // Click login button multiple times rapidly
-      await Promise.all([
-        landingPage.githubLoginButton.click(),
-        landingPage.githubLoginButton.click().catch(() => {}), // May fail, that's ok
-      ])
-
-      await page.waitForLoadState('networkidle')
+    test('should handle concurrent auth attempts', async ({ page }) => {
+      const secondPage = await page.context().newPage()
+      try {
+        await Promise.all([
+          completeMockOAuthCallback(page),
+          completeMockOAuthCallback(secondPage),
+        ])
+      } finally {
+        await secondPage.close()
+      }
 
       // Should be authenticated once
       expect(await isAuthenticated(page)).toBe(true)

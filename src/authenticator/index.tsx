@@ -35,13 +35,18 @@ const Authenticator = memo(() => {
         )
         .then(({ data }) => {
           dispatch(login(data['access_token']))
+        })
+        .catch(() => {
+          // Keep users on the landing page if the OAuth token exchange fails.
+        })
+        .finally(() => {
           setLoading(false)
         })
       window.history.pushState({}, '', url.split('login')[0])
     }
-  }, [isAuthenticated])
+  }, [dispatch, isAuthenticated])
 
-  if (loading) <FullScreenSpinner />
+  if (loading) return <FullScreenSpinner />
   return (
     <Suspense fallback={<FullScreenSpinner />}>
       {accessToken ? <App /> : <LandingPage />}

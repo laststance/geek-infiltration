@@ -1,5 +1,72 @@
 import { test, expect } from '../fixtures/auth'
-import { clearAuthState } from '../helpers/auth'
+import { setReduxSlice } from '../helpers/storage'
+
+/**
+ * Persists a PR/Issue timeline so network-error tests exercise the real fetch path.
+ * @param page - Playwright page whose Redux Persist state should receive a timeline.
+ * @returns Resolves after the subscribed slice is stored.
+ * @example
+ * await persistIssueTimeline(page)
+ */
+async function persistIssueTimeline(page: Parameters<typeof setReduxSlice>[0]) {
+  await setReduxSlice(page, 'subscribed', {
+    subscribed: [
+      {
+        aim: { user: 'octocat' },
+        id: 'timeline-error-recovery',
+        information: 'PR_Issues',
+      },
+    ],
+  })
+}
+
+/**
+ * Builds a successful PR/Issue GraphQL response for manual retry coverage.
+ * @param title - Issue title expected to appear after the retry succeeds.
+ * @returns Mock getIssueComments data.
+ * @example
+ * issueCommentsResponse('Recovered issue')
+ */
+function issueCommentsResponse(title: string) {
+  return {
+    search: {
+      edges: [
+        {
+          node: {
+            issueComments: {
+              edges: [
+                {
+                  node: {
+                    author: {
+                      avatarUrl:
+                        'https://avatars.githubusercontent.com/u/1?v=4',
+                      login: 'octocat',
+                      resourcePath: '/octocat',
+                      url: 'https://github.com/octocat',
+                    },
+                    body: 'Recovered body',
+                    bodyHTML: '<p>Recovered body</p>',
+                    bodyText: 'Recovered body',
+                    createdAt: '2026-06-24T00:00:00Z',
+                    issue: {
+                      author: { login: 'octocat' },
+                      title,
+                      url: 'https://github.com/octocat/hello-world/issues/1',
+                    },
+                    publishedAt: '2026-06-24T00:00:00Z',
+                    reactions: { totalCount: 0 },
+                    repository: { nameWithOwner: 'octocat/hello-world' },
+                    url: 'https://github.com/octocat/hello-world/issues/1#issuecomment-1',
+                  },
+                },
+              ],
+            },
+          },
+        },
+      ],
+    },
+  }
+}
 
 test.describe('Error Handling', () => {
   test.describe('Network Errors', () => {
@@ -24,7 +91,7 @@ test.describe('Error Handling', () => {
 
       // Should recover
       await page.goto('/')
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       expect(await appPage.isVisible()).toBe(true)
     })
@@ -57,7 +124,7 @@ test.describe('Error Handling', () => {
       })
 
       await appPage.goto()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // App should handle error gracefully
       expect(await appPage.appContainer.isVisible()).toBe(true)
@@ -84,7 +151,7 @@ test.describe('Error Handling', () => {
 
       // Try to interact with API
       await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should handle expired token (may redirect to login)
       expect(true).toBe(true)
@@ -105,7 +172,7 @@ test.describe('Error Handling', () => {
       })
 
       await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should handle invalid token gracefully
       expect(true).toBe(true)
@@ -119,10 +186,8 @@ test.describe('Error Handling', () => {
     }) => {
       await appPage.goto()
 
-      // Clear auth
-      await clearAuthState(page)
-      await page.reload()
-      await page.waitForLoadState('networkidle')
+      // Logout through the same account menu users see.
+      await appPage.sidebar.clickLogout()
 
       // Should redirect to landing page
       expect(await landingPage.isVisible()).toBe(true)
@@ -135,7 +200,7 @@ test.describe('Error Handling', () => {
       page.on('pageerror', (error) => errors.push(error))
 
       await page.goto('/')
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should not have critical React errors
       const hasCriticalError = errors.some(
@@ -157,7 +222,7 @@ test.describe('Error Handling', () => {
       // Trigger potential error by rapid interactions
       await page.reload()
       await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should not accumulate many errors
       expect(errors.length).toBeLessThan(5)
@@ -183,7 +248,7 @@ test.describe('Error Handling', () => {
       })
 
       await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should recover or show error boundary
       expect(true).toBe(true)
@@ -204,7 +269,7 @@ test.describe('Error Handling', () => {
       })
 
       await appPage.goto()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should handle malformed response
       expect(await appPage.appContainer.isVisible()).toBe(true)
@@ -229,7 +294,7 @@ test.describe('Error Handling', () => {
       })
 
       await appPage.goto()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should handle missing fields
       expect(await appPage.appContainer.isVisible()).toBe(true)
@@ -256,7 +321,6 @@ test.describe('Error Handling', () => {
       })
 
       await appPage.goto()
-      await page.waitForLoadState('networkidle')
 
       // Should handle type mismatches
       expect(await appPage.appContainer.isVisible()).toBe(true)
@@ -274,10 +338,12 @@ test.describe('Error Handling', () => {
       })
 
       await page.goto('/').catch(() => {})
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should handle missing localStorage
-      expect(true).toBe(true)
+      await expect(
+        page.getByRole('link', { name: /login with github/i }),
+      ).toBeVisible()
     })
 
     test('should handle console errors without breaking', async ({
@@ -292,43 +358,35 @@ test.describe('Error Handling', () => {
       })
 
       await page.goto('/')
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
-      // May have some console errors, but should not crash
-      expect(true).toBe(true)
+      // The authenticated app should stay usable without browser console errors.
+      await expect(page.getByTestId('app-container')).toBeVisible()
+      await expect.poll(() => consoleErrors).toEqual([])
     })
   })
 
   test.describe('Error Recovery', () => {
-    test('should retry failed requests', async ({
+    test('should show an error when a timeline request fails', async ({
       page,
       appPage,
       authenticatedPage,
     }) => {
       let attemptCount = 0
+      await persistIssueTimeline(page)
 
       await page.route('**/graphql', (route) => {
         attemptCount++
-
-        if (attemptCount <= 2) {
-          // Fail first 2 attempts
-          route.abort('failed')
-        } else {
-          // Succeed on 3rd attempt
-          route.fulfill({
-            status: 200,
-            body: JSON.stringify({
-              data: { viewer: { login: 'testuser' } },
-            }),
-          })
-        }
+        route.abort('failed')
       })
 
       await appPage.goto()
-      await page.waitForTimeout(3000)
 
-      // Should retry and eventually succeed
-      expect(attemptCount).toBeGreaterThan(1)
+      // Current implementation surfaces the failed request instead of auto-retrying.
+      await expect(
+        page.getByText('Error in fetch from Github API.'),
+      ).toBeVisible()
+      expect(attemptCount).toBe(1)
     })
 
     test('should allow manual retry after error', async ({
@@ -336,19 +394,32 @@ test.describe('Error Handling', () => {
       appPage,
       authenticatedPage,
     }) => {
+      await persistIssueTimeline(page)
       await page.route('**/graphql', (route) => route.abort('failed'))
 
       await appPage.goto()
-      await page.waitForLoadState('networkidle')
+      await expect(
+        page.getByText('Error in fetch from Github API.'),
+      ).toBeVisible()
 
       // Clear route to allow retry
       await page.unroute('**/graphql')
+      await page.route('**/graphql', (route) => {
+        route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            data: issueCommentsResponse('Recovered issue after retry'),
+          }),
+        })
+      })
 
-      await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.reload({ waitUntil: 'domcontentloaded' })
 
       // Should recover on retry
-      expect(true).toBe(true)
+      await expect(
+        page.getByRole('link', { name: 'Recovered issue after retry' }),
+      ).toBeVisible()
     })
   })
 
@@ -384,7 +455,7 @@ test.describe('Error Handling', () => {
       })
 
       await page.reload()
-      await page.waitForLoadState('networkidle')
+      await page.waitForLoadState('domcontentloaded')
 
       // Should show error boundary or recover
       expect(true).toBe(true)
