@@ -90,6 +90,7 @@
     "clean": "rimraf node_modules pnpm-lock.yaml dist",
     "codegen": "graphql-codegen --config codegen.yml",
     "dev": "VITE_CJS_TRACE=true vite",
+    "generate:og-image": "node --experimental-strip-types scripts/generate-og-image.ts",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
     "prettier": "prettier --ignore-unknown --write .",
