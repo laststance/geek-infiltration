@@ -340,9 +340,9 @@ test.describe('Error Handling', () => {
       await page.goto('/').catch(() => {})
       await page.waitForLoadState('domcontentloaded')
 
-      // Should handle missing localStorage
+      // Should handle missing localStorage by leaving at least one login path visible.
       await expect(
-        page.getByRole('link', { name: /login with github/i }),
+        page.getByRole('link', { name: /login with github/i }).first(),
       ).toBeVisible()
     })
 
