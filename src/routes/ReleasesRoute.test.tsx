@@ -1,7 +1,7 @@
 import { ThemeProvider, createTheme } from '@mui/material'
 import { render, screen, within } from '@testing-library/react'
 import type { ReactElement } from 'react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type {
   GetViewerStarredRepositoryReleasesQuery,
@@ -122,6 +122,12 @@ function createViewerQuery(
 describe('ReleasesRoute', () => {
   beforeEach(() => {
     vi.clearAllMocks()
+    vi.useFakeTimers()
+    vi.setSystemTime(new Date('2026-04-02T00:00:00Z'))
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
   })
 
   it('shows release cards newest first with repository, tag, title, avatar, and external link', () => {
@@ -179,6 +185,7 @@ describe('ReleasesRoute', () => {
     expect(within(releaseCards[0]).getByText('React 20')).toBeVisible()
     expect(within(releaseCards[0]).getByText('v20.0.0')).toBeVisible()
     expect(within(releaseCards[0]).getByText('Pre-release')).toBeVisible()
+    expect(within(releaseCards[0]).getByText('1 day ago')).toBeVisible()
     expect(
       within(releaseCards[0]).getByText('React 20 release notes'),
     ).toBeVisible()
