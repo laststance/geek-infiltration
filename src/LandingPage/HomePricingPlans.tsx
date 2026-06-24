@@ -67,7 +67,11 @@ export function HomePricingPlans() {
                     : varFade().inUp
                 }
               >
-                <PlanCard plan={plan} />
+                <PlanCard
+                  plan={plan}
+                  githubAuthUrl={githubAuthUrl}
+                  prepareGitHubAuth={prepareGitHubAuth}
+                />
               </MotionInView>
             </Grid>
           ))}
@@ -105,18 +109,19 @@ export function HomePricingPlans() {
 }
 
 type PlanCardProps = {
+  githubAuthUrl: string
   plan: {
     description: string
     icon: string
     points: string[]
     title: string
   }
+  prepareGitHubAuth: () => void
 }
 
-function PlanCard({ plan }: PlanCardProps) {
+function PlanCard({ githubAuthUrl, plan, prepareGitHubAuth }: PlanCardProps) {
   const { description, icon, points, title } = plan
   const highlighted = title === 'Timeline aggregation'
-  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
 
   return (
     <Card
