@@ -166,6 +166,7 @@ function PlanCard({ plan }: PlanCardProps) {
           fullWidth
           variant={highlighted ? 'contained' : 'outlined'}
           href={GITHUB_AUTH_URL}
+          aria-label={`Login with GitHub for ${title}`}
         >
           Login with GitHub
         </Button>

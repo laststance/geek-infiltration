@@ -4,8 +4,6 @@ import { alpha, styled } from '@mui/material/styles'
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
 
-const IMG = [...Array(10)].map(() => '/og-image.png')
-
 const RootStyle = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(10),
   paddingTop: theme.spacing(15),
@@ -60,26 +58,14 @@ export function HomeCleanInterfaces() {
         </ContentStyle>
 
         <Box sx={{ position: 'relative' }}>
-          {IMG.map((_, index) => (
-            <MotionInView
-              key={index}
-              variants={varFade().inUp}
-              sx={{
-                left: 0,
-                position: 'absolute',
-                top: 0,
-                ...(index === 0 && { zIndex: 8 }),
-                ...(index === 9 && { position: 'relative', zIndex: 9 }),
-              }}
-            >
-              <Image
-                disabledEffect
-                visibleByDefault
-                alt={`Geek Infiltration timeline preview ${index + 1}`}
-                src={IMG[index]}
-              />
-            </MotionInView>
-          ))}
+          <MotionInView variants={varFade().inUp} sx={{ position: 'relative' }}>
+            <Image
+              disabledEffect
+              visibleByDefault
+              alt="Geek Infiltration timeline preview"
+              src="/og-image.png"
+            />
+          </MotionInView>
         </Box>
       </Container>
     </RootStyle>
