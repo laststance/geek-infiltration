@@ -215,7 +215,9 @@ test.describe('Timeline Container', () => {
 
     expect(sidebarBox).toBeTruthy()
     expect(timelineBox).toBeTruthy()
-    expect(timelineBox!.x).toBeGreaterThan(sidebarBox!.x)
+    expect(timelineBox!.x).toBeGreaterThanOrEqual(
+      sidebarBox!.x + sidebarBox!.width,
+    )
     expect(timelineBox!.height).toBeGreaterThan(
       (page.viewportSize()?.height || 720) * 0.8,
     )
@@ -270,7 +272,9 @@ test.describe('Timeline Container', () => {
     await appPage.goto()
     await expect(page.getByRole('heading', { name: 'octocat' })).toBeVisible()
 
-    await page.locator('.MuiToolbar-root:has-text("octocat") button').click()
+    await page
+      .getByRole('button', { name: 'Open octocat timeline settings' })
+      .click()
     await page.getByRole('menuitem', { name: 'delete' }).click()
 
     await expect(

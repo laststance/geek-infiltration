@@ -10,9 +10,20 @@ import { test, expect } from '../fixtures/auth'
  * const input = getUsernameCombobox(page)
  */
 function getUsernameCombobox(page: Page) {
-  return page
-    .getByRole('dialog', { name: 'Enter GitHub Username' })
-    .getByRole('combobox', { name: 'GitHub username' })
+  return getUsernameDialog(page).getByRole('combobox', {
+    name: 'GitHub username',
+  })
+}
+
+/**
+ * Locates the subscription dialog by accessible name so modal checks cannot match stray text.
+ * @param page - Playwright page where the subscription dialog may be open.
+ * @returns The named subscription dialog locator.
+ * @example
+ * await expect(getUsernameDialog(page)).toBeVisible()
+ */
+function getUsernameDialog(page: Page) {
+  return page.getByRole('dialog', { name: 'Enter GitHub Username' })
 }
 
 test.describe('Subscription Flow with Following Suggestions', () => {
@@ -160,7 +171,7 @@ test.describe('Subscription Flow with Following Suggestions', () => {
       await addButton.click()
 
       // Modal should be visible with title
-      await expect(page.getByText('Enter GitHub Username')).toBeVisible()
+      await expect(getUsernameDialog(page)).toBeVisible()
     })
   })
 
@@ -173,7 +184,7 @@ test.describe('Subscription Flow with Following Suggestions', () => {
 
       // Open modal
       await page.getByRole('button', { name: 'Add subscription' }).click()
-      await expect(page.getByText('Enter GitHub Username')).toBeVisible()
+      await expect(getUsernameDialog(page)).toBeVisible()
 
       // Click the autocomplete input
       const input = getUsernameCombobox(page)
@@ -250,7 +261,7 @@ test.describe('Subscription Flow with Following Suggestions', () => {
       await page.getByRole('button', { name: 'Add' }).click()
 
       // Modal should close after successful submission
-      await expect(page.getByText('Enter GitHub Username')).not.toBeVisible()
+      await expect(getUsernameDialog(page)).not.toBeVisible()
 
       // Added subscription should render a PR/Issue timeline with mocked comments.
       await expect(page.getByRole('heading', { name: 'octocat' })).toBeVisible()
@@ -286,7 +297,7 @@ test.describe('Subscription Flow with Following Suggestions', () => {
       await page.getByRole('button', { name: 'Add' }).click()
 
       // Modal should close
-      await expect(page.getByText('Enter GitHub Username')).not.toBeVisible()
+      await expect(getUsernameDialog(page)).not.toBeVisible()
 
       // Added subscription should render a Discussion timeline with mocked comments.
       await expect(

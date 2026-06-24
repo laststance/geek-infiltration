@@ -23,8 +23,10 @@ export class LandingPagePO {
 
     // Main sections
     this.mainHeader = page.locator('header, [role="banner"], .MuiAppBar-root')
-    this.mainFooter = page.getByText(/Laststance\.io/)
-    this.homeSection = page.locator('main, [role="main"], body')
+    this.mainFooter = page
+      .getByRole('contentinfo')
+      .filter({ hasText: /Laststance\.io/ })
+    this.homeSection = page.getByRole('main')
 
     // GitHub OAuth button - actual implementation uses "Login with GitHub" text
     this.githubLoginButton = page.locator(

@@ -54,7 +54,7 @@ export class SidebarPO {
       .first()
 
     // Navigation items
-    this.navItems = this.sidebarContainer.locator('a, button')
+    this.navItems = this.sidebarContainer.getByRole('link')
     this.navHome = this.sidebarContainer.locator(
       'a:has-text("Home"), button:has-text("Home")',
     )

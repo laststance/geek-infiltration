@@ -21,8 +21,7 @@ test.describe('Sidebar Functionality', () => {
       page,
       appPage,
     }) => {
-      await page.goto('/')
-      await page.waitForLoadState('domcontentloaded')
+      await page.goto('/', { waitUntil: 'domcontentloaded' })
 
       // Sidebar should be visible immediately
       await appPage.sidebar.waitForVisible()
@@ -86,11 +85,13 @@ test.describe('Sidebar Functionality', () => {
     test('should display action buttons', async ({ page, appPage }) => {
       await appPage.goto()
 
-      // Get sidebar action controls
-      const navItems = await appPage.sidebar.getNavigationItems()
-
       // Current implementation exposes the add button and account menu button.
-      expect(navItems.length).toBeGreaterThan(0)
+      await expect(
+        page.getByRole('button', { name: 'Add subscription' }),
+      ).toBeVisible()
+      await expect(
+        page.getByRole('button', { name: 'Open account menu' }),
+      ).toBeVisible()
     })
 
     test('should be able to open the add-subscription action', async ({
@@ -101,7 +102,9 @@ test.describe('Sidebar Functionality', () => {
 
       await page.getByRole('button', { name: 'Add subscription' }).click()
 
-      await expect(page.getByText('Enter GitHub Username')).toBeVisible()
+      await expect(
+        page.getByRole('dialog', { name: 'Enter GitHub Username' }),
+      ).toBeVisible()
     })
   })
 

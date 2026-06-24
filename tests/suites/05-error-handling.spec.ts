@@ -341,7 +341,9 @@ test.describe('Error Handling', () => {
       await page.waitForLoadState('domcontentloaded')
 
       // Should handle missing localStorage
-      expect(true).toBe(true)
+      await expect(
+        page.getByRole('link', { name: /login with github/i }),
+      ).toBeVisible()
     })
 
     test('should handle console errors without breaking', async ({
@@ -358,8 +360,9 @@ test.describe('Error Handling', () => {
       await page.goto('/')
       await page.waitForLoadState('domcontentloaded')
 
-      // May have some console errors, but should not crash
-      expect(true).toBe(true)
+      // The authenticated app should stay usable without browser console errors.
+      await expect(page.getByTestId('app-container')).toBeVisible()
+      expect(consoleErrors).toEqual([])
     })
   })
 

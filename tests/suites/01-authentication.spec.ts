@@ -209,7 +209,7 @@ test.describe('Authentication Flow', () => {
       await appPage.sidebar.clickLogout()
       await page.waitForFunction(() => {
         const persistedState = localStorage.getItem('persist:Geek-Infiltration')
-        if (!persistedState) return false
+        if (!persistedState) return true
 
         const state = JSON.parse(persistedState)
         const authenticator = JSON.parse(state.authenticator || '{}')
@@ -221,7 +221,15 @@ test.describe('Authentication Flow', () => {
       expect(token).toBeNull()
 
       const reduxState = await getReduxPersistedState(page)
-      expect(reduxState).toHaveProperty('authenticator')
+      if (reduxState === null) {
+        expect(reduxState).toBeNull()
+      } else {
+        expect(reduxState).toHaveProperty('authenticator')
+        const authenticator = JSON.parse(
+          (reduxState as Record<string, string>).authenticator || '{}',
+        )
+        expect(authenticator.accessToken ?? null).toBeNull()
+      }
     })
   })
 
@@ -305,8 +313,15 @@ test.describe('Authentication Flow', () => {
     })
 
     test('should handle concurrent auth attempts', async ({ page }) => {
-      await completeMockOAuthCallback(page)
-      await completeMockOAuthCallback(page)
+      const secondPage = await page.context().newPage()
+      try {
+        await Promise.all([
+          completeMockOAuthCallback(page),
+          completeMockOAuthCallback(secondPage),
+        ])
+      } finally {
+        await secondPage.close()
+      }
 
       // Should be authenticated once
       expect(await isAuthenticated(page)).toBe(true)

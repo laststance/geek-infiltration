@@ -7,7 +7,7 @@ import { HomeHugePackElements } from './HomeHugePackElements'
 import { HomeLookingFor } from './HomeLookingFor'
 import { HomePricingPlans } from './HomePricingPlans'
 
-const RootStyle = styled('div')(() => ({
+const RootStyle = styled('main')(() => ({
   height: '100%',
 }))
 

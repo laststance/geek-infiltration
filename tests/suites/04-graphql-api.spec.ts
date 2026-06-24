@@ -624,7 +624,7 @@ test.describe('GraphQL API Integration', () => {
 
       // Current implementation loads the latest comment batch, not cursor pagination.
       await appPage.scrollTimelineToBottom()
-      await page.waitForTimeout(500)
+      await expect.poll(() => requestCount).toBe(1)
 
       expect(requestCount).toBe(1)
     })
@@ -683,7 +683,6 @@ test.describe('GraphQL API Integration', () => {
 
       await appPage.goto()
       await expect(appPage.timelineContainer).toBeAttached()
-      await page.waitForTimeout(500)
 
       expect(requestCount).toBe(0)
     })

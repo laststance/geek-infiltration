@@ -32,7 +32,11 @@ const Toolbar: React.FC<Props> = ({ id, information, aim }) => {
       <Text variant="subtitle1" noWrap>
         {information}
       </Text>
-      <IconButton sx={{ flex: 'none' }} onClick={handleClick}>
+      <IconButton
+        aria-label={`Open ${aim.user ? aim.user : aim.repo} timeline settings`}
+        sx={{ flex: 'none' }}
+        onClick={handleClick}
+      >
         <SettingsIcon />
       </IconButton>
       <Menu
