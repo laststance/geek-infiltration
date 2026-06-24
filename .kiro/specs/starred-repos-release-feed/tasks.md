@@ -73,8 +73,8 @@
 - [ ] 3.1 Add GraphQL query for starred repository releases
   - Create `src/gql/getViewerStarredRepositoryReleases.graphql`.
   - Fetch `viewer.starredRepositories` with `pageInfo`, `totalCount`, and repository identity fields.
-  - Fetch up to 5 recent releases per starred repository.
-  - Include release id, title/name, tag, URL, description, prerelease/draft flags, and dates.
+  - Fetch a created-order release candidate window per starred repository.
+  - Include release id, title/name, tag, URL, description, pre-release/draft flags, and dates.
   - Include repository owner avatar and `nameWithOwner`.
   - _Requirements: 3, 4, 5_
   - _Contracts: GraphQL Query Contract (design.md)_
@@ -83,7 +83,7 @@
 - [ ] 3.2 Generate and verify typed RTK Query hook
   - Run `pnpm codegen`.
   - Verify `useGetViewerStarredRepositoryReleasesQuery` is generated.
-  - Confirm variables for `starredFirst`, `starredAfter`, and `releasesFirst`.
+  - Confirm variables for `starredFirst`, `starredAfter`, and `releaseCandidateFirst`.
   - Confirm existing auth header behavior is reused through `src/constants/api.ts`.
   - _Requirements: 4_
   - _GitHub Issue: #1268_
@@ -93,7 +93,7 @@
   - Filter null nodes and draft releases.
   - Use `publishedAt ?? createdAt` for sorting.
   - Sort newest-first and dedupe by release id.
-  - Add focused tests for sorting, fallback title, draft filtering, and null handling.
+  - Add focused tests for sorting, fallback title, draft filtering, null handling, and later-published older-created releases.
   - _Requirements: 3, 4, 5, 6_
   - _Contracts: ReleaseFeedItem Interface (design.md)_
   - _GitHub Issue: #1268_
@@ -160,8 +160,8 @@
 
 - [ ] 6. Rich Details - Markdown preview and badges
 
-- [ ] 6.1 Add prerelease and metadata badges
-  - Show "Pre-release" badge for `isPrerelease`.
+- [ ] 6.1 Add pre-release and metadata badges
+  - Map GraphQL `isPrerelease` to a visible "pre-release" badge.
   - Show tag name and relative date in a compact metadata row.
   - Ensure badge color works in light and dark theme.
   - _Requirements: 5, 7_
@@ -199,7 +199,7 @@
 - [ ] 7.2 Add release feed data E2E tests
   - Mock `getViewerStarredRepositoryReleases`.
   - Test multiple repositories with releases render newest-first.
-  - Test release cards show repository name, tag, title, date, and prerelease badge.
+  - Test release cards show repository name, tag, title, date, and pre-release badge.
   - Test release links point to GitHub release URLs.
   - _Requirements: 3, 4, 5_
   - _GitHub Issue: #1272_

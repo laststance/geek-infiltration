@@ -153,7 +153,7 @@ sequenceDiagram
     participant GH as GitHub GraphQL API
 
     Feed->>Hook: Request first starred repo page
-    Hook->>RTK: Cache key by first/after/releasesFirst
+    Hook->>RTK: Cache key by first/after/releaseCandidateFirst
     RTK->>GH: viewer.starredRepositories + repository.releases
     GH-->>RTK: Repositories, releases, pageInfo
     RTK-->>Feed: Data, loading, error
@@ -247,7 +247,7 @@ createBrowserRouter([
 query getViewerStarredRepositoryReleases(
   $starredFirst: Int = 50
   $starredAfter: String
-  $releasesFirst: Int = 5
+  $releaseCandidateFirst: Int = 20
 ) {
   viewer {
     starredRepositories(
@@ -270,7 +270,7 @@ query getViewerStarredRepositoryReleases(
           avatarUrl
         }
         releases(
-          first: $releasesFirst
+          first: $releaseCandidateFirst
           orderBy: { field: CREATED_AT, direction: DESC }
         ) {
           nodes {
@@ -301,6 +301,9 @@ query getViewerStarredRepositoryReleases(
 - Flatten all repository releases into `ReleaseFeedItem[]`.
 - Sort flattened releases newest-first by timestamp.
 - Dedupe by release `id`.
+- Treat `releaseCandidateFirst` as an input candidate window, not as the final number of visible releases per repository.
+- Do not trim each repository to a display count until after flattening and sorting by release timestamp.
+- Include a normalization test where a later-published release with an older `createdAt` outranks a newer-created but earlier-published release.
 
 ### ReleaseFeedItem Interface
 
@@ -326,7 +329,9 @@ interface ReleaseFeedItem {
 
 ### Pagination Strategy
 
-- Initial query: `starredFirst = 50`, `releasesFirst = 5`.
+- Initial query: `starredFirst = 50`, `releaseCandidateFirst = 20`.
+- GitHub GraphQL currently orders repository releases by `CREATED_AT` or `NAME`, not by publication time.
+- Fetch a wider created-order candidate window, then sort and select by `publishedAt ?? createdAt` in app code.
 - Store fetched pages in component state as an array of page results or flattened items.
 - Trigger the next query when a bottom sentinel enters view and `hasNextPage` is true.
 - Use `starredAfter = pageInfo.endCursor` for subsequent pages.
@@ -353,7 +358,7 @@ interface ReleaseFeedItem {
 ### Card States
 
 - **Normal release**: title, tag, repository, timestamp, body preview when present.
-- **Pre-release**: show "Pre-release" badge near the tag.
+- **pre-release**: show "pre-release" badge near the tag.
 - **No body**: omit preview and keep spacing compact.
 - **Expanded body**: show Markdown content and collapse affordance.
 - **External navigation**: clicking the title/card link opens `release.url` in a new tab with safe `rel` attributes.
@@ -382,7 +387,8 @@ interface ReleaseFeedItem {
 ### Unit/Component
 
 - Release normalization filters null/draft records and sorts newest-first.
-- Release card renders title fallback, tag, prerelease badge, repository identity, and body preview.
+- Release normalization preserves a later-published release even when its `createdAt` is older than another candidate.
+- Release card renders title fallback, tag, pre-release badge, repository identity, and body preview.
 - Release state component renders loading, empty, error, retry, and pagination states.
 
 ### E2E
