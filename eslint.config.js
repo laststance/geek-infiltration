@@ -1,4 +1,5 @@
 import js from '@eslint/js'
+import { fixupPluginRules } from '@eslint/compat'
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import importPlugin from 'eslint-plugin-import'
@@ -34,9 +35,9 @@ export default [
     },
     plugins: {
       '@typescript-eslint': tsPlugin,
-      react,
-      'react-hooks': reactHooks,
-      import: importPlugin,
+      react: fixupPluginRules(react),
+      'react-hooks': fixupPluginRules(reactHooks),
+      import: fixupPluginRules(importPlugin),
     },
     rules: {
       // TypeScript recommended (manual since we're not using the wrapper)

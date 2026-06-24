@@ -105,7 +105,13 @@ export async function getReduxSlice(
 }
 
 /**
- * Set specific Redux slice in persisted state
+ * Sets one Redux Persist slice using the same stringified shape that redux-persist writes at runtime.
+ * @param page - Playwright page whose localStorage should be updated.
+ * @param sliceName - Redux slice key to replace.
+ * @param sliceData - Serializable slice value to store.
+ * @returns Resolves after localStorage receives the updated persisted state.
+ * @example
+ * await setReduxSlice(page, 'authenticator', { accessToken: 'mock-token' })
  */
 export async function setReduxSlice(
   page: Page,
@@ -117,17 +123,21 @@ export async function setReduxSlice(
   const newState = {
     ...currentState,
     [sliceName]: JSON.stringify(sliceData),
-    _persist: {
+    _persist: JSON.stringify({
       version: -1,
       rehydrated: true,
-    },
+    }),
   }
 
   await setReduxPersistedState(page, newState)
 }
 
 /**
- * Wait for Redux rehydration
+ * Waits until persisted Redux metadata shows rehydration has completed.
+ * @param page - Playwright page to poll.
+ * @returns Resolves after Redux Persist marks the state as rehydrated.
+ * @example
+ * await waitForReduxRehydration(page)
  */
 export async function waitForReduxRehydration(page: Page): Promise<void> {
   await page.waitForFunction(() => {
@@ -136,7 +146,11 @@ export async function waitForReduxRehydration(page: Page): Promise<void> {
 
     try {
       const parsed = JSON.parse(state)
-      return parsed._persist?.rehydrated === true
+      const persistMetadata =
+        typeof parsed._persist === 'string'
+          ? JSON.parse(parsed._persist)
+          : parsed._persist
+      return persistMetadata?.rehydrated === true
     } catch {
       return false
     }

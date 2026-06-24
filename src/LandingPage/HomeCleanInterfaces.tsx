@@ -49,9 +49,10 @@ export function HomeCleanInterfaces() {
 
           <MotionInView variants={varFade().inUp}>
             <Typography
+              component="p"
               variant="h2"
-              paragraph
               sx={{
+                mb: 2,
                 ...(!isLight && {
                   textShadow: (theme) =>
                     `4px 4px 16px ${alpha(theme.palette.grey[800], 0.48)}`,

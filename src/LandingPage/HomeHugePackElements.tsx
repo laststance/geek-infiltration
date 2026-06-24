@@ -75,7 +75,13 @@ export function HomeHugePackElements() {
   return (
     <RootStyle>
       <Container>
-        <Grid container spacing={5} justifyContent="center">
+        <Grid
+          container
+          spacing={5}
+          sx={{
+            justifyContent: 'center',
+          }}
+        >
           <Grid
             size={{ xs: 12, md: 4 }}
             sx={{ alignItems: 'center', display: 'flex' }}

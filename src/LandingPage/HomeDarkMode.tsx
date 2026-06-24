@@ -50,7 +50,9 @@ export function HomeDarkMode() {
           container
           spacing={5}
           direction="row-reverse"
-          justifyContent="space-between"
+          sx={{
+            justifyContent: 'space-between',
+          }}
         >
           <Grid size={{ xs: 12, md: 4 }}>
             <ContentStyle>

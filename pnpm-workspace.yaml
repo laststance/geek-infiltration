@@ -28,3 +28,7 @@ minimumReleaseAgeExclude:
   - '@laststance/redux-storage-middleware'
   - '@laststance/react-next-eslint-plugin'
 verifyStoreIntegrity: true
+allowBuilds:
+  '@swc/core': true
+  esbuild: true
+  unrs-resolver: true
