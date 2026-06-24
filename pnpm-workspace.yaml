@@ -1,11 +1,6 @@
 packages:
   - '.'
 
-onlyBuiltDependencies:
-  - '@swc/core'
-  - esbuild
-  - unrs-resolver
-
 # Supply-chain security (migrated from .npmrc 2026-05-07)
 minimumReleaseAge: 1440
 minimumReleaseAgeExclude:
