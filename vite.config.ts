@@ -12,8 +12,8 @@ type OAuthTokenExchangeRequest = {
 }
 
 type OAuthTokenExchangeEnvironment = {
+  GITHUB_CLIENT_SECRET?: string
   VITE_CLIENT_ID?: string
-  VITE_CLIENT_SECRET?: string
 }
 
 type MiddlewareStack =
@@ -78,7 +78,7 @@ async function exchangeGitHubOAuthCode(
     }
   }
 
-  if (!environment.VITE_CLIENT_ID || !environment.VITE_CLIENT_SECRET) {
+  if (!environment.VITE_CLIENT_ID || !environment.GITHUB_CLIENT_SECRET) {
     return {
       body: { error: 'oauth_server_not_configured' },
       contentType: 'application/json',
@@ -96,7 +96,7 @@ async function exchangeGitHubOAuthCode(
     const githubResponse = await fetch(GITHUB_OAUTH_TOKEN_URL, {
       body: JSON.stringify({
         client_id: environment.VITE_CLIENT_ID,
-        client_secret: environment.VITE_CLIENT_SECRET,
+        client_secret: environment.GITHUB_CLIENT_SECRET,
         code: requestBody.code,
       }),
       headers: {

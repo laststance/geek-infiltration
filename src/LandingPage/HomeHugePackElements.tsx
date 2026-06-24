@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography, Grid } from '@mui/material'
 import { alpha, useTheme, styled } from '@mui/material/styles'
 
-import { createGitHubAuthUrl } from '../constants/GITHUB_AUTH_URL'
+import { useGitHubAuthUrl } from '../hooks/useGitHubAuthUrl'
 
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
@@ -73,7 +73,7 @@ export function HomeHugePackElements() {
   const screenLeftAnimate = variantScreenLeft
   const screenCenterAnimate = variantScreenCenter
   const screenRightAnimate = variantScreenRight
-  const githubAuthUrl = createGitHubAuthUrl()
+  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
 
   return (
     <RootStyle>
@@ -125,6 +125,7 @@ export function HomeHugePackElements() {
                   color="inherit"
                   variant="contained"
                   href={githubAuthUrl}
+                  onClick={prepareGitHubAuth}
                 >
                   Login with GitHub
                 </Button>

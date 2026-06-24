@@ -19,10 +19,8 @@ test.describe('Authentication Flow', () => {
     }) => {
       await landingPage.goto()
 
-      // Verify Landing Page is visible
-      expect(await landingPage.isVisible()).toBe(true)
-
       // Verify key elements are present
+      await expect(landingPage.githubLoginButton).toBeVisible()
       await expect(landingPage.mainHeader).toBeVisible()
       await expect(landingPage.homeSection).toBeVisible()
       await expect(landingPage.mainFooter).toBeVisible()
@@ -151,6 +149,19 @@ test.describe('Authentication Flow', () => {
         await page.evaluate(() =>
           sessionStorage.getItem('geek-infiltration:github-oauth-state'),
         ),
+      ).toBeNull()
+
+      await landingPage.githubLoginButton.evaluate((element) => {
+        const preventNavigation = (event: Event) => event.preventDefault()
+        element.addEventListener('click', preventNavigation, { once: true })
+        const linkElement = element as HTMLElement
+        linkElement.click()
+      })
+
+      expect(
+        await page.evaluate(() =>
+          sessionStorage.getItem('geek-infiltration:github-oauth-state'),
+        ),
       ).toBe(oauthState)
     })
 
@@ -223,7 +234,7 @@ test.describe('Authentication Flow', () => {
       })
 
       // Should still be on Landing Page (not authenticated)
-      expect(await landingPage.isVisible()).toBe(true)
+      await expect(landingPage.githubLoginButton).toBeVisible()
       expect(await isAuthenticated(page)).toBe(false)
     })
 
@@ -241,6 +252,7 @@ test.describe('Authentication Flow', () => {
       if (firstState === null) {
         throw new Error('GitHub OAuth state should exist')
       }
+      await setOAuthState(page, firstState)
       await page.route('**/login/oauth/access_token', (route) => {
         route.fulfill({
           body: JSON.stringify({ error: 'bad_verification_code' }),
@@ -267,7 +279,7 @@ test.describe('Authentication Flow', () => {
         await page.evaluate(() =>
           sessionStorage.getItem('geek-infiltration:github-oauth-state'),
         ),
-      ).toBe(retryState)
+      ).toBeNull()
       expect(await isAuthenticated(page)).toBe(false)
     })
 
@@ -293,7 +305,7 @@ test.describe('Authentication Flow', () => {
       })
 
       // Assert
-      expect(await landingPage.isVisible()).toBe(true)
+      await expect(landingPage.githubLoginButton).toBeVisible()
       expect(await isAuthenticated(page)).toBe(false)
       expect(tokenExchangeWasRequested).toBe(false)
     })
@@ -306,9 +318,6 @@ test.describe('Authentication Flow', () => {
       appPage,
     }) => {
       await appPage.goto()
-
-      // Verify App is visible
-      expect(await appPage.isVisible()).toBe(true)
 
       // Verify authenticated
       expect(await isAuthenticated(page)).toBe(true)
@@ -333,7 +342,8 @@ test.describe('Authentication Flow', () => {
 
       // Should still be authenticated
       expect(await isAuthenticated(page)).toBe(true)
-      expect(await appPage.isVisible()).toBe(true)
+      await expect(appPage.appContainer).toBeVisible()
+      await expect(appPage.sidebar.sidebarContainer).toBeVisible()
     })
 
     test('should maintain auth state across navigation', async ({
@@ -350,7 +360,8 @@ test.describe('Authentication Flow', () => {
 
       // Should still be authenticated
       expect(await isAuthenticated(page)).toBe(true)
-      expect(await appPage.isVisible()).toBe(true)
+      await expect(appPage.appContainer).toBeVisible()
+      await expect(appPage.sidebar.sidebarContainer).toBeVisible()
     })
   })
 
@@ -367,10 +378,10 @@ test.describe('Authentication Flow', () => {
       await expect(page).toHaveURL(/\/$/)
 
       // Assert
-      expect(await landingPage.isVisible()).toBe(true)
+      await expect(landingPage.githubLoginButton).toBeVisible()
       await page.goto('/releases', { waitUntil: 'domcontentloaded' })
       await expect(page).toHaveURL(/\/$/)
-      expect(await landingPage.isVisible()).toBe(true)
+      await expect(landingPage.githubLoginButton).toBeVisible()
     })
 
     test('should render authenticated timeline and releases routes by URL', async ({
@@ -453,7 +464,7 @@ test.describe('Authentication Flow', () => {
       await appPage.sidebar.clickLogout()
 
       // Should be back on Landing Page
-      expect(await landingPage.isVisible()).toBe(true)
+      await expect(landingPage.githubLoginButton).toBeVisible()
       expect(await isAuthenticated(page)).toBe(false)
     })
 
@@ -559,7 +570,7 @@ test.describe('Authentication Flow', () => {
 
       // Should fallback to unauthenticated state
       expect(await isAuthenticated(page)).toBe(false)
-      expect(await landingPage.isVisible()).toBe(true)
+      await expect(landingPage.githubLoginButton).toBeVisible()
     })
 
     test('should handle missing OAuth parameters', async ({
@@ -574,7 +585,7 @@ test.describe('Authentication Flow', () => {
 
       // Should remain unauthenticated
       expect(await isAuthenticated(page)).toBe(false)
-      expect(await landingPage.isVisible()).toBe(true)
+      await expect(landingPage.githubLoginButton).toBeVisible()
     })
 
     test('should handle concurrent auth attempts', async ({ page }) => {

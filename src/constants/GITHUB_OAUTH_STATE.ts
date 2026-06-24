@@ -48,23 +48,6 @@ export function readStoredGitHubOAuthState() {
 }
 
 /**
- * Reuses the active OAuth state or creates one for the next GitHub redirect.
- * @returns State token shared by all landing-page login links.
- * @example
- * getOrCreateGitHubOAuthState()
- */
-export function getOrCreateGitHubOAuthState() {
-  const storedState = readStoredGitHubOAuthState()
-  if (storedState !== null) {
-    return storedState
-  }
-
-  const oauthState = createGitHubOAuthState()
-  storeGitHubOAuthState(oauthState)
-  return oauthState
-}
-
-/**
  * Clears the stored OAuth state once a callback succeeds or fails.
  * @returns Nothing.
  * @example

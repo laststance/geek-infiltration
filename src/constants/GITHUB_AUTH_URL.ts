@@ -1,5 +1,3 @@
-import { getOrCreateGitHubOAuthState } from './GITHUB_OAUTH_STATE'
-
 const GITHUB_OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
 const GITHUB_OAUTH_SCOPE = 'user'
 
@@ -17,15 +15,16 @@ function getGitHubOAuthRedirectUri() {
 
 /**
  * Builds the GitHub OAuth authorize URL used by every landing CTA.
+ * @param oauthState - CSRF token that the callback route will verify.
  * @returns A GitHub authorize URL with client id, scope, and callback route.
  * @example
- * createGitHubAuthUrl() // => "https://github.com/login/oauth/authorize?..."
+ * createGitHubAuthUrl('state-token') // => "https://github.com/login/oauth/authorize?..."
  */
-export function createGitHubAuthUrl() {
+export function createGitHubAuthUrl(oauthState: string) {
   const githubAuthUrl = new URL(GITHUB_OAUTH_AUTHORIZE_URL)
   githubAuthUrl.searchParams.set('scope', GITHUB_OAUTH_SCOPE)
   githubAuthUrl.searchParams.set('client_id', import.meta.env.VITE_CLIENT_ID)
   githubAuthUrl.searchParams.set('redirect_uri', getGitHubOAuthRedirectUri())
-  githubAuthUrl.searchParams.set('state', getOrCreateGitHubOAuthState())
+  githubAuthUrl.searchParams.set('state', oauthState)
   return githubAuthUrl.toString()
 }

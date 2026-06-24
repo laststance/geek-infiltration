@@ -97,7 +97,7 @@
 - [ ] `.env` ファイル存在確認（`.env.sample` 参照）
 - [ ] 必要な環境変数設定
   - `VITE_CLIENT_ID`
-  - `VITE_CLIENT_SECRET`
+  - `GITHUB_CLIENT_SECRET`
   - `VITE_REDIRECT_URI`
   - `VITE_SENTRY_DNS`（オプション）
 
