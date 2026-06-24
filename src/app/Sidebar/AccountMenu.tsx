@@ -18,8 +18,9 @@ const UserMenuButton: React.FC = memo(() => {
 
   return (
     <>
-      <IconButton onClick={handleClick}>
+      <IconButton aria-label="Open account menu" onClick={handleClick}>
         <Avatar
+          alt="GitHub account avatar"
           src="https://avatars.githubusercontent.com/u/5501268?s=32&v=4"
           sx={{ cursor: 'pointer' }}
         />

@@ -22,7 +22,7 @@ const Toolbar: React.FC<Props> = ({ id, information, aim }) => {
   const { anchorEl, handleClick, handleClose, open } = useAnchorElement()
   const handleRemove = useCallback(() => {
     dispatch(unsubscribe(id))
-  }, [id])
+  }, [dispatch, id])
 
   return (
     <TimelineToolbar>

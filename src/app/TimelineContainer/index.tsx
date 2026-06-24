@@ -13,6 +13,7 @@ const TimelineContainer: React.FC = memo(() => {
       wrap="nowrap"
       spacing={1}
       component="section"
+      data-testid="timeline-container"
       sx={{ overflowX: 'scroll' }}
     >
       {subscribed.length
