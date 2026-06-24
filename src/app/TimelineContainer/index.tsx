@@ -7,6 +7,9 @@ import TimeLine from './Timeline'
 
 const TimelineContainer: React.FC = memo(() => {
   const subscribed = useAppSelector((state) => state.subscribed.subscribed)
+  // Older persisted sessions can miss the nested list while Redux rehydrates.
+  const timelines = Array.isArray(subscribed) ? subscribed : []
+
   return (
     <Grid
       container
@@ -14,10 +17,10 @@ const TimelineContainer: React.FC = memo(() => {
       spacing={1}
       component="section"
       data-testid="timeline-container"
-      sx={{ overflowX: 'scroll' }}
+      sx={{ flex: 1, minWidth: 0, overflowX: 'scroll' }}
     >
-      {subscribed.length
-        ? subscribed.map(({ id, information, aim }, i) => {
+      {timelines.length
+        ? timelines.map(({ id, information, aim }, i) => {
             return (
               <TimeLine
                 key={id}

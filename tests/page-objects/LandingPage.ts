@@ -38,10 +38,14 @@ export class LandingPagePO {
   }
 
   /**
-   * Navigate to landing page
+   * Navigates to the landing route and waits for its lazy module to render.
+   * @returns Resolves after the GitHub login CTA and main content are visible.
+   * @example
+   * await landingPage.goto()
    */
   async goto() {
     await this.page.goto('/', { waitUntil: 'domcontentloaded' })
+    await this.waitForVisible()
   }
 
   /**

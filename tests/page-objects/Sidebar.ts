@@ -32,13 +32,8 @@ export class SidebarPO {
   constructor(page: Page) {
     this.page = page
 
-    // Sidebar container (adjust based on actual implementation)
-    this.sidebarContainer = page.locator(
-      '[data-testid="sidebar"], ' +
-        'aside, ' +
-        'nav[aria-label="Main navigation"], ' +
-        'main > div:first-child', // First child of main
-    )
+    // Measure the real sidebar, not the adjacent timeline div in WebKit.
+    this.sidebarContainer = page.getByTestId('sidebar')
 
     // User profile elements
     this.userAvatar = this.sidebarContainer.locator(
@@ -85,10 +80,30 @@ export class SidebarPO {
   }
 
   /**
-   * Wait for sidebar to be visible
+   * Waits until the compact sidebar is visible with MUI styles applied.
+   * @returns Resolves after WebKit finishes Emotion style injection.
+   * @example
+   * await sidebar.waitForVisible()
    */
   async waitForVisible() {
     await this.sidebarContainer.waitFor({ state: 'visible', timeout: 5000 })
+    await this.page.waitForFunction(
+      () => {
+        const sidebar = document.querySelector('[data-testid="sidebar"]')
+        if (!sidebar) return false
+
+        const box = sidebar.getBoundingClientRect()
+
+        // WebKit can expose the DOM before Emotion styles finish applying.
+        return (
+          box.width >= 44 &&
+          box.width <= 100 &&
+          box.height >= window.innerHeight * 0.9
+        )
+      },
+      undefined,
+      { timeout: 5000 },
+    )
   }
 
   /**

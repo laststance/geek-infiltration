@@ -2,7 +2,7 @@ import { Button, Box, Container, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { m } from 'framer-motion'
 
-import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+import { useGitHubAuthUrl } from '../hooks/useGitHubAuthUrl'
 
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
@@ -27,6 +27,8 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export function HomeAdvertisement() {
+  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
+
   return (
     <Container>
       <ContentStyle>
@@ -69,7 +71,8 @@ export function HomeAdvertisement() {
             <Button
               size="large"
               variant="contained"
-              href={GITHUB_AUTH_URL}
+              href={githubAuthUrl}
+              onClick={prepareGitHubAuth}
               sx={{
                 '&:hover': { bgcolor: 'grey.300' },
                 bgcolor: 'common.white',

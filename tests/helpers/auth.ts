@@ -11,6 +11,31 @@ export const MOCK_ACCESS_TOKEN = 'mock_github_token_for_e2e_tests'
 export const MOCK_AUTH_CODE = 'mock_auth_code_12345'
 
 /**
+ * Mock GitHub OAuth CSRF state
+ */
+export const MOCK_OAUTH_STATE = 'mock_oauth_state_12345'
+
+const GITHUB_OAUTH_STATE_STORAGE_KEY = 'geek-infiltration:github-oauth-state'
+
+/**
+ * Persists the OAuth state expected by the callback route.
+ * @param page - Playwright page on the app origin.
+ * @param state - Mock state token GitHub should echo to the callback.
+ * @returns Resolves after sessionStorage has the expected state.
+ * @example
+ * await setOAuthState(page, 'mock-state')
+ */
+export async function setOAuthState(page: Page, state = MOCK_OAUTH_STATE) {
+  await page.goto('/og-image.png', { timeout: 10000, waitUntil: 'load' })
+  await page.evaluate(
+    ({ key, value }) => {
+      sessionStorage.setItem(key, value)
+    },
+    { key: GITHUB_OAUTH_STATE_STORAGE_KEY, value: state },
+  )
+}
+
+/**
  * Setup authentication mocks for GitHub OAuth flow
  * This intercepts the OAuth callback and token exchange
  */
@@ -20,11 +45,18 @@ export async function setupAuthMocks(page: Page) {
     // Simulate GitHub redirecting back with auth code
     const url = new URL(route.request().url())
     const redirectUri = url.searchParams.get('redirect_uri')
+    const state = url.searchParams.get('state')
     if (redirectUri) {
+      const callbackUrl = new URL(redirectUri)
+      callbackUrl.searchParams.set('code', MOCK_AUTH_CODE)
+      if (state !== null) {
+        callbackUrl.searchParams.set('state', state)
+      }
+
       route.fulfill({
         status: 302,
         headers: {
-          Location: `${redirectUri}?code=${MOCK_AUTH_CODE}`,
+          Location: callbackUrl.toString(),
         },
       })
     } else {
@@ -38,7 +70,15 @@ export async function setupAuthMocks(page: Page) {
     const postData = request.postData()
 
     // Verify the auth code is present
-    if (postData?.includes(MOCK_AUTH_CODE)) {
+    if (postData?.includes('client_secret')) {
+      route.fulfill({
+        status: 400,
+        contentType: 'application/json',
+        body: JSON.stringify({
+          error: 'client_secret_leaked',
+        }),
+      })
+    } else if (postData?.includes(MOCK_AUTH_CODE)) {
       route.fulfill({
         status: 200,
         contentType: 'application/json',
@@ -70,7 +110,13 @@ export async function setupAuthMocks(page: Page) {
  */
 export async function completeMockOAuthCallback(page: Page) {
   await setupAuthMocks(page)
-  await page.goto(`/?code=${MOCK_AUTH_CODE}`, { waitUntil: 'domcontentloaded' })
+  await setOAuthState(page)
+  await page.goto(
+    `/callback?code=${MOCK_AUTH_CODE}&state=${MOCK_OAUTH_STATE}`,
+    {
+      waitUntil: 'domcontentloaded',
+    },
+  )
   await page.getByTestId('app-container').waitFor({ state: 'visible' })
 }
 
@@ -181,5 +227,5 @@ export async function getAuthToken(page: Page): Promise<string | null> {
  */
 export async function isAuthenticated(page: Page): Promise<boolean> {
   const token = await getAuthToken(page)
-  return !!token
+  return Boolean(token)
 }

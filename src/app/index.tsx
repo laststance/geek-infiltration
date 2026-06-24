@@ -1,27 +1,13 @@
-import { Container } from '@mui/material'
 import React, { memo } from 'react'
 
-import Sidebar from './Sidebar'
+import AppShell from './AppShell'
 import TimelineContainer from './TimelineContainer'
 
 const App: React.FC = memo(() => {
   return (
-    <Container
-      fixed
-      disableGutters
-      component="main"
-      data-testid="app-container"
-      sx={{
-        display: 'flex',
-        maxHeight: '100vh',
-        minHeight: '100vh',
-        minWidth: '100%',
-        overflowY: 'hidden',
-      }}
-    >
-      <Sidebar />
+    <AppShell>
       <TimelineContainer />
-    </Container>
+    </AppShell>
   )
 })
 App.displayName = 'App'

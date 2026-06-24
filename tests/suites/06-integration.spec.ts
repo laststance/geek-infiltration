@@ -314,9 +314,10 @@ test.describe('Integration Tests', () => {
       await appPage.goto()
 
       if (browserName !== 'chromium') {
-        await page.reload()
-        await page.reload()
-        await expect(appPage.appContainer).toBeVisible()
+        await page.reload({ waitUntil: 'domcontentloaded' })
+        await appPage.waitForVisible()
+        await page.reload({ waitUntil: 'domcontentloaded' })
+        await appPage.waitForVisible()
         return
       }
 
