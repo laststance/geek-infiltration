@@ -47,6 +47,18 @@ export const test = base.extend<AuthFixtures>({
    */
   graphqlMocker: async ({ page }, use) => {
     const mocker = new GraphQLMocker()
+    mocker.mockOperation('getViewerStarredRepositoryReleases', () => ({
+      viewer: {
+        starredRepositories: {
+          nodes: [],
+          pageInfo: {
+            endCursor: null,
+            hasNextPage: false,
+          },
+          totalCount: 0,
+        },
+      },
+    }))
     await mocker.setup(page)
     await use(mocker)
     mocker.clear()

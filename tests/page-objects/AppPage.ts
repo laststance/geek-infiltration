@@ -52,7 +52,7 @@ export class AppPagePO {
 
   /**
    * Navigate to the Release Feed route (assumes authentication is already set).
-   * @returns Resolves after the release route placeholder is visible.
+   * @returns Resolves after the release route section is visible.
    * @example
    * await appPage.gotoReleases()
    */
