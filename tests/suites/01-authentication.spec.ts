@@ -138,6 +138,10 @@ test.describe('Authentication Flow', () => {
       expect(href).toContain('github.com/login/oauth/authorize')
       expect(href).toContain('client_id')
       expect(href).toContain('redirect_uri')
+      if (href === null) throw new Error('GitHub OAuth href should exist')
+
+      const oauthUrl = new URL(href)
+      expect(oauthUrl.searchParams.get('redirect_uri')).toContain('/callback')
     })
 
     test('should not have auth token in localStorage', async ({
@@ -164,6 +168,7 @@ test.describe('Authentication Flow', () => {
       // Verify we're now authenticated and App is visible
       const authenticated = await isAuthenticated(page)
       expect(authenticated).toBe(true)
+      await expect(page).toHaveURL(/\/app$/)
 
       // Verify App container is visible (not Landing Page)
       await expect(page.getByTestId('app-container')).toBeVisible()
@@ -202,7 +207,9 @@ test.describe('Authentication Flow', () => {
         })
       })
 
-      await page.goto('/?code=expired_code', { waitUntil: 'domcontentloaded' })
+      await page.goto('/callback?code=expired_code', {
+        waitUntil: 'domcontentloaded',
+      })
 
       // Should still be on Landing Page (not authenticated)
       expect(await landingPage.isVisible()).toBe(true)
@@ -255,12 +262,98 @@ test.describe('Authentication Flow', () => {
       await appPage.goto()
 
       // Navigate within the same origin and reload to verify persisted auth state survives navigation.
-      await page.goto('/#timeline', { waitUntil: 'domcontentloaded' })
-      await page.goto('/', { waitUntil: 'domcontentloaded' })
+      await page.goto('/releases', { waitUntil: 'domcontentloaded' })
+      await expect(appPage.releaseFeedRoute).toBeVisible()
+      await page.goto('/app', { waitUntil: 'domcontentloaded' })
 
       // Should still be authenticated
       expect(await isAuthenticated(page)).toBe(true)
       expect(await appPage.isVisible()).toBe(true)
+    })
+  })
+
+  test.describe('URL Routing', () => {
+    test('should redirect signed-out users away from authenticated routes', async ({
+      page,
+      unauthenticatedPage,
+      landingPage,
+    }) => {
+      // Arrange
+      await page.goto('/app', { waitUntil: 'domcontentloaded' })
+
+      // Act
+      await expect(page).toHaveURL(/\/$/)
+
+      // Assert
+      expect(await landingPage.isVisible()).toBe(true)
+      await page.goto('/releases', { waitUntil: 'domcontentloaded' })
+      await expect(page).toHaveURL(/\/$/)
+      expect(await landingPage.isVisible()).toBe(true)
+    })
+
+    test('should render authenticated timeline and releases routes by URL', async ({
+      page,
+      authenticatedPage,
+      appPage,
+    }) => {
+      // Arrange
+      await appPage.goto()
+
+      // Act
+      await expect(page).toHaveURL(/\/app$/)
+
+      // Assert
+      await expect(appPage.timelineContainer).toBeAttached()
+      await appPage.gotoReleases()
+      await expect(page).toHaveURL(/\/releases$/)
+      await expect(appPage.releaseFeedRoute).toBeVisible()
+    })
+
+    test('should keep browser back and forward navigation in sync with routed views', async ({
+      page,
+      authenticatedPage,
+      appPage,
+    }) => {
+      // Arrange
+      await appPage.goto()
+      await appPage.gotoReleases()
+
+      // Act
+      await page.goBack({ waitUntil: 'domcontentloaded' })
+
+      // Assert
+      await expect(page).toHaveURL(/\/app$/)
+      await expect(appPage.timelineContainer).toBeAttached()
+
+      // Act
+      await page.goForward({ waitUntil: 'domcontentloaded' })
+
+      // Assert
+      await expect(page).toHaveURL(/\/releases$/)
+      await expect(appPage.releaseFeedRoute).toBeVisible()
+    })
+
+    test('should show a loading state while code-split routed views load', async ({
+      page,
+      authenticatedPage,
+      appPage,
+    }) => {
+      // Arrange
+      let releaseRouteWasRequested = false
+      await page.route('**/src/routes/ReleasesRoute.tsx*', async (route) => {
+        releaseRouteWasRequested = true
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        await route.continue()
+      })
+      await appPage.goto()
+
+      // Act
+      await page.goto('/releases', { waitUntil: 'domcontentloaded' })
+
+      // Assert
+      await expect(page.getByTestId('full-screen-spinner')).toBeVisible()
+      await expect(appPage.releaseFeedRoute).toBeVisible()
+      expect(releaseRouteWasRequested).toBe(true)
     })
   })
 
@@ -338,7 +431,7 @@ test.describe('Authentication Flow', () => {
       page,
       authenticatedPage,
     }) => {
-      await page.goto('/')
+      await page.goto('/app')
 
       // Verify token is not in session storage
       const sessionToken = await page.evaluate(() => {
@@ -351,7 +444,7 @@ test.describe('Authentication Flow', () => {
       page,
       authenticatedPage,
     }) => {
-      await page.goto('/')
+      await page.goto('/app')
 
       // Check localStorage keys
       const keys = await page.evaluate(() => {
@@ -367,6 +460,7 @@ test.describe('Authentication Flow', () => {
   test.describe('Edge Cases', () => {
     test('should handle corrupted localStorage gracefully', async ({
       page,
+      landingPage,
     }) => {
       await page.goto('/')
 
@@ -383,6 +477,7 @@ test.describe('Authentication Flow', () => {
 
       // Should fallback to unauthenticated state
       expect(await isAuthenticated(page)).toBe(false)
+      expect(await landingPage.isVisible()).toBe(true)
     })
 
     test('should handle missing OAuth parameters', async ({
@@ -392,11 +487,12 @@ test.describe('Authentication Flow', () => {
       await landingPage.goto()
 
       // Navigate with missing code parameter
-      await page.goto('/?error=access_denied')
+      await page.goto('/callback?error=access_denied')
       await page.waitForLoadState('domcontentloaded')
 
       // Should remain unauthenticated
       expect(await isAuthenticated(page)).toBe(false)
+      expect(await landingPage.isVisible()).toBe(true)
     })
 
     test('should handle concurrent auth attempts', async ({ page }) => {

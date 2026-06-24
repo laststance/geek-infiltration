@@ -13,9 +13,9 @@ import '@fontsource/roboto/400.css'
 import '@fontsource/roboto/500.css'
 import '@fontsource/roboto/700.css'
 
-import Authenticator from './authenticator'
 import ErrorBoundary from './components/ErrorBoundary'
 import { theme } from './constants/theme'
+import { AppRouter } from './router'
 import { store } from './store'
 
 const persistor = persistStore(store)
@@ -45,7 +45,7 @@ root.render(
         <ReduxPersistGate persistor={persistor}>
           <ThemeProvider theme={theme}>
             <CssBaseline />
-            <Authenticator />
+            <AppRouter />
           </ThemeProvider>
         </ReduxPersistGate>
       </ReduxProvider>

@@ -70,7 +70,9 @@ export async function setupAuthMocks(page: Page) {
  */
 export async function completeMockOAuthCallback(page: Page) {
   await setupAuthMocks(page)
-  await page.goto(`/?code=${MOCK_AUTH_CODE}`, { waitUntil: 'domcontentloaded' })
+  await page.goto(`/callback?code=${MOCK_AUTH_CODE}`, {
+    waitUntil: 'domcontentloaded',
+  })
   await page.getByTestId('app-container').waitFor({ state: 'visible' })
 }
 
@@ -181,5 +183,5 @@ export async function getAuthToken(page: Page): Promise<string | null> {
  */
 export async function isAuthenticated(page: Page): Promise<boolean> {
   const token = await getAuthToken(page)
-  return !!token
+  return Boolean(token)
 }

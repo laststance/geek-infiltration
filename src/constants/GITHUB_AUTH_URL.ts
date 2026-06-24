@@ -1,3 +1,30 @@
-export const GITHUB_AUTH_URL = `https://github.com/login/oauth/authorize?scope=user&client_id=${
-  import.meta.env.VITE_CLIENT_ID
-}&redirect_uri=${import.meta.env.VITE_REDIRECT_URI}`
+const GITHUB_OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
+const GITHUB_OAUTH_SCOPE = 'user'
+
+/**
+ * Resolves the callback URL GitHub should return to after authorization.
+ * @returns The configured redirect URI, or the local `/callback` route.
+ * @example
+ * getGitHubOAuthRedirectUri() // => "http://localhost:3005/callback"
+ */
+function getGitHubOAuthRedirectUri() {
+  const configuredRedirectUri = import.meta.env.VITE_REDIRECT_URI || ''
+  const redirectBaseUrl = configuredRedirectUri || window.location.origin
+  return new URL('/callback', redirectBaseUrl).toString()
+}
+
+/**
+ * Builds the GitHub OAuth authorize URL used by every landing CTA.
+ * @returns A GitHub authorize URL with client id, scope, and callback route.
+ * @example
+ * createGitHubAuthUrl() // => "https://github.com/login/oauth/authorize?..."
+ */
+function createGitHubAuthUrl() {
+  const githubAuthUrl = new URL(GITHUB_OAUTH_AUTHORIZE_URL)
+  githubAuthUrl.searchParams.set('scope', GITHUB_OAUTH_SCOPE)
+  githubAuthUrl.searchParams.set('client_id', import.meta.env.VITE_CLIENT_ID)
+  githubAuthUrl.searchParams.set('redirect_uri', getGitHubOAuthRedirectUri())
+  return githubAuthUrl.toString()
+}
+
+export const GITHUB_AUTH_URL = createGitHubAuthUrl()

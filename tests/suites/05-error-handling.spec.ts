@@ -353,7 +353,12 @@ test.describe('Error Handling', () => {
       const consoleErrors: string[] = []
       page.on('console', (msg) => {
         if (msg.type() === 'error') {
-          consoleErrors.push(msg.text())
+          const text = msg.text()
+
+          // Firefox reports transient font download failures as console errors.
+          if (text.includes('downloadable font: download failed')) return
+
+          consoleErrors.push(text)
         }
       })
 

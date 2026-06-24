@@ -34,9 +34,9 @@ test.describe('Sidebar Functionality', () => {
     }) => {
       await appPage.goto()
 
-      // Navigate within the same origin and back to the root view.
-      await page.goto('/#sidebar-check', { waitUntil: 'domcontentloaded' })
-      await page.goto('/', { waitUntil: 'domcontentloaded' })
+      // Navigate within the authenticated route and back to the timeline view.
+      await page.goto('/app#sidebar-check', { waitUntil: 'domcontentloaded' })
+      await page.goto('/app', { waitUntil: 'domcontentloaded' })
 
       // Sidebar should still be visible
       expect(await appPage.sidebar.isVisible()).toBe(true)
