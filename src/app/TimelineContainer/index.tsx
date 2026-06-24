@@ -17,7 +17,7 @@ const TimelineContainer: React.FC = memo(() => {
       spacing={1}
       component="section"
       data-testid="timeline-container"
-      sx={{ overflowX: 'scroll' }}
+      sx={{ flex: 1, minWidth: 0, overflowX: 'scroll' }}
     >
       {timelines.length
         ? timelines.map(({ id, information, aim }, i) => {

@@ -4,6 +4,9 @@ import {
   getAuthToken,
   isAuthenticated,
   MOCK_ACCESS_TOKEN,
+  MOCK_AUTH_CODE,
+  MOCK_OAUTH_STATE,
+  setOAuthState,
 } from '../helpers/auth'
 import { getReduxPersistedState } from '../helpers/storage'
 
@@ -142,6 +145,13 @@ test.describe('Authentication Flow', () => {
 
       const oauthUrl = new URL(href)
       expect(oauthUrl.searchParams.get('redirect_uri')).toContain('/callback')
+      const oauthState = oauthUrl.searchParams.get('state')
+      expect(oauthState).toBeTruthy()
+      expect(
+        await page.evaluate(() =>
+          sessionStorage.getItem('geek-infiltration:github-oauth-state'),
+        ),
+      ).toBe(oauthState)
     })
 
     test('should not have auth token in localStorage', async ({
@@ -207,13 +217,85 @@ test.describe('Authentication Flow', () => {
         })
       })
 
-      await page.goto('/callback?code=expired_code', {
+      await setOAuthState(page)
+      await page.goto(`/callback?code=expired_code&state=${MOCK_OAUTH_STATE}`, {
         waitUntil: 'domcontentloaded',
       })
 
       // Should still be on Landing Page (not authenticated)
       expect(await landingPage.isVisible()).toBe(true)
       expect(await isAuthenticated(page)).toBe(false)
+    })
+
+    test('should prepare a fresh OAuth state after a failed callback returns to landing', async ({
+      page,
+      landingPage,
+    }) => {
+      // Arrange
+      await landingPage.goto()
+      const firstHref = await landingPage.githubLoginButton.getAttribute('href')
+      if (firstHref === null) {
+        throw new Error('GitHub OAuth href should exist')
+      }
+      const firstState = new URL(firstHref).searchParams.get('state')
+      if (firstState === null) {
+        throw new Error('GitHub OAuth state should exist')
+      }
+      await page.route('**/login/oauth/access_token', (route) => {
+        route.fulfill({
+          body: JSON.stringify({ error: 'bad_verification_code' }),
+          contentType: 'application/json',
+          status: 401,
+        })
+      })
+
+      // Act
+      await page.goto(`/callback?code=expired_code&state=${firstState}`, {
+        waitUntil: 'domcontentloaded',
+      })
+
+      // Assert
+      await landingPage.waitForVisible()
+      const retryHref = await landingPage.githubLoginButton.getAttribute('href')
+      if (retryHref === null) {
+        throw new Error('GitHub OAuth retry href should exist')
+      }
+      const retryState = new URL(retryHref).searchParams.get('state')
+      expect(retryState).toBeTruthy()
+      expect(retryState).not.toBe(firstState)
+      expect(
+        await page.evaluate(() =>
+          sessionStorage.getItem('geek-infiltration:github-oauth-state'),
+        ),
+      ).toBe(retryState)
+      expect(await isAuthenticated(page)).toBe(false)
+    })
+
+    test('should reject OAuth callback when state does not match', async ({
+      page,
+      landingPage,
+    }) => {
+      // Arrange
+      let tokenExchangeWasRequested = false
+      await setOAuthState(page, 'expected_state')
+      await page.route('**/login/oauth/access_token', (route) => {
+        tokenExchangeWasRequested = true
+        route.fulfill({
+          body: JSON.stringify({ access_token: MOCK_ACCESS_TOKEN }),
+          contentType: 'application/json',
+          status: 200,
+        })
+      })
+
+      // Act
+      await page.goto(`/callback?code=${MOCK_AUTH_CODE}&state=wrong_state`, {
+        waitUntil: 'domcontentloaded',
+      })
+
+      // Assert
+      expect(await landingPage.isVisible()).toBe(true)
+      expect(await isAuthenticated(page)).toBe(false)
+      expect(tokenExchangeWasRequested).toBe(false)
     })
   })
 
@@ -303,7 +385,7 @@ test.describe('Authentication Flow', () => {
       await expect(page).toHaveURL(/\/app$/)
 
       // Assert
-      await expect(appPage.timelineContainer).toBeAttached()
+      await expect(appPage.timelineContainer).toBeVisible()
       await appPage.gotoReleases()
       await expect(page).toHaveURL(/\/releases$/)
       await expect(appPage.releaseFeedRoute).toBeVisible()
@@ -323,7 +405,7 @@ test.describe('Authentication Flow', () => {
 
       // Assert
       await expect(page).toHaveURL(/\/app$/)
-      await expect(appPage.timelineContainer).toBeAttached()
+      await expect(appPage.timelineContainer).toBeVisible()
 
       // Act
       await page.goForward({ waitUntil: 'domcontentloaded' })

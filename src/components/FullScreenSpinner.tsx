@@ -8,8 +8,8 @@ import { Backdrop, CircularProgress } from '@mui/material'
  */
 export function FullScreenSpinner() {
   return (
-    <Backdrop open data-testid="full-screen-spinner" aria-label="Loading">
-      <CircularProgress />
+    <Backdrop open data-testid="full-screen-spinner">
+      <CircularProgress aria-label="Loading" />
     </Backdrop>
   )
 }

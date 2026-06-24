@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { useTheme, styled } from '@mui/material/styles'
 
-import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+import { createGitHubAuthUrl } from '../constants/GITHUB_AUTH_URL'
 
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
@@ -25,6 +25,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 export function HomePricingPlans() {
   const theme = useTheme()
   const isLight = theme.palette.mode === 'light'
+  const githubAuthUrl = createGitHubAuthUrl()
 
   return (
     <RootStyle>
@@ -87,7 +88,7 @@ export function HomePricingPlans() {
             </MotionInView>
 
             <MotionInView variants={varFade().inUp}>
-              <Button size="large" variant="contained" href={GITHUB_AUTH_URL}>
+              <Button size="large" variant="contained" href={githubAuthUrl}>
                 Login with GitHub
               </Button>
             </MotionInView>
@@ -110,6 +111,7 @@ type PlanCardProps = {
 function PlanCard({ plan }: PlanCardProps) {
   const { description, icon, points, title } = plan
   const highlighted = title === 'Timeline aggregation'
+  const githubAuthUrl = createGitHubAuthUrl()
 
   return (
     <Card
@@ -165,7 +167,7 @@ function PlanCard({ plan }: PlanCardProps) {
           size="large"
           fullWidth
           variant={highlighted ? 'contained' : 'outlined'}
-          href={GITHUB_AUTH_URL}
+          href={githubAuthUrl}
           aria-label={`Login with GitHub for ${title}`}
         >
           Login with GitHub

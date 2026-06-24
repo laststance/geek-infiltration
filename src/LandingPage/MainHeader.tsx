@@ -1,7 +1,7 @@
 import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 
-import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+import { createGitHubAuthUrl } from '../constants/GITHUB_AUTH_URL'
 import useOffSetTop from '../hooks/useOffSetTop'
 
 import { MAIN_HEADER_DESKTOP } from './config'
@@ -33,6 +33,7 @@ export default function MainHeader() {
   const isOffset = useOffSetTop(MAIN_HEADER_DESKTOP)
 
   const theme = useTheme()
+  const githubAuthUrl = createGitHubAuthUrl()
 
   return (
     <AppBar sx={{ bgcolor: 'transparent', boxShadow: 0 }}>
@@ -55,7 +56,7 @@ export default function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
 
           <Button
-            href={GITHUB_AUTH_URL}
+            href={githubAuthUrl}
             size="large"
             color="inherit"
             variant="outlined"

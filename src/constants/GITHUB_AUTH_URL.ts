@@ -1,3 +1,5 @@
+import { getOrCreateGitHubOAuthState } from './GITHUB_OAUTH_STATE'
+
 const GITHUB_OAUTH_AUTHORIZE_URL = 'https://github.com/login/oauth/authorize'
 const GITHUB_OAUTH_SCOPE = 'user'
 
@@ -19,12 +21,11 @@ function getGitHubOAuthRedirectUri() {
  * @example
  * createGitHubAuthUrl() // => "https://github.com/login/oauth/authorize?..."
  */
-function createGitHubAuthUrl() {
+export function createGitHubAuthUrl() {
   const githubAuthUrl = new URL(GITHUB_OAUTH_AUTHORIZE_URL)
   githubAuthUrl.searchParams.set('scope', GITHUB_OAUTH_SCOPE)
   githubAuthUrl.searchParams.set('client_id', import.meta.env.VITE_CLIENT_ID)
   githubAuthUrl.searchParams.set('redirect_uri', getGitHubOAuthRedirectUri())
+  githubAuthUrl.searchParams.set('state', getOrCreateGitHubOAuthState())
   return githubAuthUrl.toString()
 }
-
-export const GITHUB_AUTH_URL = createGitHubAuthUrl()

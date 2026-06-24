@@ -1,7 +1,7 @@
 import { Button, Container, Typography, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-import { GITHUB_AUTH_URL } from '../constants/GITHUB_AUTH_URL'
+import { createGitHubAuthUrl } from '../constants/GITHUB_AUTH_URL'
 
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
@@ -15,6 +15,8 @@ const RootStyle = styled('div')(({ theme }) => ({
 }))
 
 export function HomeLookingFor() {
+  const githubAuthUrl = createGitHubAuthUrl()
+
   return (
     <RootStyle>
       <Container>
@@ -51,7 +53,7 @@ export function HomeLookingFor() {
                 color="inherit"
                 size="large"
                 variant="outlined"
-                href={GITHUB_AUTH_URL}
+                href={githubAuthUrl}
                 endIcon={<Iconify icon={'ic:round-arrow-right-alt'} />}
               >
                 Login with GitHub
