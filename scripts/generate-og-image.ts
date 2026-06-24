@@ -3,7 +3,7 @@
  * Uses Playwright to screenshot an HTML template for pixel-perfect control.
  *
  * @example
- * pnpm tsx scripts/generate-og-image.ts
+ * node --experimental-strip-types scripts/generate-og-image.ts
  */
 import { chromium } from '@playwright/test'
 import path from 'node:path'
@@ -250,7 +250,7 @@ const html = `<!DOCTYPE html>
   <div class="content">
     <div class="logo-area">
       <div class="logo-icon">GI</div>
-      <div class="logo-text">Laststance.io</div>
+      <div class="logo-text">Geek Infiltration</div>
     </div>
 
     <div class="main-text">
@@ -295,7 +295,7 @@ async function main() {
   const browser = await chromium.launch()
   const page = await browser.newPage({
     viewport: { width: OG_WIDTH, height: OG_HEIGHT },
-    deviceScaleFactor: 2,
+    deviceScaleFactor: 1,
   })
 
   await page.setContent(html, { waitUntil: 'networkidle' })
@@ -307,6 +307,7 @@ async function main() {
   await page.screenshot({
     path: outputPath,
     type: 'png',
+    scale: 'css',
     clip: { x: 0, y: 0, width: OG_WIDTH, height: OG_HEIGHT },
   })
 
