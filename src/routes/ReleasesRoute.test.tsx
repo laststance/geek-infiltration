@@ -245,6 +245,60 @@ describe('ReleasesRoute', () => {
     ).toBeVisible()
   })
 
+  it('renders Markdown release notes and toggles long notes without leaving the card', () => {
+    // Arrange
+    const repository = createRepositoryNode({
+      id: 'repo-markdown',
+      nameWithOwner: 'facebook/react',
+      releases: [
+        createReleaseNode({
+          description: [
+            '## Highlights',
+            '',
+            '- Added streaming examples',
+            '- Fixed cache invalidation',
+            '- Updated docs',
+            '- Improved diagnostics',
+          ].join('\n'),
+          id: 'release-markdown',
+          name: 'React Markdown',
+          publishedAt: '2026-04-01T00:00:00Z',
+          tagName: 'v20.1.0',
+          url: 'https://github.com/facebook/react/releases/tag/v20.1.0',
+        }),
+      ],
+    })
+    mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
+      data: createViewerQuery([repository]),
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+      refetch: vi.fn(),
+    })
+
+    // Act
+    renderWithTheme(<Component />)
+    const expandButton = screen.getByRole('button', {
+      name: 'Expand release notes for facebook/react React Markdown',
+    })
+
+    // Assert
+    expect(screen.getByRole('heading', { name: 'Highlights' })).toBeVisible()
+    expect(screen.getByText('Added streaming examples')).toBeVisible()
+    expect(expandButton).toHaveAttribute('aria-expanded', 'false')
+
+    // Act
+    fireEvent.click(expandButton)
+
+    // Assert
+    expect(
+      screen.getByRole('button', {
+        name: 'Collapse release notes for facebook/react React Markdown',
+      }),
+    ).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByText('Show less')).toBeVisible()
+  })
+
   it('shows a no starred repositories state after an empty query succeeds', () => {
     // Arrange
     mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
