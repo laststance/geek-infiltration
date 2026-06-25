@@ -20,6 +20,7 @@ import {
   RELEASE_FEED_AVATAR_SIZE_PX,
   RELEASE_FEED_BODY_PREVIEW_MAX_CHARACTERS,
   RELEASE_FEED_CARD_BORDER_RADIUS_PX,
+  RELEASE_FEED_MARKDOWN_COLLAPSED_MAX_HEIGHT,
 } from './constants'
 import type { ReleaseFeedItem } from './normalizeReleaseFeedItems'
 
@@ -86,7 +87,7 @@ function shouldCollapseReleaseMarkdown(body: string): boolean {
 }
 
 /**
- * Renders release notes as safe Markdown with optional three-line collapse behavior.
+ * Renders release notes as safe Markdown with optional height-based collapse behavior.
  * @param body - Trimmed GitHub release Markdown body.
  * @param id - Stable DOM id used by the expand/collapse control.
  * @param isExpanded - Whether the full Markdown body is currently visible.
@@ -103,13 +104,27 @@ function ReleaseMarkdownBody({
   id: string
   isExpanded: boolean
 }) {
+  const isCollapsed = !isExpanded
+
   return (
     <Box
       color="text.secondary"
       id={id}
-      sx={{
+      sx={(theme) => ({
         '& > :first-of-type': { mt: 0 },
         '& > :last-of-type': { mb: 0 },
+        '&::after': isCollapsed
+          ? {
+              background: `linear-gradient(to bottom, transparent, ${theme.palette.background.paper})`,
+              bottom: 0,
+              content: '""',
+              height: '1.75rem',
+              left: 0,
+              pointerEvents: 'none',
+              position: 'absolute',
+              right: 0,
+            }
+          : { content: 'none' },
         '& a': { overflowWrap: 'anywhere' },
         '& blockquote': {
           borderLeft: 2,
@@ -142,13 +157,14 @@ function ReleaseMarkdownBody({
           borderColor: 'divider',
           p: 0.75,
         },
-        display: isExpanded ? 'block' : '-webkit-box',
         fontSize: '0.875rem',
         lineHeight: 1.55,
-        overflow: 'hidden',
-        WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: isExpanded ? 'unset' : 3,
-      }}
+        maxHeight: isCollapsed
+          ? RELEASE_FEED_MARKDOWN_COLLAPSED_MAX_HEIGHT
+          : 'none',
+        overflow: isCollapsed ? 'hidden' : 'visible',
+        position: 'relative',
+      })}
     >
       <ReactMarkdown
         components={RELEASE_FEED_MARKDOWN_COMPONENTS}
@@ -284,7 +300,7 @@ export const ReleaseFeedCard = memo(({ item }: ReleaseFeedCardProps) => {
                 <ReleaseMarkdownBody
                   body={releaseMarkdown}
                   id={markdownPreviewId}
-                  isExpanded={isMarkdownExpanded}
+                  isExpanded={!shouldCollapseMarkdown || isMarkdownExpanded}
                 />
                 {shouldCollapseMarkdown ? (
                   <Box>

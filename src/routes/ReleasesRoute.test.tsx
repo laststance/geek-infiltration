@@ -299,6 +299,49 @@ describe('ReleasesRoute', () => {
     expect(screen.getByText('Show less')).toBeVisible()
   })
 
+  it('shows short Markdown release notes without collapse controls', () => {
+    // Arrange
+    const repository = createRepositoryNode({
+      id: 'repo-short-markdown',
+      nameWithOwner: 'vitejs/vite',
+      releases: [
+        createReleaseNode({
+          description: 'A compact patch note with `inline code`.',
+          id: 'release-short-markdown',
+          name: 'Vite Patch',
+          publishedAt: '2026-04-01T00:00:00Z',
+          tagName: 'v8.0.1',
+          url: 'https://github.com/vitejs/vite/releases/tag/v8.0.1',
+        }),
+      ],
+    })
+    mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
+      data: createViewerQuery([repository]),
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+      refetch: vi.fn(),
+    })
+
+    // Act
+    renderWithTheme(<Component />)
+
+    // Assert
+    expect(
+      screen.getByText(
+        (_, element) =>
+          element?.tagName.toLowerCase() === 'p' &&
+          element.textContent === 'A compact patch note with inline code.',
+      ),
+    ).toBeVisible()
+    expect(screen.getByText('inline code')).toBeVisible()
+    expect(
+      screen.queryByRole('button', {
+        name: 'Expand release notes for vitejs/vite Vite Patch',
+      }),
+    ).not.toBeInTheDocument()
+  })
+
   it('shows a no starred repositories state after an empty query succeeds', () => {
     // Arrange
     mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({

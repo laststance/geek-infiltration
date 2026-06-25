@@ -268,10 +268,16 @@ test.describe('Release Feed route', () => {
               description: [
                 '## Highlights',
                 '',
+                '> Rendered Markdown keeps its block structure.',
+                '',
                 '- Added streaming examples',
                 '- Fixed cache invalidation',
                 '- Updated docs',
                 '- Improved diagnostics',
+                '',
+                '| Runtime | Status |',
+                '| --- | --- |',
+                '| Chrome | Verified |',
                 '',
                 '[Compare changes](https://github.com/example/markdown/compare/v1...v2)',
               ].join('\n'),
@@ -298,6 +304,24 @@ test.describe('Release Feed route', () => {
       name: 'Expand release notes for example/markdown Markdown Notes',
     })
     await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
+    const markdownBodyId = await expandButton.getAttribute('aria-controls')
+    expect(markdownBodyId).toBeTruthy()
+    const markdownBody = page.locator(`#${markdownBodyId}`)
+    const collapsedMarkdownStyles = await markdownBody.evaluate((element) => {
+      const elementStyle = window.getComputedStyle(element)
+      const fadeStyle = window.getComputedStyle(element, '::after')
+
+      return {
+        display: elementStyle.display,
+        fadeContent: fadeStyle.content,
+        maxHeight: elementStyle.maxHeight,
+        overflow: elementStyle.overflow,
+      }
+    })
+    expect(collapsedMarkdownStyles.display).toBe('block')
+    expect(collapsedMarkdownStyles.fadeContent).not.toBe('none')
+    expect(collapsedMarkdownStyles.maxHeight).not.toBe('none')
+    expect(collapsedMarkdownStyles.overflow).toBe('hidden')
 
     // Act
     await expandButton.click()
@@ -307,6 +331,20 @@ test.describe('Release Feed route', () => {
       name: 'Collapse release notes for example/markdown Markdown Notes',
     })
     await expect(collapseButton).toHaveAttribute('aria-expanded', 'true')
+    const expandedMarkdownStyles = await markdownBody.evaluate((element) => {
+      const elementStyle = window.getComputedStyle(element)
+      const fadeStyle = window.getComputedStyle(element, '::after')
+
+      return {
+        fadeContent: fadeStyle.content,
+        maxHeight: elementStyle.maxHeight,
+        overflow: elementStyle.overflow,
+      }
+    })
+    expect(expandedMarkdownStyles.fadeContent).toBe('none')
+    expect(expandedMarkdownStyles.maxHeight).toBe('none')
+    expect(expandedMarkdownStyles.overflow).toBe('visible')
+    await expect(page.getByRole('cell', { name: 'Chrome' })).toBeVisible()
     await expect(
       page.getByRole('link', { name: 'Compare changes' }),
     ).toHaveAttribute(
