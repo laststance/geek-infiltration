@@ -1,5 +1,5 @@
 import { ThemeProvider, createTheme } from '@mui/material'
-import { render, screen, within } from '@testing-library/react'
+import { fireEvent, render, screen, within } from '@testing-library/react'
 import type { ReactElement } from 'react'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
@@ -11,11 +11,14 @@ import type {
 import { Component } from './ReleasesRoute'
 
 const mockUseGetViewerStarredRepositoryReleasesQuery = vi.fn()
+const mockUseLazyGetViewerStarredRepositoryReleasesQuery = vi.fn()
 
 vi.mock('@/generated/graphql', () => ({
   useGetViewerStarredRepositoryReleasesQuery: (
     variables: GetViewerStarredRepositoryReleasesQueryVariables,
   ) => mockUseGetViewerStarredRepositoryReleasesQuery(variables),
+  useLazyGetViewerStarredRepositoryReleasesQuery: () =>
+    mockUseLazyGetViewerStarredRepositoryReleasesQuery(),
 }))
 
 const theme = createTheme()
@@ -124,6 +127,9 @@ describe('ReleasesRoute', () => {
     vi.clearAllMocks()
     vi.useFakeTimers()
     vi.setSystemTime(new Date('2026-04-02T00:00:00Z'))
+    mockUseLazyGetViewerStarredRepositoryReleasesQuery.mockReturnValue([
+      vi.fn(),
+    ])
   })
 
   afterEach(() => {
@@ -258,5 +264,66 @@ describe('ReleasesRoute', () => {
         'Star repositories on GitHub to start building your release feed.',
       ),
     ).toBeVisible()
+  })
+
+  it('shows an initial error with a retry action when the release query fails before data loads', () => {
+    // Arrange
+    const refetch = vi.fn()
+    mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
+      data: undefined,
+      error: new Error('Network request failed'),
+      isFetching: false,
+      isLoading: false,
+      refetch,
+    })
+
+    // Act
+    renderWithTheme(<Component />)
+    fireEvent.click(screen.getByRole('button', { name: 'Retry' }))
+
+    // Assert
+    expect(
+      screen.getByText(
+        'Release Feed could not load releases. Please try again.',
+      ),
+    ).toBeVisible()
+    expect(refetch).toHaveBeenCalledTimes(1)
+  })
+
+  it('keeps already loaded releases visible when a later query reports a partial error', () => {
+    // Arrange
+    const refetch = vi.fn()
+    const repository = createRepositoryNode({
+      id: 'repo-react',
+      nameWithOwner: 'facebook/react',
+      releases: [
+        createReleaseNode({
+          id: 'release-react-partial',
+          name: 'React Partial',
+          publishedAt: '2026-04-01T00:00:00Z',
+          tagName: 'v20.0.0',
+        }),
+      ],
+    })
+    mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
+      data: createViewerQuery([repository]),
+      error: new Error('One repository failed'),
+      isFetching: false,
+      isLoading: false,
+      refetch,
+    })
+
+    // Act
+    renderWithTheme(<Component />)
+    fireEvent.click(screen.getByRole('button', { name: 'Retry all releases' }))
+
+    // Assert
+    expect(screen.getByText('React Partial')).toBeVisible()
+    expect(
+      screen.getByText(
+        'Release Feed could not load releases. Please try again.',
+      ),
+    ).toBeVisible()
+    expect(refetch).toHaveBeenCalledTimes(1)
   })
 })

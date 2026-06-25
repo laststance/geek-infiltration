@@ -9,6 +9,7 @@ import {
   RELEASE_FEED_GENERIC_ERROR_MESSAGE,
   RELEASE_FEED_RATE_LIMIT_ERROR_MESSAGE,
   formatReleaseFeedErrorMessage,
+  mergeNormalizedViewerStarredRepositoryReleasePages,
   mergeReleaseFeedItems,
   normalizeRepositoryReleaseCandidates,
   normalizeViewerStarredRepositoryReleases,
@@ -94,16 +95,21 @@ function createRepositoryNode(repository: {
  */
 function createViewerQuery(
   repositories: Array<StarredRepositoryNode | null>,
+  pageInfo: {
+    endCursor: string | null
+    hasNextPage: boolean
+  } = {
+    endCursor: 'starred-cursor-1',
+    hasNextPage: true,
+  },
+  totalCount = repositories.length,
 ): GetViewerStarredRepositoryReleasesQuery {
   return {
     viewer: {
       starredRepositories: {
         nodes: repositories,
-        pageInfo: {
-          endCursor: 'starred-cursor-1',
-          hasNextPage: true,
-        },
-        totalCount: repositories.length,
+        pageInfo,
+        totalCount,
       },
     },
   }
@@ -353,6 +359,68 @@ describe('mergeReleaseFeedItems', () => {
     ])
     expect(result[1].release.body).toBe('Cached body')
     expect(result[1].release.title).toBe('Cached title')
+  })
+})
+
+describe('mergeNormalizedViewerStarredRepositoryReleasePages', () => {
+  it('combines infinite-scroll pages newest first and keeps the latest starred cursor', () => {
+    // Arrange
+    const firstRepository = createRepositoryNode({
+      id: 'repo-react',
+      nameWithOwner: 'facebook/react',
+      releases: [
+        createReleaseNode({
+          id: 'release-react-19',
+          name: 'React 19',
+          publishedAt: '2026-03-01T00:00:00Z',
+          tagName: 'v19.0.0',
+        }),
+      ],
+    })
+    const nextRepository = createRepositoryNode({
+      id: 'repo-vite',
+      nameWithOwner: 'vitejs/vite',
+      releases: [
+        createReleaseNode({
+          id: 'release-vite-8',
+          name: 'Vite 8',
+          publishedAt: '2026-04-01T00:00:00Z',
+          tagName: 'v8.0.0',
+        }),
+      ],
+    })
+    const firstPage = normalizeViewerStarredRepositoryReleases(
+      createViewerQuery(
+        [firstRepository],
+        { endCursor: 'starred-cursor-1', hasNextPage: true },
+        2,
+      ),
+    )
+    const nextPage = normalizeViewerStarredRepositoryReleases(
+      createViewerQuery(
+        [nextRepository],
+        { endCursor: null, hasNextPage: false },
+        2,
+      ),
+    )
+
+    // Act
+    const result = mergeNormalizedViewerStarredRepositoryReleasePages(
+      firstPage,
+      nextPage,
+    )
+
+    // Assert
+    expect(result.items.map((item) => item.id)).toEqual([
+      'release-vite-8',
+      'release-react-19',
+    ])
+    expect(result.starredRepositoriesPageInfo).toEqual({
+      endCursor: null,
+      hasNextPage: false,
+    })
+    expect(result.repositoryReleasePageInfos).toHaveLength(2)
+    expect(result.totalStarredRepositories).toBe(2)
   })
 })
 
