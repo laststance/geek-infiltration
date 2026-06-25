@@ -307,21 +307,17 @@ test.describe('Release Feed route', () => {
     const markdownBodyId = await expandButton.getAttribute('aria-controls')
     expect(markdownBodyId).toBeTruthy()
     const markdownBody = page.locator(`#${markdownBodyId}`)
+    await expect(markdownBody).toHaveCSS('display', 'block')
+    await expect(markdownBody).not.toHaveCSS('max-height', 'none')
+    await expect(markdownBody).toHaveCSS('overflow', 'hidden')
     const collapsedMarkdownStyles = await markdownBody.evaluate((element) => {
-      const elementStyle = window.getComputedStyle(element)
       const fadeStyle = window.getComputedStyle(element, '::after')
 
       return {
-        display: elementStyle.display,
         fadeContent: fadeStyle.content,
-        maxHeight: elementStyle.maxHeight,
-        overflow: elementStyle.overflow,
       }
     })
-    expect(collapsedMarkdownStyles.display).toBe('block')
     expect(collapsedMarkdownStyles.fadeContent).not.toBe('none')
-    expect(collapsedMarkdownStyles.maxHeight).not.toBe('none')
-    expect(collapsedMarkdownStyles.overflow).toBe('hidden')
 
     // Act
     await expandButton.click()
@@ -331,19 +327,16 @@ test.describe('Release Feed route', () => {
       name: 'Collapse release notes for example/markdown Markdown Notes',
     })
     await expect(collapseButton).toHaveAttribute('aria-expanded', 'true')
+    await expect(markdownBody).toHaveCSS('max-height', 'none')
+    await expect(markdownBody).toHaveCSS('overflow', 'visible')
     const expandedMarkdownStyles = await markdownBody.evaluate((element) => {
-      const elementStyle = window.getComputedStyle(element)
       const fadeStyle = window.getComputedStyle(element, '::after')
 
       return {
         fadeContent: fadeStyle.content,
-        maxHeight: elementStyle.maxHeight,
-        overflow: elementStyle.overflow,
       }
     })
     expect(expandedMarkdownStyles.fadeContent).toBe('none')
-    expect(expandedMarkdownStyles.maxHeight).toBe('none')
-    expect(expandedMarkdownStyles.overflow).toBe('visible')
     await expect(page.getByRole('cell', { name: 'Chrome' })).toBeVisible()
     await expect(
       page.getByRole('link', { name: 'Compare changes' }),
