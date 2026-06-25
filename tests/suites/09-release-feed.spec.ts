@@ -251,6 +251,104 @@ test.describe('Release Feed route', () => {
     await expect(page.getByRole('heading', { name: 'v6.0.0' })).toBeVisible()
   })
 
+  test('renders Markdown release notes and expands long notes without animation requirements', async ({
+    page,
+    appPage,
+    graphqlMocker,
+  }) => {
+    // Arrange
+    graphqlMocker.mockOperation('getViewerStarredRepositoryReleases', () =>
+      createReleaseFeedResponse([
+        {
+          id: 'repo-markdown',
+          nameWithOwner: 'example/markdown',
+          ownerLogin: 'example',
+          releases: [
+            createReleaseNode({
+              description: [
+                '## Highlights',
+                '',
+                '> Rendered Markdown keeps its block structure.',
+                '',
+                '- Added streaming examples',
+                '- Fixed cache invalidation',
+                '- Updated docs',
+                '- Improved diagnostics',
+                '',
+                '| Runtime | Status |',
+                '| --- | --- |',
+                '| Chrome | Verified |',
+                '',
+                '[Compare changes](https://github.com/example/markdown/compare/v1...v2)',
+              ].join('\n'),
+              id: 'release-markdown',
+              name: 'Markdown Notes',
+              publishedAt: '2026-06-24T12:00:00Z',
+              tagName: 'v2.0.0',
+              url: 'https://github.com/example/markdown/releases/tag/v2.0.0',
+            }),
+          ],
+        },
+      ]),
+    )
+
+    // Act
+    await appPage.gotoReleases()
+
+    // Assert
+    await expect(
+      page.getByRole('heading', { name: 'Highlights' }),
+    ).toBeVisible()
+    await expect(page.getByText('Added streaming examples')).toBeVisible()
+    const expandButton = page.getByRole('button', {
+      name: 'Expand release notes for example/markdown Markdown Notes',
+    })
+    await expect(expandButton).toHaveAttribute('aria-expanded', 'false')
+    const markdownBodyId = await expandButton.getAttribute('aria-controls')
+    expect(markdownBodyId).toBeTruthy()
+    const markdownBody = page.locator(`#${markdownBodyId}`)
+    await expect(markdownBody).toHaveCSS('display', 'block')
+    await expect(markdownBody).not.toHaveCSS('max-height', 'none')
+    await expect(markdownBody).toHaveCSS('overflow', 'hidden')
+    const collapsedMarkdownStyles = await markdownBody.evaluate((element) => {
+      const fadeStyle = window.getComputedStyle(element, '::after')
+
+      return {
+        fadeContent: fadeStyle.content,
+      }
+    })
+    expect(collapsedMarkdownStyles.fadeContent).not.toBe('none')
+
+    // Act
+    await expandButton.click()
+
+    // Assert
+    const collapseButton = page.getByRole('button', {
+      name: 'Collapse release notes for example/markdown Markdown Notes',
+    })
+    await expect(collapseButton).toHaveAttribute('aria-expanded', 'true')
+    await expect(markdownBody).toHaveCSS('max-height', 'none')
+    await expect(markdownBody).toHaveCSS('overflow', 'visible')
+    const expandedMarkdownStyles = await markdownBody.evaluate((element) => {
+      const fadeStyle = window.getComputedStyle(element, '::after')
+
+      return {
+        fadeContent: fadeStyle.content,
+      }
+    })
+    expect(expandedMarkdownStyles.fadeContent).toBe('none')
+    await expect(page.getByRole('cell', { name: 'Chrome' })).toBeVisible()
+    await expect(
+      page.getByRole('link', { name: 'Compare changes' }),
+    ).toHaveAttribute(
+      'href',
+      'https://github.com/example/markdown/compare/v1...v2',
+    )
+    await expect(
+      page.getByRole('link', { name: 'Compare changes' }),
+    ).toHaveAttribute('target', '_blank')
+  })
+
   test('shows the no starred repositories empty state after an empty query succeeds', async ({
     page,
     appPage,

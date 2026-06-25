@@ -245,6 +245,103 @@ describe('ReleasesRoute', () => {
     ).toBeVisible()
   })
 
+  it('renders Markdown release notes and toggles long notes without leaving the card', () => {
+    // Arrange
+    const repository = createRepositoryNode({
+      id: 'repo-markdown',
+      nameWithOwner: 'facebook/react',
+      releases: [
+        createReleaseNode({
+          description: [
+            '## Highlights',
+            '',
+            '- Added streaming examples',
+            '- Fixed cache invalidation',
+            '- Updated docs',
+            '- Improved diagnostics',
+          ].join('\n'),
+          id: 'release-markdown',
+          name: 'React Markdown',
+          publishedAt: '2026-04-01T00:00:00Z',
+          tagName: 'v20.1.0',
+          url: 'https://github.com/facebook/react/releases/tag/v20.1.0',
+        }),
+      ],
+    })
+    mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
+      data: createViewerQuery([repository]),
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+      refetch: vi.fn(),
+    })
+
+    // Act
+    renderWithTheme(<Component />)
+    const expandButton = screen.getByRole('button', {
+      name: 'Expand release notes for facebook/react React Markdown',
+    })
+
+    // Assert
+    expect(screen.getByRole('heading', { name: 'Highlights' })).toBeVisible()
+    expect(screen.getByText('Added streaming examples')).toBeVisible()
+    expect(expandButton).toHaveAttribute('aria-expanded', 'false')
+
+    // Act
+    fireEvent.click(expandButton)
+
+    // Assert
+    expect(
+      screen.getByRole('button', {
+        name: 'Collapse release notes for facebook/react React Markdown',
+      }),
+    ).toHaveAttribute('aria-expanded', 'true')
+    expect(screen.getByText('Show less')).toBeVisible()
+  })
+
+  it('shows short Markdown release notes without collapse controls', () => {
+    // Arrange
+    const repository = createRepositoryNode({
+      id: 'repo-short-markdown',
+      nameWithOwner: 'vitejs/vite',
+      releases: [
+        createReleaseNode({
+          description: 'A compact patch note with `inline code`.',
+          id: 'release-short-markdown',
+          name: 'Vite Patch',
+          publishedAt: '2026-04-01T00:00:00Z',
+          tagName: 'v8.0.1',
+          url: 'https://github.com/vitejs/vite/releases/tag/v8.0.1',
+        }),
+      ],
+    })
+    mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
+      data: createViewerQuery([repository]),
+      error: undefined,
+      isFetching: false,
+      isLoading: false,
+      refetch: vi.fn(),
+    })
+
+    // Act
+    renderWithTheme(<Component />)
+
+    // Assert
+    expect(
+      screen.getByText(
+        (_, element) =>
+          element?.tagName.toLowerCase() === 'p' &&
+          element.textContent === 'A compact patch note with inline code.',
+      ),
+    ).toBeVisible()
+    expect(screen.getByText('inline code')).toBeVisible()
+    expect(
+      screen.queryByRole('button', {
+        name: 'Expand release notes for vitejs/vite Vite Patch',
+      }),
+    ).not.toBeInTheDocument()
+  })
+
   it('shows a no starred repositories state after an empty query succeeds', () => {
     // Arrange
     mockUseGetViewerStarredRepositoryReleasesQuery.mockReturnValue({
