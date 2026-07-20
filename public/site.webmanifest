@@ -1,19 +1,24 @@
 {
-  "name": "",
-  "short_name": "",
+  "name": "Geek Infiltration",
+  "short_name": "Geek",
+  "description": "Visualize GitHub activity in a clean timeline and release feed.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "theme_color": "#070c13",
+  "background_color": "#070c13",
   "icons": [
     {
       "src": "/android-chrome-192x192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
       "src": "/android-chrome-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ],
-  "theme_color": "#000000",
-  "background_color": "#000000",
-  "display": "standalone"
+  ]
 }
