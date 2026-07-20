@@ -1,7 +1,7 @@
 import { Box, Button, Container, Typography, Grid } from '@mui/material'
 import { alpha, useTheme, styled } from '@mui/material/styles'
 
-import { useGitHubAuthUrl } from '../hooks/useGitHubAuthUrl'
+import { GITHUB_AUTH_ENDPOINT } from '../constants/endpoint'
 
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
@@ -65,6 +65,12 @@ const variantScreenRight = {
 
 // ----------------------------------------------------------------------
 
+/**
+ * Renders the landing feature showcase and routes its login CTA through the same-origin OAuth BFF.
+ * @returns Feature showcase with an authenticated-app entry point.
+ * @example
+ * <HomeHugePackElements />
+ */
 export function HomeHugePackElements() {
   const theme = useTheme()
   const isLight = theme.palette.mode === 'light'
@@ -73,8 +79,6 @@ export function HomeHugePackElements() {
   const screenLeftAnimate = variantScreenLeft
   const screenCenterAnimate = variantScreenCenter
   const screenRightAnimate = variantScreenRight
-  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
-
   return (
     <RootStyle>
       <Container>
@@ -124,8 +128,7 @@ export function HomeHugePackElements() {
                   size="large"
                   color="inherit"
                   variant="contained"
-                  href={githubAuthUrl}
-                  onClick={prepareGitHubAuth}
+                  href={GITHUB_AUTH_ENDPOINT}
                 >
                   Login with GitHub
                 </Button>

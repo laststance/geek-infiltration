@@ -1,6 +1,5 @@
 import { test, expect } from '../fixtures/auth'
 import { mockGraphQLError } from '../helpers/graphql-mock'
-import { MOCK_ACCESS_TOKEN } from '../helpers/auth'
 import { setReduxSlice } from '../helpers/storage'
 
 type TimelineInformation = 'PR_Issues' | 'Discussion'
@@ -226,20 +225,18 @@ test.describe('GraphQL API Integration', () => {
   })
 
   test.describe('API Authentication', () => {
-    test('should include Bearer token in GraphQL requests', async ({
+    test('should call the same-origin BFF without exposing a Bearer token', async ({
       page,
       appPage,
     }) => {
-      let authHeaderReceived = false
+      let browserAuthorizationHeader: string | undefined
 
       await persistIssueTimeline(page)
 
-      // Intercept the timeline query and check the auth header.
-      await page.route('**/graphql', (route) => {
+      // Intercept the browser-to-BFF request; only the Function adds GitHub authorization upstream.
+      await page.route('**/api/github/graphql', (route) => {
         const headers = route.request().headers()
-        if (headers['authorization'] === `Bearer ${MOCK_ACCESS_TOKEN}`) {
-          authHeaderReceived = true
-        }
+        browserAuthorizationHeader = headers.authorization
 
         route.fulfill({
           status: 200,
@@ -255,7 +252,7 @@ test.describe('GraphQL API Integration', () => {
         page.getByRole('link', { name: 'Bearer header issue' }),
       ).toBeVisible()
 
-      expect(authHeaderReceived).toBe(true)
+      expect(browserAuthorizationHeader).toBeUndefined()
     })
 
     test('should handle unauthorized API responses', async ({

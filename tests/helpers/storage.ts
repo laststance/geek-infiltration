@@ -111,7 +111,7 @@ export async function getReduxSlice(
  * @param sliceData - Serializable slice value to store.
  * @returns Resolves after localStorage receives the updated persisted state.
  * @example
- * await setReduxSlice(page, 'authenticator', { accessToken: 'mock-token' })
+ * await setReduxSlice(page, 'subscribed', { subscribed: [] })
  */
 export async function setReduxSlice(
   page: Page,

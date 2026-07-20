@@ -3,18 +3,42 @@ import IconButton from '@mui/material/IconButton'
 import Menu from '@mui/material/Menu'
 import MenuItem from '@mui/material/MenuItem'
 import React, { memo, useCallback } from 'react'
+import { useNavigate } from 'react-router'
 
+import { api } from '../../constants/api'
 import useAnchorElement from '../../hooks/useAnchorElement'
 import { useAppDispatch } from '../../hooks/useAppDispatch'
-import { logout } from '../../redux/authenticatorSlice'
 
+/**
+ * Renders account actions and ends the server session when an authenticated user selects logout.
+ * @returns Sidebar account menu with profile, account, and logout actions.
+ * @example
+ * <UserMenuButton />
+ */
 const UserMenuButton: React.FC = memo(() => {
   const { anchorEl, handleClick, handleClose, open } = useAnchorElement()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
 
-  const handleLogout = useCallback(() => {
-    dispatch(logout())
-  }, [dispatch])
+  /**
+   * Calls the BFF logout endpoint from the menu and clears user-specific API cache after success.
+   * @returns Resolves after logout succeeds or stops without navigation when the BFF rejects it.
+   * @example
+   * await handleLogout()
+   */
+  const handleLogout = useCallback(async () => {
+    handleClose()
+    const response = await fetch('/api/auth/logout', {
+      credentials: 'same-origin',
+      method: 'POST',
+    })
+    // Failed logout keeps the current route so a transient server error does not fake sign-out.
+    if (!response.ok) return
+
+    // Remove user-specific GitHub results before the public route renders.
+    dispatch(api.util.resetApiState())
+    navigate('/', { replace: true })
+  }, [dispatch, handleClose, navigate])
 
   return (
     <>
@@ -28,7 +52,7 @@ const UserMenuButton: React.FC = memo(() => {
       <Menu anchorEl={anchorEl} open={open} onClose={handleClose}>
         <MenuItem onClick={handleClose}>Profile</MenuItem>
         <MenuItem onClick={handleClose}>My account</MenuItem>
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={() => void handleLogout()}>Logout</MenuItem>
       </Menu>
     </>
   )

@@ -1,9 +1,5 @@
 import { test as base } from '@playwright/test'
-import {
-  setAuthState,
-  clearAuthState,
-  MOCK_ACCESS_TOKEN,
-} from '../helpers/auth'
+import { setAuthState, clearAuthState } from '../helpers/auth'
 import { GraphQLMocker } from '../helpers/graphql-mock'
 import { AppPagePO } from '../page-objects/AppPage'
 import { LandingPagePO } from '../page-objects/LandingPage'
@@ -28,7 +24,7 @@ export const test = base.extend<AuthFixtures>({
    * Automatically sets auth state before each test
    */
   authenticatedPage: async ({ page }, use) => {
-    await setAuthState(page, MOCK_ACCESS_TOKEN)
+    await setAuthState(page)
     await use()
   },
 

@@ -1,22 +1,17 @@
 import { Page } from '@playwright/test'
 
-/**
- * Mock GitHub OAuth access token
- */
-export const MOCK_ACCESS_TOKEN = 'mock_github_token_for_e2e_tests'
+import {
+  E2E_APP_VISIBLE_TIMEOUT_MS,
+  E2E_AUTH_SETUP_ATTEMPTS,
+  E2E_NAVIGATION_TIMEOUT_MS,
+} from '../constants'
 
-/**
- * Mock GitHub OAuth authorization code
- */
-export const MOCK_AUTH_CODE = 'mock_auth_code_12345'
-
-/**
- * Mock GitHub OAuth CSRF state
- */
-export const MOCK_OAUTH_STATE = 'mock_oauth_state_12345'
-
-const GITHUB_OAUTH_STATE_STORAGE_KEY = 'geek-infiltration:github-oauth-state'
-const GITHUB_GRAPHQL_API_URL = 'https://api.github.com/graphql'
+const AUTH_SESSION_API_URL = '**/api/auth/session'
+const AUTH_LOGOUT_API_URL = '**/api/auth/logout'
+const GITHUB_GRAPHQL_API_URL = '**/api/github/graphql'
+type AuthenticationMockState = {
+  authenticated: boolean
+}
 
 /**
  * Detects the Release Feed operation even when the GraphQL client omits `operationName`.
@@ -37,7 +32,7 @@ function isReleaseFeedQuery(operation: {
 }
 
 /**
- * Prevents authenticated E2E routing tests from reaching live GitHub when `/releases` mounts.
+ * Prevents authenticated E2E routing tests from reaching the real BFF or GitHub API when `/releases` mounts.
  * @param page - Playwright page whose GraphQL requests should receive a safe empty Release Feed.
  * @returns Resolves after the default Release Feed route mock is registered.
  * @example
@@ -70,8 +65,6 @@ export async function setupDefaultReleaseFeedMock(page: Page) {
     }
 
     await route.fulfill({
-      status: 200,
-      contentType: 'application/json',
       body: JSON.stringify({
         data: {
           viewer: {
@@ -86,187 +79,108 @@ export async function setupDefaultReleaseFeedMock(page: Page) {
           },
         },
       }),
+      contentType: 'application/json',
+      status: 200,
     })
   })
 }
 
 /**
- * Persists the OAuth state expected by the callback route.
- * @param page - Playwright page on the app origin.
- * @param state - Mock state token GitHub should echo to the callback.
- * @returns Resolves after sessionStorage has the expected state.
+ * Mocks the browser-visible session contract while keeping GitHub credentials absent from E2E state.
+ * @param page - Playwright page whose same-origin auth APIs should be intercepted.
+ * @param initiallyAuthenticated - Initial BFF session status exposed to route loaders.
+ * @returns Mutable server-session stand-in shared by login, status, and logout handlers.
  * @example
- * await setOAuthState(page, 'mock-state')
+ * await setupAuthenticationApiMock(page, true)
  */
-export async function setOAuthState(page: Page, state = MOCK_OAUTH_STATE) {
-  await page.goto('/og-image.png', { timeout: 10000, waitUntil: 'load' })
-  await page.evaluate(
-    ({ key, value }) => {
-      sessionStorage.setItem(key, value)
-    },
-    { key: GITHUB_OAUTH_STATE_STORAGE_KEY, value: state },
-  )
+export async function setupAuthenticationApiMock(
+  page: Page,
+  initiallyAuthenticated: boolean,
+) {
+  const authenticationState: AuthenticationMockState = {
+    authenticated: initiallyAuthenticated,
+  }
+
+  await page.route(AUTH_SESSION_API_URL, async (route) => {
+    await route.fulfill({
+      body: JSON.stringify({
+        authenticated: authenticationState.authenticated,
+      }),
+      contentType: 'application/json',
+      headers: { 'Cache-Control': 'no-store' },
+      status: 200,
+    })
+  })
+
+  await page.route(AUTH_LOGOUT_API_URL, async (route) => {
+    authenticationState.authenticated = false
+    await route.fulfill({ status: 204 })
+  })
+
+  return authenticationState
 }
 
 /**
- * Setup authentication mocks for GitHub OAuth flow
- * This intercepts the OAuth callback and token exchange
- */
-export async function setupAuthMocks(page: Page) {
-  // Mock the GitHub OAuth callback redirect
-  await page.route('**/github.com/login/oauth/authorize**', (route) => {
-    // Simulate GitHub redirecting back with auth code
-    const url = new URL(route.request().url())
-    const redirectUri = url.searchParams.get('redirect_uri')
-    const state = url.searchParams.get('state')
-    if (redirectUri) {
-      const callbackUrl = new URL(redirectUri)
-      callbackUrl.searchParams.set('code', MOCK_AUTH_CODE)
-      if (state !== null) {
-        callbackUrl.searchParams.set('state', state)
-      }
-
-      route.fulfill({
-        status: 302,
-        headers: {
-          Location: callbackUrl.toString(),
-        },
-      })
-    } else {
-      route.abort()
-    }
-  })
-
-  // Mock the token exchange endpoint (proxied through Vite)
-  await page.route('**/login/oauth/access_token', (route) => {
-    const request = route.request()
-    const postData = request.postData()
-
-    // Verify the auth code is present
-    if (postData?.includes('client_secret')) {
-      route.fulfill({
-        status: 400,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          error: 'client_secret_leaked',
-        }),
-      })
-    } else if (postData?.includes(MOCK_AUTH_CODE)) {
-      route.fulfill({
-        status: 200,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          access_token: MOCK_ACCESS_TOKEN,
-          token_type: 'bearer',
-          scope: 'repo,user',
-        }),
-      })
-    } else {
-      route.fulfill({
-        status: 400,
-        contentType: 'application/json',
-        body: JSON.stringify({
-          error: 'bad_verification_code',
-          error_description: 'The code passed is incorrect or expired.',
-        }),
-      })
-    }
-  })
-}
-
-/**
- * Opens the app OAuth callback URL so Authenticator exchanges the mocked code for a token.
- * @param page - Playwright page that should receive the authenticated app state.
- * @returns Resolves after the app renders with the mocked access token persisted.
+ * Exercises the browser login navigation against mocked BFF boundaries without creating a client token.
+ * @param page - Playwright page that should enter the authenticated app.
+ * @returns Resolves after the account shell becomes visible.
  * @example
  * await completeMockOAuthCallback(page)
  */
 export async function completeMockOAuthCallback(page: Page) {
-  await setupAuthMocks(page)
+  const authenticationState = await setupAuthenticationApiMock(page, false)
   await setupDefaultReleaseFeedMock(page)
-  await setOAuthState(page)
-  await page.goto(
-    `/callback?code=${MOCK_AUTH_CODE}&state=${MOCK_OAUTH_STATE}`,
-    {
-      waitUntil: 'domcontentloaded',
-    },
-  )
+  await page.goto('/', { waitUntil: 'domcontentloaded' })
+  authenticationState.authenticated = true
+  await page.goto('/app', { waitUntil: 'domcontentloaded' })
   await page.getByTestId('app-container').waitFor({ state: 'visible' })
 }
 
 /**
- * Writes the Redux Persist auth shape directly so tests can start from an authenticated shell.
- * @param page - Playwright page on the app origin.
- * @param accessToken - Mock GitHub token to persist.
- * @returns Resolves after localStorage and sessionStorage are updated.
+ * Starts a test from an authenticated BFF session without writing credentials into browser storage.
+ * @param page - Playwright page whose auth APIs should report a valid session.
+ * @returns Resolves after the app shell renders.
  * @example
- * await writePersistedAuthState(page, 'mock-token')
+ * await setAuthState(page)
  */
-async function writePersistedAuthState(page: Page, accessToken: string) {
-  await page.evaluate((token) => {
-    const reduxState = {
-      authenticator: JSON.stringify({
-        accessToken: token,
-      }),
-      subscribed: JSON.stringify({ subscribed: [] }),
-      _persist: JSON.stringify({
-        version: -1,
-        rehydrated: true,
-      }),
-    }
-    localStorage.setItem(
-      'persist:Geek-Infiltration',
-      JSON.stringify(reduxState),
-    )
-    sessionStorage.clear()
-  }, accessToken)
-}
-
-/**
- * Sets persisted authentication before tests that need app access without exercising OAuth.
- * @param page - Playwright page whose localStorage should receive Redux Persist state.
- * @param accessToken - Mock GitHub token to persist.
- * @returns Resolves after the page reloads with persisted auth applied.
- * @example
- * await setAuthState(page, 'mock-token')
- */
-export async function setAuthState(
-  page: Page,
-  accessToken = MOCK_ACCESS_TOKEN,
-) {
+export async function setAuthState(page: Page) {
+  await setupAuthenticationApiMock(page, true)
   await setupDefaultReleaseFeedMock(page)
-  await page.goto('/og-image.png', { timeout: 10000, waitUntil: 'load' })
-  await writePersistedAuthState(page, accessToken)
 
-  for (let attempt = 0; attempt < 3; attempt++) {
+  // Retrying isolates transient parallel-browser navigation delays from authentication behavior.
+  for (let attempt = 0; attempt < E2E_AUTH_SETUP_ATTEMPTS; attempt++) {
     try {
-      // Load the app after storage is ready, then wait for the authenticated tree to hydrate.
       await page.goto('/', {
-        timeout: 10000,
+        timeout: E2E_NAVIGATION_TIMEOUT_MS,
         waitUntil: 'domcontentloaded',
       })
-      await page
-        .getByTestId('app-container')
-        .waitFor({ state: 'visible', timeout: 7000 })
+      await page.getByTestId('app-container').waitFor({
+        state: 'visible',
+        timeout: E2E_APP_VISIBLE_TIMEOUT_MS,
+      })
       return
     } catch (error) {
-      if (attempt === 2) throw error
+      // The final attempt surfaces a real fixture failure to Playwright.
+      if (attempt === E2E_AUTH_SETUP_ATTEMPTS - 1) throw error
 
-      // Retry from a static page to avoid staying stuck in a lazy-loading fallback.
-      await page.goto('/og-image.png', { timeout: 10000, waitUntil: 'load' })
-      await writePersistedAuthState(page, accessToken)
+      // Restart from a static resource when parallel browser work delays route hydration.
+      await page.goto('/og-image.png', {
+        timeout: E2E_NAVIGATION_TIMEOUT_MS,
+        waitUntil: 'load',
+      })
     }
   }
 }
 
 /**
- * Clears persisted auth data before checking the unauthenticated landing state.
- * @param page - Playwright page whose browser storage should be cleared.
- * @returns Resolves after the landing page login button is visible.
+ * Starts a test from a signed-out BFF session and removes any legacy browser-persisted auth artifacts.
+ * @param page - Playwright page whose auth APIs should report no session.
+ * @returns Resolves after the landing login entry point becomes visible.
  * @example
  * await clearAuthState(page)
  */
 export async function clearAuthState(page: Page) {
+  await setupAuthenticationApiMock(page, false)
   await page.goto('/og-image.png', { waitUntil: 'load' })
   await page.evaluate(() => {
     localStorage.removeItem('persist:Geek-Infiltration')
@@ -280,27 +194,24 @@ export async function clearAuthState(page: Page) {
 }
 
 /**
- * Get current auth token from Redux state
- */
-export async function getAuthToken(page: Page): Promise<string | null> {
-  return page.evaluate(() => {
-    const persistedState = localStorage.getItem('persist:Geek-Infiltration')
-    if (!persistedState) return null
-
-    try {
-      const state = JSON.parse(persistedState)
-      const authenticator = JSON.parse(state.authenticator || '{}')
-      return authenticator.accessToken || null
-    } catch {
-      return null
-    }
-  })
-}
-
-/**
- * Check if user is authenticated
+ * Checks the same session endpoint used by React Router instead of inspecting browser-readable tokens.
+ * @param page - Playwright page on the application origin.
+ * @returns True only when the mocked BFF reports a valid session.
+ * @example
+ * await isAuthenticated(page) // => true
  */
 export async function isAuthenticated(page: Page): Promise<boolean> {
-  const token = await getAuthToken(page)
-  return Boolean(token)
+  return page.evaluate(async () => {
+    const response = await fetch('/api/auth/session', { cache: 'no-store' })
+    // Mocked server errors must not count as a valid session.
+    if (!response.ok) return false
+
+    const payload: unknown = await response.json()
+    return (
+      payload !== null &&
+      typeof payload === 'object' &&
+      'authenticated' in payload &&
+      payload.authenticated === true
+    )
+  })
 }

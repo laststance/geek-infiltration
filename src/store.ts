@@ -2,11 +2,10 @@ import { configureStore } from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { combineReducers } from 'redux'
 import { persistReducer } from 'redux-persist'
-import type { WebStorage } from 'redux-persist/es/types'
+import type { PersistedState, WebStorage } from 'redux-persist/es/types'
 import webStorage from 'redux-persist/lib/storage'
 
 import { api } from './constants/api'
-import authenticatorReducer from './redux/authenticatorSlice'
 import subscribedReducer from './redux/subscribedSlice'
 import userInterfaceReducer from './redux/userInterfaceSlice'
 
@@ -18,6 +17,7 @@ import userInterfaceReducer from './redux/userInterfaceSlice'
  * isWebStorage({ getItem() {}, setItem() {}, removeItem() {} }) // => true
  */
 function isWebStorage(candidate: unknown): candidate is WebStorage {
+  // Primitive and null module values cannot implement the storage contract.
   if (candidate === null || typeof candidate !== 'object') return false
 
   return (
@@ -38,6 +38,7 @@ function isWebStorage(candidate: unknown): candidate is WebStorage {
  * resolvePersistStorage({ default: { getItem() {}, setItem() {}, removeItem() {} } }) // => default storage
  */
 function resolvePersistStorage(storageModule: unknown): WebStorage {
+  // Native ESM resolution can expose the adapter directly.
   if (isWebStorage(storageModule)) return storageModule
 
   // Vite can expose the CJS default export one level deeper.
@@ -55,14 +56,34 @@ function resolvePersistStorage(storageModule: unknown): WebStorage {
 
 const storage = resolvePersistStorage(webStorage)
 
+/**
+ * Deletes legacy browser-persisted GitHub tokens during Redux Persist rehydration after the BFF migration.
+ * @param persistedState - Previously stored root state, possibly containing the removed authenticator slice.
+ * @returns Persisted state without browser-readable authentication credentials.
+ * @example
+ * await removeLegacyAuthenticatorState({ _persist, authenticator: { accessToken: 'token' } })
+ */
+async function removeLegacyAuthenticatorState(persistedState: PersistedState) {
+  // New or already-migrated stores have no browser credential to remove.
+  if (persistedState === undefined || !('authenticator' in persistedState)) {
+    return persistedState
+  }
+
+  const { authenticator: legacyAuthenticator, ...safePersistedState } =
+    persistedState
+  void legacyAuthenticator
+  return safePersistedState
+}
+
 const persistConfig = {
   key: 'Geek-Infiltration',
+  migrate: removeLegacyAuthenticatorState,
   storage,
-  whitelist: ['authenticator', 'subscribed'],
+  version: 1,
+  whitelist: ['subscribed'],
 }
 
 const reducers = combineReducers({
-  authenticator: authenticatorReducer,
   subscribed: subscribedReducer,
   userInterface: userInterfaceReducer,
   [api.reducerPath]: api.reducer,
@@ -70,7 +91,7 @@ const reducers = combineReducers({
 
 const persistedReducer = persistReducer(persistConfig, reducers)
 export const store = configureStore({
-  devTools: !!import.meta.env.DEV,
+  devTools: Boolean(import.meta.env.DEV),
   middleware: (getDefaultMiddleware) =>
     // Adding the api middleware enables caching, invalidation, polling,
     // and other useful features of `rtk-query`.

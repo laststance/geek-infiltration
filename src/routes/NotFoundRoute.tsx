@@ -1,6 +1,18 @@
-import { Navigate } from 'react-router'
+import { redirect } from 'react-router'
 
-import { useAppSelector } from '@/hooks/useAppSelector'
+import { readAuthSession } from '@/auth/readAuthSession'
+import { FullScreenSpinner } from '@/components/FullScreenSpinner'
+
+/**
+ * Resolves unknown URLs to the correct entry point after validating the server session.
+ * @returns Redirect to the authenticated app or public landing route.
+ * @example
+ * await loader() // => redirect('/app') or redirect('/')
+ */
+export async function loader() {
+  // Unknown URLs preserve the user's authenticated or public application boundary.
+  return redirect((await readAuthSession()) ? '/app' : '/')
+}
 
 /**
  * Routes unknown URLs back to the correct public or authenticated entry point.
@@ -9,11 +21,5 @@ import { useAppSelector } from '@/hooks/useAppSelector'
  * <Route path="*" Component={Component} />
  */
 export function Component() {
-  const accessToken = useAppSelector((state) => state.authenticator.accessToken)
-
-  if (accessToken !== null) {
-    return <Navigate to="/app" replace />
-  }
-
-  return <Navigate to="/" replace />
+  return <FullScreenSpinner />
 }

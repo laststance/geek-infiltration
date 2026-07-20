@@ -1,7 +1,7 @@
 import { Button, Container, Typography, Grid } from '@mui/material'
 import { styled } from '@mui/material/styles'
 
-import { useGitHubAuthUrl } from '../hooks/useGitHubAuthUrl'
+import { GITHUB_AUTH_ENDPOINT } from '../constants/endpoint'
 
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
@@ -14,9 +14,13 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }))
 
+/**
+ * Renders the landing-page value statement and sends its login CTA to the server-owned OAuth flow.
+ * @returns Value section with a same-origin GitHub login link.
+ * @example
+ * <HomeLookingFor />
+ */
 export function HomeLookingFor() {
-  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
-
   return (
     <RootStyle>
       <Container>
@@ -53,8 +57,7 @@ export function HomeLookingFor() {
                 color="inherit"
                 size="large"
                 variant="outlined"
-                href={githubAuthUrl}
-                onClick={prepareGitHubAuth}
+                href={GITHUB_AUTH_ENDPOINT}
                 endIcon={<Iconify icon={'ic:round-arrow-right-alt'} />}
               >
                 Login with GitHub

@@ -9,7 +9,7 @@ import {
 } from '@mui/material'
 import { useTheme, styled } from '@mui/material/styles'
 
-import { useGitHubAuthUrl } from '../hooks/useGitHubAuthUrl'
+import { GITHUB_AUTH_ENDPOINT } from '../constants/endpoint'
 
 import { MotionInView, varFade } from './animate'
 import Iconify from './Iconify'
@@ -22,10 +22,15 @@ const RootStyle = styled('div')(({ theme }) => ({
   },
 }))
 
+/**
+ * Renders product capability cards whose login actions all begin at the same-origin OAuth BFF.
+ * @returns Capability grid and call-to-action section.
+ * @example
+ * <HomePricingPlans />
+ */
 export function HomePricingPlans() {
   const theme = useTheme()
   const isLight = theme.palette.mode === 'light'
-  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
 
   return (
     <RootStyle>
@@ -67,11 +72,7 @@ export function HomePricingPlans() {
                     : varFade().inUp
                 }
               >
-                <PlanCard
-                  plan={plan}
-                  githubAuthUrl={githubAuthUrl}
-                  prepareGitHubAuth={prepareGitHubAuth}
-                />
+                <PlanCard plan={plan} />
               </MotionInView>
             </Grid>
           ))}
@@ -95,8 +96,7 @@ export function HomePricingPlans() {
               <Button
                 size="large"
                 variant="contained"
-                href={githubAuthUrl}
-                onClick={prepareGitHubAuth}
+                href={GITHUB_AUTH_ENDPOINT}
               >
                 Login with GitHub
               </Button>
@@ -109,17 +109,22 @@ export function HomePricingPlans() {
 }
 
 type PlanCardProps = {
-  githubAuthUrl: string
   plan: {
     description: string
     icon: string
     points: string[]
     title: string
   }
-  prepareGitHubAuth: () => void
 }
 
-function PlanCard({ githubAuthUrl, plan, prepareGitHubAuth }: PlanCardProps) {
+/**
+ * Renders one capability card and uses the shared BFF login route when its CTA is selected.
+ * @param plan - Capability copy, icon, title, and bullet points to display.
+ * @returns One landing-page capability card.
+ * @example
+ * <PlanCard plan={{ description: 'See activity', icon: '/icon.svg', points: ['Pull requests'], title: 'Timeline aggregation' }} />
+ */
+function PlanCard({ plan }: PlanCardProps) {
   const { description, icon, points, title } = plan
   const highlighted = title === 'Timeline aggregation'
 
@@ -177,8 +182,7 @@ function PlanCard({ githubAuthUrl, plan, prepareGitHubAuth }: PlanCardProps) {
           size="large"
           fullWidth
           variant={highlighted ? 'contained' : 'outlined'}
-          href={githubAuthUrl}
-          onClick={prepareGitHubAuth}
+          href={GITHUB_AUTH_ENDPOINT}
           aria-label={`Login with GitHub for ${title}`}
         >
           Login with GitHub

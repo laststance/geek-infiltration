@@ -10,11 +10,6 @@ export const router = createBrowserRouter([
     lazy: async () => import('@/routes/LandingRoute'),
   },
   {
-    path: '/callback',
-    HydrateFallback: FullScreenSpinner,
-    lazy: async () => import('@/routes/OAuthCallbackRoute'),
-  },
-  {
     HydrateFallback: FullScreenSpinner,
     lazy: async () => import('@/routes/AuthenticatedLayout'),
     children: [

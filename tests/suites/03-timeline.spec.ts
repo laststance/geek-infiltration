@@ -296,7 +296,7 @@ test.describe('Timeline Container', () => {
         information: 'PR_Issues',
       },
     ])
-    await page.route('https://api.github.com/graphql', (route) => {
+    await page.route('**/api/github/graphql', (route) => {
       route.fulfill({
         contentType: 'application/json',
         status: 500,

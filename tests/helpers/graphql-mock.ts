@@ -33,7 +33,7 @@ export class GraphQLMocker {
   /**
    * Setup route interception for GraphQL API
    */
-  async setup(page: Page, apiUrl = 'https://api.github.com/graphql') {
+  async setup(page: Page, apiUrl = '**/api/github/graphql') {
     await page.route(apiUrl, async (route: Route) => {
       const request = route.request()
       const postData = request.postData()

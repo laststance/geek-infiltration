@@ -8,7 +8,7 @@ import {
 
 test.describe('Integration Tests', () => {
   test.describe('Redux Persistence', () => {
-    test('should persist authenticator state', async ({
+    test('should not persist authenticator credentials', async ({
       page,
       authenticatedPage,
       appPage,
@@ -16,8 +16,7 @@ test.describe('Integration Tests', () => {
       await appPage.goto()
 
       const authenticatorSlice = await getReduxSlice(page, 'authenticator')
-      expect(authenticatorSlice).toBeTruthy()
-      expect(authenticatorSlice).toHaveProperty('accessToken')
+      expect(authenticatorSlice).toBeNull()
     })
 
     test('should persist subscribed state', async ({
@@ -448,7 +447,7 @@ test.describe('Integration Tests', () => {
       await landingPage.goto()
       expect(await landingPage.isVisible()).toBe(true)
 
-      // 2. Authenticate through the OAuth callback path.
+      // 2. Establish the same server session produced by the OAuth callback.
       await completeMockOAuthCallback(page)
 
       // 3. Navigate to app

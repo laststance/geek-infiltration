@@ -103,8 +103,13 @@ test.describe('Error Handling', () => {
     }) => {
       // Throttle network
       await page.route('**/*', async (route) => {
+        if (new URL(route.request().url()).pathname.startsWith('/api/')) {
+          await route.fallback()
+          return
+        }
+
         await new Promise((resolve) => setTimeout(resolve, 1000))
-        route.continue()
+        await route.continue()
       })
 
       await appPage.goto()

@@ -1,7 +1,7 @@
 import { Box, Button, AppBar, Toolbar, Container } from '@mui/material'
 import { styled, useTheme } from '@mui/material/styles'
 
-import { useGitHubAuthUrl } from '../hooks/useGitHubAuthUrl'
+import { GITHUB_AUTH_ENDPOINT } from '../constants/endpoint'
 import useOffSetTop from '../hooks/useOffSetTop'
 
 import { MAIN_HEADER_DESKTOP } from './config'
@@ -29,12 +29,16 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   zIndex: -1,
 }))
 
+/**
+ * Renders the landing header and starts server-owned GitHub OAuth when a visitor selects login.
+ * @returns Responsive public header with a same-origin login CTA.
+ * @example
+ * <MainHeader />
+ */
 export default function MainHeader() {
   const isOffset = useOffSetTop(MAIN_HEADER_DESKTOP)
 
   const theme = useTheme()
-  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
-
   return (
     <AppBar sx={{ bgcolor: 'transparent', boxShadow: 0 }}>
       <ToolbarStyle
@@ -56,8 +60,7 @@ export default function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
 
           <Button
-            href={githubAuthUrl}
-            onClick={prepareGitHubAuth}
+            href={GITHUB_AUTH_ENDPOINT}
             size="large"
             color="inherit"
             variant="outlined"

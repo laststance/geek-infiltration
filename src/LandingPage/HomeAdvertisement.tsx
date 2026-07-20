@@ -2,7 +2,7 @@ import { Button, Box, Container, Typography } from '@mui/material'
 import { styled } from '@mui/material/styles'
 import { m } from 'framer-motion'
 
-import { useGitHubAuthUrl } from '../hooks/useGitHubAuthUrl'
+import { GITHUB_AUTH_ENDPOINT } from '../constants/endpoint'
 
 import { MotionInView, varFade } from './animate'
 import Image from './Image'
@@ -26,9 +26,13 @@ const ContentStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
+/**
+ * Renders the final landing-page login CTA so signed-out visitors enter the same-origin OAuth BFF.
+ * @returns Advertisement section linked to the server-side GitHub OAuth start route.
+ * @example
+ * <HomeAdvertisement />
+ */
 export function HomeAdvertisement() {
-  const { githubAuthUrl, prepareGitHubAuth } = useGitHubAuthUrl()
-
   return (
     <Container>
       <ContentStyle>
@@ -71,8 +75,7 @@ export function HomeAdvertisement() {
             <Button
               size="large"
               variant="contained"
-              href={githubAuthUrl}
-              onClick={prepareGitHubAuth}
+              href={GITHUB_AUTH_ENDPOINT}
               sx={{
                 '&:hover': { bgcolor: 'grey.300' },
                 bgcolor: 'common.white',

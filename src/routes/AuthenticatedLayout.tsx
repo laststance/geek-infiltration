@@ -1,9 +1,22 @@
 import { Suspense } from 'react'
-import { Navigate, Outlet } from 'react-router'
+import { Outlet, redirect } from 'react-router'
 
 import AppShell from '@/app/AppShell'
+import { readAuthSession } from '@/auth/readAuthSession'
 import { FullScreenSpinner } from '@/components/FullScreenSpinner'
-import { useAppSelector } from '@/hooks/useAppSelector'
+
+/**
+ * Rejects protected-route navigation unless the BFF validates the HttpOnly session.
+ * @returns No loader data for authenticated users, otherwise a landing redirect.
+ * @example
+ * await loader() // => null or redirect('/')
+ */
+export async function loader() {
+  // Signed-out visitors return to the public entry point before app components render.
+  if (!(await readAuthSession())) return redirect('/')
+
+  return null
+}
 
 /**
  * Protects authenticated routes and keeps the shared app shell outside route content.
@@ -12,13 +25,6 @@ import { useAppSelector } from '@/hooks/useAppSelector'
  * <Route Component={Component} />
  */
 export function Component() {
-  const accessToken = useAppSelector((state) => state.authenticator.accessToken)
-
-  // Authenticated routes should never render private UI without a persisted token.
-  if (accessToken === null) {
-    return <Navigate to="/" replace />
-  }
-
   return (
     <AppShell>
       <Suspense fallback={<FullScreenSpinner />}>
