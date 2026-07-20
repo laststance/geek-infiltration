@@ -88,6 +88,23 @@ describe('UserAutocomplete', () => {
       expect(screen.getByText('@')).toBeInTheDocument()
     })
 
+    it('renders the GitHub username textbox with the 1Password opt-out attribute', () => {
+      // Arrange
+      mockUseGetViewerFollowingQuery.mockReturnValue({
+        data: mockFollowingData,
+        isLoading: false,
+      })
+
+      // Act
+      renderWithTheme(<UserAutocomplete value="" onChange={mockOnChange} />)
+
+      // Assert
+      expect(screen.getByLabelText('GitHub username')).toHaveAttribute(
+        'data-1p-ignore',
+        'true',
+      )
+    })
+
     it('shows suggestions when input is focused', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
