@@ -1,6 +1,6 @@
-import { SESSION_COOKIE_NAME } from '../constants'
-import { readCookie } from '../cookies'
-import { authSessionStore } from '../sessionStore'
+import { SESSION_COOKIE_NAME } from '../constants.js'
+import { readCookie } from '../cookies.js'
+import { authSessionStore } from '../sessionStore.js'
 
 /**
  * Resolves a server-side GitHub credential when session and GraphQL routes receive a valid opaque cookie ID.

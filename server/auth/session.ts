@@ -4,7 +4,7 @@ import {
   OAUTH_TRANSACTION_AUDIENCE,
   OAUTH_TRANSACTION_MAX_AGE_SECONDS,
   SESSION_ISSUER,
-} from './constants'
+} from './constants.js'
 
 export type OAuthTransaction = {
   codeVerifier: string

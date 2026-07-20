@@ -6,7 +6,7 @@ import {
   RANDOM_TOKEN_BYTE_LENGTH,
   SESSION_MAX_AGE_SECONDS,
   SESSION_STORAGE_KEY_PREFIX,
-} from './constants'
+} from './constants.js'
 
 export type AuthSession = {
   githubAccessToken: string

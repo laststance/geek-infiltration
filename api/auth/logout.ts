@@ -2,9 +2,12 @@ import {
   HTTP_STATUS_METHOD_NOT_ALLOWED,
   HTTP_STATUS_NO_CONTENT,
   SESSION_COOKIE_NAME,
-} from '../../server/auth/constants'
-import { readCookie, serializeHttpOnlyCookie } from '../../server/auth/cookies'
-import { authSessionStore } from '../../server/auth/sessionStore'
+} from '../../server/auth/constants.js'
+import {
+  readCookie,
+  serializeHttpOnlyCookie,
+} from '../../server/auth/cookies.js'
+import { authSessionStore } from '../../server/auth/sessionStore.js'
 
 /**
  * Ends the browser session when the account menu posts logout, without exposing or revoking credentials client-side.

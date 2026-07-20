@@ -7,14 +7,14 @@ import {
   OAUTH_TRANSACTION_COOKIE_NAME,
   SESSION_COOKIE_NAME,
   SESSION_MAX_AGE_SECONDS,
-} from '../../../server/auth/constants'
+} from '../../../server/auth/constants.js'
 import {
   readCookie,
   serializeHttpOnlyCookie,
-} from '../../../server/auth/cookies'
-import { readGitHubOAuthEnvironment } from '../../../server/auth/environment'
-import { unsealOAuthTransaction } from '../../../server/auth/session'
-import { authSessionStore } from '../../../server/auth/sessionStore'
+} from '../../../server/auth/cookies.js'
+import { readGitHubOAuthEnvironment } from '../../../server/auth/environment.js'
+import { unsealOAuthTransaction } from '../../../server/auth/session.js'
+import { authSessionStore } from '../../../server/auth/sessionStore.js'
 
 /**
  * Returns the callback URI shared with GitHub so code exchange uses the exact authorize-time value.

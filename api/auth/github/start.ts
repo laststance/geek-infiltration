@@ -11,10 +11,10 @@ import {
   OAUTH_TRANSACTION_COOKIE_NAME,
   OAUTH_TRANSACTION_MAX_AGE_SECONDS,
   RANDOM_TOKEN_BYTE_LENGTH,
-} from '../../../server/auth/constants'
-import { serializeHttpOnlyCookie } from '../../../server/auth/cookies'
-import { readGitHubOAuthEnvironment } from '../../../server/auth/environment'
-import { sealOAuthTransaction } from '../../../server/auth/session'
+} from '../../../server/auth/constants.js'
+import { serializeHttpOnlyCookie } from '../../../server/auth/cookies.js'
+import { readGitHubOAuthEnvironment } from '../../../server/auth/environment.js'
+import { sealOAuthTransaction } from '../../../server/auth/session.js'
 
 /**
  * Keeps post-login navigation on this application when the OAuth start endpoint receives a return target.

@@ -1,4 +1,4 @@
-import { SESSION_SECRET_MINIMUM_LENGTH } from './constants'
+import { SESSION_SECRET_MINIMUM_LENGTH } from './constants.js'
 
 type GitHubOAuthEnvironment = {
   clientId: string

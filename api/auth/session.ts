@@ -1,8 +1,8 @@
 import {
   HTTP_STATUS_INTERNAL_SERVER_ERROR,
   HTTP_STATUS_METHOD_NOT_ALLOWED,
-} from '../../server/auth/constants'
-import { readValidatedAuthSession } from '../../server/auth/utils/readValidatedAuthSession'
+} from '../../server/auth/constants.js'
+import { readValidatedAuthSession } from '../../server/auth/utils/readValidatedAuthSession.js'
 
 /**
  * Reports only whether the HttpOnly session is valid when React Router guards a public or private route.

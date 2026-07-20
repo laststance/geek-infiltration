@@ -26,11 +26,11 @@ vi.mock('@upstash/redis', () => ({
   },
 }))
 
-import githubOAuthCallbackFunction from '../api/auth/github/callback'
-import githubOAuthStartFunction from '../api/auth/github/start'
-import authLogoutFunction from '../api/auth/logout'
-import authSessionFunction from '../api/auth/session'
-import githubGraphqlFunction from '../api/github/graphql'
+import githubOAuthCallbackFunction from '../api/auth/github/callback.js'
+import githubOAuthStartFunction from '../api/auth/github/start.js'
+import authLogoutFunction from '../api/auth/logout.js'
+import authSessionFunction from '../api/auth/session.js'
+import githubGraphqlFunction from '../api/github/graphql.js'
 
 const TEST_SESSION_SECRET = 'test-session-secret-with-at-least-32-characters'
 

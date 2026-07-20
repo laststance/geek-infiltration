@@ -5,8 +5,8 @@ import {
   HTTP_STATUS_BAD_REQUEST,
   HTTP_STATUS_METHOD_NOT_ALLOWED,
   HTTP_STATUS_UNAUTHORIZED,
-} from '../../server/auth/constants'
-import { readValidatedAuthSession } from '../../server/auth/utils/readValidatedAuthSession'
+} from '../../server/auth/constants.js'
+import { readValidatedAuthSession } from '../../server/auth/utils/readValidatedAuthSession.js'
 
 /**
  * Proxies authenticated GraphQL calls so only the BFF can read or send the user's GitHub token.
