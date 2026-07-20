@@ -168,6 +168,8 @@ const UserAutocomplete: React.FC<UserAutocompleteProps> = memo(
               htmlInput: {
                 ...params.slotProps.htmlInput,
                 'aria-label': 'GitHub username',
+                // Tell 1Password to ignore this username picker so its inline prompt stays hidden.
+                'data-1p-ignore': true,
               },
             }}
           />

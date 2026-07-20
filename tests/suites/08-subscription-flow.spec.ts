@@ -173,6 +173,23 @@ test.describe('Subscription Flow with Following Suggestions', () => {
       // Modal should be visible with title
       await expect(getUsernameDialog(page)).toBeVisible()
     })
+
+    test('should mark the username input so 1Password ignores it', async ({
+      page,
+      appPage,
+    }) => {
+      // Arrange
+      await appPage.goto()
+
+      // Act
+      await page.getByRole('button', { name: 'Add subscription' }).click()
+
+      // Assert
+      await expect(getUsernameCombobox(page)).toHaveAttribute(
+        'data-1p-ignore',
+        'true',
+      )
+    })
   })
 
   test.describe('Following Suggestions', () => {
