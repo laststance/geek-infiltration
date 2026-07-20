@@ -5,12 +5,7 @@ function createGradient(color1: string, color2: string) {
 }
 
 export type ColorSchema =
-  | 'primary'
-  | 'secondary'
-  | 'info'
-  | 'success'
-  | 'warning'
-  | 'error'
+  'primary' | 'secondary' | 'info' | 'success' | 'warning' | 'error'
 
 interface GradientsPaletteOptions {
   error: string
