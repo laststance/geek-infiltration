@@ -201,7 +201,8 @@ export default function MockBoard() {
     const column = strip?.children[index]
     if (column instanceof HTMLElement) {
       column.scrollIntoView({
-        behavior: 'smooth',
+        // Honor prefers-reduced-motion: jump instantly instead of animating.
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
         inline: 'center',
         block: 'nearest',
       })
