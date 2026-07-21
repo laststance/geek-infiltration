@@ -1,38 +1,26 @@
-import { styled } from '@mui/material/styles'
+import { Box } from '@mui/material'
 
-import { HomeAdvertisement } from './HomeAdvertisement'
-import { HomeCleanInterfaces } from './HomeCleanInterfaces'
-import { HomeDarkMode } from './HomeDarkMode'
-import { HomeHugePackElements } from './HomeHugePackElements'
-import { HomeLookingFor } from './HomeLookingFor'
-import { HomePricingPlans } from './HomePricingPlans'
+import FeatureCards from './sections/FeatureCards'
+import Hero from './sections/Hero'
+import MockBoard from './sections/MockBoard'
+import NoiseVsSource from './sections/NoiseVsSource'
+import TerminalCTA from './sections/TerminalCTA'
 
-const RootStyle = styled('main')(() => ({
-  height: '100%',
-}))
-
-const ContentStyle = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.default,
-  overflow: 'hidden',
-  position: 'relative',
-}))
-
+/**
+ * Landing main content in the approved refine-1 order: hero → mock product board →
+ * feature cards → noise-vs-source band → terminal CTA. Carries the <main> landmark;
+ * rendered between the header and footer by the landing entry.
+ * @returns The landing page body.
+ * @example <Home />
+ */
 export default function HomePage() {
   return (
-    <RootStyle>
-      <ContentStyle>
-        <HomeHugePackElements />
-
-        <HomeDarkMode />
-
-        <HomeCleanInterfaces />
-
-        <HomePricingPlans />
-
-        <HomeLookingFor />
-
-        <HomeAdvertisement />
-      </ContentStyle>
-    </RootStyle>
+    <Box component="main">
+      <Hero />
+      <MockBoard />
+      <FeatureCards />
+      <NoiseVsSource />
+      <TerminalCTA />
+    </Box>
   )
 }
