@@ -89,8 +89,16 @@ letter-spacing `-0.03em`.
 
 - Landmarks: `<header>` (MainHeader), `<main>` (HomeRootComponent), `<footer>`
   (MainFooter). Each section is a labeled `<section>`. Exactly one `<h1>` (hero).
+- Heading outline is `h1 → h2 → h3` with no skipped levels. Sections whose only
+  visible titles are `h3` (FeatureCards, NoiseVsSource) carry a screen-reader-only
+  `<h2>` styled with `LANDING_VISUALLY_HIDDEN` (a clip helper in `tokens.ts` that
+  stays in the accessibility tree — unlike `display:none`) and reference it via
+  `aria-labelledby`. Keep new sections on this pattern so the outline stays valid.
 - `focus-visible` rings on every `Login with GitHub` button, board column, page dot,
   and the footer link.
+- Mobile page dots wrap the 8px visual dot in a ≥24px transparent tap target
+  (WCAG 2.5.8, non-overlapping centers); their scroll-into-view honors
+  `prefers-reduced-motion` (like the board glow).
 
 ## Component map
 
