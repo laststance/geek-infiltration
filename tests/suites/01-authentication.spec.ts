@@ -23,11 +23,11 @@ test.describe('Authentication Flow', () => {
       await expect(landingPage.mainFooter).toBeVisible()
       await expect(
         main.getByRole('heading', {
-          name: /GitHub Activity Visualization/i,
+          name: /Follow the work, not the feed/i,
         }),
       ).toBeVisible()
       await expect(
-        main.getByText(/Track pull requests, issues, and discussions/i),
+        main.getByText(/Track the issues and pull requests that matter/i),
       ).toBeVisible()
       await expect(
         main.getByRole('heading', {
@@ -36,7 +36,7 @@ test.describe('Authentication Flow', () => {
         }),
       ).toBeVisible()
       await expect(
-        main.getByRole('heading', { exact: true, name: 'GitHub login' }),
+        main.getByRole('heading', { exact: true, name: 'GitHub OAuth login' }),
       ).toBeVisible()
       await expect(
         main.getByRole('heading', { exact: true, name: 'Subscriptions' }),

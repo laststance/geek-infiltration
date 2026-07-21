@@ -1,68 +1,45 @@
-import {
-  Link,
-  Divider,
-  Container,
-  Typography,
-  Stack,
-  Box,
-  Grid,
-} from '@mui/material'
-import { styled } from '@mui/material/styles'
+import { Box, Link, Typography } from '@mui/material'
 
-import SocialsButton from './SocialsButton'
+import { LANDING } from './sections/tokens'
 
-const RootStyle = styled('footer')(({ theme }) => ({
-  backgroundColor: theme.palette.background.default,
-}))
-
+/**
+ * Minimal landing footer: a centered, muted copyright line linking back to
+ * Laststance.io. Marks the page `<footer>` landmark below the closing CTA.
+ * @returns The landing footer.
+ * @example <MainFooter />
+ */
 export default function MainFooter() {
   return (
-    <RootStyle>
-      <Divider />
-      <Container>
-        <Grid
-          container
+    <Box
+      component="footer"
+      sx={{
+        textAlign: 'center',
+        px: 3,
+        py: 4,
+        borderTop: `1px solid ${LANDING.border}`,
+      }}
+    >
+      <Typography sx={{ color: LANDING.textMuted, fontSize: '0.85rem' }}>
+        © {new Date().getFullYear()}{' '}
+        <Link
+          href="https://laststance.io/"
+          target="_blank"
+          rel="noreferrer"
           sx={{
-            justifyContent: 'flex-end',
-            alignItems: 'center',
+            color: LANDING.textMuted,
+            textUnderlineOffset: 3,
+            transition: 'color .18s ease',
+            '&:hover': { color: LANDING.text },
+            '&:focus-visible': {
+              outline: `2px solid ${LANDING.greenBorder}`,
+              outlineOffset: 2,
+              borderRadius: 2,
+            },
           }}
         >
-          <Grid size={{ md: 3 }}>
-            <Stack
-              direction="row"
-              sx={{
-                justifyContent: { md: 'flex-end', xs: 'center' },
-                mb: 5,
-                mt: 5,
-              }}
-            >
-              <SocialsButton sx={{ mx: 0.5 }} />
-            </Stack>
-          </Grid>
-        </Grid>
-        <Box>
-          <Typography
-            component="p"
-            variant="body2"
-            sx={{
-              fontSize: 13,
-              mt: 0,
-              pb: 5,
-              textAlign: 'center',
-            }}
-          >
-            © 2023.{' '}
-            <Link
-              href="https://laststance.io/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Laststance.io
-            </Link>{' '}
-            All rights reserved
-          </Typography>
-        </Box>
-      </Container>
-    </RootStyle>
+          Laststance.io
+        </Link>
+      </Typography>
+    </Box>
   )
 }
