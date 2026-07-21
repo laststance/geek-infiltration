@@ -22,6 +22,7 @@ export const LANDING = {
   textSubtle: '#c9d1d9', // body + comment text (high contrast on panel)
   textMuted: '#9198a1', // secondary metadata (>= 4.5:1 on panel, a11y-verified)
   danger: '#f85149', // GitHub red — "THE NOISE" side
+  dangerBorder: 'rgba(248, 81, 73, 0.35)', // danger outline (mirrors greenBorder for the noise column)
   purple: '#a371f7', // GitHub issue purple — Issue badges
 } as const
 

@@ -39,32 +39,36 @@ export default function LoginButton({
       startIcon={
         <Iconify icon="octicon:mark-github-16" sx={{ width: 18, height: 18 }} />
       }
-      sx={{
-        fontFamily: LANDING_FONT_SANS,
-        px: 2.5,
-        py: size === 'large' ? 1.25 : 1,
-        borderRadius: 1.5,
-        color: LANDING.text,
-        fontWeight: 600,
-        letterSpacing: 0.2,
-        textTransform: 'none',
-        border: '1px solid',
-        borderColor: isAccent ? LANDING.greenBorder : LANDING.border,
-        bgcolor: isAccent ? LANDING.greenSoft : 'transparent',
-        transition:
-          'border-color .18s ease, background-color .18s ease, box-shadow .18s ease',
-        '&:hover': {
-          bgcolor: isAccent ? LANDING.greenHover : LANDING.greenSoft,
-          borderColor: LANDING.green,
+      sx={[
+        {
+          fontFamily: LANDING_FONT_SANS,
+          px: 2.5,
+          py: size === 'large' ? 1.25 : 1,
+          borderRadius: 1.5,
+          color: LANDING.text,
+          fontWeight: 600,
+          letterSpacing: 0.2,
+          textTransform: 'none',
+          border: '1px solid',
+          borderColor: isAccent ? LANDING.greenBorder : LANDING.border,
+          bgcolor: isAccent ? LANDING.greenSoft : 'transparent',
+          transition:
+            'border-color .18s ease, background-color .18s ease, box-shadow .18s ease',
+          '&:hover': {
+            bgcolor: isAccent ? LANDING.greenHover : LANDING.greenSoft,
+            borderColor: LANDING.green,
+          },
+          // Visible keyboard focus ring (a11y): green halo on focus-visible only.
+          '&:focus-visible': {
+            outline: 'none',
+            borderColor: LANDING.green,
+            boxShadow: `0 0 0 3px ${LANDING.greenFocusRing}`,
+          },
         },
-        // Visible keyboard focus ring (a11y): green halo on focus-visible only.
-        '&:focus-visible': {
-          outline: 'none',
-          borderColor: LANDING.green,
-          boxShadow: `0 0 0 3px ${LANDING.greenFocusRing}`,
-        },
-        ...sx,
-      }}
+        // MUI SxProps can be an object, array, or callback; normalize to an array so a
+        // caller's array/callback sx composes instead of being dropped by object spread.
+        ...(Array.isArray(sx) ? sx : sx ? [sx] : []),
+      ]}
     >
       Login with GitHub
     </Button>

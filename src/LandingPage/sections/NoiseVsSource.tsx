@@ -47,7 +47,7 @@ function ComparisonColumn({
         p: 3,
         borderRadius: 2,
         bgcolor: LANDING.panel,
-        border: `1px solid ${isNoise ? 'rgba(248, 81, 73, 0.35)' : LANDING.greenBorder}`,
+        border: `1px solid ${isNoise ? LANDING.dangerBorder : LANDING.greenBorder}`,
       }}
     >
       <Typography

@@ -123,4 +123,28 @@ describe('MockBoard mobile page dots', () => {
       block: 'nearest',
     })
   })
+
+  it('clamps the active page dot to the last column when overscrolled past the end', () => {
+    // Arrange: render the board and fake a strip overscrolled beyond the last column,
+    // exercising handleStripScroll's Math.min(..., length - 1) clamp against overscroll.
+    render(<MockBoard />)
+    const strip = screen.getAllByRole('group')[0].parentElement
+    if (!strip) throw new Error('scroll strip (column groups parent) not found')
+    Object.defineProperty(strip, 'scrollWidth', {
+      configurable: true,
+      value: COLUMN_WIDTH_PX * BOARD_COLUMNS.length,
+    })
+    Object.defineProperty(strip, 'scrollLeft', {
+      configurable: true,
+      writable: true,
+      value: COLUMN_WIDTH_PX * BOARD_COLUMNS.length + 999, // overscroll past the last column
+    })
+
+    // Act: the strip scrolls past its end, as a rubber-band overscroll would.
+    fireEvent.scroll(strip)
+
+    // Assert: the index clamps to the final column (antfu), never out of range.
+    expect(pageDotFor('antfu')).toHaveAttribute('aria-current', 'true')
+    expect(pageDotFor('kentcdodds')).toHaveAttribute('aria-current', 'false')
+  })
 })

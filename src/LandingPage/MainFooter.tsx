@@ -20,7 +20,7 @@ export default function MainFooter() {
       }}
     >
       <Typography sx={{ color: LANDING.textMuted, fontSize: '0.85rem' }}>
-        © 2026{' '}
+        © {new Date().getFullYear()}{' '}
         <Link
           href="https://laststance.io/"
           target="_blank"
