@@ -3,6 +3,7 @@ import { useReducedMotion } from 'framer-motion'
 import { useRef, useState } from 'react'
 import type { UIEvent } from 'react'
 
+import { BOARD_GLOW_DURATION_S } from '../config'
 import Iconify from '../Iconify'
 
 import type { BoardColumn } from './boardData'
@@ -220,8 +221,32 @@ export default function MockBoard() {
         mx: 'auto',
       }}
     >
-      <Reveal>
-        {/* Browser window frame with pulsing green glow */}
+      <Reveal sx={{ position: 'relative' }}>
+        {/* Green glow: a static max-glow box-shadow whose OPACITY pulses. Animating
+            opacity composites on the GPU, so the largest element on the page no
+            longer repaints every frame (as animating box-shadow did). Sits as a
+            sibling BEHIND the frame so the frame's overflow:hidden can't clip it. */}
+        <Box
+          aria-hidden
+          sx={{
+            position: 'absolute',
+            inset: 0,
+            borderRadius: 2.5,
+            pointerEvents: 'none',
+            boxShadow:
+              '0 0 0 1px rgba(57, 211, 83, 0.34), 0 12px 80px -16px rgba(57, 211, 83, 0.6)',
+            '@keyframes giBoardGlowPulse': {
+              '0%, 100%': { opacity: 0.6 },
+              '50%': { opacity: 1 },
+            },
+            // Reduced motion: hold a steady mid glow instead of pulsing.
+            opacity: prefersReducedMotion ? 0.7 : undefined,
+            animation: prefersReducedMotion
+              ? 'none'
+              : `giBoardGlowPulse ${BOARD_GLOW_DURATION_S}s ease-in-out infinite`,
+          }}
+        />
+        {/* Browser window frame (clips its own content; paints above the glow) */}
         <Box
           sx={{
             position: 'relative',
@@ -229,19 +254,6 @@ export default function MockBoard() {
             border: `1px solid ${LANDING.border}`,
             bgcolor: LANDING.panel,
             overflow: 'hidden',
-            '@keyframes giBoardGlow': {
-              '0%, 100%': {
-                boxShadow:
-                  '0 0 0 1px rgba(57, 211, 83, 0.18), 0 12px 60px -22px rgba(57, 211, 83, 0.4)',
-              },
-              '50%': {
-                boxShadow:
-                  '0 0 0 1px rgba(57, 211, 83, 0.34), 0 12px 80px -16px rgba(57, 211, 83, 0.6)',
-              },
-            },
-            animation: prefersReducedMotion
-              ? 'none'
-              : 'giBoardGlow 4.5s ease-in-out infinite',
           }}
         >
           {/* Chrome bar */}
@@ -384,7 +396,7 @@ export default function MockBoard() {
               borderRadius: '50%',
               '&:focus-visible': {
                 outline: 'none',
-                boxShadow: `0 0 0 3px rgba(57, 211, 83, 0.4)`,
+                boxShadow: `0 0 0 3px ${LANDING.greenFocusRing}`,
               },
             }}
           >
@@ -395,7 +407,9 @@ export default function MockBoard() {
                 width: activeColumn === index ? 22 : 8,
                 height: 8,
                 borderRadius: 4,
-                transition: 'width .2s ease, background-color .2s ease',
+                transition: prefersReducedMotion
+                  ? 'none'
+                  : 'width .2s ease, background-color .2s ease',
                 bgcolor:
                   activeColumn === index ? LANDING.green : LANDING.border,
               }}

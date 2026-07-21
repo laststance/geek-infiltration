@@ -69,10 +69,14 @@ letter-spacing `-0.03em`.
 
 ## Motion (`sections/Reveal.tsx`)
 
-- Entrance: fade + 24px rise, `whileInView` with `viewport={{ once: true }}`,
-  `duration .55s`, ease `[0.22, 1, 0.36, 1]`. Uses framer-motion `motion` directly
-  (no `LazyMotion` provider is mounted in this app).
-- Board: soft green-glow **pulse** (`giBoardGlow`, 4.5s) on the browser frame.
+- Entrance: fade + 24px rise, `duration .55s`, ease `[0.22, 1, 0.36, 1]`. Above-the-fold
+  content (the hero) fires on mount via `animate` (Reveal's `immediate` prop) so its
+  reveal never gates on an IntersectionObserver; below-the-fold content uses `whileInView`
+  with `viewport={{ once: true }}`. Uses framer-motion `motion` directly (no `LazyMotion`
+  provider is mounted in this app).
+- Board: soft green-glow **pulse** (`giBoardGlowPulse`, 4.5s) on the browser frame — a
+  static max-glow box-shadow overlay whose **opacity** pulses, so the largest element on
+  the page composites on the GPU instead of repainting the shadow every frame.
 - **`prefers-reduced-motion`**: Reveal drops the translate; the glow animation is
   disabled. Honor this for any new motion.
 

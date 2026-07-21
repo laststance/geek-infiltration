@@ -77,7 +77,7 @@ function ComparisonColumn({
               icon={isNoise ? 'octicon:x-16' : 'octicon:check-16'}
               sx={{ width: 18, height: 18, color: accent, flexShrink: 0 }}
             />
-            <Typography sx={{ color: LANDING.textSubtle, fontSize: '0.98rem' }}>
+            <Typography sx={{ color: LANDING.textSubtle, fontSize: '1rem' }}>
               {point}
             </Typography>
           </Box>

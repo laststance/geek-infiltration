@@ -112,7 +112,7 @@ export default function FeatureCards() {
             <Typography
               sx={{
                 color: LANDING.textMuted,
-                fontSize: '0.95rem',
+                fontSize: '1rem',
                 lineHeight: 1.6,
               }}
             >

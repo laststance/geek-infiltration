@@ -16,6 +16,8 @@ export const LANDING = {
   greenDim: '#26a641', // secondary accent / gradient end
   greenSoft: 'rgba(57, 211, 83, 0.12)', // tint fills, hover washes
   greenBorder: 'rgba(57, 211, 83, 0.45)', // accented outlines / glow ring
+  greenHover: 'rgba(57, 211, 83, 0.2)', // hover wash on the accent CTA
+  greenFocusRing: 'rgba(57, 211, 83, 0.4)', // keyboard focus halo (CTA + page dots)
   text: '#ffffff', // primary text
   textSubtle: '#c9d1d9', // body + comment text (high contrast on panel)
   textMuted: '#9198a1', // secondary metadata (>= 4.5:1 on panel, a11y-verified)

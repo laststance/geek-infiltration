@@ -54,14 +54,14 @@ export default function LoginButton({
         transition:
           'border-color .18s ease, background-color .18s ease, box-shadow .18s ease',
         '&:hover': {
-          bgcolor: isAccent ? 'rgba(57, 211, 83, 0.2)' : LANDING.greenSoft,
+          bgcolor: isAccent ? LANDING.greenHover : LANDING.greenSoft,
           borderColor: LANDING.green,
         },
         // Visible keyboard focus ring (a11y): green halo on focus-visible only.
         '&:focus-visible': {
           outline: 'none',
           borderColor: LANDING.green,
-          boxShadow: `0 0 0 3px rgba(57, 211, 83, 0.4)`,
+          boxShadow: `0 0 0 3px ${LANDING.greenFocusRing}`,
         },
         ...sx,
       }}

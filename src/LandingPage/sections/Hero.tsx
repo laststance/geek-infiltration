@@ -26,7 +26,9 @@ export default function Hero() {
       }}
     >
       {/* Mono eyebrow — sets the "calm, GitHub-native" tone above the headline */}
-      <Reveal>
+      {/* immediate: hero is above-the-fold, so fire on mount (never gate the CTA
+          on an IntersectionObserver — see Reveal). */}
+      <Reveal immediate>
         <Typography
           sx={{
             fontFamily: LANDING_FONT_MONO,
@@ -43,7 +45,7 @@ export default function Hero() {
       </Reveal>
 
       {/* The single visual anchor of the whole page */}
-      <Reveal delay={0.06}>
+      <Reveal immediate delay={0.06}>
         <Typography
           component="h1"
           sx={{
@@ -60,7 +62,7 @@ export default function Hero() {
       </Reveal>
 
       {/* One-line promise */}
-      <Reveal delay={0.12}>
+      <Reveal immediate delay={0.12}>
         <Typography
           sx={{
             color: LANDING.textSubtle,
@@ -76,7 +78,7 @@ export default function Hero() {
         </Typography>
       </Reveal>
 
-      <Reveal delay={0.18}>
+      <Reveal immediate delay={0.18}>
         <LoginButton tone="accent" />
       </Reveal>
     </Box>
