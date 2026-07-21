@@ -132,7 +132,6 @@ function BoardColumnCard({
         <Avatar
           src={`https://github.com/${column.commenter}.png?size=48`}
           alt=""
-          slotProps={{ img: { loading: 'lazy' } }}
           sx={{
             width: 24,
             height: 24,

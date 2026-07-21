@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import Reveal from './Reveal'
 
@@ -14,16 +14,19 @@ let intersectionObserverConstructions = 0
  * @example stubMatchMedia() // window.matchMedia(...).matches === false
  */
 function stubMatchMedia(): void {
-  window.matchMedia = vi.fn().mockImplementation((query: string) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addEventListener: vi.fn(),
-    removeEventListener: vi.fn(),
-    addListener: vi.fn(),
-    removeListener: vi.fn(),
-    dispatchEvent: vi.fn(),
-  }))
+  vi.stubGlobal(
+    'matchMedia',
+    vi.fn().mockImplementation((query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+      addListener: vi.fn(),
+      removeListener: vi.fn(),
+      dispatchEvent: vi.fn(),
+    })),
+  )
 }
 
 /**
@@ -50,7 +53,13 @@ describe('Reveal entrance', () => {
   beforeEach(() => {
     intersectionObserverConstructions = 0
     stubMatchMedia()
-    window.IntersectionObserver = CountingIntersectionObserver
+    vi.stubGlobal('IntersectionObserver', CountingIntersectionObserver)
+  })
+
+  // Restore matchMedia/IntersectionObserver after each test so global stubs never
+  // leak between tests (vi.unstubAllGlobals reverses vi.stubGlobal assignments).
+  afterEach(() => {
+    vi.unstubAllGlobals()
   })
 
   it('reveals above-the-fold content on mount without waiting on an IntersectionObserver', () => {
