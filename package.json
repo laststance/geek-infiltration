@@ -110,5 +110,6 @@
     "playwright:ui": "playwright test --ui",
     "playwright:debug": "playwright test --debug",
     "playwright:codegen": "playwright codegen"
-  }
+  },
+  "version": "0.1.0.0"
 }
