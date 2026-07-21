@@ -46,3 +46,23 @@ export const landingCssVars = {
 
 /** Fixed content max-width so header, hero, and bands share one measure. */
 export const LANDING_MAX_WIDTH_PX = 1200
+
+/**
+ * Screen-reader-only style for section headings that restore a valid h1→h2→h3
+ * outline without changing the visual design. Standard clip technique — stays in
+ * the accessibility tree (NOT `display:none`, which would drop the heading from it).
+ * Local (not `@mui/utils`) because that package is a pnpm phantom dep here.
+ * @example <Typography component="h2" sx={LANDING_VISUALLY_HIDDEN}>What you get</Typography>
+ */
+export const LANDING_VISUALLY_HIDDEN = {
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: 0,
+  margin: '-1px',
+  overflow: 'hidden',
+  clip: 'rect(0 0 0 0)',
+  clipPath: 'inset(50%)',
+  whiteSpace: 'nowrap',
+  border: 0,
+} as const

@@ -3,7 +3,12 @@ import { Box, Typography } from '@mui/material'
 import Iconify from '../Iconify'
 
 import Reveal from './Reveal'
-import { LANDING, LANDING_FONT_MONO, LANDING_MAX_WIDTH_PX } from './tokens'
+import {
+  LANDING,
+  LANDING_FONT_MONO,
+  LANDING_MAX_WIDTH_PX,
+  LANDING_VISUALLY_HIDDEN,
+} from './tokens'
 
 const NOISE_POINTS = [
   'Endless scroll',
@@ -93,7 +98,7 @@ export default function NoiseVsSource() {
   return (
     <Box
       component="section"
-      aria-label="Why Geek Infiltration"
+      aria-labelledby="noise-vs-source-heading"
       sx={{
         px: 3,
         py: { xs: 4, md: 6 },
@@ -101,6 +106,14 @@ export default function NoiseVsSource() {
         mx: 'auto',
       }}
     >
+      {/* SR-only section heading — restores a valid h1→h2→h3 outline (visual unchanged) */}
+      <Typography
+        component="h2"
+        id="noise-vs-source-heading"
+        sx={LANDING_VISUALLY_HIDDEN}
+      >
+        Why Geek Infiltration
+      </Typography>
       <Reveal
         sx={{
           display: 'flex',

@@ -3,7 +3,11 @@ import { Box, Typography } from '@mui/material'
 import Iconify from '../Iconify'
 
 import Reveal from './Reveal'
-import { LANDING, LANDING_MAX_WIDTH_PX } from './tokens'
+import {
+  LANDING,
+  LANDING_MAX_WIDTH_PX,
+  LANDING_VISUALLY_HIDDEN,
+} from './tokens'
 
 /** One feature card's content (icon + heading + supporting copy). */
 interface Feature {
@@ -41,7 +45,7 @@ export default function FeatureCards() {
   return (
     <Box
       component="section"
-      aria-label="What you get"
+      aria-labelledby="feature-cards-heading"
       sx={{
         px: 3,
         py: { xs: 4, md: 6 },
@@ -49,6 +53,14 @@ export default function FeatureCards() {
         mx: 'auto',
       }}
     >
+      {/* SR-only section heading — restores a valid h1→h2→h3 outline (visual unchanged) */}
+      <Typography
+        component="h2"
+        id="feature-cards-heading"
+        sx={LANDING_VISUALLY_HIDDEN}
+      >
+        What you get
+      </Typography>
       <Box
         sx={{
           display: 'grid',
