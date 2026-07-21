@@ -357,7 +357,7 @@ export default function MockBoard() {
         sx={{
           display: { xs: 'flex', md: 'none' },
           justifyContent: 'center',
-          gap: 1,
+          gap: 0.5,
           mt: 2,
         }}
       >
@@ -370,20 +370,36 @@ export default function MockBoard() {
             aria-current={activeColumn === index}
             onClick={() => scrollToColumn(index)}
             sx={{
-              width: activeColumn === index ? 22 : 8,
-              height: 8,
+              // >=24px transparent hit area (WCAG 2.5.8) around the small visual
+              // dot; gap:0.5 keeps ~28px between centers so targets never overlap.
+              display: 'grid',
+              placeItems: 'center',
+              width: 24,
+              height: 24,
               p: 0,
               border: 'none',
-              borderRadius: 4,
+              background: 'none',
               cursor: 'pointer',
-              transition: 'width .2s ease, background-color .2s ease',
-              bgcolor: activeColumn === index ? LANDING.green : LANDING.border,
+              borderRadius: '50%',
               '&:focus-visible': {
                 outline: 'none',
                 boxShadow: `0 0 0 3px rgba(57, 211, 83, 0.4)`,
               },
             }}
-          />
+          >
+            {/* Visual dot — unchanged 8px (widens to a 22px pill when active) */}
+            <Box
+              aria-hidden
+              sx={{
+                width: activeColumn === index ? 22 : 8,
+                height: 8,
+                borderRadius: 4,
+                transition: 'width .2s ease, background-color .2s ease',
+                bgcolor:
+                  activeColumn === index ? LANDING.green : LANDING.border,
+              }}
+            />
+          </Box>
         ))}
       </Box>
     </Box>
