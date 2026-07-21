@@ -30,7 +30,7 @@ const FEATURES: readonly Feature[] = [
   {
     icon: 'octicon:lock-16',
     title: 'GitHub OAuth login',
-    body: 'Secure, read-only access. Your data stays private and is never sold.',
+    body: 'Secure GitHub OAuth. Your data stays private and is never sold.',
   },
 ] as const
 
