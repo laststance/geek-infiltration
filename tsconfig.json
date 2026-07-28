@@ -23,7 +23,7 @@
   "include": [
     "src",
     "@types",
-    "tests",
+    "e2e",
     "./**.js",
     "./**.ts",
     "./**.cjs",

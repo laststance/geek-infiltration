@@ -32,7 +32,7 @@ reviews:
   path_instructions:
     - path: 'src/**/*.{ts,tsx}'
       instructions: 'React/TypeScriptの挙動差分、Redux Persist/RTK Query state、MUI accessible name、ユーザーに見える退行を優先して確認してください。'
-    - path: 'tests/**/*.spec.ts'
+    - path: 'e2e/**/*.spec.ts'
       instructions: 'Playwright E2Eは現在実装済みのユースケースをDAMPに検証し、web-first assertionを使い、networkidleや実GitHub依存を避けているか確認してください。'
     - path: '.github/workflows/*.yml'
       instructions: 'GitHub Actionsは最小権限、concurrency、pnpm frozen lockfile、remote action SHA pinning、Playwright browser install/report artifactの有無を確認してください。'
