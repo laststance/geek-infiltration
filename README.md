@@ -21,9 +21,8 @@ available at [geek-infiltration.vercel.app](https://geek-infiltration.vercel.app
 
 ## Local development
 
-The local Volta toolchain uses Node.js `22.21.1` and pnpm `11.9.0` (see
-`package.json`). The Vercel project currently runs Production Functions on
-Node.js `24.x`, so use the Vercel build check below as well as the local checks.
+This project runs on Node.js `v24.18.0` and pnpm `11.17.0` (see
+`packageManager` in `package.json`).
 
 ### Setup
 

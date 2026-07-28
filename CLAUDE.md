@@ -67,8 +67,7 @@ antfu
 
 - Platform: Vercel (`laststance/geek-infiltration`)
 - Production URL: `https://geek-infiltration.vercel.app`
-- Local Volta runtime: Node.js `22.21.1`; Production Functions runtime: Node.js
-  `24.x`.
+- Node.js runtime: `v24.18.0` (local and Production Functions).
 - Run Vercel commands as `pnpm dlx vercel@56.3.2 ...` so clean machines use the
   verified CLI version without a global dependency.
 - Project type: Vite SPA with same-origin Vercel Functions BFF
