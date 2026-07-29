@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react-swc'
+import { codeInspectorPlugin } from 'code-inspector-plugin'
 import type { IncomingMessage, ServerResponse } from 'node:http'
 import { defineConfig, loadEnv } from 'vite'
 import type { Plugin, PreviewServer, ViteDevServer } from 'vite'
@@ -253,7 +254,16 @@ export default defineConfig(({ mode }) => {
     build: {
       sourcemap: true,
     },
-    plugins: [apiFunctionPlugin(), react()],
+    plugins: [
+      // Click DOM elements in the browser to open Cursor at the matching source line.
+      codeInspectorPlugin({
+        bundler: 'vite',
+        editor: 'cursor',
+        hotKeys: ['altKey'],
+      }),
+      apiFunctionPlugin(),
+      react(),
+    ],
     resolve: {
       tsconfigPaths: true,
     },

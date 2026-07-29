@@ -70,6 +70,7 @@
     "all-contributors-cli": "^6.26.1",
     "autoprefixer": "^10.5.4",
     "change-case": "^5.4.4",
+    "code-inspector-plugin": "^2.0.5",
     "eslint": "^10.7.0",
     "eslint-config-prettier": "^10.1.8",
     "eslint-config-ts-prefixer": "^4.2.1",
