@@ -18,7 +18,6 @@ export class SidebarPO {
   // Navigation items
   readonly navItems: Locator
   readonly timelineNavigationLink: Locator
-  readonly releaseFeedNavigationLink: Locator
   readonly navHome: Locator
   readonly navRepositories: Locator
   readonly navIssues: Locator
@@ -54,9 +53,6 @@ export class SidebarPO {
     this.navItems = this.sidebarContainer.getByRole('link')
     this.timelineNavigationLink = this.sidebarContainer.getByRole('link', {
       name: 'Timeline',
-    })
-    this.releaseFeedNavigationLink = this.sidebarContainer.getByRole('link', {
-      name: 'Release Feed',
     })
     this.navHome = this.sidebarContainer.locator(
       'a:has-text("Home"), button:has-text("Home")',
@@ -160,16 +156,6 @@ export class SidebarPO {
    */
   async clickTimelineNavigation() {
     await this.timelineNavigationLink.click()
-  }
-
-  /**
-   * Clicks the release feed route control exposed by the authenticated Sidebar.
-   * @returns Resolves after the Release Feed navigation link is activated.
-   * @example
-   * await sidebar.clickReleaseFeedNavigation()
-   */
-  async clickReleaseFeedNavigation() {
-    await this.releaseFeedNavigationLink.click()
   }
 
   /**

@@ -18,11 +18,6 @@ export const router = createBrowserRouter([
         HydrateFallback: FullScreenSpinner,
         lazy: async () => import('@/routes/TimelineRoute'),
       },
-      {
-        path: '/releases',
-        HydrateFallback: FullScreenSpinner,
-        lazy: async () => import('@/routes/ReleasesRoute'),
-      },
     ],
   },
   {
