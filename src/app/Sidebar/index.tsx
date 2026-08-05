@@ -1,11 +1,10 @@
-import NewReleasesIcon from '@mui/icons-material/NewReleases'
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline'
 import { Stack, Tooltip, alpha, styled } from '@mui/material'
 import type { PropsWithChildren } from 'react'
 import React, { memo } from 'react'
 import { NavLink } from 'react-router'
 
-import useModalControl from '../../hooks/useModalControl'
+import useModalControl from '@/hooks/useModalControl'
 
 import UserMenuButton from './AccountMenu'
 import SubscribeFormModal from './SubscribeFormModal'
@@ -20,12 +19,6 @@ const NAVIGATION_ITEMS = [
     label: 'Timeline',
     testId: 'sidebar-timeline-link',
     to: '/app',
-  },
-  {
-    icon: NewReleasesIcon,
-    label: 'Release Feed',
-    testId: 'sidebar-release-feed-link',
-    to: '/releases',
   },
 ] as const
 
@@ -59,7 +52,7 @@ const SidebarNavigationLink = styled(NavLink)(({ theme }) => ({
 
 /**
  * Renders authenticated view links so Sidebar controls URL state and active view styling.
- * @returns The compact Timeline and Release Feed navigation controls.
+ * @returns The compact Timeline navigation control.
  * @example
  * <SidebarNavigation />
  */

@@ -14,7 +14,6 @@ export class AppPagePO {
   // Sub-components
   readonly sidebar: SidebarPO
   readonly timelineContainer: Locator
-  readonly releaseFeedRoute: Locator
 
   // Timeline elements
   readonly timelineItems: Locator
@@ -29,7 +28,6 @@ export class AppPagePO {
     // Sub-components
     this.sidebar = new SidebarPO(page)
     this.timelineContainer = page.getByTestId('timeline-container')
-    this.releaseFeedRoute = page.getByTestId('release-feed-route')
 
     // Timeline items (repositories, issues, etc.)
     this.timelineItems = this.timelineContainer.locator(
@@ -48,18 +46,6 @@ export class AppPagePO {
   async goto() {
     await this.page.goto('/app', { waitUntil: 'domcontentloaded' })
     await this.waitForVisible()
-  }
-
-  /**
-   * Navigate to the Release Feed route (assumes authentication is already set).
-   * @returns Resolves after the release route section is visible.
-   * @example
-   * await appPage.gotoReleases()
-   */
-  async gotoReleases() {
-    await this.page.goto('/releases', { waitUntil: 'domcontentloaded' })
-    await this.waitForVisible()
-    await this.releaseFeedRoute.waitFor({ state: 'visible', timeout: 10000 })
   }
 
   /**

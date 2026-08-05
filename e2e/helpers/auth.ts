@@ -8,81 +8,8 @@ import {
 
 const AUTH_SESSION_API_URL = '**/api/auth/session'
 const AUTH_LOGOUT_API_URL = '**/api/auth/logout'
-const GITHUB_GRAPHQL_API_URL = '**/api/github/graphql'
 type AuthenticationMockState = {
   authenticated: boolean
-}
-
-/**
- * Detects the Release Feed operation even when the GraphQL client omits `operationName`.
- * @param operation - Parsed GraphQL POST body from Playwright routing.
- * @returns True when the request is the initial starred repository release query.
- * @example
- * isReleaseFeedQuery({ query: 'query getViewerStarredRepositoryReleases { viewer { login } }' })
- */
-function isReleaseFeedQuery(operation: {
-  operationName?: string
-  query?: string
-}) {
-  return (
-    operation.operationName === 'getViewerStarredRepositoryReleases' ||
-    operation.query?.includes('query getViewerStarredRepositoryReleases') ===
-      true
-  )
-}
-
-/**
- * Prevents authenticated E2E routing tests from reaching the real BFF or GitHub API when `/releases` mounts.
- * @param page - Playwright page whose GraphQL requests should receive a safe empty Release Feed.
- * @returns Resolves after the default Release Feed route mock is registered.
- * @example
- * await setupDefaultReleaseFeedMock(page)
- */
-export async function setupDefaultReleaseFeedMock(page: Page) {
-  await page.route(GITHUB_GRAPHQL_API_URL, async (route) => {
-    const postData = route.request().postData()
-
-    if (!postData) {
-      await route.fallback()
-      return
-    }
-
-    let operation: { operationName?: string; query?: string }
-
-    try {
-      operation = JSON.parse(postData) as {
-        operationName?: string
-        query?: string
-      }
-    } catch {
-      await route.fallback()
-      return
-    }
-
-    if (!isReleaseFeedQuery(operation)) {
-      await route.fallback()
-      return
-    }
-
-    await route.fulfill({
-      body: JSON.stringify({
-        data: {
-          viewer: {
-            starredRepositories: {
-              nodes: [],
-              pageInfo: {
-                endCursor: null,
-                hasNextPage: false,
-              },
-              totalCount: 0,
-            },
-          },
-        },
-      }),
-      contentType: 'application/json',
-      status: 200,
-    })
-  })
 }
 
 /**
@@ -129,7 +56,6 @@ export async function setupAuthenticationApiMock(
  */
 export async function completeMockOAuthCallback(page: Page) {
   const authenticationState = await setupAuthenticationApiMock(page, false)
-  await setupDefaultReleaseFeedMock(page)
   await page.goto('/', { waitUntil: 'domcontentloaded' })
   authenticationState.authenticated = true
   await page.goto('/app', { waitUntil: 'domcontentloaded' })
@@ -145,7 +71,6 @@ export async function completeMockOAuthCallback(page: Page) {
  */
 export async function setAuthState(page: Page) {
   await setupAuthenticationApiMock(page, true)
-  await setupDefaultReleaseFeedMock(page)
 
   // Retrying isolates transient parallel-browser navigation delays from authentication behavior.
   for (let attempt = 0; attempt < E2E_AUTH_SETUP_ATTEMPTS; attempt++) {

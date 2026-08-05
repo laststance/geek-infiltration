@@ -1,5 +1,4 @@
 import { test, expect } from '../fixtures/auth'
-import { E2E_LAZY_ROUTE_DELAY_MS } from '../constants'
 import { completeMockOAuthCallback, isAuthenticated } from '../helpers/auth'
 import { getReduxPersistedState } from '../helpers/storage'
 
@@ -147,7 +146,6 @@ test.describe('Authentication Flow', () => {
 
       // Act
       await page.reload({ waitUntil: 'domcontentloaded' })
-      await page.goto('/releases', { waitUntil: 'domcontentloaded' })
       await page.goto('/app', { waitUntil: 'domcontentloaded' })
 
       // Assert
@@ -158,7 +156,7 @@ test.describe('Authentication Flow', () => {
   })
 
   test.describe('URL Routing', () => {
-    test('redirects signed-out users away from every protected route', async ({
+    test('redirects signed-out users away from the protected timeline route', async ({
       page,
       unauthenticatedPage,
       landingPage,
@@ -169,16 +167,9 @@ test.describe('Authentication Flow', () => {
       // Assert
       await expect(page).toHaveURL(/\/$/)
       await expect(landingPage.githubLoginButton).toBeVisible()
-
-      // Act
-      await page.goto('/releases', { waitUntil: 'domcontentloaded' })
-
-      // Assert
-      await expect(page).toHaveURL(/\/$/)
-      await expect(landingPage.githubLoginButton).toBeVisible()
     })
 
-    test('renders timeline and releases URLs for a valid server session', async ({
+    test('renders the timeline URL for a valid server session', async ({
       page,
       authenticatedPage,
       appPage,
@@ -187,59 +178,24 @@ test.describe('Authentication Flow', () => {
       await appPage.goto()
 
       // Act and Assert
-      await expect(appPage.timelineContainer).toBeVisible()
-      await appPage.gotoReleases()
-      await expect(page).toHaveURL(/\/releases$/)
-      await expect(appPage.releaseFeedRoute).toBeVisible()
-    })
-
-    test('keeps browser back and forward navigation synchronized with routed views', async ({
-      page,
-      authenticatedPage,
-      appPage,
-    }) => {
-      // Arrange
-      await appPage.goto()
-      await appPage.gotoReleases()
-
-      // Act
-      await page.goBack({ waitUntil: 'domcontentloaded' })
-
-      // Assert
       await expect(page).toHaveURL(/\/app$/)
       await expect(appPage.timelineContainer).toBeVisible()
-
-      // Act
-      await page.goForward({ waitUntil: 'domcontentloaded' })
-
-      // Assert
-      await expect(page).toHaveURL(/\/releases$/)
-      await expect(appPage.releaseFeedRoute).toBeVisible()
     })
 
-    test('shows a loading state while the code-split release route loads', async ({
+    test('redirects unknown authenticated URLs back to the timeline', async ({
       page,
       authenticatedPage,
       appPage,
     }) => {
       // Arrange
-      let releaseRouteWasRequested = false
-      await page.route('**/src/routes/ReleasesRoute.tsx*', async (route) => {
-        releaseRouteWasRequested = true
-        await new Promise((resolve) =>
-          setTimeout(resolve, E2E_LAZY_ROUTE_DELAY_MS),
-        )
-        await route.continue()
-      })
       await appPage.goto()
 
       // Act
       await page.goto('/releases', { waitUntil: 'domcontentloaded' })
 
       // Assert
-      await expect(page.getByTestId('full-screen-spinner')).toBeVisible()
-      await expect(appPage.releaseFeedRoute).toBeVisible()
-      expect(releaseRouteWasRequested).toBe(true)
+      await expect(page).toHaveURL(/\/app$/)
+      await expect(appPage.timelineContainer).toBeVisible()
     })
   })
 
