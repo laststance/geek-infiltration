@@ -3363,8 +3363,7 @@ export type CreatedIssueContributionEdge = {
 
 /** Represents either a issue the viewer can access or a restricted contribution. */
 export type CreatedIssueOrRestrictedContribution =
-  | CreatedIssueContribution
-  | RestrictedContribution
+  CreatedIssueContribution | RestrictedContribution
 
 /** Represents the contribution a user made on GitHub by opening a pull request. */
 export type CreatedPullRequestContribution = Contribution & {
@@ -3411,8 +3410,7 @@ export type CreatedPullRequestContributionEdge = {
 
 /** Represents either a pull request the viewer can access or a restricted contribution. */
 export type CreatedPullRequestOrRestrictedContribution =
-  | CreatedPullRequestContribution
-  | RestrictedContribution
+  CreatedPullRequestContribution | RestrictedContribution
 
 /** Represents the contribution a user made by leaving a review on a pull request. */
 export type CreatedPullRequestReviewContribution = Contribution & {
@@ -3506,8 +3504,7 @@ export type CreatedRepositoryContributionEdge = {
 
 /** Represents either a repository the viewer can access or a restricted contribution. */
 export type CreatedRepositoryOrRestrictedContribution =
-  | CreatedRepositoryContribution
-  | RestrictedContribution
+  CreatedRepositoryContribution | RestrictedContribution
 
 /** Represents a mention made by one issue or pull request to another. */
 export type CrossReferencedEvent = Node &
@@ -23813,38 +23810,6 @@ export type GetIssueCommentsQuery = {
   }
 }
 
-export type GetRepositoryReleaseCandidatesQueryVariables = Exact<{
-  owner: string
-  name: string
-  releaseCandidateFirst?: number | null | undefined
-  releaseAfter?: string | null | undefined
-}>
-
-export type GetRepositoryReleaseCandidatesQuery = {
-  repository: {
-    id: string
-    nameWithOwner: string
-    url: string
-    owner:
-      | { login: string; avatarUrl: string }
-      | { login: string; avatarUrl: string }
-    releases: {
-      pageInfo: { hasNextPage: boolean; endCursor: string | null }
-      nodes: Array<{
-        id: string
-        name: string | null
-        tagName: string
-        description: string | null
-        isDraft: boolean
-        isPrerelease: boolean
-        publishedAt: string | null
-        createdAt: string
-        url: string
-      } | null> | null
-    }
-  } | null
-}
-
 export type GetViewerFollowingQueryVariables = Exact<{
   first?: number | null | undefined
 }>
@@ -23857,44 +23822,6 @@ export type GetViewerFollowingQuery = {
         login: string
         name: string | null
         avatarUrl: string
-      } | null> | null
-    }
-  }
-}
-
-export type GetViewerStarredRepositoryReleasesQueryVariables = Exact<{
-  starredFirst?: number | null | undefined
-  starredAfter?: string | null | undefined
-  releaseCandidateFirst?: number | null | undefined
-}>
-
-export type GetViewerStarredRepositoryReleasesQuery = {
-  viewer: {
-    starredRepositories: {
-      totalCount: number
-      pageInfo: { hasNextPage: boolean; endCursor: string | null }
-      nodes: Array<{
-        id: string
-        name: string
-        nameWithOwner: string
-        url: string
-        owner:
-          | { login: string; avatarUrl: string }
-          | { login: string; avatarUrl: string }
-        releases: {
-          pageInfo: { hasNextPage: boolean; endCursor: string | null }
-          nodes: Array<{
-            id: string
-            name: string | null
-            tagName: string
-            description: string | null
-            isDraft: boolean
-            isPrerelease: boolean
-            publishedAt: string | null
-            createdAt: string
-            url: string
-          } | null> | null
-        }
       } | null> | null
     }
   }
@@ -23988,45 +23915,6 @@ export const GetIssueComments = gql`
     }
   }
 `
-export const GetRepositoryReleaseCandidates = gql`
-  query getRepositoryReleaseCandidates(
-    $owner: String!
-    $name: String!
-    $releaseCandidateFirst: Int = 5
-    $releaseAfter: String
-  ) {
-    repository(owner: $owner, name: $name) {
-      id
-      nameWithOwner
-      url
-      owner {
-        login
-        avatarUrl
-      }
-      releases(
-        first: $releaseCandidateFirst
-        after: $releaseAfter
-        orderBy: { field: CREATED_AT, direction: DESC }
-      ) {
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        nodes {
-          id
-          name
-          tagName
-          description
-          isDraft
-          isPrerelease
-          publishedAt
-          createdAt
-          url
-        }
-      }
-    }
-  }
-`
 export const GetViewerFollowing = gql`
   query getViewerFollowing($first: Int = 100) {
     viewer {
@@ -24036,57 +23924,6 @@ export const GetViewerFollowing = gql`
           login
           name
           avatarUrl
-        }
-      }
-    }
-  }
-`
-export const GetViewerStarredRepositoryReleases = gql`
-  query getViewerStarredRepositoryReleases(
-    $starredFirst: Int = 50
-    $starredAfter: String
-    $releaseCandidateFirst: Int = 5
-  ) {
-    viewer {
-      starredRepositories(
-        first: $starredFirst
-        after: $starredAfter
-        orderBy: { field: STARRED_AT, direction: DESC }
-      ) {
-        totalCount
-        pageInfo {
-          hasNextPage
-          endCursor
-        }
-        nodes {
-          id
-          name
-          nameWithOwner
-          url
-          owner {
-            login
-            avatarUrl
-          }
-          releases(
-            first: $releaseCandidateFirst
-            orderBy: { field: CREATED_AT, direction: DESC }
-          ) {
-            pageInfo {
-              hasNextPage
-              endCursor
-            }
-            nodes {
-              id
-              name
-              tagName
-              description
-              isDraft
-              isPrerelease
-              publishedAt
-              createdAt
-              url
-            }
-          }
         }
       }
     }
@@ -24201,40 +24038,6 @@ export const GetIssueCommentsDocument = new TypedDocumentString(`
   }
 }
     `)
-export const GetRepositoryReleaseCandidatesDocument = new TypedDocumentString(`
-    query getRepositoryReleaseCandidates($owner: String!, $name: String!, $releaseCandidateFirst: Int = 5, $releaseAfter: String) {
-  repository(owner: $owner, name: $name) {
-    id
-    nameWithOwner
-    url
-    owner {
-      login
-      avatarUrl
-    }
-    releases(
-      first: $releaseCandidateFirst
-      after: $releaseAfter
-      orderBy: {field: CREATED_AT, direction: DESC}
-    ) {
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      nodes {
-        id
-        name
-        tagName
-        description
-        isDraft
-        isPrerelease
-        publishedAt
-        createdAt
-        url
-      }
-    }
-  }
-}
-    `)
 export const GetViewerFollowingDocument = new TypedDocumentString(`
     query getViewerFollowing($first: Int = 100) {
   viewer {
@@ -24244,54 +24047,6 @@ export const GetViewerFollowingDocument = new TypedDocumentString(`
         login
         name
         avatarUrl
-      }
-    }
-  }
-}
-    `)
-export const GetViewerStarredRepositoryReleasesDocument =
-  new TypedDocumentString(`
-    query getViewerStarredRepositoryReleases($starredFirst: Int = 50, $starredAfter: String, $releaseCandidateFirst: Int = 5) {
-  viewer {
-    starredRepositories(
-      first: $starredFirst
-      after: $starredAfter
-      orderBy: {field: STARRED_AT, direction: DESC}
-    ) {
-      totalCount
-      pageInfo {
-        hasNextPage
-        endCursor
-      }
-      nodes {
-        id
-        name
-        nameWithOwner
-        url
-        owner {
-          login
-          avatarUrl
-        }
-        releases(
-          first: $releaseCandidateFirst
-          orderBy: {field: CREATED_AT, direction: DESC}
-        ) {
-          pageInfo {
-            hasNextPage
-            endCursor
-          }
-          nodes {
-            id
-            name
-            tagName
-            description
-            isDraft
-            isPrerelease
-            publishedAt
-            createdAt
-            url
-          }
-        }
       }
     }
   }
@@ -24318,31 +24073,12 @@ const injectedRtkApi = api.injectEndpoints({
         variables,
       }),
     }),
-    getRepositoryReleaseCandidates: build.query<
-      GetRepositoryReleaseCandidatesQuery,
-      GetRepositoryReleaseCandidatesQueryVariables
-    >({
-      query: (variables) => ({
-        document: GetRepositoryReleaseCandidatesDocument as unknown as string,
-        variables,
-      }),
-    }),
     getViewerFollowing: build.query<
       GetViewerFollowingQuery,
       GetViewerFollowingQueryVariables | void
     >({
       query: (variables) => ({
         document: GetViewerFollowingDocument as unknown as string,
-        variables,
-      }),
-    }),
-    getViewerStarredRepositoryReleases: build.query<
-      GetViewerStarredRepositoryReleasesQuery,
-      GetViewerStarredRepositoryReleasesQueryVariables | void
-    >({
-      query: (variables) => ({
-        document:
-          GetViewerStarredRepositoryReleasesDocument as unknown as string,
         variables,
       }),
     }),
@@ -24355,10 +24091,6 @@ export const {
   useLazyGetDiscussionCommentsQuery,
   useGetIssueCommentsQuery,
   useLazyGetIssueCommentsQuery,
-  useGetRepositoryReleaseCandidatesQuery,
-  useLazyGetRepositoryReleaseCandidatesQuery,
   useGetViewerFollowingQuery,
   useLazyGetViewerFollowingQuery,
-  useGetViewerStarredRepositoryReleasesQuery,
-  useLazyGetViewerStarredRepositoryReleasesQuery,
 } = injectedRtkApi
