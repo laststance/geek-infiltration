@@ -7,6 +7,25 @@
   "lint-staged": {
     "*": "prettier --ignore-unknown --write"
   },
+  "scripts": {
+    "build": "vite build",
+    "preview": "vite preview",
+    "clean": "rimraf node_modules pnpm-lock.yaml dist",
+    "codegen": "graphql-codegen --config codegen.yml && prettier --write src/generated/graphql.ts",
+    "dev": "VITE_CJS_TRACE=true vite",
+    "generate:og-image": "node --experimental-strip-types scripts/generate-og-image.ts",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "prettier": "prettier --ignore-unknown --write .",
+    "serve": "serve dist",
+    "typecheck": "tsc --noEmit",
+    "validate": "./scripts/validate",
+    "prepare": "husky install",
+    "playwright": "playwright test",
+    "playwright:ui": "playwright test --ui",
+    "playwright:debug": "playwright test --debug",
+    "playwright:codegen": "playwright codegen"
+  },
   "dependencies": {
     "@emotion/cache": "^11.14.0",
     "@emotion/react": "^11.14.0",
@@ -72,11 +91,9 @@
     "change-case": "^5.4.4",
     "code-inspector-plugin": "^2.0.5",
     "eslint": "^10.7.0",
-    "eslint-config-prettier": "^10.1.8",
     "eslint-config-ts-prefixer": "^4.2.1",
     "eslint-import-resolver-typescript": "^4.4.5",
     "eslint-plugin-import": "^2.32.0",
-    "eslint-plugin-prettier": "^5.5.6",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-sort-keys-custom-order": "^3.0.3",
     "globals": "^17.7.0",
@@ -90,24 +107,5 @@
     "typescript": "6.0.3",
     "vite": "^8.1.5",
     "vitest": "^4.1.10"
-  },
-  "scripts": {
-    "build": "vite build",
-    "preview": "vite preview",
-    "clean": "rimraf node_modules pnpm-lock.yaml dist",
-    "codegen": "graphql-codegen --config codegen.yml && prettier --write src/generated/graphql.ts",
-    "dev": "VITE_CJS_TRACE=true vite",
-    "generate:og-image": "node --experimental-strip-types scripts/generate-og-image.ts",
-    "lint": "eslint src",
-    "lint:fix": "eslint src --fix",
-    "prettier": "prettier --ignore-unknown --write .",
-    "serve": "serve dist",
-    "typecheck": "tsc --noEmit",
-    "validate": "./scripts/validate",
-    "prepare": "husky install",
-    "playwright": "playwright test",
-    "playwright:ui": "playwright test --ui",
-    "playwright:debug": "playwright test --debug",
-    "playwright:codegen": "playwright codegen"
   }
 }

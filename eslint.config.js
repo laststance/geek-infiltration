@@ -4,7 +4,6 @@ import { fixupPluginRules } from '@eslint/compat'
 import tsPlugin from '@typescript-eslint/eslint-plugin'
 import tsParser from '@typescript-eslint/parser'
 import importPlugin from 'eslint-plugin-import'
-import prettierPlugin from 'eslint-plugin-prettier/recommended'
 import reactHooks from 'eslint-plugin-react-hooks'
 import globals from 'globals'
 
@@ -109,7 +108,4 @@ export default [
       },
     },
   },
-
-  // Prettier (must be last to override formatting rules)
-  prettierPlugin,
 ]
