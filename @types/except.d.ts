@@ -83,10 +83,9 @@ export type Except<
   KeysType extends keyof ObjectType,
   Options extends ExceptOptions = { requireExactProps: false },
 > = {
-  [KeyType in keyof ObjectType as Filter<
-    KeyType,
-    KeysType
-  >]: ObjectType[KeyType]
+  [
+    KeyType in keyof ObjectType as Filter<KeyType, KeysType>
+  ]: ObjectType[KeyType]
 } & (Options['requireExactProps'] extends true
   ? Partial<Record<KeysType, never>>
   : {})

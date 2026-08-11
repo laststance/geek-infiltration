@@ -14,7 +14,7 @@ minimumReleaseAgeExclude:
   - vitest
   - '@vitejs/plugin-react'
   - eslint
-  - prettier
+  - oxfmt
   - tailwindcss
   - '@tanstack/react-query'
   - zod

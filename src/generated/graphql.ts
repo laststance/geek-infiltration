@@ -3363,7 +3363,8 @@ export type CreatedIssueContributionEdge = {
 
 /** Represents either a issue the viewer can access or a restricted contribution. */
 export type CreatedIssueOrRestrictedContribution =
-  CreatedIssueContribution | RestrictedContribution
+  | CreatedIssueContribution
+  | RestrictedContribution
 
 /** Represents the contribution a user made on GitHub by opening a pull request. */
 export type CreatedPullRequestContribution = Contribution & {
@@ -3410,7 +3411,8 @@ export type CreatedPullRequestContributionEdge = {
 
 /** Represents either a pull request the viewer can access or a restricted contribution. */
 export type CreatedPullRequestOrRestrictedContribution =
-  CreatedPullRequestContribution | RestrictedContribution
+  | CreatedPullRequestContribution
+  | RestrictedContribution
 
 /** Represents the contribution a user made by leaving a review on a pull request. */
 export type CreatedPullRequestReviewContribution = Contribution & {
@@ -3504,7 +3506,8 @@ export type CreatedRepositoryContributionEdge = {
 
 /** Represents either a repository the viewer can access or a restricted contribution. */
 export type CreatedRepositoryOrRestrictedContribution =
-  CreatedRepositoryContribution | RestrictedContribution
+  | CreatedRepositoryContribution
+  | RestrictedContribution
 
 /** Represents a mention made by one issue or pull request to another. */
 export type CrossReferencedEvent = Node &

@@ -22,7 +22,8 @@ type ApiFunction = {
 }
 
 type MiddlewareStack =
-  ViteDevServer['middlewares'] | PreviewServer['middlewares']
+  | ViteDevServer['middlewares']
+  | PreviewServer['middlewares']
 
 const API_FUNCTIONS: Record<string, ApiFunction> = {
   '/api/auth/github/callback': githubOAuthCallbackFunction,
