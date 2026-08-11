@@ -11,8 +11,4 @@ describe('swap:happy', () => {
     const res = swap(arr, arr[0], arr.at(-1))
     expect(res).toEqual([{ d: 4 }, { b: 2 }, { c: 3 }, { a: 1 }])
   })
-  test.skip('', () => {})
-  test.skip('', () => {})
-  test.skip('', () => {})
-  test.skip('', () => {})
 })
