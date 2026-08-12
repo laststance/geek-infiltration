@@ -5,19 +5,18 @@
   "type": "module",
   "packageManager": "pnpm@11.17.0+sha512.cca3cea332ad254bb84145f966d19f4879615210346fc92c79a047f23a0d7b3cca3c3792f0076ba1f1831d277efbcf0a9119b31a9a60eca7fb3d6231f331ef72",
   "lint-staged": {
-    "*": "oxfmt --no-error-on-unmatched-pattern"
+    "*": "prettier --ignore-unknown --write"
   },
   "scripts": {
     "build": "vite build",
     "preview": "vite preview",
     "clean": "rimraf node_modules pnpm-lock.yaml dist",
-    "codegen": "graphql-codegen --config codegen.yml && oxfmt src/generated/graphql.ts",
+    "codegen": "graphql-codegen --config codegen.yml && prettier --write src/generated/graphql.ts",
     "dev": "VITE_CJS_TRACE=true vite",
-    "format": "oxfmt",
-    "format:check": "oxfmt --check",
     "generate:og-image": "node --experimental-strip-types scripts/generate-og-image.ts",
     "lint": "eslint src",
     "lint:fix": "eslint src --fix",
+    "prettier": "prettier --ignore-unknown --write .",
     "serve": "serve dist",
     "typecheck": "tsc --noEmit",
     "validate": "./scripts/validate",
@@ -101,8 +100,8 @@
     "husky": "^9.1.7",
     "jsdom": "^29.1.1",
     "lint-staged": "^17.1.1",
-    "oxfmt": "^0.63.0",
     "postcss": "^8.5.22",
+    "prettier": "^3.9.6",
     "rimraf": "^6.1.3",
     "serve": "^14.2.6",
     "typescript": "6.0.3",
