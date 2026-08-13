@@ -1,3 +1,4 @@
+import { useSortable } from '@dnd-kit/react/sortable'
 import { Grid } from '@mui/material'
 import React, { memo } from 'react'
 
@@ -17,11 +18,12 @@ interface Props {
 }
 
 const TimeLine: React.FC<Props> = memo(
-  //eslint-disable-next-line @typescript-eslint/no-unused-vars
   ({ id, timelimeIndex, information, target }) => {
+    const { ref } = useSortable({ id, index: timelimeIndex });
     const timelineWidth = useAppSelector(selectTimelineWidth)
     return (
       <Grid
+        ref={ref}
         sx={{
           maxHeight: '100vh',
           maxWidth: timelineWidth,
