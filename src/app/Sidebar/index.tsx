@@ -1,7 +1,7 @@
 import ViewTimelineIcon from '@mui/icons-material/ViewTimeline'
-import { Stack,Tooltip,alpha,styled } from '@mui/material'
+import { Stack, Tooltip, alpha, styled } from '@mui/material'
 import type { PropsWithChildren } from 'react'
-import React,{ memo } from 'react'
+import React, { memo } from 'react'
 import { NavLink } from 'react-router'
 
 import useModalControl from '@/hooks/useModalControl'
@@ -32,12 +32,12 @@ const SidebarNavigationLink = styled(NavLink)(({ theme }) => ({
   minHeight: SIDEBAR_BUTTON_SIZE_PX,
   minWidth: SIDEBAR_BUTTON_SIZE_PX,
   textDecoration: 'none',
-  transition: theme.transitions.create(['background-color','color'],{
+  transition: theme.transitions.create(['background-color', 'color'], {
     duration: theme.transitions.duration.shortest,
   }),
   width: SIDEBAR_BUTTON_SIZE_PX,
   '&.active': {
-    backgroundColor: alpha(theme.palette.primary.main,0.18),
+    backgroundColor: alpha(theme.palette.primary.main, 0.18),
     color: theme.palette.primary.main,
   },
   '&:focus-visible': {
@@ -45,7 +45,7 @@ const SidebarNavigationLink = styled(NavLink)(({ theme }) => ({
     outlineOffset: 2,
   },
   '&:hover': {
-    backgroundColor: alpha(theme.palette.primary.main,0.12),
+    backgroundColor: alpha(theme.palette.primary.main, 0.12),
     color: theme.palette.primary.main,
   },
 }))
@@ -56,8 +56,7 @@ const SidebarNavigationLink = styled(NavLink)(({ theme }) => ({
  * @example
  * <SidebarNavigation />
  */
-const SidebarNavigation = memo(() =>
-{
+const SidebarNavigation = memo(() => {
   return (
     <Stack
       aria-label="Authenticated views"
@@ -65,8 +64,7 @@ const SidebarNavigation = memo(() =>
       direction="column"
       spacing={1}
     >
-      {NAVIGATION_ITEMS.map((item) =>
-      {
+      {NAVIGATION_ITEMS.map((item) => {
         const Icon = item.icon
 
         return (
@@ -109,9 +107,8 @@ const SideBarContainer: React.FC<PropsWithChildren> = memo(({ children }) => (
 ))
 SideBarContainer.displayName = 'Sidebar.Container'
 
-const Sidebar = memo(() =>
-{
-  const { closeModal,isModalVisible,openModal } = useModalControl()
+const Sidebar = memo(() => {
+  const { closeModal, isModalVisible, openModal } = useModalControl()
 
   return (
     <>

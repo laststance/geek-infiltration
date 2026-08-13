@@ -19,7 +19,7 @@ interface Props {
 
 const TimeLine: React.FC<Props> = memo(
   ({ id, timelimeIndex, information, target }) => {
-    const { ref } = useSortable({ id, index: timelimeIndex });
+    const { ref } = useSortable({ id, index: timelimeIndex })
     const timelineWidth = useAppSelector(selectTimelineWidth)
     return (
       <Grid
