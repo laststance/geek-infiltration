@@ -46,6 +46,8 @@ jobs:
           # Azure Ubuntu mirrors can stall on Ign: until the job's 60m timeout.
           shopt -s nullglob
           for apt_source in /etc/apt/sources.list /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
+            # nullglob drops unmatched globs only; the literal sources.list path still appears.
+            [ -f "$apt_source" ] || continue
             sudo sed -i 's/azure.archive.ubuntu.com/archive.ubuntu.com/g' "$apt_source"
           done
           sudo tee /etc/apt/apt.conf.d/99ci-timeout >/dev/null <<'EOF'
