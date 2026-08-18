@@ -97,8 +97,9 @@ describe('GitHub authentication BFF', () => {
     const transactionCookie = startResponse.headers
       .get('set-cookie')
       ?.split(';')[0]
-    const githubFetch = vi.fn(async (_input: string | URL | Request) =>
-      Response.json({ access_token: 'server-only-github-token' }),
+    const githubFetch = vi.fn(
+      async (_input: string | URL | Request, _init?: RequestInit) =>
+        Response.json({ access_token: 'server-only-github-token' }),
     )
     vi.stubGlobal('fetch', githubFetch)
     const callbackRequest = new Request(

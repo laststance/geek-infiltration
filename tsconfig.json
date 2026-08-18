@@ -24,7 +24,7 @@
     "src",
     "@types",
     "e2e",
-    "server/vercelRuntimeCompatibility.test.ts",
+    "server",
     "./**.js",
     "./**.ts",
     "./**.cjs",
