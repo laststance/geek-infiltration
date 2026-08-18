@@ -18,12 +18,13 @@
       "@/*": ["./src/*"]
     },
     "jsx": "react-jsx",
-    "types": ["vitest/globals"]
+    "types": ["node", "vitest/globals"]
   },
   "include": [
     "src",
     "@types",
     "e2e",
+    "server/vercelRuntimeCompatibility.test.ts",
     "./**.js",
     "./**.ts",
     "./**.cjs",
