@@ -272,8 +272,12 @@ test.describe('Timeline Container', () => {
     await appPage.goto()
     await expect(page.getByRole('heading', { name: 'octocat' })).toBeVisible()
 
+    // dnd-kit marks the column as a button whose accessible name includes this label.
     await page
-      .getByRole('button', { name: 'Open octocat timeline settings' })
+      .getByRole('button', {
+        name: 'Open octocat timeline settings',
+        exact: true,
+      })
       .click()
     await page.getByRole('menuitem', { name: 'delete' }).click()
 

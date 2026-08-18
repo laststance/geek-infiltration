@@ -41,8 +41,37 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Prefer archive.ubuntu.com for apt
+        run: |
+          # Azure Ubuntu mirrors can stall on Ign: until the job's 60m timeout.
+          shopt -s nullglob
+          for apt_source in /etc/apt/sources.list /etc/apt/sources.list.d/*.list /etc/apt/sources.list.d/*.sources; do
+            # nullglob drops unmatched globs only; the literal sources.list path still appears.
+            [ -f "$apt_source" ] || continue
+            sudo sed -i 's/azure.archive.ubuntu.com/archive.ubuntu.com/g' "$apt_source"
+          done
+          sudo tee /etc/apt/apt.conf.d/99ci-timeout >/dev/null <<'EOF'
+          Acquire::Retries "3";
+          Acquire::http::Timeout "20";
+          Acquire::https::Timeout "20";
+          EOF
+
+      - name: Cache Playwright browsers
+        id: playwright-cache
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-${{ runner.os }}-chromium-${{ hashFiles('pnpm-lock.yaml') }}
+
       - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 10
         run: pnpm exec playwright install --with-deps chromium
+
+      - name: Install Playwright OS dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        timeout-minutes: 10
+        run: pnpm exec playwright install-deps chromium
 
       - name: Run Playwright tests
         run: pnpm exec playwright test --project=chromium --reporter=list,html
