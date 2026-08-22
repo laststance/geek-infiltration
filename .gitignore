@@ -11,3 +11,4 @@ dist-ssr
 logs/
 .vercel
 .gstack/
+.serena
