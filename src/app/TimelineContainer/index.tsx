@@ -5,7 +5,7 @@ import React, { memo } from 'react'
 
 import { useAppDispatch } from '@/hooks/useAppDispatch'
 import { useAppSelector } from '@/hooks/useAppSelector'
-import { swap } from '@/redux/subscribedSlice'
+import { reorder } from '@/redux/subscribedSlice'
 
 import TimeLine from './Timeline'
 
@@ -31,7 +31,7 @@ const TimelineContainer: React.FC = memo(() => {
           const { source } = event.operation
           if (!isSortable(source)) return
           if (source.initialIndex === source.index) return
-          dispatch(swap([source.initialIndex, source.index]))
+          dispatch(reorder([source.initialIndex, source.index]))
         }}
       >
         {timelines.length
