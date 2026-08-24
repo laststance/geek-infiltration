@@ -30,9 +30,17 @@ export const subscribedSlice = createSlice({
         state.subscribed[toIndex],
       )
     },
+    reorder: (state, action: PayloadAction<[number, number]>) => {
+      const [oldIndex, newIndex] = action.payload
+      const [moved] = state.subscribed.splice(oldIndex, 1)
+      if (moved === undefined) {
+        return
+      }
+      state.subscribed.splice(newIndex, 0, moved)
+    },
   },
 })
 
-export const { subscribe, unsubscribe, swap } = subscribedSlice.actions
+export const { subscribe, unsubscribe, swap, reorder } = subscribedSlice.actions
 
 export default subscribedSlice.reducer
