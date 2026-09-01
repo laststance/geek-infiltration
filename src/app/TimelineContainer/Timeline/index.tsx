@@ -1,5 +1,5 @@
 import { useSortable } from '@dnd-kit/react/sortable'
-import { Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import React, { memo } from 'react'
 
 import { useAppSelector } from '@/hooks/useAppSelector'
@@ -25,21 +25,33 @@ const TimeLine: React.FC<Props> = memo(
       <Grid
         ref={ref}
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
           maxHeight: '100vh',
           maxWidth: timelineWidth,
           minHeight: '100vh',
           minWidth: timelineWidth,
-          overflow: 'scroll',
+          overflow: 'hidden',
         }}
       >
         <Toolbar id={id} information={information} aim={target} />
 
-        {target.user && information === 'PR_Issues' && (
-          <PullRequest_Issue_Comments user={target.user} />
-        )}
-        {target.user && information === 'Discussion' && (
-          <DiscussionComments user={target.user} />
-        )}
+        <Box
+          data-testid="timeline-comments"
+          sx={{
+            flex: 1,
+            minHeight: 0,
+            // Column overflow is hidden so this pane is the only vertical scroller.
+            overflow: 'auto',
+          }}
+        >
+          {target.user && information === 'PR_Issues' && (
+            <PullRequest_Issue_Comments user={target.user} />
+          )}
+          {target.user && information === 'Discussion' && (
+            <DiscussionComments user={target.user} />
+          )}
+        </Box>
       </Grid>
     )
   },

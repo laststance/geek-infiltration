@@ -1,6 +1,11 @@
 import { test, expect } from '../fixtures/auth'
 import type { GraphQLMocker } from '../helpers/graphql-mock'
 import { setReduxSlice } from '../helpers/storage'
+import {
+  TIMELINE_COMMENTS_SCROLL_OFFSET_PX,
+  TIMELINE_OVERFLOW_COMMENT_COUNT,
+  TIMELINE_TOOLBAR_STICKY_TOLERANCE_PX,
+} from '../constants'
 
 /**
  * Persists subscribed timelines before the app boots so Redux Persist hydrates the desired test state.
@@ -22,6 +27,72 @@ async function persistSubscribedTimelines(
 }
 
 /**
+ * Builds one mocked issue-comment GraphQL edge for a PR/Issues timeline.
+ * @param title - Issue title shown on the comment card.
+ * @param commentNumber - Unique suffix for issue and comment URLs.
+ * @returns A GraphQL edge matching the getIssueComments selection.
+ * @example
+ * issueCommentEdge('Visible issue', 1)
+ */
+function issueCommentEdge(title: string, commentNumber: number) {
+  return {
+    node: {
+      author: {
+        avatarUrl: 'https://avatars.githubusercontent.com/u/1?v=4',
+        login: 'octocat',
+        resourcePath: '/octocat',
+        url: 'https://github.com/octocat',
+      },
+      body: 'Issue comment body',
+      bodyHTML: '<p>Issue comment body</p>',
+      bodyText: 'Issue comment body',
+      createdAt: '2026-06-24T00:00:00Z',
+      issue: {
+        author: {
+          login: 'octocat',
+        },
+        title,
+        url: `https://github.com/octocat/hello-world/issues/${commentNumber}`,
+      },
+      publishedAt: '2026-06-24T00:00:00Z',
+      reactions: {
+        totalCount: 0,
+      },
+      repository: {
+        nameWithOwner: 'octocat/hello-world',
+      },
+      url: `https://github.com/octocat/hello-world/issues/${commentNumber}#issuecomment-${commentNumber}`,
+    },
+  }
+}
+
+/**
+ * Mocks the PR/Issue comments query with one card per title so a column can overflow.
+ * @param graphqlMocker - Test GraphQL mocker fixture.
+ * @param titles - Issue titles that should become visible in the timeline.
+ * @returns The configured mocker for fluent test setup.
+ * @example
+ * mockIssueCommentFeed(graphqlMocker, ['Visible issue', 'Second issue'])
+ */
+function mockIssueCommentFeed(graphqlMocker: GraphQLMocker, titles: string[]) {
+  return graphqlMocker.mockOperation('getIssueComments', () => ({
+    search: {
+      edges: [
+        {
+          node: {
+            issueComments: {
+              edges: titles.map((title, index) =>
+                issueCommentEdge(title, index + 1),
+              ),
+            },
+          },
+        },
+      ],
+    },
+  }))
+}
+
+/**
  * Mocks the PR/Issue comments query used by PR_Issues timelines.
  * @param graphqlMocker - Test GraphQL mocker fixture.
  * @param title - Issue title that should become visible in the timeline.
@@ -30,50 +101,7 @@ async function persistSubscribedTimelines(
  * mockIssueComments(graphqlMocker, 'Visible issue')
  */
 function mockIssueComments(graphqlMocker: GraphQLMocker, title: string) {
-  return graphqlMocker.mockOperation('getIssueComments', () => ({
-    search: {
-      edges: [
-        {
-          node: {
-            issueComments: {
-              edges: [
-                {
-                  node: {
-                    author: {
-                      avatarUrl:
-                        'https://avatars.githubusercontent.com/u/1?v=4',
-                      login: 'octocat',
-                      resourcePath: '/octocat',
-                      url: 'https://github.com/octocat',
-                    },
-                    body: 'Issue comment body',
-                    bodyHTML: '<p>Issue comment body</p>',
-                    bodyText: 'Issue comment body',
-                    createdAt: '2026-06-24T00:00:00Z',
-                    issue: {
-                      author: {
-                        login: 'octocat',
-                      },
-                      title,
-                      url: 'https://github.com/octocat/hello-world/issues/1',
-                    },
-                    publishedAt: '2026-06-24T00:00:00Z',
-                    reactions: {
-                      totalCount: 0,
-                    },
-                    repository: {
-                      nameWithOwner: 'octocat/hello-world',
-                    },
-                    url: 'https://github.com/octocat/hello-world/issues/1#issuecomment-1',
-                  },
-                },
-              ],
-            },
-          },
-        },
-      ],
-    },
-  }))
+  return mockIssueCommentFeed(graphqlMocker, [title])
 }
 
 /**
@@ -169,6 +197,65 @@ test.describe('Timeline Container', () => {
     await expect(
       page.getByRole('link', { name: 'PR timeline issue from E2E mock' }),
     ).toBeVisible()
+  })
+
+  test('keeps the timeline toolbar in view while comments scroll', async ({
+    page,
+    appPage,
+    graphqlMocker,
+  }) => {
+    // Arrange
+    const overflowTitles = Array.from(
+      { length: TIMELINE_OVERFLOW_COMMENT_COUNT },
+      (_, index) => `Overflow comment ${index + 1}`,
+    )
+    await persistSubscribedTimelines(page, [
+      {
+        aim: { user: 'octocat' },
+        id: 'timeline-sticky-toolbar',
+        information: 'PR_Issues',
+      },
+    ])
+    mockIssueCommentFeed(graphqlMocker, overflowTitles)
+    await appPage.goto()
+
+    const toolbarHeading = page.getByRole('heading', { name: 'octocat' })
+    const commentsPane = appPage.timelineCommentsPanes.first()
+    await expect(toolbarHeading).toBeVisible()
+    await expect(
+      page.getByRole('link', {
+        name: `Overflow comment ${TIMELINE_OVERFLOW_COMMENT_COUNT}`,
+      }),
+    ).toBeVisible()
+
+    const toolbarBefore = await toolbarHeading.boundingBox()
+    const scrollTopBefore = await commentsPane.evaluate(
+      (element) => element.scrollTop,
+    )
+    const canScroll = await commentsPane.evaluate(
+      (element) => element.scrollHeight > element.clientHeight,
+    )
+
+    // Act
+    const scrollTopTarget =
+      scrollTopBefore === 0 ? TIMELINE_COMMENTS_SCROLL_OFFSET_PX : 0
+    await commentsPane.evaluate((element, nextScrollTop) => {
+      element.scrollTop = nextScrollTop
+    }, scrollTopTarget)
+
+    // Assert
+    const toolbarAfter = await toolbarHeading.boundingBox()
+    const scrollTopAfter = await commentsPane.evaluate(
+      (element) => element.scrollTop,
+    )
+
+    expect(canScroll).toBe(true)
+    expect(toolbarBefore).toBeTruthy()
+    expect(toolbarAfter).toBeTruthy()
+    expect(scrollTopAfter).not.toBe(scrollTopBefore)
+    expect(Math.abs(toolbarAfter!.y - toolbarBefore!.y)).toBeLessThanOrEqual(
+      TIMELINE_TOOLBAR_STICKY_TOLERANCE_PX,
+    )
   })
 
   test('renders Discussion comments for a persisted user subscription', async ({

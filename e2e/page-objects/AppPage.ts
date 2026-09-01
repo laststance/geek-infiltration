@@ -17,6 +17,7 @@ export class AppPagePO {
 
   // Timeline elements
   readonly timelineItems: Locator
+  readonly timelineCommentsPanes: Locator
   readonly loadMoreButton: Locator
 
   constructor(page: Page) {
@@ -33,6 +34,7 @@ export class AppPagePO {
     this.timelineItems = this.timelineContainer.locator(
       'article, [data-testid="timeline-item"], [role="article"]',
     )
+    this.timelineCommentsPanes = this.page.getByTestId('timeline-comments')
 
     // Load more button (infinite scroll or pagination)
     this.loadMoreButton = page.locator(
@@ -92,11 +94,14 @@ export class AppPagePO {
   }
 
   /**
-   * Scroll timeline to bottom
+   * Scrolls the comments pane of the first timeline column to its bottom.
+   * @returns Resolves after the pane's scrollTop has been set.
+   * @example
+   * await appPage.scrollTimelineToBottom()
    */
   async scrollTimelineToBottom() {
-    await this.timelineContainer.evaluate((el) => {
-      el.scrollTo({ top: el.scrollHeight, behavior: 'smooth' })
+    await this.timelineCommentsPanes.first().evaluate((el) => {
+      el.scrollTo({ top: el.scrollHeight })
     })
   }
 
