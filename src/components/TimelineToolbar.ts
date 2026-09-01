@@ -10,6 +10,7 @@ const TimelineToolbar = styled(Toolbar)(({ theme }) => ({
     alignItems: 'center',
     gap: theme.spacing(1),
     flexDirection: 'row',
+    flexShrink: 0,
     justifyContent: 'space-between',
     paddingRight: 0,
     paddingLeft: theme.spacing(1),
