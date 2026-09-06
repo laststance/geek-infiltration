@@ -1,4 +1,5 @@
 language: 'ja-JP'
+early_access: true
 tone_instructions: '簡潔で実行可能に。挙動リスク、テスト不足、CI、依存関係の問題を優先し、コード識別子・コマンド・パスは英語のまま扱う。'
 
 reviews:
@@ -72,3 +73,4 @@ reviews:
 
 chat:
   auto_reply: true
+  art: false
