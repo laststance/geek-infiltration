@@ -1,7 +1,7 @@
 import { ThemeProvider, createTheme } from '@mui/material'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { describe, it, expect, vi, beforeEach } from 'vitest'
+import { describe, test, expect, vi, beforeEach } from 'vitest'
 
 import UserAutocomplete from './UserAutocomplete'
 
@@ -51,7 +51,7 @@ describe('UserAutocomplete', () => {
   })
 
   describe('loading state', () => {
-    it('renders loading indicator when data is being fetched', () => {
+    test('renders loading indicator when data is being fetched', () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: undefined,
         isLoading: true,
@@ -62,7 +62,7 @@ describe('UserAutocomplete', () => {
       expect(screen.getByRole('progressbar')).toBeInTheDocument()
     })
 
-    it('does not render loading indicator when data is loaded', () => {
+    test('does not render loading indicator when data is loaded', () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -75,7 +75,7 @@ describe('UserAutocomplete', () => {
   })
 
   describe('rendering', () => {
-    it('renders input with @ prefix and aria-label', () => {
+    test('renders input with @ prefix and aria-label', () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -88,7 +88,7 @@ describe('UserAutocomplete', () => {
       expect(screen.getByText('@')).toBeInTheDocument()
     })
 
-    it('renders the GitHub username textbox with the 1Password opt-out attribute', () => {
+    test('renders the GitHub username textbox with the 1Password opt-out attribute', () => {
       // Arrange
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
@@ -105,7 +105,7 @@ describe('UserAutocomplete', () => {
       )
     })
 
-    it('shows suggestions when input is focused', async () => {
+    test('shows suggestions when input is focused', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -125,7 +125,7 @@ describe('UserAutocomplete', () => {
       expect(options).toHaveLength(3)
     })
 
-    it('displays avatar, name, and @login for each suggestion', async () => {
+    test('displays avatar, name, and @login for each suggestion', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -145,7 +145,7 @@ describe('UserAutocomplete', () => {
   })
 
   describe('onChange callback', () => {
-    it('calls onChange with login when selecting a suggestion', async () => {
+    test('calls onChange with login when selecting a suggestion', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -164,7 +164,7 @@ describe('UserAutocomplete', () => {
       expect(mockOnChange).toHaveBeenCalledWith('octocat')
     })
 
-    it('calls onChange with typed value in freeSolo mode', async () => {
+    test('calls onChange with typed value in freeSolo mode', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -182,7 +182,7 @@ describe('UserAutocomplete', () => {
   })
 
   describe('empty following list', () => {
-    it('shows no option items when following list is empty', async () => {
+    test('shows no option items when following list is empty', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: { viewer: { following: { totalCount: 0, nodes: [] } } },
         isLoading: false,
@@ -199,7 +199,7 @@ describe('UserAutocomplete', () => {
   })
 
   describe('error state', () => {
-    it('renders error styling and helper text when error prop is true', () => {
+    test('renders error styling and helper text when error prop is true', () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -219,7 +219,7 @@ describe('UserAutocomplete', () => {
   })
 
   describe('filtering', () => {
-    it('filters suggestions as user types', async () => {
+    test('filters suggestions as user types', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,
@@ -236,7 +236,7 @@ describe('UserAutocomplete', () => {
       expect(screen.getByText('@octocat')).toBeInTheDocument()
     })
 
-    it('filters by name as well as login', async () => {
+    test('filters by name as well as login', async () => {
       mockUseGetViewerFollowingQuery.mockReturnValue({
         data: mockFollowingData,
         isLoading: false,

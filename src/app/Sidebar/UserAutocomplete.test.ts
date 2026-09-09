@@ -1,4 +1,4 @@
-import { describe, it, expect } from 'vitest'
+import { describe, test, expect } from 'vitest'
 
 import { filterFollowingUsers, type FollowingUser } from './UserAutocomplete'
 
@@ -26,36 +26,36 @@ const mockUsers: FollowingUser[] = [
 ]
 
 describe('filterFollowingUsers', () => {
-  it('returns all users when input is empty', () => {
+  test('returns all users when input is empty', () => {
     const result = filterFollowingUsers(mockUsers, '')
     expect(result).toHaveLength(4)
   })
 
-  it('filters by login substring (case-insensitive)', () => {
+  test('filters by login substring (case-insensitive)', () => {
     const result = filterFollowingUsers(mockUsers, 'octo')
     expect(result).toHaveLength(1)
     expect(result[0].login).toBe('octocat')
   })
 
-  it('filters by name substring (case-insensitive)', () => {
+  test('filters by name substring (case-insensitive)', () => {
     const result = filterFollowingUsers(mockUsers, 'linus')
     expect(result).toHaveLength(1)
     expect(result[0].login).toBe('torvalds')
   })
 
-  it('matches across both name and login', () => {
+  test('matches across both name and login', () => {
     const result = filterFollowingUsers(mockUsers, 'dan')
     expect(result).toHaveLength(1)
     expect(result[0].login).toBe('gaearon')
   })
 
-  it('handles users with null name gracefully', () => {
+  test('handles users with null name gracefully', () => {
     const result = filterFollowingUsers(mockUsers, 'null')
     expect(result).toHaveLength(1)
     expect(result[0].login).toBe('nullname')
   })
 
-  it('returns empty array when no match', () => {
+  test('returns empty array when no match', () => {
     const result = filterFollowingUsers(mockUsers, 'zzzzz')
     expect(result).toHaveLength(0)
   })

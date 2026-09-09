@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
 import { BOARD_COLUMNS } from './boardData'
@@ -74,7 +74,7 @@ describe('MockBoard mobile page dots', () => {
     Element.prototype.scrollIntoView = scrollIntoViewSpy
   })
 
-  it('marks the swiped-to column as the current page dot', () => {
+  test('marks the swiped-to column as the current page dot', () => {
     // Arrange: render the board and grab the horizontal scroll strip (the parent of
     // the four column groups), then fake a four-column-wide strip scrolled to #3.
     render(<MockBoard />)
@@ -100,7 +100,7 @@ describe('MockBoard mobile page dots', () => {
     expect(pageDotFor('antfu')).toHaveAttribute('aria-current', 'false')
   })
 
-  it('marks the first column as current before any swipe', () => {
+  test('marks the first column as current before any swipe', () => {
     // Arrange & Act
     render(<MockBoard />)
 
@@ -109,7 +109,7 @@ describe('MockBoard mobile page dots', () => {
     expect(pageDotFor('sindresorhus')).toHaveAttribute('aria-current', 'false')
   })
 
-  it('smoothly scrolls the clicked column into view when its page dot is activated', () => {
+  test('smoothly scrolls the clicked column into view when its page dot is activated', () => {
     // Arrange
     render(<MockBoard />)
 
@@ -124,7 +124,7 @@ describe('MockBoard mobile page dots', () => {
     })
   })
 
-  it('clamps the active page dot to the last column when overscrolled past the end', () => {
+  test('clamps the active page dot to the last column when overscrolled past the end', () => {
     // Arrange: render the board and fake a strip overscrolled beyond the last column,
     // exercising handleStripScroll's Math.min(..., length - 1) clamp against overscroll.
     render(<MockBoard />)

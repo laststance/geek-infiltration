@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import { beforeEach, describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
 import MockBoard from './MockBoard'
@@ -56,7 +56,7 @@ describe('MockBoard with reduced motion', () => {
     Element.prototype.scrollIntoView = scrollIntoViewSpy
   })
 
-  it('jumps to the clicked column instantly instead of animating the scroll', () => {
+  test('jumps to the clicked column instantly instead of animating the scroll', () => {
     // Arrange
     render(<MockBoard />)
 

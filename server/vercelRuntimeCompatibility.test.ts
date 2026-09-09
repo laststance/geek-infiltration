@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { resolve } from 'node:path'
 
-import { describe, expect, it } from 'vitest'
+import { describe, expect, test } from 'vitest'
 
 const VERCEL_RUNTIME_MODULE_PATHS = [
   'api/auth/github/callback.ts',
@@ -16,7 +16,7 @@ const VERCEL_RUNTIME_MODULE_PATHS = [
 ]
 
 describe('Vercel Node ESM runtime compatibility', () => {
-  it('keeps every deployed BFF relative import resolvable after TypeScript emits JavaScript', async () => {
+  test('keeps every deployed BFF relative import resolvable after TypeScript emits JavaScript', async () => {
     // Arrange
     const projectRootPath = process.cwd()
 

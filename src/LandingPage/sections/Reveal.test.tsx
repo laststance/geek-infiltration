@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 import Reveal from './Reveal'
 
@@ -62,7 +62,7 @@ describe('Reveal entrance', () => {
     vi.unstubAllGlobals()
   })
 
-  it('reveals above-the-fold content on mount without waiting on an IntersectionObserver', () => {
+  test('reveals above-the-fold content on mount without waiting on an IntersectionObserver', () => {
     // Arrange & Act: an immediate reveal wraps hero content.
     render(
       <Reveal immediate>
@@ -75,7 +75,7 @@ describe('Reveal entrance', () => {
     expect(intersectionObserverConstructions).toBe(0)
   })
 
-  it('defers below-the-fold content to scroll-into-view via an IntersectionObserver', () => {
+  test('defers below-the-fold content to scroll-into-view via an IntersectionObserver', () => {
     // Arrange & Act: a default (non-immediate) reveal wraps a lower section.
     render(
       <Reveal>

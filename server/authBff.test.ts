@@ -1,6 +1,6 @@
 // @vitest-environment node
 
-import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 
 const redisMock = vi.hoisted(() => {
   const values = new Map<string, string>()
@@ -54,7 +54,7 @@ describe('GitHub authentication BFF', () => {
     vi.unstubAllEnvs()
   })
 
-  it('starts login with server-generated OAuth state and PKCE', async () => {
+  test('starts login with server-generated OAuth state and PKCE', async () => {
     // Arrange
     const request = new Request('https://app.example.com/api/auth/github/start')
 
@@ -85,7 +85,7 @@ describe('GitHub authentication BFF', () => {
     )
   })
 
-  it('completes login with an opaque session cookie instead of exposing the GitHub token', async () => {
+  test('completes login with an opaque session cookie instead of exposing the GitHub token', async () => {
     // Arrange
     const startResponse = await githubOAuthStartFunction.fetch(
       new Request('https://app.example.com/api/auth/github/start'),
@@ -140,7 +140,7 @@ describe('GitHub authentication BFF', () => {
     expect(tokenRequestBody.get('code_verifier')).toHaveLength(43)
   })
 
-  it('reports an authenticated session without returning the GitHub token', async () => {
+  test('reports an authenticated session without returning the GitHub token', async () => {
     // Arrange
     const startResponse = await githubOAuthStartFunction.fetch(
       new Request('https://app.example.com/api/auth/github/start'),
@@ -180,7 +180,7 @@ describe('GitHub authentication BFF', () => {
     expect(await response.json()).toEqual({ authenticated: true })
   })
 
-  it('reports signed out when no protected session cookie exists', async () => {
+  test('reports signed out when no protected session cookie exists', async () => {
     // Arrange
     const request = new Request('https://app.example.com/api/auth/session')
 
@@ -192,7 +192,7 @@ describe('GitHub authentication BFF', () => {
     expect(await response.json()).toEqual({ authenticated: false })
   })
 
-  it('logs out by expiring the protected session cookie', async () => {
+  test('logs out by expiring the protected session cookie', async () => {
     // Arrange
     redisMock.values.set(
       'geek-infiltration:session:test-session-id',
@@ -220,7 +220,7 @@ describe('GitHub authentication BFF', () => {
     expect(redisMock.values.size).toBe(0)
   })
 
-  it('proxies GraphQL with the server-owned GitHub token', async () => {
+  test('proxies GraphQL with the server-owned GitHub token', async () => {
     // Arrange
     const startResponse = await githubOAuthStartFunction.fetch(
       new Request('https://app.example.com/api/auth/github/start'),
@@ -282,7 +282,7 @@ describe('GitHub authentication BFF', () => {
     expect(graphqlRequest?.[1]?.body).toBe(graphqlBody)
   })
 
-  it('rejects GraphQL before contacting GitHub when the session is missing', async () => {
+  test('rejects GraphQL before contacting GitHub when the session is missing', async () => {
     // Arrange
     const githubFetch = vi.fn()
     vi.stubGlobal('fetch', githubFetch)
@@ -303,7 +303,7 @@ describe('GitHub authentication BFF', () => {
     expect(githubFetch).not.toHaveBeenCalled()
   })
 
-  it('rejects a mismatched OAuth state before exchanging a GitHub code', async () => {
+  test('rejects a mismatched OAuth state before exchanging a GitHub code', async () => {
     // Arrange
     const startResponse = await githubOAuthStartFunction.fetch(
       new Request('https://app.example.com/api/auth/github/start'),
@@ -329,7 +329,7 @@ describe('GitHub authentication BFF', () => {
     expect(githubFetch).not.toHaveBeenCalled()
   })
 
-  it('keeps post-login redirects on the application origin', async () => {
+  test('keeps post-login redirects on the application origin', async () => {
     // Arrange
     const startResponse = await githubOAuthStartFunction.fetch(
       new Request(
@@ -363,7 +363,7 @@ describe('GitHub authentication BFF', () => {
     )
   })
 
-  it('keeps local Vite sessions server-side without requiring Redis credentials', async () => {
+  test('keeps local Vite sessions server-side without requiring Redis credentials', async () => {
     // Arrange
     vi.stubEnv('NODE_ENV', 'development')
     vi.stubEnv('UPSTASH_REDIS_REST_URL', '')
