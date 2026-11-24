@@ -105,7 +105,7 @@
     "prettier": "^3.10.1",
     "rimraf": "^6.1.4",
     "serve": "^14.2.8",
-    "typescript": "7.0.2",
+    "typescript": "~6.0.3",
     "vite": "^8.3.8",
     "vitest": "^5.1.1"
   }
