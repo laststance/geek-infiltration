@@ -29,3 +29,8 @@ allowBuilds:
   esbuild: true
   node-pty: true
   unrs-resolver: true
+
+overrides:
+  'undici@^8': '8.12.2'
+  'follow-redirects@<1.16.2': '1.16.2'
+  '@graphql-tools/executor-legacy-ws@<1.1.36': '1.1.36'
